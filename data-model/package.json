@@ -10,7 +10,7 @@
     "test": "mocha"
   },
   "keywords": [],
-  "author": "Donnie Flood <me@donnie.com>",
+  "author": "Donnie Flood <npm@donnie.com>",
   "license": "Apache 2",
   "dependencies": {
     "enumify": "^1.0.4"
