@@ -1,19 +1,25 @@
 {
-  "name": "gmavillage-data-model",
+  "name": "@gma-village/data-model",
   "version": "0.0.1",
   "description": "Data model for Gma Village apps",
   "main": "index.js",
+  "engines": {
+    "node": "6.9.1"
+  },
   "scripts": {
     "test": "mocha"
   },
   "keywords": [],
   "author": "Donnie Flood <me@donnie.com>",
   "license": "Apache 2",
-  "private": "true",
   "dependencies": {
     "enumify": "^1.0.4"
   },
   "devDependencies": {
     "mocha": "^3.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/floodfx/gma-village.git"
+  },
 }
