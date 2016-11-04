@@ -5,6 +5,7 @@ var CareLocation = require('./src/CareLocation')
 var CareTraining = require('./src/CareTraining')
 var Demeanor = require('./src/Demeanor')
 var Neighborhood = require('./src/Neighborhood')
+var Gma = require('./src/Gma')
 
 module.exports = {
   Availability: Availability,
@@ -13,5 +14,6 @@ module.exports = {
   CareLocation: CareLocation,
   CareTraining: CareTraining,
   Demeanor: Demeanor,
-  Neighborhood: Neighborhood
+  Neighborhood: Neighborhood,
+  Gma: Gma,
 }
