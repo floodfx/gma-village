@@ -1,0 +1,28 @@
+{
+  "name": "gma-village-import-data",
+  "version": "0.0.1",
+  "description": "Imports data from a given spreadsheet to a given google cloud datastore.",
+  "main": "index.js",
+  "engines": {
+    "node": "6.9.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Donnie Flood <npm@donnie.com>",
+  "license": "Apache 2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/floodfx/gma-village.git"
+  },
+  "devDependencies": {
+    "mocha": "3.1.2"
+  },
+  "dependencies": {
+    "gma-village-data-model": "0.0.2",
+    "google-auth-library": "0.9.9",
+    "googleapis": "14.1.0",
+    "nconf": "0.8.4"
+  }
+}
