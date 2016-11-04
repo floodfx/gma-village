@@ -4,9 +4,13 @@ nconf
   .argv() // command line args
   .env([  // environment vars
     'SCOPES',
-    'SPREADSHEET_ID'
+    'SPREADSHEET_API_SCOPES',
+    'GOOGLE_PROJECT_ID',
+    'DATASTORE_EMULATOR_URL'
   ])
   .defaults({
-    SCOPES: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+    SPREADSHEET_API_SCOPES: 'https://www.googleapis.com/auth/spreadsheets.readonly',
     SPREADSHEET_ID: '',
+    GOOGLE_PROJECT_ID: '',
+    DATASTORE_EMULATOR_URL: ''
   })
