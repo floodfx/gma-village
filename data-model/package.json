@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "Donnie Flood <npm@donnie.com>",
-  "license": "Apache 2",
+  "license": "Apache-2.0",
   "dependencies": {
     "enumify": "^1.0.4"
   },

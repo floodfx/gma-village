@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "Donnie Flood <npm@donnie.com>",
-  "license": "Apache 2",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/floodfx/gma-village.git"
@@ -20,6 +20,7 @@
     "mocha": "3.1.2"
   },
   "dependencies": {
+    "@google-cloud/datastore": "0.5.0",
     "gma-village-data-model": "0.0.2",
     "google-auth-library": "0.9.9",
     "googleapis": "14.1.0",
