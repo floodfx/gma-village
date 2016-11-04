@@ -1,5 +1,6 @@
 var google = require('googleapis');
 var authorize = require('./authorize')
+var cleanName = require('./name-helper')
 
 var bulkimport = (spreadsheet_id, auth) => {
   var sheets = google.sheets('v4');
@@ -17,12 +18,31 @@ var bulkimport = (spreadsheet_id, auth) => {
       console.log('No data found.');
     } else {
       for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        console.log('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s',
-          row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[47], row[8], row[9], row[10], row[11]);
+        var [timestamp,
+             name,
+             neighborhood,
+             isAvailableOutsideArea,
+             careAges,
+             availabilities,
+             careLocations,
+             demeanors,
+             enjoyCaringForKidsText,
+             careExperiences,
+             careTrainings,
+             additionalInformationText] = rows[i];
+        var {first_name, last_name} = cleanName(name)
+        console.log("first", first_name, "last", last_name)
+        console.log('\n\n%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s',
+          timestamp, name, neighborhood, isAvailableOutsideArea, careAges,
+          availabilities, careLocations, demeanors, enjoyCaringForKidsText,
+          careExperiences, careTrainings, additionalInformationText);
+        var {first_name, last_name} = cleanName(name)
       }
     }
   });
 }
+
+
+
 
 module.exports = bulkimport
