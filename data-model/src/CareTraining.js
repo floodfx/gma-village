@@ -6,7 +6,7 @@ CareTraining.initEnum([
   'HEALTH_AND_SAFETY',
   'CPR_AND_FIRST_AID',
   'PREVENTATIVE_HEALTH',
-  'CHILD_CENTERED_ART'
+  'CHILDCENTERED_ART'
 ]);
 
 module.exports = CareTraining

@@ -1,7 +1,7 @@
 
 
 class Gma {
-  constructor({
+  constructor(
     first_name,
     last_name,
     phone,
@@ -15,10 +15,11 @@ class Gma {
     careExperiences,
     careTrainings,
     additionalInformationText
-  }) {
+  ) {
     this.first_name = first_name;
     this.last_name = last_name;
     this.phone = phone;
+    this.neighborhood = neighborhood;
     this.isAvailableOutsideNeightborhood = isAvailableOutsideNeightborhood;
     this.careAges = careAges;
     this.availabilities = availabilities;
@@ -36,6 +37,7 @@ class Gma {
       first name\t${this.first_name}\n
       last name\t${this.last_name}\n
       phone\t${this.phone}\n
+      neighborhood\t${this.neighborhood}\n
       isAvailableOutsideNeightborhood\t${this.isAvailableOutsideNeightborhood}\n
       careAges\t${this.careAges}\n
       availabilities\t${this.availabilities}\n
