@@ -1,0 +1,134 @@
+interface Entity {
+  id: ID!
+}
+
+type Gma implements Entity {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  phone: String!
+  availabilities: [Availability!]
+  otherAvailability: String
+  careAges: [CareAge!]
+  careExperiences: [CareExperience!]
+  otherCareExperience: String
+  careLocations: [CareLocation!]
+  careTrainings: [CareTraining!]
+  otherCareTraining: String
+  city: City!
+  demeanors: [Demeanor!]
+  otherDemeanor: String
+  neighborhood: Neighborhood!
+  otherNeighborhood: String
+  isAvailableOutsideNeighborhood: Boolean!
+  whyCareForKidsText: String!
+  additionalInformationText: String!
+}
+
+enum Availability {
+  EARLY_MORNING,
+  DAYTIME,
+  EVENING,
+  OVERNIGHT,
+  WEEKEND,
+  OTHER
+}
+
+enum CareAge {
+  ZERO_TO_SIX_MONTHS,
+  SIX_MONTHS_TO_TWO_YEARS,
+  TWO_YEARS_TO_FIVE_YEARS,
+  FIVE_YEARS_PLUS
+}
+
+enum CareExperience {
+  RAISED_KIDS,
+  CARED_FOR_GRANDKIDS,
+  WORKED_BABYSITTING,
+  WORKED_CHILDCARE_CENTER,
+  WORKED_SCHOOL,
+  OTHER
+}
+
+enum CareLocation {
+  CHILDS_HOME,
+  PROVIDERS_HOME
+}
+
+enum CareTraining {
+  HEALTH_AND_SAFETY,
+  CPR_AND_FIRST_AID,
+  PREVENTATIVE_HEALTH,
+  CHILDCENTERED_ART,
+  OTHER
+}
+
+enum City {
+  OAKLAND
+}
+
+enum Demeanor {
+  PATIENT,
+  OUTGOING,
+  CALM,
+  FUNNY,
+  RELIABLE,
+  SERIOUS,
+  ENERGETIC,
+  QUIET,
+  PLAYFUL,
+  LOUD,
+  OTHER
+}
+
+enum Neighborhood {
+  WEST_OAKLAND,
+  EAST_OAKLAND,
+  CENTRAL_OAKLAND,
+  BERKELEY,
+  EMERYVILLE,
+  PIEDMONT,
+  ALBANY,
+  ALAMEDA,
+  CASTRO_VALLEY,
+  OTHER
+}
+
+input FilterInput {
+  availabilities: [Availability!]
+  careAge: [CareAge!]
+  careExperiences: [CareExperience!]
+  careLocations: [CareLocation!]
+  careTrainings: [CareTraining!]
+}
+
+type Query {
+  gma(id: ID): Gma
+  gmas(filter: FilterInput = {}): [Gma!]
+}
+
+input GmaInput {
+  first_name: String!
+  last_name: String
+  phone: String!
+  availabilities: [Availability!]
+  otherAvailability: String
+  careAges: [CareAge!]
+  careExperiences: [CareExperience!]
+  otherCareExperience: String
+  careLocations: [CareLocation!]
+  careTrainings: [CareTraining!]
+  otherCareTraining: String
+  city: City!
+  demeanors: [Demeanor!]
+  otherDemeanor: String
+  neighborhood: Neighborhood!
+  otherNeighborhood: String
+  isAvailableOutsideNeightborhood: Boolean!
+  whyCareForKidsText: String!
+  additionalInformationText: String!
+}
+
+type Mutation {
+  saveGma(input: GmaInput): Gma
+}

@@ -1,0 +1,33 @@
+{
+  "name": "gma-village-graphql",
+  "version": "0.0.1",
+  "description": "Gma Village GraphQL Server",
+  "main": "index.js",
+  "engines": {
+    "node": "6.9.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Donnie Flood <npm@donnie.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/floodfx/gma-village.git"
+  },
+  "devDependencies": {
+    "mocha": "3.1.2"
+  },
+  "dependencies": {
+    "@google-cloud/datastore": "0.5.0",
+    "gma-village-data-model": "0.0.4",
+    "google-auth-library": "0.9.9",
+    "googleapis": "14.1.0",
+    "nconf": "0.8.4",
+    "express": "4.14.0",
+    "express-graphql": "0.5.4",
+    "google-cloud": "0.43.0",
+    "graphql": "0.7.2"
+  }
+}
