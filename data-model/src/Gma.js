@@ -40,7 +40,7 @@ class Gma {
     this.otherDemeanor = otherDemeanor;
     this.neighborhood = neighborhood;
     this.otherNeighborhood = otherNeighborhood;
-    this.isAvailableOutsideNeightborhood = isAvailableOutsideNeightborhood;
+    this.isAvailableOutsideNeighborhood = isAvailableOutsideNeighborhood;
     this.whyCareForKidsText = whyCareForKidsText;
     this.additionalInformationText = additionalInformationText;
   }
@@ -65,7 +65,7 @@ class Gma {
       otherDemeanor\t${this.otherDemeanor}\n
       neighborhood\t${this.neighborhood}\n
       otherNeighborhood\t${this.otherNeighborhood}\n
-      isAvailableOutsideNeightborhood\t${this.isAvailableOutsideNeightborhood}\n
+      isAvailableOutsideNeighborhood\t${this.isAvailableOutsideNeighborhood}\n
       whyCareForKidsText\t${this.whyCareForKidsText}\n
       additionalInformationText\t${this.additionalInformationText}\n
     `
