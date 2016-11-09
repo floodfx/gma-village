@@ -53,7 +53,7 @@ class GmaDAO {
         var nextToken = nextQuery.moreResults !== Datastore.NO_MORE_RESULTS ? nextQuery.endCursor : false;
         var gmas = entities.map((entity) => {
           console.log("entity", entity)
-          return this._getGma(entity.key.id, entity.data)
+          return this._getGma(entity[this.db.KEY].id, entity)
         })
         console.log("gmas", gmas)
         resolve({gmas, nextToken});
