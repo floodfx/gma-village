@@ -102,12 +102,18 @@ input FilterInput {
   careTrainings: [CareTraining!]
 }
 
+type GmaList {
+  gmas: [Gma!],
+  nextToken: String
+}
+
 type Query {
   gma(id: ID): Gma
-  gmas(filter: FilterInput = {}): [Gma!]
+  gmas(filter: FilterInput = {}, limit: Int = 10, nextToken: String): GmaList
 }
 
 input GmaInput {
+  id: ID
   first_name: String!
   last_name: String
   phone: String!
@@ -124,7 +130,7 @@ input GmaInput {
   otherDemeanor: String
   neighborhood: Neighborhood!
   otherNeighborhood: String
-  isAvailableOutsideNeightborhood: Boolean!
+  isAvailableOutsideNeighborhood: Boolean!
   whyCareForKidsText: String!
   additionalInformationText: String!
 }
