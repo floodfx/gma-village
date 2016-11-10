@@ -9,13 +9,21 @@
     "react-scripts": "0.7.0"
   },
   "dependencies": {
+    "apollo-client": "0.5.1",
     "express": "4.14.0",
+    "gma-village-data-model": "0.0.7",
+    "graphql-tag": "0.1.16",
+    "isomorphic-fetch": "2.2.1",
+    "lokka": "1.7.0",
+    "lokka-transport-http": "1.6.1",
     "react": "15.3.2",
+    "react-apollo": "0.5.16",
     "react-dom": "15.3.2",
     "react-redux": "4.4.5",
     "react-router": "3.0.0",
     "redux": "3.6.0",
-    "redux-logger": "2.7.4"
+    "redux-logger": "2.7.4",
+    "redux-thunk": "2.1.0"
   },
   "scripts": {
     "start": "node server.js",

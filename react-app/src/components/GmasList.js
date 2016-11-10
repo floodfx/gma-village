@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 
 class GmasList extends Component {
 
+  componentWillMount() {
+    console.log("props", this.props)
+  }
+
   render() {
     return <ul>{this.props.gmas.map(this.renderGma)} </ul>;
   }
 
-  renderGma({id, first_name}) {
-    return <li key={id}>{first_name}</li>;
+  renderGma({id}) {
+    return <li key={id}>{id}</li>;
   }
 
 }

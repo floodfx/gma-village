@@ -1,20 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory } from 'react-router';
+import { Link, Router, Route, browserHistory } from 'react-router';
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
 
+
 const Header = ({children}) => (
   <div className="App">
-    <div className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h2>Welcome to Gma</h2>
-    </div>
-    <p className="App-intro">
-      To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
+    <h1>Welcome to Gma Village</h1>
+    <ul>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/gmas">Gmas</Link></li>
+    </ul>
     {children}
   </div>
 )
