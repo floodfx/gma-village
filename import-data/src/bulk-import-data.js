@@ -1,6 +1,7 @@
 var google = require('googleapis');
 var authorize = require('./authorize')
 var NameHelper = require('./name-helper')
+var PhoneHelper = require('./phone-helper')
 var CareAgesHelper = require('./care-ages-helper')
 var CareLocationsHelper = require('./care-locations-helper')
 var CareExperiencesHelper = require('./care-experiences-helper')
@@ -12,12 +13,16 @@ var {
   CareExperience,
   CareLocation,
   CareTraining,
+  City,
   Demeanor,
   Neighborhood,
-  Gma
-} = require('../../data-model/index')
+  Gma,
+  GmaDAO
+} = require('gma-village-data-model')
+var gmaDao = new GmaDAO()
 
 var bulkimport = (spreadsheet_id, auth) => {
+
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
     auth: auth,
@@ -44,7 +49,7 @@ var bulkimport = (spreadsheet_id, auth) => {
              nameRaw,
              phoneRaw,
              neighborhoodRaw,
-             isAvailableOutsideNeightborhoodRaw,
+             isAvailableOutsideNeighborhoodRaw,
              careAgesRaw,
              availabilitiesRaw,
              careLocationsRaw,
@@ -56,9 +61,9 @@ var bulkimport = (spreadsheet_id, auth) => {
         // console.log("data", data)
 
         var {first_name, last_name} = NameHelper.parse(nameRaw);
-        var phone = phoneRaw;
-        var neighborhood = Neighborhood.parse(neighborhoodRaw);
-        var isAvailableOutsideNeightborhood = isAvailableOutsideNeightborhoodRaw === 'yes'
+        var phone = PhoneHelper.parse(phoneRaw);
+        var neighborhood = EnumParserHelper.parseAll(neighborhoodRaw, Neighborhood, {}, true);
+        var isAvailableOutsideNeighborhood = isAvailableOutsideNeighborhoodRaw === 'yes'
         var careAges = EnumParserHelper.parseAll(careAgesRaw, CareAge, CareAgesHelper.VALID_VALUES_MAP);
         var availabilities = EnumParserHelper.parseAll(availabilitiesRaw, Availability, {}, true);
         var careLocations = EnumParserHelper.parseAll(careLocationsRaw, CareLocation, CareLocationsHelper.VALID_VALUES_MAP);
@@ -67,22 +72,51 @@ var bulkimport = (spreadsheet_id, auth) => {
         var careTrainings = EnumParserHelper.parseAll(careTrainingsRaw, CareTraining, {}, true);
 
         var gma = new Gma(
-          first_name, last_name, phone, neighborhood, isAvailableOutsideNeightborhood,
-          careAges, availabilities.valids, careLocations, demeanors.valids, whyCareForKidsText,
-          careExperiences.valids, careTrainings.valids, additionalInformationText
+          undefined,
+          first_name,
+          last_name,
+          phone,
+          availabilities.values,
+          availabilities.others,
+          careAges,
+          careExperiences.values,
+          careExperiences.others,
+          careLocations,
+          careTrainings.values,
+          careTrainings.others,
+          City.OAKLAND.name,
+          demeanors.values,
+          demeanors.others,
+          neighborhood.values,
+          neighborhood.others,
+          isAvailableOutsideNeighborhood,
+          whyCareForKidsText,
+          additionalInformationText
         )
 
-        console.log(gma.toString())
-        // console.log('\n\n%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s',
-        //   timestamp, name, neighborhood, isAvailableOutsideArea, careAges,
-        //   availabilities, careLocations, demeanors, enjoyCaringForKidsText,
-        //   careExperiences, careTrainings, additionalInformationText);
+        // console.log("\n\n\n\n", gma.toString())
 
+        saveGma(gma)
       }
-      // save clean data
 
     }
   });
+}
+
+const saveGma = (gma) => {
+  gmaDao.gmaByPhone(gma.phone)
+    .then(foundGma => {
+      if(foundGma) {
+        console.log(`gma with phone ${gma.phone}, alread exists. ${foundGma.id}`)
+        //TODO update?
+      } else {
+        // console.log("saving gma", gma)
+        gmaDao.saveGma(gma)
+      }
+    })
+    .catch(err => {
+      console.log("error finding gma by phone", err)
+    })
 }
 
 var allColumnsContainData = (row, expectedCols = 13) => {

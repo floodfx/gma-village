@@ -1,19 +1,19 @@
 
 class EnumParserHelper {
 
-  static parseAll(input, enumClass, additionalValidValues={}, allowInvalids=false, delimiter=', ') {
+  static parseAll(input, enumClass, additionalValidValues={}, allowOthers=false, delimiter=', ') {
     var split = input.split(delimiter);
     // console.log("split", split)
-    var invalids = [];
-    var valids = split.map((value) => {
+    var others = [];
+    var values = split.map((value) => {
       // console.log("value", value)
       var validValue = additionalValidValues[value.trim()];
       if(validValue === undefined) {
         try {
           validValue = enumClass.parse(value);
         }catch(e) {
-          if(allowInvalids) {
-            invalids.push(value)
+          if(allowOthers) {
+            others.push(value)
             return
           } else {
             throw e;
@@ -23,18 +23,19 @@ class EnumParserHelper {
       return validValue;
     });
     // flatten array and remove undefined items
-    valids = valids.reduce((a, b) => {
+    values = values.reduce((a, b) => {
       if(b) {
         return a.concat(b);
       } else {
         return a;
       }
     }, []);
-    // return both valids and invalids if allowed
-    if(allowInvalids) {
-      return {valids, invalids};
+    var values = values.map((v) => v.name)
+    // return both values and other if allowed
+    if(allowOthers) {
+      return {values, others};
     }
-    return valids;
+    return values;
   }
 }
 

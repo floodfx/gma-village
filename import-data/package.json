@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@google-cloud/datastore": "0.5.0",
-    "gma-village-data-model": "0.0.4",
+    "gma-village-data-model": "0.0.10",
     "google-auth-library": "0.9.9",
     "googleapis": "14.1.0",
     "nconf": "0.8.4"
