@@ -25,7 +25,7 @@
     "cors": "2.8.1",
     "express": "4.14.0",
     "express-graphql": "0.5.4",
-    "gma-village-data-model": "0.0.7",
+    "gma-village-data-model": "0.0.10",
     "google-auth-library": "0.9.9",
     "google-cloud": "0.43.0",
     "googleapis": "14.1.0",
