@@ -1,5 +1,5 @@
 var Datastore = require('@google-cloud/datastore');
-var {Gma} = require('gma-village-data-model')
+var Gma = require('../Gma')
 
 class GmaDAO {
 
@@ -24,68 +24,71 @@ class GmaDAO {
     });
   }
 
-  gmas(filter, limit=10, nextToken) {
-    console.log("gmas", filter)
+  gmaByPhone(phone) {
+    console.log("fetch gma by phone", phone)
     return new Promise((resolve, reject) => {
       var q = this.db.createQuery([this.kind])
-      // q.run((err, entities, nextQuery) => {
-      //   console.log(err, entities, nextQuery)
-      //   if (err) {
-      //     reject(err);
-      //   }
-      //   var nextToken = nextQuery.moreResults !== Datastore.NO_MORE_RESULTS ? nextQuery.endCursor : false;
-      //   var gmas = entities.map((entity) => {
-      //     console.log("entity", entity)
-      //     console.log("entity.KEY", entity.KEY)
-      //     return this._getGma(entity.key, entity)
-      //   })
-      //   console.log("gmas", gmas)
-      //   resolve({gmas, nextToken});
-      // });
-        // .limit(limit)
-        // .select('__key__')
-        // .start(nextToken || false);
+        .filter("phone", "=", phone)
       this.db.runQuery(q, (err, entities, nextQuery) => {
-        console.log(err, entities, nextQuery)
+        // console.log("results of find by phone", err, entities, nextQuery)
+        if (err) {
+          reject(err);
+        }
+        if(entities.length !== 0) {
+          var entity = entities[0];
+          resolve(this._getGma(entity[this.db.KEY].id, entity))
+        } else {
+          resolve(undefined)
+        }
+      })
+    });
+  }
+
+  gmas(filter, limit=10, nextToken) {
+    // console.log("gmas", filter)
+    return new Promise((resolve, reject) => {
+      var q = this.db.createQuery([this.kind])
+      this.db.runQuery(q, (err, entities, nextQuery) => {
+        // console.log(err, entities, nextQuery)
         if (err) {
           reject(err);
         }
         var nextToken = nextQuery.moreResults !== Datastore.NO_MORE_RESULTS ? nextQuery.endCursor : false;
         var gmas = entities.map((entity) => {
-          console.log("entity", entity)
+          // console.log("entity", entity)
           return this._getGma(entity[this.db.KEY].id, entity)
         })
-        console.log("gmas", gmas)
+        // console.log("gmas", gmas)
         resolve({gmas, nextToken});
       });
     });
   }
 
-  saveGma(input) {
-    console.log("saveGma", input)
+  saveGma(gma) {
+    // console.log("saveGma", gma)
     return new Promise((resolve, reject) => {
-      console.log("inside promise", input)
+      // console.log("inside promise", gma)
       var key;
-      if (input.id) {
-        key = this.db.key([this.kind, input.id]);
+      if (gma.id) {
+        key = this.db.key([this.kind, gma.id]);
       } else {
         key = this.db.key(this.kind);
       }
       var data = [];
-      Object.keys(input.input).forEach(function (k) {
-        if (input.input[k] === undefined) {
+      Object.keys(gma).forEach(function (k) {
+        if (gma[k] === undefined) {
           return;
         }
         data.push({
           name: k,
-          value: input.input[k]
+          value: gma[k]
         });
       });
       var entity = {
         key: key,
         data: data
       }
-      console.log("saving", entity)
+      // console.log("saving", entity)
       this.db.save(entity, (err) => {
         if(err) {
           reject(err)
