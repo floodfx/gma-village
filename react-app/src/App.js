@@ -1,18 +1,13 @@
-import './App.css';
+import Navi from './Navi'
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import { Link, Router, Route, browserHistory } from 'react-router';
+import { Link, Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
 
-
 const Header = ({children}) => (
-  <div className="App">
-    <h1>Welcome to Gma Village</h1>
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/gmas">Gmas</Link></li>
-    </ul>
+  <div className="container">
+    <Navi />
     {children}
   </div>
 )
@@ -21,9 +16,9 @@ const App = ({ store }) => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Header}>
-        <Route path="gmas" component={GmasListContainer}>
-          <Route path="profile" component={GmaProfileContainer}/>
-        </Route>
+        <IndexRedirect to="/gmas" />
+        <Route path="gmas" component={GmasListContainer}/>
+        <Route path="/gma/:gmaId" component={GmaProfileContainer} />
       </Route>
     </Router>
   </Provider>

@@ -12,9 +12,9 @@ class GmasListContainer extends Component {
   render() {
     return (
       <div>
-        <span>Gmas Loading[{this.props.loading}]</span>
-        <span>Gmas Errors[{this.props.error}]</span>
-        <GmasList gmas={this.props.gmas} />
+        <GmasList gmas={this.props.gmas}
+          loading={this.props.loading}
+          error={this.props.error} />
         {this.props.children}
       </div>
     );

@@ -25,7 +25,12 @@ export const fetchGmas = () => {
         {
           gmas {
             gmas {
-              id
+              id,
+              first_name,
+              last_name,
+              phone,
+              availabilities,
+              neighborhood
             }
           }
         }
