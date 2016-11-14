@@ -5,7 +5,7 @@ import {
 } from '../actions/GmaProfileContainer'
 
 const gmaProfile = (state = {
-  loading: false,
+  loading: true,
   gma: {},
   error: ''
 }, action) => {

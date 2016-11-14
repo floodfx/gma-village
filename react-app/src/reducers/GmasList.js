@@ -5,7 +5,7 @@ import {
 } from '../actions/GmasListContainer'
 
 const gmasList = (state = {
-  loading: false,
+  loading: true,
   gmas: [],
   error: ''
 }, action) => {

@@ -1,3 +1,15 @@
 .App {
   text-align: left;
 }
+
+.gma-orange: {
+  color: #f37441
+}
+
+.gma-light-green: {
+  color: #afdfd2
+}
+
+.gma-font-family: {
+  font-family: "proxima-nova"
+}

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { Link, Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
+import './App.css'
 
 const Header = ({children}) => (
   <div className="container">

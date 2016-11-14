@@ -21,7 +21,17 @@ export const fetchGmaRequestFailure = (error) => ({
 const fetchGmaQuery = `
   query fetchGma($id: ID!) {
     gma(id: $id) {
-      id
+      id,
+      first_name,
+      availabilities,
+      careAges,
+      neighborhood,
+      careLocations,
+      careExperiences,
+      careTrainings,
+      demeanors,
+      additionalInformationText,
+      whyCareForKidsText
     }
   }
 `;

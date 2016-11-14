@@ -12,8 +12,14 @@ class GmaProfileContainer extends Component {
     this.props.dispatch(fetchGma(gmaId))
   }
 
+  componentWillReceiveProps(newProps) {
+    console.log("newProps", newProps)
+  }
+
   render() {
-    return <GmaProfile gma={this.props.gma} />;
+    return <GmaProfile gma={this.props.gma}
+                       loading={this.props.loading}
+                       error={this.props.error}/>;
   }
 }
 
