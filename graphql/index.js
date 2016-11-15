@@ -18,7 +18,7 @@ app.use(cors());
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
-  graphiql: false// process.env.NODE_ENV !== 'production',
+  graphiql: process.env.NODE_ENV !== 'production',
 }));
 
 app.listen(8080);
