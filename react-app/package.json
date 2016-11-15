@@ -18,6 +18,7 @@
     "isomorphic-fetch": "2.2.1",
     "lokka": "1.7.0",
     "lokka-transport-http": "1.6.1",
+    "moment": "2.16.0",
     "react": "15.3.2",
     "react-apollo": "0.5.16",
     "react-bootstrap": "0.30.6",

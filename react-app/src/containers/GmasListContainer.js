@@ -12,7 +12,6 @@ class GmasListContainer extends Component {
   }
 
   onFilterClick = (vals) => {
-    console.log("vals", vals)
     vals.forEach((val) => this.props.dispatch(filterGmasList(val)))
   }
 
@@ -39,7 +38,6 @@ GmasListContainer.propTypes = {
 };
 
 const filterGmas = (gmas, filters) => {
-  console.log("filtering", gmas, filters)
   var availFilters = filters.filter((filter) => filter.constructor === Availability)
   var locFilters = filters.filter((filter) => filter.constructor === CareLocation)
   var ageFilters = filters.filter((filter) => filter.constructor === CareAge)

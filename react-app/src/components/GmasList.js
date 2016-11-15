@@ -6,12 +6,7 @@ import imgUrl from './ImageUrl'
 
 class GmasList extends Component {
 
-  componentWillReceiveProps(newProps) {
-    console.log("newProps", newProps)
-  }
-
   render() {
-
     if(this.props.loading) {
       return <div>Loading... </div>
     }

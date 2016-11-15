@@ -1,8 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { capitalizeWords, careAgeTextToNumber} from './formatutil'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
-import classNames from 'classnames'
-
 
 const filterBy = (header, enumValues, filters, onFilterClick) => {
   return (
