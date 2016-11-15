@@ -6,18 +6,22 @@ import './Navi.css'
 
 
 const Navi = () => (
-  <nav className="navbar">
-    <Link className="navbar-brand" to="/">
-      <img src={logo} alt="Gma Village Logo" width="164" height="90"/>
-    </Link>
-    <ul className="nav navbar-nav" >
-      <li className="nav-item">
-        <Link className="navbar-link" to="/" style={{lineHeight: '96px'}}>Home</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="navbar-link" to="/gmas" style={{lineHeight: '96px'}}>Gmas</Link>
-      </li>
-    </ul>
+  <nav className="navbar" style={{paddingBottom: '50px'}}>
+    <div className="navbar-header">
+      <Link className="navbar-brand" to="/" >
+        <img className="img-responsive" src={logo} alt="Gma Village Logo" style={{maxHeight: '100px'}}/>
+      </Link>
+    </div>
+    <div className="collapse navbar-collapse">
+      <ul className="nav navbar-nav" >
+        <li className="nav-item">
+          <Link className="navbar-link" to="/" style={{lineHeight: '100px'}}>Home</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="navbar-link" to="/gmas" style={{lineHeight: '100px'}}>Gmas</Link>
+        </li>
+      </ul>
+    </div>
   </nav>
 )
 

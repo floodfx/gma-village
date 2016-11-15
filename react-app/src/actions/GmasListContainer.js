@@ -3,6 +3,7 @@ import client from '../graphql/client'
 export const INIT_GMAS_LIST_REQUEST = "INIT_GMAS_LIST_REQUEST"
 export const INIT_GMAS_LIST_REQUEST_SUCCESS = "INIT_GMAS_LIST_REQUEST_SUCCESS"
 export const INIT_GMAS_LIST_REQUEST_FAILURE = "INIT_GMAS_LIST_REQUEST_FAILURE"
+export const FILTER_GMAS_LIST = "FILTER_GMAS_LIST"
 
 export const initGmasListRequest = () => ({
   type: INIT_GMAS_LIST_REQUEST
@@ -18,6 +19,12 @@ export const initGmasListRequestFailure = (error) => ({
   error
 })
 
+export const filterGmasList = (filter) => ({
+  type: FILTER_GMAS_LIST,
+  filter
+})
+
+
 export const fetchGmas = () => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
@@ -30,7 +37,10 @@ export const fetchGmas = () => {
               last_name,
               phone,
               availabilities,
-              neighborhood
+              neighborhood,
+              careAges,
+              careLocations,
+              isAvailableOutsideNeighborhood          
             }
           }
         }

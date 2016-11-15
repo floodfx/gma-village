@@ -2,14 +2,52 @@
   text-align: left;
 }
 
-.gma-orange: {
+.gma-orange-border {
+  border: 1px solid #f37441;
+  border-radius: 10px;
+}
+
+.gma-green-border {
+  border: 1px solid #c4e3c7;
+  border-radius: 10px;
+}
+
+.gma-orange {
   color: #f37441
 }
 
-.gma-light-green: {
-  color: #afdfd2
+.gma-green {
+  color: #c4e3c7
 }
 
-.gma-font-family: {
+.gma-lt-orange {
+  color: #f9ac8e
+}
+
+.gma-grey {
+  color: #6d6e70
+}
+
+.gma-blue {
+  color: #0d344f
+}
+
+.gma-yellow {
+  color: #c0b931
+}
+
+.gma-pink {
+  color: #f4dcd5
+}
+
+.gma-lt-grey {
+  color: #a7a9ab
+}
+
+.gma-font-family {
   font-family: "proxima-nova"
+}
+
+.gma-flags-bg {
+  background-image: url(./assets/flags.png);
 }

@@ -22,6 +22,7 @@ const fetchGmaQuery = `
   query fetchGma($id: ID!) {
     gma(id: $id) {
       id,
+      phone,
       first_name,
       availabilities,
       careAges,
