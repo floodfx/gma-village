@@ -1,5 +1,5 @@
 var assert = require('assert');
-var CareTraining = require("../src/CareTraining")
+var CareTraining = require("../lib/CareTraining")
 
 describe('CareTraining', function() {
   describe('enums', function() {

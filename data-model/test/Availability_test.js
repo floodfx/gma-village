@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Availability = require("../src/Availability")
+var Availability = require("../lib/Availability")
 
 describe('Availability', function() {
   describe('enums', function() {
