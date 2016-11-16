@@ -1,5 +1,5 @@
 var Datastore = require('@google-cloud/datastore');
-var Gma = require('../Gma')
+var { Gma } = require('gma-village-data-model')
 
 class GmaDAO {
 

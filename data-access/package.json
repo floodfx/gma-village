@@ -1,0 +1,22 @@
+{
+  "name": "gma-village-data-access",
+  "version": "0.0.1",
+  "description": "Gma Village Data Access Layer",
+  "main": "index.js",
+  "engines": {
+    "node": "6.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@google-cloud/datastore": "0.5.0",
+    "gma-village-data-model": "0.1.0"
+  },
+  "author": "Donnie Flood <npm@donnie.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/floodfx/gma-village.git"
+  }
+}
