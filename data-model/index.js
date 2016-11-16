@@ -7,7 +7,6 @@ var City = require('./src/City')
 var Demeanor = require('./src/Demeanor')
 var Neighborhood = require('./src/Neighborhood')
 var Gma = require('./src/Gma')
-var GmaDAO = require('./src/google-datastore/gma-dao')
 
 module.exports = {
   Availability: Availability,
@@ -18,6 +17,5 @@ module.exports = {
   City: City,
   Demeanor: Demeanor,
   Neighborhood: Neighborhood,
-  Gma: Gma,
-  GmaDAO: GmaDAO
+  Gma: Gma
 }

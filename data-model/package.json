@@ -1,6 +1,6 @@
 {
   "name": "gma-village-data-model",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "Data model for Gma Village apps",
   "main": "index.js",
   "engines": {
@@ -13,10 +13,6 @@
   "author": "Donnie Flood <npm@donnie.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "@google-cloud/datastore": "0.5.0",
-    "google-auth-library": "0.9.9",
-    "google-cloud": "0.43.0",
-    "googleapis": "14.1.0",
     "enumify": "^1.0.4"
   },
   "devDependencies": {
