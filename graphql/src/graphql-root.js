@@ -1,4 +1,4 @@
-var { GmaDAO } = require('gma-village-data-model');
+var { GmaDAO } = require('gma-village-data-access');
 
 const gmaDao = new GmaDAO()
 
