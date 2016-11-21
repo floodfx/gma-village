@@ -9,11 +9,13 @@ import './App.css'
 
 const Footer = () => {
   return (
-    <div>
-      <hr />
+    <div className="row">
       <footer className="footer">
         <div className="container">
-          <p className="text-center text-muted">&copy; Gma Village {moment().format('YYYY')}</p>
+          <div className="col-md-12 col-sm-8">
+            <hr />
+            <p className="text-center gma-orange">&copy; Gma Village {moment().format('YYYY')}</p>
+          </div>
         </div>
       </footer>
     </div>

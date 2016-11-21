@@ -2,14 +2,16 @@ import React from 'react';
 import { capitalizeWords, careAgeTextToNumber} from './formatutil'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 
-const filterBy = (header, enumValues, filters, onFilterClick) => {
+const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
   return (
     <div>
-      <h4>{header}&nbsp;
-        <span style={{whiteSpace: 'nowrap'}}>
-          (<a onClick={(event) => onFilterClick(enumValues.filter((enumValue) => !filters.includes(enumValue)))}>all</a>,&nbsp;
-           <a onClick={(event) => onFilterClick(filters.filter((filter) => enumValues.includes(filter)))}>none</a>)
-        </span>
+      <h4><u>{header}</u>&nbsp;
+        {allOrNoneEnabled &&
+          <span style={{whiteSpace: 'nowrap'}}>
+            (<a onClick={(event) => onFilterClick(enumValues.filter((enumValue) => !filters.includes(enumValue)))}>all</a>,&nbsp;
+             <a onClick={(event) => onFilterClick(filters.filter((filter) => enumValues.includes(filter)))}>none</a>)
+          </span>
+        }
       </h4>
       {enumValues.map((val) => {
         return (
@@ -31,19 +33,19 @@ const filterBy = (header, enumValues, filters, onFilterClick) => {
 }
 
 const GmasFilter = ({filters, onFilterClick}) => (
-  <div className="col-md-12 gma-orange-border" style={{paddingBottom: '10px'}}>
-    <h3 className="gma-orange">Find Gmas (Select all that apply)</h3>
+  <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
+    <h3 className="gma-orange">Find Gmas that:</h3>
       <div className="col-md-2">
-        {filterBy('Neighborhood', Neighborhood.enumValues, filters, onFilterClick)}
+        {filterBy('Live in:', Neighborhood.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Children\'s Ages', CareAge.enumValues, filters, onFilterClick)}
+        {filterBy('Care for kids ages:', CareAge.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Care Location', CareLocation.enumValues, filters, onFilterClick)}
+        {filterBy('Can provide care at:', CareLocation.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Availability', Availability.enumValues, filters, onFilterClick)}
+        {filterBy('Are generally available:', Availability.enumValues, filters, onFilterClick)}
       </div>
   </div>
 )

@@ -19,6 +19,15 @@ class GmasListContainer extends Component {
     return (
       <div>
         <div className="row">
+          <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
+            <h3 className="gma-orange">Welcome!</h3>
+            <p>
+              We look forward to connecting you to our community of Gma's.
+              Please select all the apply below to find a Gma that matches your needs.
+            </p>
+          </div>
+        </div>
+        <div className="row">
           <GmasFilter filters={this.props.filters} onFilterClick={this.onFilterClick} />
         </div>
         <div className="row">

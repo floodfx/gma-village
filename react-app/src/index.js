@@ -7,10 +7,9 @@ import gmaProfile  from './reducers/GmaProfile'
 import App from './App';
 import thunk from 'redux-thunk'
 
-import './index.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-
+import './index.css'
 
 const middleware = [thunk]
 if (process.env.NODE_ENV !== 'production') {

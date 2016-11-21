@@ -14,6 +14,7 @@ class GmasList extends Component {
       const atLeastOneGma = this.props.gmas.length > 0
       return (
         <div>
+          <div className="col-md-12 col-sm-8 gma-orange-border">
           <h1 className="gma-orange">Gmas <span className="badge">{this.props.gmas.length}</span></h1>
           {!atLeastOneGma &&
             <div className="alert alert-warning" role="alert">
@@ -23,6 +24,7 @@ class GmasList extends Component {
           {atLeastOneGma &&
             this.props.gmas.map(this.renderProfileThumbnail)
           }
+          </div>
         </div>
       );
     }
@@ -38,7 +40,7 @@ class GmasList extends Component {
           <div className="caption">
             <h3 className="gma-orange text-center">Gma {gma.first_name}</h3>
             <div className="text-center">
-              <a className="btn btn-default" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
+              <a className="btn gma-orange-bg" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
             </div>
             <div style={{marginTop: '30px'}}>
               <h4>Availability</h4>
@@ -58,7 +60,7 @@ class GmasList extends Component {
               </ul>
             </div>
             <div style={{marginTop: '30px'}} className="text-center">
-              <Link to={`/gma/${gma.id}`}>Read More &#8594;</Link>
+              <Link to={`/gma/${gma.id}`}>Read More &rarr;</Link>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { capitalizeWords, careAgeTextToNumber, formatPhone }  from './formatutil'
 import imgUrl from './ImageUrl'
 
@@ -17,6 +18,11 @@ class GmaProfile extends Component {
     } else {
       return (
         <div>
+          <div>
+            <ol className="breadcrumb">
+              <li><Link to={'/gmas'}>&larr; Back</Link></li>
+            </ol>
+          </div>
           <div className="row">
             <div className="gma-flags-bg" style={{marginBottom: '30px'}}>&nbsp;</div>
           </div>
@@ -28,11 +34,14 @@ class GmaProfile extends Component {
 
               <div className="media-body gma-orange-border" style={{padding: '20px'}}>
                 <div className="pull-right">
-                  <a className="btn btn-default" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
+                  <a className="btn gma-orange-bg" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
                 </div>
                 <h1 className="media-heading gma-orange">Gma {gma.first_name}</h1>
 
-                <h4>Neighborhood: <span style={{fontWeight: 'normal'}}>{capitalizeWords(gma.neighborhood)}</span></h4>
+                <h4>I live in: <span style={{fontWeight: 'normal'}}>{capitalizeWords(gma.neighborhood)}</span></h4>
+                {gma.isAvailableOutsideNeighborhood &&
+                <h4 style={{fontWeight: 'normal'}}>I'm willing to travel to provide care</h4>
+                }
                 <h4>Care for kids ages: <span style={{fontWeight: 'normal'}}>{gma.careAges.map((age) => careAgeTextToNumber(age)).join(", ")}</span></h4>
                 <h4>Provide care at: <span style={{fontWeight: 'normal'}}>{this.joinAndCapitalize(gma.careLocations)}</span></h4>
                 <h4>General Availability: <span style={{fontWeight: 'normal'}}>{this.joinAndCapitalize(gma.availabilities)}</span></h4>
@@ -42,20 +51,18 @@ class GmaProfile extends Component {
           <div className="row" style={{marginTop: '10px'}}>
             <div className="media col-md-12 col-sm-6">
               <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-                <h3>I would describe myself as</h3>
-                <p>{this.joinAndCapitalize(gma.demeanors)}</p>
-                <h3>I enjoy caring for kids because</h3>
-                <p>{gma.whyCareForKidsText}</p>
+                <h4>I would describe myself as: <span style={{fontWeight: 'normal'}}>{this.joinAndCapitalize(gma.demeanors)}</span></h4>
+                <h4>I enjoy caring for kids because: <span style={{fontWeight: 'normal'}}>{gma.whyCareForKidsText}</span></h4>
               </div>
             </div>
           </div>
           <div className="row" style={{marginTop: '10px'}}>
             <div className="media col-md-12 col-sm-6">
               <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-                <h3>Experience:</h3>
+                <h4>Experience</h4>
                 <ul>
                   {gma.careExperiences.map((exp) => {
-                    return <li key={exp}>{capitalizeWords(exp)}</li>
+                    return <li key={exp}><h4 style={{fontWeight: 'normal'}}>{capitalizeWords(exp)}</h4></li>
                   })}
                 </ul>
               </div>
@@ -64,10 +71,10 @@ class GmaProfile extends Component {
           <div className="row" style={{marginTop: '10px'}}>
             <div className="media col-md-12 col-sm-6">
               <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-                <h3>Training</h3>
+                <h4>Training</h4>
                 <ul>
                   {gma.careTrainings.map((tra) => {
-                    return <li key={tra}>{capitalizeWords(tra)}</li>
+                    return <li key={tra}><h4 style={{fontWeight: 'normal'}}>{capitalizeWords(tra)}</h4></li>
                   })}
                 </ul>
               </div>
@@ -76,8 +83,7 @@ class GmaProfile extends Component {
           <div className="row" style={{marginTop: '10px'}}>
             <div className="media col-md-12 col-sm-6">
               <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-                <h3>Something else I'd like to share</h3>
-                <p>{gma.additionalInformationText}</p>
+                <h4>Something else I'd like to share: <span style={{fontWeight: 'normal'}}>{gma.additionalInformationText}</span></h4>
               </div>
             </div>
           </div>
