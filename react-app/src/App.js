@@ -1,4 +1,3 @@
-import Navi from './Navi'
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
@@ -6,6 +5,7 @@ import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
 import moment from 'moment'
 import './App.css'
+import Navi from './Navi'
 
 const Footer = () => {
   return (

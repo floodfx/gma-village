@@ -1,8 +1,52 @@
-
-.navbar-nav > li > a {
- line-height: 200px;
+.navbar {
+  font-family: "proxima-nova";
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
-.gma-orange: {
-  color: #f37441
+.navbar-header {
+  min-height: 90px;
+}
+
+.navbar-nav > li > a {
+  display: inline;
+  padding: .5em;
+}
+
+.navbar-toggle {
+  margin-top: 36px;
+}
+
+.icon-bar {
+  background-color: white;
+}
+
+a.navbar-link {
+  color: rgba(0,0,0,.5);
+}
+
+a:hover.navbar-link {
+  color: #000;
+}
+
+a.active {
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .nav-item {
+    line-height: normal;
+  }
+  .delimiter {
+    display: none;
+  }
+  #gma-navbar-collapse {
+    margin-top: 10px
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-item {
+    line-height: 120px;
+  }
 }
