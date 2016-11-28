@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import  { fetchGmas, filterGmasList }  from '../actions/GmasListContainer'
 import  { Availability, CareAge, CareLocation, Neighborhood }  from 'gma-village-data-model'
 
+export const WILLING_TO_TRAVEL = "willingToTravel"
+
 class GmasListContainer extends Component {
 
   componentWillMount() {
@@ -47,24 +49,25 @@ GmasListContainer.propTypes = {
 };
 
 const filterGmas = (gmas, filters) => {
-  var availFilters = filters.filter((filter) => filter.constructor === Availability)
-  var locFilters = filters.filter((filter) => filter.constructor === CareLocation)
-  var ageFilters = filters.filter((filter) => filter.constructor === CareAge)
-  var neighFilters = filters.filter((filter) => filter.constructor === Neighborhood)
+  let availFilters = filters.filter((filter) => filter.constructor === Availability)
+  let locFilters = filters.filter((filter) => filter.constructor === CareLocation)
+  let ageFilters = filters.filter((filter) => filter.constructor === CareAge)
+  let neighFilters = filters.filter((filter) => filter.constructor === Neighborhood)
   return gmas.filter((gma) => {
-    var availRes = availFilters.reduce((prev, curr) => {
+    let availRes = availFilters.reduce((prev, curr) => {
         return prev |= gma.availabilities.includes(curr.name)
       }, false);
-    var locRes = locFilters.reduce((prev, curr) => {
+    let locRes = locFilters.reduce((prev, curr) => {
       return prev |= gma.careLocations.includes(curr.name)
     }, false)
-    var ageRes = ageFilters.reduce((prev, curr) => {
+    let ageRes = ageFilters.reduce((prev, curr) => {
       return prev |= gma.careAges.includes(curr.name)
     }, false)
-    var neighRes = neighFilters.reduce((prev, curr) => {
-      return prev |= (gma.neighborhood === curr.name) || gma.isAvailableOutsideNeighborhood
+    let willingToTravelFilterAndGmaAvail = (filters.includes(WILLING_TO_TRAVEL) && gma.isAvailableOutsideNeighborhood)
+    let neighRes = neighFilters.reduce((prev, curr) => {
+      return prev |= (gma.neighborhood === curr.name)
     }, false)
-    return availRes && locRes && ageRes && neighRes;
+    return availRes && locRes && ageRes && (neighRes || willingToTravelFilterAndGmaAvail);
   })
 }
 

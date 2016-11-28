@@ -1,6 +1,7 @@
 import React from 'react';
 import { capitalizeWords, careAgeTextToNumber} from './formatutil'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
+import {WILLING_TO_TRAVEL} from '../containers/GmasListContainer'
 
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
   return (
@@ -37,6 +38,10 @@ const GmasFilter = ({filters, onFilterClick}) => (
     <h3 className="gma-orange">Find Gmas that:</h3>
       <div className="col-md-2">
         {filterBy('Live in:', Neighborhood.enumValues, filters, onFilterClick)}
+        <label key={"willingToTravel"} style={{whiteSpace: 'nowrap'}}>
+          <input checked={filters.includes(WILLING_TO_TRAVEL)} onChange={(event) => onFilterClick([WILLING_TO_TRAVEL], event)} type="checkbox" value={WILLING_TO_TRAVEL}/>
+            &nbsp;Willing to Travel
+        </label>
       </div>
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Care for kids ages:', CareAge.enumValues, filters, onFilterClick)}
