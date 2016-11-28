@@ -1,9 +1,64 @@
 body {
   margin: 0;
   padding: 0;
+}
+
+h1 {
+  font-weight: bold;
+  font-family: Georgia, serif;
+}
+
+h2 {
+  font-weight: bold;
+  font-family: Georgia, serif;
+}
+
+h3 {
+  font-weight: bold;
   font-family: Georgia, serif;
 }
 
 h4 {
   font-weight: bold;
+  font-family: Georgia, serif;
+}
+
+h5 {
+  font-weight: bold;
+  font-family: Georgia, serif;
+}
+
+h6 {
+  font-weight: bold;
+  font-family: Georgia, serif;
+}
+
+h1 > span.normal {
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+h2 > span.normal {
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+h3 > span.normal {
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+h4 > span.normal {
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+h5 > span.normal {
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+h6 > span.normal {
+  font-weight: normal;
+  font-family: sans-serif;
 }
