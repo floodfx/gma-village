@@ -91,6 +91,7 @@ enum Neighborhood {
   ALBANY,
   ALAMEDA,
   CASTRO_VALLEY,
+  NORTH_OAKLAND,
   OTHER
 }
 

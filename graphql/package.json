@@ -1,6 +1,6 @@
 {
   "name": "gma-village-graphql",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Gma Village GraphQL Server",
   "main": "index.js",
   "engines": {
@@ -24,7 +24,7 @@
     "cors": "2.8.1",
     "express": "4.14.0",
     "express-graphql": "0.5.4",
-    "gma-village-data-access": "0.0.1",
+    "gma-village-data-access": "^0.0.2",
     "graphql": "0.7.2",
     "nconf": "0.8.4"
   }
