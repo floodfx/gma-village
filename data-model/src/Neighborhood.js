@@ -13,7 +13,8 @@ Neighborhood.initEnum([
   'PIEDMONT',
   'ALBANY',
   'ALAMEDA',
-  'CASTRO_VALLEY'
+  'CASTRO_VALLEY',
+  'NORTH_OAKLAND'
 ]);
 
 module.exports = Neighborhood
