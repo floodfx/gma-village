@@ -16,9 +16,9 @@ var {
   City,
   Demeanor,
   Neighborhood,
-  Gma,
-  GmaDAO
+  Gma
 } = require('gma-village-data-model')
+var { GmaDAO } = require('gma-village-data-access')
 var gmaDao = new GmaDAO()
 
 var bulkimport = (spreadsheet_id, auth) => {
@@ -87,8 +87,8 @@ var bulkimport = (spreadsheet_id, auth) => {
           City.OAKLAND.name,
           demeanors.values,
           demeanors.others,
-          neighborhood.values,
-          neighborhood.others,
+          neighborhood.values.length > 0 ? neighborhood.values[0] : "",
+          neighborhood.others.length > 0 ? neighborhood.others[0] : "",
           isAvailableOutsideNeighborhood,
           whyCareForKidsText,
           additionalInformationText

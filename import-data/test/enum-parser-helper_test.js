@@ -7,7 +7,8 @@ var {
   Availability,
   CareAge,
   CareLocation,
-  Demeanor
+  Demeanor,
+  Neighborhood
 } = require('gma-village-data-model')
 
 describe('EnumParserHelper for Availability', function() {
@@ -84,4 +85,17 @@ describe('EnumParserHelper for Demeanor', function() {
       assert.ok(values.others.includes('Honest'))
     });
   });
+});
+
+describe('EnumParserHelper for Neighborhood', function() {
+  describe('parseAll valid', function() {
+    it('should parse all clean values', function() {
+      var input = "North Oakland"
+      var values = EnumParserHelper.parseAll(input, Neighborhood, {}, true)
+      assert.equal(values.values.length, 1);
+      assert.equal(values.others.length, 0);
+      assert.ok(values.values.includes(Neighborhood.NORTH_OAKLAND.name))
+    });
+  });
+
 });
