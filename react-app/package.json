@@ -12,7 +12,7 @@
     "basic-auth": "1.1.0",
     "bootstrap": "3.3.7",
     "express": "4.14.0",
-    "gma-village-data-model": "0.2.2",
+    "gma-village-data-model": "0.3.0",
     "isomorphic-fetch": "2.2.1",
     "lokka": "1.7.0",
     "lokka-transport-http": "1.6.1",
