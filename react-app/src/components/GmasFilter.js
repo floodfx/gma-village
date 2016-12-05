@@ -3,6 +3,15 @@ import { capitalizeWords, careAgeTextToNumber} from './formatutil'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 import {WILLING_TO_TRAVEL} from '../containers/GmasListContainer'
 
+const customSortNeighborhoods = (n1, n2) => {
+  if(n2 === Neighborhood.NORTH_OAKLAND) {
+    return 1;
+  } else {
+    return n1.ordinal - n2.ordinal
+  }
+}
+
+
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
   return (
     <div>
@@ -37,7 +46,7 @@ const GmasFilter = ({filters, onFilterClick}) => (
   <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
     <h3 className="gma-orange">Find Gmas that:</h3>
       <div className="col-md-2">
-        {filterBy('Live in:', Neighborhood.enumValues, filters, onFilterClick)}
+        {filterBy('Live in:', Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods), filters, onFilterClick)}
         <label key={"willingToTravel"} style={{whiteSpace: 'nowrap'}}>
           <input checked={filters.includes(WILLING_TO_TRAVEL)} onChange={(event) => onFilterClick([WILLING_TO_TRAVEL], event)} type="checkbox" value={WILLING_TO_TRAVEL}/>
             &nbsp;Willing to Travel
@@ -54,5 +63,6 @@ const GmasFilter = ({filters, onFilterClick}) => (
       </div>
   </div>
 )
+
 
 export default GmasFilter
