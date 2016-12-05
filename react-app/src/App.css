@@ -49,10 +49,10 @@
   color: #a7a9ab
 }
 
-.gma-font-family {
-  font-family: "proxima-nova"
-}
-
 .gma-flags-bg {
   background-image: url(./assets/flags.png);
+}
+
+.gma-font {
+  font-family: Georgia, serif;
 }

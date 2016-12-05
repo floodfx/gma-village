@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { capitalizeWords, formatPhone }  from './formatutil'
-import './GmasList.css'
 import imgUrl from './ImageUrl'
 
 class GmasList extends Component {
@@ -38,24 +37,24 @@ class GmasList extends Component {
             <img className="img-rounded img-responsive gma-orange-border" style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} src={imgUrl(gma)} alt="gmas placeholder"/>
           </Link>
           <div className="caption">
-            <h3 className="gma-orange text-center">Gma {gma.first_name}</h3>
+            <h3 className="gma-orange text-center gma-font">Gma {gma.first_name}</h3>
             <div className="text-center">
               <a className="btn gma-orange-bg" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
             </div>
-            <div style={{marginTop: '30px'}}>
-              <h4>Availability</h4>
-              <ul>
+            <div className="text-center" style={{marginTop: '30px'}}>
+              <p style={{fontWeight:"bold"}}>Availability</p>
+              <ul style={{display:"inline", padding: 0}}>
                 {gma.availabilities.map((avail) => {
-                  return <li key={avail}>{capitalizeWords(avail)}</li>
+                  return <li style={{listStyleType:"none"}} key={avail}>{capitalizeWords(avail)}</li>
                 })}
               </ul>
             </div>
-            <div >
-              <h4>Neighborhood</h4>
-              <ul>
-                <li>{capitalizeWords(gma.neighborhood)}</li>
+            <div className="text-center" style={{marginTop: '20px'}}>
+              <p style={{fontWeight:"bold"}}>Neighborhood</p>
+              <ul style={{display:"inline", padding: 0}}>
+                <li style={{listStyleType:"none"}}>{capitalizeWords(gma.neighborhood)}</li>
                 {gma.isAvailableOutsideNeighborhood &&
-                  <li>Willing to travel</li>
+                  <li style={{listStyleType:"none"}}>Willing to travel</li>
                 }
               </ul>
             </div>
