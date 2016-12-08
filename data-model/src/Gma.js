@@ -1,5 +1,3 @@
-
-
 class Gma {
   constructor(
     id,

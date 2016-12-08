@@ -7,6 +7,9 @@ import City from './City';
 import Demeanor from './Demeanor';
 import Neighborhood from './Neighborhood';
 import Gma from './Gma';
+import User from './User';
+import Admin from './Admin';
+import Role from './Role';
 
 export {
   Availability,
@@ -17,5 +20,8 @@ export {
   City,
   Demeanor,
   Neighborhood,
-  Gma
+  Gma,
+  User,
+  Admin,
+  Role
 }
