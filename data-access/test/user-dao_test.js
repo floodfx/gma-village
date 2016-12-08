@@ -40,5 +40,13 @@ describe('UserDAO', function() {
       }).catch(err => done(err))
     });
 
+    it('should throw error when user not found', function(done) {
+      this.timeout(10000)
+      new UserDAO("test").get("some_id").then((user) => {
+        done("shouldn't find user here")
+      }).catch((err) => {
+        done()
+      })
+    });
   });
 });

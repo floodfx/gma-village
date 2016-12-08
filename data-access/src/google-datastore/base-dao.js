@@ -17,7 +17,11 @@ class BaseDAO {
         if(err) {
           reject(err);
         } else {
-          resolve(this._buildEntity(key.id, data));
+          if(data) {
+            resolve(this._buildEntity(key.id, data));
+          } else {
+            reject("Entity not found")
+          }
         }
       });
     });
