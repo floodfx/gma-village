@@ -1,6 +1,5 @@
 var assert = require('assert');
-var GmaDAO = require("../src/google-datastore/gma-dao.js")
-var UserDAO = require("../src/google-datastore/user-dao.js")
+var { GmaDAO, UserDAO } = require("../index")
 var { Gma, User } = require('gma-village-data-model')
 
 var u = new User(null, "a", "b", "5551112222", "kind", "kind_id", true,
