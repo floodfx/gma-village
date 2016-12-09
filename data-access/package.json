@@ -1,6 +1,6 @@
 {
   "name": "gma-village-data-access",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Gma Village Data Access Layer",
   "main": "index.js",
   "engines": {
