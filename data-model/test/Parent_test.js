@@ -9,7 +9,6 @@ describe('Parent', function() {
         "fn",
         "ln",
         "ph",
-        "kind",
         true,
         "ak_token",
         "ak_uid",
@@ -23,7 +22,7 @@ describe('Parent', function() {
       assert.equal(p.first_name, "fn");
       assert.equal(p.last_name, "ln");
       assert.equal(p.phone, "ph");
-      assert.equal(p.kind, "kind");
+      assert.equal(p.kind, "Parent");
       assert.ok(p.active);
       assert.equal(p.ak_access_token, "ak_token");
       assert.equal(p.ak_user_id, "ak_uid");

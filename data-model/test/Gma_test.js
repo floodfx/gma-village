@@ -19,7 +19,6 @@ describe('Gma', function() {
         "fn",
         "ln",
         "ph",
-        "kind",
         true,
         "ak_token",
         "ak_uid",
@@ -49,7 +48,7 @@ describe('Gma', function() {
       assert.equal(g.first_name, "fn");
       assert.equal(g.last_name, "ln");
       assert.equal(g.phone, "ph");
-      assert.equal(g.kind, "kind");
+      assert.equal(g.kind, "Gma");
       assert.ok(g.active);
       assert.equal(g.ak_access_token, "ak_token");
       assert.equal(g.ak_user_id, "ak_uid");

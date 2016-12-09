@@ -9,7 +9,6 @@ describe('Admin', function() {
         "fn",
         "ln",
         "ph",
-        "kind",
         true,
         "ak_token",
         "ak_uid",
@@ -24,7 +23,7 @@ describe('Admin', function() {
       assert.equal(a.first_name, "fn");
       assert.equal(a.last_name, "ln");
       assert.equal(a.phone, "ph");
-      assert.equal(a.kind, "kind");
+      assert.equal(a.kind, "Admin");
       assert.ok(a.active);
       assert.equal(a.ak_access_token, "ak_token");
       assert.equal(a.ak_user_id, "ak_uid");
