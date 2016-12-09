@@ -1,6 +1,6 @@
 var User = require('./User')
 
-class Admin extends User {
+class Parent extends User {
   constructor(
     id,
     first_name,
@@ -14,8 +14,7 @@ class Admin extends User {
     ak_token_last_renewed_timestamp,
     last_login_timestamp,
     created_on_timestamp,
-    member_since_timestamp,
-    roles
+    member_since_timestamp
   ) {
     super(
       id,
@@ -32,16 +31,14 @@ class Admin extends User {
       created_on_timestamp,
       member_since_timestamp
     )
-    this.roles = roles;
   }
 
   toString() {
     return `
-      Admin\n
+      Parent\n
       ${super.toString()}
-      roles\t${this.roles}\n
     `
   }
 }
 
-module.exports = Admin
+module.exports = Parent

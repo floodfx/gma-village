@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Demeanor = require("../lib/Demeanor")
+var { Demeanor } = require("../lib/index")
 
 describe('Demeanor', function() {
   describe('enums', function() {

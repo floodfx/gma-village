@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Neighborhood = require("../lib/Neighborhood")
+var { Neighborhood } = require("../lib/index")
 
 describe('Neighborhood', function() {
   describe('enums', function() {

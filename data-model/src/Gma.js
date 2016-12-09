@@ -1,9 +1,20 @@
-class Gma {
+var User = require('./User')
+
+class Gma extends User {
   constructor(
     id,
     first_name,
     last_name,
     phone,
+    kind,
+    active,
+    ak_access_token,
+    ak_user_id,
+    ak_token_refresh_interval_sec,
+    ak_token_last_renewed_timestamp,
+    last_login_timestamp,
+    created_on_timestamp,
+    member_since_timestamp,
     availabilities,
     otherAvailability,
     careAges,
@@ -21,10 +32,21 @@ class Gma {
     whyCareForKidsText,
     additionalInformationText
   ) {
-    this.id = id;
-    this.first_name = first_name;
-    this.last_name = last_name;
-    this.phone = phone;
+    super(
+      id,
+      first_name,
+      last_name,
+      phone,
+      kind,
+      active,
+      ak_access_token,
+      ak_user_id,
+      ak_token_refresh_interval_sec,
+      ak_token_last_renewed_timestamp,
+      last_login_timestamp,
+      created_on_timestamp,
+      member_since_timestamp
+    )
     this.availabilities = availabilities;
     this.otherAvailability = otherAvailability;
     this.careAges = careAges;
@@ -46,10 +68,7 @@ class Gma {
   toString() {
     return `
       Gma\n
-      id\t${this.id}\n
-      first name\t${this.first_name}\n
-      last name\t${this.last_name}\n
-      phone\t${this.phone}\n
+      ${super.toString()}
       availabilities\t${this.availabilities}\n
       otherAvailability\t${this.otherAvailability}\n
       careAges\t${this.careAges}\n

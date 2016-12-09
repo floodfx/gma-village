@@ -9,6 +9,7 @@ import Neighborhood from './Neighborhood';
 import Gma from './Gma';
 import User from './User';
 import Admin from './Admin';
+import Parent from './Parent';
 import Role from './Role';
 
 export {
@@ -23,5 +24,6 @@ export {
   Gma,
   User,
   Admin,
+  Parent,
   Role
 }

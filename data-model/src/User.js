@@ -7,7 +7,6 @@ class User {
     last_name,
     phone,
     kind,
-    kind_id,
     active,
     ak_access_token,
     ak_user_id,
@@ -22,7 +21,6 @@ class User {
     this.last_name = last_name;
     this.phone = phone;
     this.kind = kind;
-    this.kind_id = kind_id;
     this.active = active;
     this.ak_access_token = ak_access_token;
     this.ak_user_id = ak_user_id;
@@ -35,13 +33,12 @@ class User {
 
   toString() {
     return `
-      User\n
+      ${this.constructor}\n
       id\t${this.id}\n
       first name\t${this.first_name}\n
       last name\t${this.last_name}\n
       phone\t${this.phone}\n
       kind\t${this.kind}\n
-      kind_id\t${this.kind_id}\n
       active\t${this.active}\n
       ak_access_token\t${this.ak_access_token}\n
       ak_user_id\t${this.ak_user_id}\n

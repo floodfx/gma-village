@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Role = require("../lib/Role")
+var { Role } = require("../lib/index")
 
 describe('Role', function() {
   describe('enums', function() {
