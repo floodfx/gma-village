@@ -1,41 +1,118 @@
 var assert = require('assert');
-var { GmaDAO, UserDAO } = require("../index")
-var { Gma, User } = require('gma-village-data-model')
+var { UserDAO } = require("../index")
+var {
+  Admin,
+  Gma,
+  Parent,
+  User,
+  Availability,
+  CareAge,
+  CareLocation,
+  CareTraining,
+  CareExperience,
+  City,
+  Demeanor,
+  Neighborhood,
+  Role
+} = require('gma-village-data-model')
 
-var u = new User(null, "a", "b", "5551112222", "kind", "kind_id", true,
-            "ak_token", "ak_uid", 1, 12345678, 12345679, 12345680, 12345681)
+var a = new Admin(
+  "id",
+  "fn",
+  "ln",
+  "ph",
+  true,
+  "ak_token",
+  "ak_uid",
+  1,
+  12,
+  123,
+  1234,
+  12345,
+  [Role.ADMIN.name]
+)
+
+var g = new Gma(
+  "id",
+  "fn",
+  "ln",
+  "ph",
+  true,
+  "ak_token",
+  "ak_uid",
+  1,
+  12,
+  123,
+  1234,
+  12345,
+  [Availability.DAYTIME.name],
+  ["Holidays"],
+  [CareAge.ZERO_TO_SIX_MONTHS.name],
+  [CareExperience.WORKED_BABYSITTING.name],
+  ["Foster"],
+  [CareLocation.CHILDS_HOME.name],
+  [CareTraining.CPR_AND_FIRST_AID.name],
+  ["Classes"],
+  [City.OAKLAND.name],
+  [Demeanor.PATIENT.name],
+  ["Cool"],
+  Neighborhood.NORTH_OAKLAND.name,
+  ["Rockridge"],
+  true,
+  "Because they are the future",
+  "Add"
+)
+
+var p = new Parent(
+  "id",
+  "fn",
+  "ln",
+  "ph",
+  true,
+  "ak_token",
+  "ak_uid",
+  1,
+  12,
+  123,
+  1234,
+  12345
+)
+
+var userDao = new UserDAO("test")
 
 describe('UserDAO', function() {
   describe('test', function() {
     it('should save and delete a user', function(done) {
       this.timeout(10000)
-      new UserDAO("test").saveUser(u).then((user) => {
-        assert.ok(user.id)
-        assert.equal("a", user.first_name)
-        assert.equal("b", user.last_name)
-        assert.equal("5551112222", user.phone)
-        assert.equal("kind", user.kind)
-        assert.equal("kind_id", user.kind_id)
-        assert.ok(user.active)
-        assert.equal("ak_token", user.ak_access_token)
-        assert.equal("ak_uid", user.ak_user_id)
-        assert.equal(1, user.ak_token_refresh_interval_sec)
-        assert.equal(12345678, user.ak_token_last_renewed_timestamp)
-        assert.equal(12345679, user.last_login_timestamp)
-        assert.equal(12345680, user.created_on_timestamp)
-        assert.equal(12345681, user.member_since_timestamp)
-        new UserDAO("test").deleteUser(u).then(res => done()).catch((err) => done(err))
+      userDao.save(p).then((user) => {
+        assert.equal(user.id, "id");
+        assert.equal(user.first_name, "fn");
+        assert.equal(user.last_name, "ln");
+        assert.equal(user.phone, "ph");
+        assert.equal(user.kind, "Parent");
+        assert.ok(user.active);
+        assert.equal(user.ak_access_token, "ak_token");
+        assert.equal(user.ak_user_id, "ak_uid");
+        assert.equal(user.ak_token_refresh_interval_sec, 1);
+        assert.equal(user.ak_token_last_renewed_timestamp, 12);
+        assert.equal(user.last_login_timestamp, 123);
+        assert.equal(user.created_on_timestamp, 1234);
+        assert.equal(user.member_since_timestamp, 12345);
+        new UserDAO("test").delete(p).then(res => done()).catch((err) => done(err))
       }).catch(err => done(err))
     });
     it('should save and find user then delete it', function(done) {
       this.timeout(10000)
-      new UserDAO("test").saveUser(u).then((user) => {
+      new UserDAO("test").save(p).then((user) => {
         assert.ok(user.id)
+        assert.equal(user.kind, "Parent")
+        assert.equal(user.phone, "ph")
         var id = user.id
         // find user
-        new UserDAO("test").userByPhone("5551112222").then((u2) => {
-          assert.equal(id, u2.id)
-          new UserDAO("test").deleteUser(u).then(res => done()).catch((err) => done(err))
+        new UserDAO("test").findByPhone(user.phone).then((u2) => {
+          assert.equal(u2.id, user.id)
+          assert.equal(u2.kind, user.kind)
+          new UserDAO("test").delete(u2).then(res => done()).catch((err) => done(err))
         }).catch(err => done(err))
       }).catch(err => done(err))
     });
@@ -47,6 +124,19 @@ describe('UserDAO', function() {
       }).catch((err) => {
         done()
       })
+    });
+
+    it('should list users based on kind', function(done) {
+      this.timeout(10000)
+      new UserDAO("test").save(p).then((parent) => {
+        new UserDAO("test").list("Parent").then((parents) => {
+          assert.equal(parents.list.length, 1)
+          done()
+        }).catch((err) => {
+          done(err)
+        })
+      }).catch(err => done(err))
+
     });
   });
 });

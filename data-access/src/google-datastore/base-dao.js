@@ -27,51 +27,52 @@ class BaseDAO {
     });
   }
 
-  list(limit=10, nextToken) {
+  list(userType=undefined, limit=10, nextToken) {
     return new Promise((resolve, reject) => {
       var q = this.db.createQuery([this.kind])
+      if(userType) {
+        q.filter('kind', userType)
+      }
       this.db.runQuery(q, (err, entities, nextQuery) => {
         if (err) {
           reject(err);
         }
         var nextToken = nextQuery.moreResults !== Datastore.NO_MORE_RESULTS ? nextQuery.endCursor : false;
         var list = entities.map((entity) => {
-          // console.log("entity", entity)
-          return this._buildEntity(entity[this.db.KEY].id, entity)
+          return this._buildEntity(entity.id, entity)
         })
         resolve({list, nextToken});
       });
     });
   }
 
-  save(entity) {
+  save(user) {
     return new Promise((resolve, reject) => {
       var key;
-      if (entity.id) {
-        key = this.db.key([this.kind, entity.id]);
+      if (user.id) {
+        key = this.db.key([this.kind, user.id]);
       } else {
         key = this.db.key(this.kind);
       }
       var data = [];
-      Object.keys(entity).forEach(function (k) {
-        if (entity[k] === undefined) {
+      Object.keys(user).forEach(function (k) {
+        if (user[k] === undefined) {
           return;
         }
         data.push({
           name: k,
-          value: entity[k]
+          value: user[k]
         });
       });
-      var object = {
+      var entity = {
         key: key,
         data: data
       }
-      this.db.save(object, (err) => {
+      this.db.save(entity, (err) => {
         if(err) {
           reject(err)
         } else {
-          entity.id = key.id
-          resolve(entity);
+          resolve(this._buildEntity(key.name, user));
         }
       })
     })
