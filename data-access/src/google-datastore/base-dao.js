@@ -27,9 +27,10 @@ class BaseDAO {
     });
   }
 
-  list(userType=undefined, limit=10, nextToken) {
+  list(userType=undefined, limit=100, nextToken) {
     return new Promise((resolve, reject) => {
       var q = this.db.createQuery([this.kind])
+      q.limit(limit)
       if(userType) {
         q.filter('kind', userType)
       }

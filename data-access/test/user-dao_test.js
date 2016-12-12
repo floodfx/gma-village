@@ -112,6 +112,7 @@ describe('UserDAO', function() {
         new UserDAO("test").findByPhone(user.phone).then((u2) => {
           assert.equal(u2.id, user.id)
           assert.equal(u2.kind, user.kind)
+          assert.equal(u2.phone, user.phone)
           new UserDAO("test").delete(u2).then(res => done()).catch((err) => done(err))
         }).catch(err => done(err))
       }).catch(err => done(err))

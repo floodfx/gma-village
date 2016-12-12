@@ -20,14 +20,19 @@ class UserDAO extends BaseDAO {
 
   findByPhone(phone, active=true) {
     return new Promise((resolve, reject) => {
-      this.list(null, 1).then((entities) => {
-        if(entities.list.length > 0) {
-          var entity = entities.list[0];
-          resolve(entity)
-        } else {
-          reject("No user found")
+      var q = this.db.createQuery([this.kind])
+          .filter("phone", phone)
+          .filter("active", active)
+          .limit(1)
+      this.db.runQuery(q, (err, entities, nextQuery) => {
+        if (err) {
+          reject(err);
         }
-      })
+        if(entities.length > 0) {
+          resolve(this._buildEntity(entities[0].id, entities[0]));
+        }
+        reject("No user found");
+      });
     });
   }
 
