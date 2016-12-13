@@ -130,15 +130,30 @@ const root = {
     }
   },
   gmas: (root, {auth, limit, nextToken}, context, info) => {
-    if(checkAuth(auth)) {
-      if(isAdmin(currentUser(auth))) {
-        return listByType("Admin")
-      } else {
-        throw "Not Authorized"
-      }
-    } else {
-      throw "Authentication Error"
-    }
+    return new Promise((resolve, reject) => {
+      checkAuth(auth).then((authed) => {
+        console.log("authed?", authed)
+        if(authed) {
+          currentUser(auth).then((user) => {
+            if(!isGma(user)) {
+              listByType("Gma").then((gmas) => {
+                resolve(gmas)
+              }).catch((err) => {
+                reject(err)
+              })
+            }
+          }).catch((err) => {
+            console.log("error fetching current user", err)
+            reject(null)
+          })
+        } else {
+          console.log("auth failure for currentUser:", auth)
+          reject(null)
+        }
+      }).catch((e) => {
+        reject(null)
+      })    
+    })
   },
   parents: (root, {auth, limit, nextToken}, context, info) => {
     if(checkAuth(auth)) {
