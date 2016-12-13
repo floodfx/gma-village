@@ -19,18 +19,24 @@
     "moment": "2.16.0",
     "nconf": "0.8.4",
     "react": "15.3.2",
+    "react-cookie": "1.0.4",
     "react-dom": "15.3.2",
     "react-redux": "4.4.5",
     "react-router": "3.0.0",
     "redux": "3.6.0",
     "redux-logger": "2.7.4",
-    "redux-thunk": "2.1.0"
+    "redux-thunk": "2.1.0",
+    "tachyons": "4.5.6",
+    "tachyons-cli": "1.0.10"
   },
   "scripts": {
     "start": "node server.js",
     "local": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "css": "tachyons src/css/app.css > src/tach.css --minify",
+    "prestart": "npm run css",
+    "prebuild": "npm run css"
   }
 }

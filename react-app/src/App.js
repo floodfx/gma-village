@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
+import LoginContainer from './containers/LoginContainer';
 import moment from 'moment'
 import './App.css'
 import Navi from './Navi'
@@ -34,9 +35,10 @@ const App = ({ store }) => (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Main}>
-        <IndexRedirect to="/gmas" />
+        <IndexRedirect to="login" />
         <Route path="gmas" component={GmasListContainer}/>
         <Route path="/gma/:gmaId" component={GmaProfileContainer} />
+        <Route path="login" component={LoginContainer}/>
       </Route>
     </Router>
   </Provider>
