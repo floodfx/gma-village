@@ -29,7 +29,7 @@ class UserDAO extends BaseDAO {
           reject(err);
         }
         if(entities.length > 0) {
-          resolve(this._buildEntity(entities[0].id, entities[0]));
+          resolve(this._buildEntity(entities[0][this.db.KEY].id, entities[0]));
         }
         reject("No user found");
       });

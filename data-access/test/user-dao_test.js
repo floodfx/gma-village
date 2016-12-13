@@ -17,7 +17,7 @@ var {
 } = require('gma-village-data-model')
 
 var a = new Admin(
-  "id",
+  undefined,
   "fn",
   "ln",
   "ph",
@@ -33,7 +33,7 @@ var a = new Admin(
 )
 
 var g = new Gma(
-  "id",
+  undefined,
   "fn",
   "ln",
   "ph",
@@ -64,7 +64,7 @@ var g = new Gma(
 )
 
 var p = new Parent(
-  "id",
+  undefined,
   "fn",
   "ln",
   "ph",
@@ -85,7 +85,7 @@ describe('UserDAO', function() {
     it('should save and delete a user', function(done) {
       this.timeout(10000)
       userDao.save(p).then((user) => {
-        assert.equal(user.id, "id");
+        assert.ok(user.id);
         assert.equal(user.first_name, "fn");
         assert.equal(user.last_name, "ln");
         assert.equal(user.phone, "ph");
@@ -98,7 +98,7 @@ describe('UserDAO', function() {
         assert.equal(user.last_login_timestamp, 123);
         assert.equal(user.created_on_timestamp, 1234);
         assert.equal(user.member_since_timestamp, 12345);
-        new UserDAO("test").delete(p).then(res => done()).catch((err) => done(err))
+        new UserDAO("test").delete(user).then(res => done()).catch((err) => done(err))
       }).catch(err => done(err))
     });
     it('should save and find user then delete it', function(done) {

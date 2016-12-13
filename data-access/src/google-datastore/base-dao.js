@@ -53,7 +53,7 @@ class BaseDAO {
       if (user.id) {
         key = this.db.key([this.kind, user.id]);
       } else {
-        key = this.db.key(this.kind);
+        key = this.db.key([this.kind]);
       }
       var data = [];
       Object.keys(user).forEach(function (k) {
@@ -73,7 +73,7 @@ class BaseDAO {
         if(err) {
           reject(err)
         } else {
-          resolve(this._buildEntity(key.name, user));
+          resolve(this._buildEntity(entity.key.id, user));
         }
       })
     })
