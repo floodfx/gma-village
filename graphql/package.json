@@ -21,11 +21,18 @@
     "mocha": "3.1.2"
   },
   "dependencies": {
+    "body-parser": "1.15.2",
     "cors": "2.8.1",
+    "crypto-js": "3.1.8",
     "express": "4.14.0",
     "express-graphql": "0.5.4",
-    "gma-village-data-access": "^0.0.2",
+    "gma-village-data-access": "0.2.2",
     "graphql": "0.7.2",
-    "nconf": "0.8.4"
+    "graphql-errors": "2.1.0",
+    "graphql-server-express": "0.4.3",
+    "graphql-tools": "0.8.3",
+    "guid": "0.0.12",
+    "nconf": "0.8.4",
+    "request-promise": "4.1.1"
   }
 }

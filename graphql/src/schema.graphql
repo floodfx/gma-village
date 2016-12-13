@@ -1,12 +1,47 @@
-interface Entity {
-  id: ID!
-}
-
-type Gma implements Entity {
+interface User {
   id: ID!
   first_name: String!
   last_name: String!
   phone: String!
+  kind: String
+  active: Boolean!
+  ak_access_token: String,
+  ak_user_id: String,
+  ak_token_refresh_interval_sec: String,
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
+}
+
+type Admin implements User {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  phone: String!
+  kind: String
+  active: Boolean!
+  ak_access_token: String,
+  ak_user_id: String,
+  ak_token_refresh_interval_sec: String,
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
+  roles: [Role!]!
+}
+
+type Gma implements User {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  phone: String!
+  kind: String
+  active: Boolean!
+  ak_access_token: String,
+  ak_user_id: String,
+  ak_token_refresh_interval_sec: String,
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
   availabilities: [Availability!]
   otherAvailability: String
   careAges: [CareAge!]
@@ -23,6 +58,43 @@ type Gma implements Entity {
   isAvailableOutsideNeighborhood: Boolean!
   whyCareForKidsText: String!
   additionalInformationText: String!
+}
+
+type Parent implements User {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  phone: String!
+  kind: String
+  active: Boolean!
+  ak_access_token: String,
+  ak_user_id: String,
+  ak_token_refresh_interval_sec: String,
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
+}
+
+type UserListResult {
+  list: [User!]
+  nextToken: String
+}
+
+type AKInit {
+  appId: ID!
+  version: String!
+  csrf: String!
+}
+
+type AKAuth {
+  csrfNonce: String!
+  authCode: String!
+}
+
+type AKPhone {
+  country_prefix: String!
+  number: String!
+  national_number: String!
 }
 
 enum Availability {
@@ -95,29 +167,47 @@ enum Neighborhood {
   OTHER
 }
 
-input FilterInput {
-  availabilities: [Availability!]
-  careAge: [CareAge!]
-  careExperiences: [CareExperience!]
-  careLocations: [CareLocation!]
-  careTrainings: [CareTraining!]
+enum Role {
+  ADMIN
 }
 
-type GmaList {
-  gmas: [Gma!],
-  nextToken: String
+input AuthInput {
+  id: ID!
+  phone: String!
+  ak_access_token: String!
+  ak_user_id: String!
 }
 
 type Query {
-  gma(id: ID): Gma
-  gmas(filter: FilterInput = {}, limit: Int = 10, nextToken: String): GmaList
+  accountKitInit: AKInit!
+  admins(auth: AuthInput!, limit: Int, nextToken: String): UserListResult
+  currentUser(auth: AuthInput!): User
+  gma(auth: AuthInput!, id: ID!): Gma
+  gmas(auth: AuthInput!, limit: Int, nextToken: String): UserListResult
+  parents(auth: AuthInput!, limit: Int, nextToken: String): UserListResult
+}
+
+input AdminInput {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  phone: String!
+  active: Boolean!
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
+  roles: [Role!]!
 }
 
 input GmaInput {
-  id: ID
+  id: ID!
   first_name: String!
-  last_name: String
+  last_name: String!
   phone: String!
+  active: Boolean!
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
   availabilities: [Availability!]
   otherAvailability: String
   careAges: [CareAge!]
@@ -136,6 +226,25 @@ input GmaInput {
   additionalInformationText: String!
 }
 
+input ParentInput {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  phone: String!
+  active: Boolean!
+  last_login_timestamp: Int
+  created_on_timestamp: Int!
+  member_since_timestamp: Int!
+}
+
 type Mutation {
-  saveGma(input: GmaInput): Gma
+  saveAdmin(auth: AuthInput!, input: AdminInput!): Admin
+  saveGma(auth: AuthInput!, input: GmaInput!): Gma
+  saveParent(auth: AuthInput!, input: ParentInput!): Parent
+  accountKitAuth(csrfNonce: String!, authCode: String!): User
+}
+
+schema {
+  query: Query
+  mutation: Mutation
 }
