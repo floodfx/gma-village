@@ -1,3 +1,5 @@
 runtime: nodejs
 vm: true
 service: gma-village-graphql-dev
+env_variables:
+  AK_APP_SECRET: YOUR_AK_APP_SECRET
