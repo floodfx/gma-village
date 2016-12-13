@@ -10,7 +10,7 @@ export const WILLING_TO_TRAVEL = "willingToTravel"
 class GmasListContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchGmas())
+    this.props.dispatch(fetchGmas(this.props.auth))
   }
 
   onFilterClick = (vals) => {
@@ -72,13 +72,14 @@ const filterGmas = (gmas, filters) => {
 }
 
 const mapStateToProps = (state) => {
-  const { gmasList } = state
+  const { gmasList, auth } = state
   const gmas = filterGmas(gmasList.gmas, gmasList.filters)
   return {
     loading: gmasList.loading,
     gmas: gmas,
     error: gmasList.error,
-    filters: gmasList.filters
+    filters: gmasList.filters,
+    auth: auth.cookie
   }
 }
 

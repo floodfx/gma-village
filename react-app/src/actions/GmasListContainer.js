@@ -25,13 +25,14 @@ export const filterGmasList = (filter) => ({
 })
 
 
-export const fetchGmas = () => {
+export const fetchGmas = (auth) => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
     return client.query(`
-        {
-          gmas {
-            gmas {
+      query fetchGmas($id: ID!, $phone: String!, $ak_access_token: String!, $ak_user_id:String!) {
+        gmas(auth:{id:$id, phone:$phone, ak_access_token:$ak_access_token, ak_user_id:$ak_user_id}) {
+          list {
+            ... on Gma {
               id,
               first_name,
               last_name,
@@ -40,12 +41,14 @@ export const fetchGmas = () => {
               neighborhood,
               careAges,
               careLocations,
-              isAvailableOutsideNeighborhood          
+              isAvailableOutsideNeighborhood
             }
-          }
+          },
+          nextToken
         }
-    `).then(data => {
-        dispatch(initGmasListRequestSuccess(data.gmas.gmas))
+      }
+    `, auth).then(data => {
+        dispatch(initGmasListRequestSuccess(data.gmas.list))
     }).catch(err => {
       dispatch(initGmasListRequestFailure(err))
     });
