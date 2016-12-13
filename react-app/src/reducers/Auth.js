@@ -10,7 +10,8 @@ import {
   CHECK_AUTH_COOKIE_FAILURE,
   CURRENT_USER_REQUEST,
   CURRENT_USER_REQUEST_SUCCESS,
-  CURRENT_USER_REQUEST_FAILURE
+  CURRENT_USER_REQUEST_FAILURE,
+  LOGOUT_REQUEST
 } from '../actions/Auth'
 
 const auth = (state = {
@@ -62,6 +63,12 @@ const auth = (state = {
       return Object.assign({}, state, {
         loading: false,
         error: action.error
+      })
+    }
+    case LOGOUT_REQUEST: {
+      return Object.assign({}, state, {
+        user: undefined,
+        cookie: undefined
       })
     }
     default:

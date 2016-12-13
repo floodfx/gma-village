@@ -9,6 +9,7 @@ export const REMOVE_AUTH_COOKIE = "REMOVE_AUTH_COOKIE"
 export const CURRENT_USER_REQUEST = "CURRENT_USER_REQUEST"
 export const CURRENT_USER_REQUEST_SUCCESS = "CURRENT_USER_REQUEST_SUCCESS"
 export const CURRENT_USER_REQUEST_FAILURE = "CURRENT_USER_REQUEST_FAILURE"
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST"
 
 const COOKIE_NAME = "gv_auth"
 
@@ -49,6 +50,10 @@ export const currentUserRequestFailure = (error) => ({
   error
 })
 
+export const logoutRequest = () => ({
+  type: LOGOUT_REQUEST
+})
+
 export const fetchAuthCookie = () => {
   return (dispatch) => {
     dispatch(checkAuthCookie())
@@ -67,7 +72,7 @@ export const fetchAuthCookie = () => {
 
 export const saveAuthCookie = (cookie) => {
   return (dispatch) => {
-    cookies.save(COOKIE_NAME, cookie);
+    cookies.save(COOKIE_NAME, cookie, {path: "/"});
     dispatch(saveAuthCookieAction(cookie))
   }
 }
@@ -151,5 +156,12 @@ export const currentUser = (auth_cookie) => {
     }).catch(err => {
       dispatch(currentUserRequestFailure(err))
     });
+  }
+}
+
+export const logout = () => {
+  return (dispatch) => {
+    cookies.remove(COOKIE_NAME, {path: "/"});
+    dispatch(logoutRequest());
   }
 }
