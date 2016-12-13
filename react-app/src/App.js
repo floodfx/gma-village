@@ -4,6 +4,7 @@ import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
 import LoginContainer from './containers/LoginContainer';
+import HomeContainer from './containers/HomeContainer';
 import moment from 'moment'
 import './App.css'
 import Navi from './Navi'
@@ -31,18 +32,21 @@ const Main = ({children}) => (
   </div>
 )
 
-const App = ({ store }) => (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={Main}>
-        <IndexRedirect to="login" />
-        <Route path="gmas" component={GmasListContainer}/>
-        <Route path="/gma/:gmaId" component={GmaProfileContainer} />
-        <Route path="login" component={LoginContainer}/>
-      </Route>
-    </Router>
-  </Provider>
-);
+const App = ({ store, authListener }) => {
+  return (
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        <Route path="/" component={Main}>
+          <IndexRedirect to="home" />
+          <Route path="gmas" component={GmasListContainer} onEnter={authListener.requireParent}/>
+          <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>
+          <Route path="login*" component={LoginContainer}/>
+          <Route path="home" component={HomeContainer} onEnter={authListener.requireUser}/>
+        </Route>
+      </Router>
+    </Provider>
+  )
+}
 
 App.propTypes = {
   store: PropTypes.object.isRequired,

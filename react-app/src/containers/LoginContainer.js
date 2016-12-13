@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import  { accountKitAuth }  from '../actions/AccountKitContainer'
 import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
 import cookie from 'react-cookie';
+import { browserHistory } from 'react-router'
 
 class LoginContainer extends Component {
 
@@ -15,7 +16,9 @@ class LoginContainer extends Component {
     // found auth cookie
     if(!this.props.cookie && nextProps.cookie) {
       this.props.dispatch(currentUser(nextProps.cookie))
-    } else if(!this.props.user && nextProps.user) {
+    }
+    // found current user
+    else if(!this.props.user && nextProps.user) {
       const { user } = nextProps;
       const cookie = {
         id: user.id,
@@ -24,6 +27,8 @@ class LoginContainer extends Component {
         ak_user_id: user.ak_user_id
       }
       this.props.dispatch(saveAuthCookie(cookie));
+      let redirect = this.props.location.query.redirect || "/home"
+      browserHistory.push(redirect)
     }
   }
 
