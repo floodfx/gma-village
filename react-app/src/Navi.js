@@ -3,8 +3,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import './Navi.css'
 
-
-
 const Navi = () => (
   <div className="row">
     <nav className="navbar">
