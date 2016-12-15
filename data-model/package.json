@@ -1,6 +1,6 @@
 {
   "name": "gma-village-data-model",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Data model for Gma Village apps",
   "main": "./lib/index.js",
   "engines": {
