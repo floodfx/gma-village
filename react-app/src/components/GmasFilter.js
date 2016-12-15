@@ -1,5 +1,4 @@
 import React from 'react';
-import { capitalizeWords, careAgeTextToNumber} from './formatutil'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 import {WILLING_TO_TRAVEL} from '../containers/GmasListContainer'
 
@@ -27,12 +26,7 @@ const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=f
         return (
           <label key={val.name} style={{whiteSpace: 'nowrap'}}>
             <input checked={filters.includes(val)} onChange={(event) => onFilterClick([val], event)} type="checkbox" value={val.ordinal}/>&nbsp;
-              {val.constructor !== CareAge &&
-                capitalizeWords(val.name)
-              }
-              {val.constructor === CareAge &&
-                careAgeTextToNumber(val.name)
-              }
+              {val.text}
               &nbsp;
               &nbsp;
           </label>
