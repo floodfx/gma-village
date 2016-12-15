@@ -9,5 +9,8 @@ describe('CareLocation', function() {
     it('should throw for unparsable values', function() {
       assert.throws(() => CareLocation.parse("something else"));
     });
+    it('should have text prop', function() {
+      assert.equal(CareLocation.CHILDS_HOME.text, "Child's Home")
+    });
   });
 });

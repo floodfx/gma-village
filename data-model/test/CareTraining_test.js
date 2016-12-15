@@ -12,5 +12,8 @@ describe('CareTraining', function() {
     it('should throw for unparsable values', function() {
       assert.throws(() => CareTraining.parse("something else"));
     });
+    it('should have text prop', function() {
+      assert.equal(CareTraining.CPR_AND_FIRST_AID.text, "CPR and First Aid")
+    });
   });
 });

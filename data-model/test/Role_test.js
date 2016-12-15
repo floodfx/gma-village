@@ -9,5 +9,8 @@ describe('Role', function() {
     it('should throw for unparsable values', function() {
       assert.throws(() => Role.parse("soemthing else"));
     });
+    it('should have text prop', function() {
+      assert.equal(Role.ADMIN.text, "Admin")
+    });
   });
 });

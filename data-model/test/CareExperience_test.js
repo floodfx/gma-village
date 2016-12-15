@@ -12,5 +12,8 @@ describe('CareExperience', function() {
     it('should throw for unparsable values', function() {
       assert.throws(() => CareExperience.parse("didn't raise kids"));
     });
+    it('should have text prop', function() {
+      assert.equal(CareExperience.WORKED_SCHOOL.text, "Worked at School")
+    });
   });
 });

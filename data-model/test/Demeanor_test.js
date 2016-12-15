@@ -9,5 +9,8 @@ describe('Demeanor', function() {
     it('should throw for unparsable values', function() {
       assert.throws(() => Demeanor.parse("soemthing else"));
     });
+    it('should have text prop', function() {
+      assert.equal(Demeanor.PATIENT.text, "Patient")
+    });
   });
 });
