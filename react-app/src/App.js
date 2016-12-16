@@ -7,6 +7,7 @@ import LoginContainer from './containers/LoginContainer';
 import HomeContainer from './containers/HomeContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import GmaCreateFormContainer from './containers/GmaCreateFormContainer';
+import AdminCreateFormContainer from './containers/AdminCreateFormContainer';
 import moment from 'moment'
 import './App.css'
 import Navi from './Navi'
@@ -40,6 +41,7 @@ const App = ({ store, authListener }) => {
       <Router history={browserHistory}>
         <Route path="/" component={Main}>
           <IndexRedirect to="home" />
+          <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>
           <Route path="gmas" component={GmasListContainer} onEnter={authListener.requireParent}/>
           <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>
           <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>

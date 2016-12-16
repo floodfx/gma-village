@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
-import  { accountKitAuth }  from '../actions/AccountKitContainer'
-import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
-import UserNavContainer from './UserNavContainer'
+import { connect } from 'react-redux';
+import  { accountKitAuth }  from '../actions/AccountKitContainer';
+import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth';
+import UserNavContainer from './UserNavContainer';
+import AdminHome from '../components/AdminHome';
 import cookie from 'react-cookie';
 
 class HomeContainer extends Component {
 
   render() {
+    const {user} = this.props;
     if(this.props.loading) {
       return (
         <div>Loading...</div>
@@ -16,7 +18,15 @@ class HomeContainer extends Component {
       return (
         <div>
           <UserNavContainer />
-          <h1>Welcome {this.props.user.first_name}!</h1>
+          {user.kind === "Admin" &&
+            <AdminHome user={user}/>
+          }
+          {user.kind === "Gma" &&
+            <GmaHome user={user} />
+          }
+          {user.kind === "Parent" &&
+            <ParentHome user={user} />
+          }
         </div>
       )
     }

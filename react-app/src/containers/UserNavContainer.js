@@ -14,15 +14,12 @@ class UserNavContainer extends Component {
   render() {
     const {user} = this.props;
     return (
-      <div className="dt w-100 border-box tr v-mid bg-light-gray pa2 br3">
+      <div className="dt w-100 border-box tr v-mid bg-light-gray pv2 ph3 br3">
         <div className="dtc ttc w-20 tl">
-          Hello,&nbsp;<Link activeClassName="active" to="me">{user.kind} {user.first_name}</Link>
-        </div>
-        <div className="dtc ttc w-70 tr">
-          <Link activeClassName="active" to="gma/create">Create Gma</Link>
+          Hello,&nbsp;<Link to="me">{user.kind} {user.first_name}</Link>
         </div>
         <div className="dtc w-10 tr">
-          <button onClick={() => this.onLogoutClick()} className="gma-orange-bg b--black ba bw1 br3 pa2">Log out</button>
+          <button onClick={() => this.onLogoutClick()} className="btn gma-orange-bg">Log out</button>
         </div>
       </div>
     )

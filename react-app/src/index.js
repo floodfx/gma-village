@@ -7,6 +7,7 @@ import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
+import uploadImage  from './reducers/UploadImage'
 
 import AuthListener  from './auth/AuthListener'
 
@@ -30,6 +31,7 @@ const store = createStore(
     gmaProfile,
     accountKitInit,
     auth,
+    uploadImage,
     form: formReducer
   }),
   applyMiddleware(...middleware)

@@ -12,9 +12,9 @@ import {
 } from 'gma-village-data-model'
 
 let GmaForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, handleFile, pristine, reset, submitting } = props
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} enctype="multipart/form-data">
       <div>
         <label className="fw7 f3">Hi! My name is:</label>
         <div>
@@ -121,6 +121,12 @@ let GmaForm = (props) => {
         <label>Something else I would like to share:</label>
         <div>
           <Field className="w-40-ns w-100 h5" name="additionalInformationText" component="textarea"/>
+        </div>
+      </div>
+      <div className="mt4">
+        <label>Profile Photo:</label>
+        <div>
+          <Field name="profilePhoto" component="input" type="file" onChange={(e) => handleFile(e)}/>
         </div>
       </div>
       <div>

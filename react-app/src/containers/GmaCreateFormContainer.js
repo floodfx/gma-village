@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GmaForm from '../components/GmaForm'
 import Loading from '../components/Loading'
 import { connect } from 'react-redux'
-import  { fetchGma }  from '../actions/GmaProfileContainer'
+import  { uploadImage }  from '../actions/UploadImage'
 
 
 class GmaCreateFormContainer extends Component {
@@ -11,19 +11,27 @@ class GmaCreateFormContainer extends Component {
     console.log("handleSubmit", values)
   }
 
+  handleFile = (e) => {
+    console.log("handleFile", e)
+    console.log("handleFile", e.target.files[0])
+    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+  }
+
   render() {
     const {loading} = this.props;
     if(loading) {
       return <Loading loading={loading} />
     } else {
-      return <GmaForm onSubmit={this.handleSubmit}/>;
+      return <GmaForm onSubmit={this.handleSubmit} handleFile={this.handleFile}/>;
     }
   }
 }
 
 const mapStateToProps = (state) => {
-  const { gmaProfile } = state
-  return { }
+  const { auth } = state
+  return {
+    auth: auth.cookie
+  }
 }
 
 GmaCreateFormContainer.defaultProps = {
