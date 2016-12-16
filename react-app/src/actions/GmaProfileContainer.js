@@ -19,8 +19,8 @@ export const fetchGmaRequestFailure = (error) => ({
 })
 
 const fetchGmaQuery = `
-  query fetchGma($id: ID!) {
-    gma(id: $id) {
+  query fetchGma($id: ID!, $phone: String!, $ak_access_token: String!, $ak_user_id:String!, $gmaId: ID!) {
+    gma(auth:{id:$id, phone:$phone, ak_access_token:$ak_access_token, ak_user_id:$ak_user_id}, id: $gmaId) {
       id,
       phone,
       first_name,
@@ -37,11 +37,11 @@ const fetchGmaQuery = `
   }
 `;
 
-export const fetchGma = (id) => {
+export const fetchGma = (auth, id) => {
   return (dispatch) => {
     dispatch(fetchGmaRequest());
-    return client.query(fetchGmaQuery, {id: id}).then(data => {
-      console.log('fetchGma data', data)
+    let input = Object.assign(auth, {gmaId: id})
+    return client.query(fetchGmaQuery, input).then(data => {
         dispatch(fetchGmaRequestSuccess(data.gma))
     }).catch(err => {
       dispatch(fetchGmaRequestFailure(err))

@@ -14,11 +14,11 @@ class UserNavContainer extends Component {
   render() {
     const {user} = this.props;
     return (
-      <div className="dt w-100 border-box tr v-mid">
-        <div className="dtc ttc w-90 tl">
+      <div className="dt w-100 border-box tr v-mid bg-light-gray pa2 br3">
+        <div className="dtc ttc w-20 tl">
           Hello,&nbsp;<Link activeClassName="active" to="me">{user.kind} {user.first_name}</Link>
         </div>
-        <div className="dtc ttc w-90 tl">
+        <div className="dtc ttc w-70 tr">
           <Link activeClassName="active" to="gma/create">Create Gma</Link>
         </div>
         <div className="dtc w-10 tr">
