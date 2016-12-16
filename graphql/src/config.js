@@ -5,6 +5,7 @@ nconf
   .argv() // command line args
   .env([  // environment vars
     'GOOGLE_PROJECT_ID',
+    'GOOGLE_CLOUD_BUCKET',
     'DATASTORE_EMULATOR_URL',
     'CORS_DOMAIN_WHITELIST_CSV',
     'AK_APP_ID',
@@ -14,6 +15,7 @@ nconf
   ])
   .defaults({
     GOOGLE_PROJECT_ID: 'gma-village',
+    GOOGLE_CLOUD_BUCKET: 'gma-village-public-assets',
     DATASTORE_EMULATOR_URL: '',
     CORS_DOMAIN_WHITELIST_CSV: 'app.gmavillage.com',
     AK_APP_ID: '1864284563828976',

@@ -1,5 +1,6 @@
 var { UserDAO } = require('gma-village-data-access');
 var ak = require('./account-kit')
+var { checkAuth } = require('./auth/auth')
 var config = require('./config')
 var { UserError } = require('graphql-errors');
 
@@ -43,18 +44,6 @@ var listByType = (userType) => {
         reject(err)
       })
   })
-}
-
-var checkAuth = (auth) => {
-  return new Promise((resolve, reject) => {
-      ak.accountDetails(auth.ak_access_token).then((account_details) => {
-      resolve(auth.ak_user_id === account_details.id &&
-              auth.phone === account_details.phone.national_number)
-    }).catch((err) => {
-      console.log(`error validating auth ${auth}. Error: ${err}`)
-      reject(false)
-    })
-  });
 }
 
 var isAdmin = (user) => {
@@ -152,7 +141,7 @@ const root = {
         }
       }).catch((e) => {
         reject(null)
-      })    
+      })
     })
   },
   parents: (root, {auth, limit, nextToken}, context, info) => {
