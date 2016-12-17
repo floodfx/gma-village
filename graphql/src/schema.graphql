@@ -171,20 +171,13 @@ enum Role {
   ADMIN
 }
 
-input AuthInput {
-  id: ID!
-  phone: String!
-  ak_access_token: String!
-  ak_user_id: String!
-}
-
 type Query {
   accountKitInit: AKInit!
-  admins(auth: AuthInput!, limit: Int, nextToken: String): UserListResult
-  currentUser(auth: AuthInput!): User
-  gma(auth: AuthInput!, id: ID!): Gma
-  gmas(auth: AuthInput!, limit: Int, nextToken: String): UserListResult
-  parents(auth: AuthInput!, limit: Int, nextToken: String): UserListResult
+  admins(limit: Int, nextToken: String): UserListResult
+  currentUser: User
+  gma(id: ID!): Gma
+  gmas(limit: Int, nextToken: String): UserListResult
+  parents(limit: Int, nextToken: String): UserListResult
 }
 
 input AdminInput {
@@ -238,9 +231,9 @@ input ParentInput {
 }
 
 type Mutation {
-  saveAdmin(auth: AuthInput!, input: AdminInput!): Admin
-  saveGma(auth: AuthInput!, input: GmaInput!): Gma
-  saveParent(auth: AuthInput!, input: ParentInput!): Parent
+  saveAdmin(input: AdminInput!): Admin
+  saveGma(input: GmaInput!): Gma
+  saveParent(input: ParentInput!): Parent
   accountKitAuth(csrfNonce: String!, authCode: String!): User
 }
 

@@ -1,13 +1,15 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var fileUpload = require('express-fileupload');
+var bearerToken = require('express-bearer-token');
 var { buildSchema, Source } = require('graphql');
 var fs = require('fs')
 var root = require('./src/graphql-root')
 var cors = require('cors')
 var config = require('./src/config')
 var schema = require('./src/schema')
-var auth = require('./src/auth/auth')
+var { isAuthenticated, loadAccountKitUserMiddleware } = require('./src/auth/auth')
+var { loadAppUserMiddleware } = require('./src/user/user')
 var images = require('./src/images/upload-images');
 var bodyParser = require('body-parser');
 var { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
@@ -44,8 +46,23 @@ if(whitelistedDomains.length > 0 && isProd) {
 
 maskErrors(schema)
 
+// USE "Authorization: Bearer <token>" Header for Authorization
+app.use(bearerToken());
+
 // GRAPHQL
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
+app.use(
+  '/graphql',
+  bodyParser.json(),
+  loadAccountKitUserMiddleware,
+  loadAppUserMiddleware,
+  graphqlExpress(request => ({    
+    schema: schema,
+    context: {
+      accountKitUser: request.accountKitUser,
+      appUser: request.appUser
+    },
+  }))
+);
 
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
@@ -54,8 +71,8 @@ app.use('/graphiql', graphiqlExpress({
 // FILE UPLOAD
 app.use(fileUpload());
 app.post('/profilePhoto',
-  [auth.isAuthenticated,
-  images.sendUploadToGCS],
+  isAuthenticated,
+  images.sendUploadToGCS,
   function(req, res) {
     var file;
 
