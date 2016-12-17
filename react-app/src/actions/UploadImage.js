@@ -1,4 +1,3 @@
-import client from '../graphql/client';
 import fetch from 'isomorphic-fetch';
 
 
@@ -33,11 +32,12 @@ export const uploadImage = (auth, image) => {
     dispatch(uploadImageRequest());
     var data = new FormData()
     data.append('file', image)
-    data.append('auth', JSON.stringify(auth))
 
+    //TODO use configured url
     fetch('//localhost:8080/profilePhoto', {
       method: 'POST',
-      body: data
+      body: data,
+      headers: {Authorization: `Bearer ${auth.ak_access_token}`}
     })
     .then(checkForErrors)
     .then(response => response.json())

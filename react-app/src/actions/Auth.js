@@ -1,5 +1,5 @@
 import cookies from 'react-cookie';
-import client from '../graphql/client'
+import graphql from '../graphql/client'
 
 export const CHECK_AUTH_COOKIE = "CHECK_AUTH_COOKIE"
 export const CHECK_AUTH_COOKIE_SUCCESS = "CHECK_AUTH_COOKIE_SUCCESS"
@@ -60,7 +60,12 @@ export const fetchAuthCookie = () => {
     const cookie = cookies.load(COOKIE_NAME, {path: "/"});
     if(cookie != null) {
       try {
-        dispatch(checkAuthCookieSuccess(JSON.parse(cookie)));
+        var c = JSON.parse(cookie);
+        if(c.id && c.phone && c.ak_access_token && c.ak_user_id) {
+          dispatch(checkAuthCookieSuccess(c));
+        } else {
+          dispatch(checkAuthCookieFailure());
+        }
       } catch(e) {
         dispatch(checkAuthCookieFailure());
       }
@@ -87,9 +92,9 @@ export const removeAuthCookie = () => {
 export const currentUser = (auth_cookie) => {
   return (dispatch) => {
     dispatch(currentUserRequest(auth_cookie));
-    return client.query(`
-      query login($id: ID!, $phone: String!, $ak_access_token: String!, $ak_user_id:String!){
-        currentUser(auth:{id:$id, phone:$phone, ak_access_token:$ak_access_token, ak_user_id:$ak_user_id}) {
+    return graphql.client.query(`
+      {
+       currentUser {
           ... on Admin {
             id,
             first_name,
@@ -151,7 +156,7 @@ export const currentUser = (auth_cookie) => {
           }
         }
       }
-    `, auth_cookie).then(data => {
+    `,).then(data => {
         dispatch(currentUserRequestSuccess(data.currentUser))
     }).catch(err => {
       dispatch(currentUserRequestFailure(err))

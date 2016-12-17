@@ -1,4 +1,4 @@
-import client from '../graphql/client'
+import graphql from '../graphql/client'
 
 export const FETCH_GMA_REQUEST = "FETCH_GMA_REQUEST"
 export const FETCH_GMA_REQUEST_SUCCESS = "FETCH_GMA_REQUEST_SUCCESS"
@@ -41,7 +41,7 @@ export const fetchGma = (auth, id) => {
   return (dispatch) => {
     dispatch(fetchGmaRequest());
     let input = Object.assign(auth, {gmaId: id})
-    return client.query(fetchGmaQuery, input).then(data => {
+    return graphql.client.query(fetchGmaQuery, input).then(data => {
         dispatch(fetchGmaRequestSuccess(data.gma))
     }).catch(err => {
       dispatch(fetchGmaRequestFailure(err))

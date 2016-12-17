@@ -1,4 +1,4 @@
-import client from '../graphql/client'
+import graphql from '../graphql/client'
 
 export const INIT_GMAS_LIST_REQUEST = "INIT_GMAS_LIST_REQUEST"
 export const INIT_GMAS_LIST_REQUEST_SUCCESS = "INIT_GMAS_LIST_REQUEST_SUCCESS"
@@ -28,7 +28,7 @@ export const filterGmasList = (filter) => ({
 export const fetchGmas = (auth) => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
-    return client.query(`
+    return graphql.client.query(`
       query fetchGmas($id: ID!, $phone: String!, $ak_access_token: String!, $ak_user_id:String!) {
         gmas(auth:{id:$id, phone:$phone, ak_access_token:$ak_access_token, ak_user_id:$ak_user_id}) {
           list {

@@ -10,6 +10,7 @@ import auth  from './reducers/Auth'
 import uploadImage  from './reducers/UploadImage'
 
 import AuthListener  from './auth/AuthListener'
+import client from './graphql/client'
 
 import thunk from 'redux-thunk'
 
@@ -39,7 +40,8 @@ const store = createStore(
 
 let authListener = new AuthListener(store)
 
-store.subscribe(authListener.listen)
+store.subscribe(authListener.listen);
+client.store = store;
 
 ReactDOM.render(
   <App store={store} authListener={authListener}/>,
