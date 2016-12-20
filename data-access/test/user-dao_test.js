@@ -132,7 +132,7 @@ describe('UserDAO', function() {
       new UserDAO("test").save(p).then((parent) => {
         new UserDAO("test").list("Parent").then((parents) => {
           assert.equal(parents.list.length, 1)
-          done()
+          new UserDAO("test").delete(parents.list[0]).then(res => done()).catch((err) => done(err))
         }).catch((err) => {
           done(err)
         })
