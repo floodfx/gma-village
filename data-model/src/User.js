@@ -14,7 +14,8 @@ class User {
     ak_token_last_renewed_timestamp,
     last_login_timestamp,
     created_on_timestamp,
-    member_since_timestamp
+    member_since_timestamp,
+    profilePhotoUrl
   ) {
     this.id = id;
     this.first_name = first_name;
@@ -29,6 +30,7 @@ class User {
     this.last_login_timestamp = last_login_timestamp;
     this.created_on_timestamp = created_on_timestamp;
     this.member_since_timestamp = member_since_timestamp;
+    this.profilePhotoUrl = profilePhotoUrl;
   }
 
   toString() {
@@ -47,6 +49,7 @@ class User {
       last_login_timestamp\t${this.last_login_timestamp}\n
       created_on_date\t${this.created_on_date}\n
       member_since_date\t${this.member_since_date}\n
+      profilePhotoUrl\t${this.profilePhotoUrl}\n
     `
   }
 }

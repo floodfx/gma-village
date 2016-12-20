@@ -17,7 +17,8 @@ describe('User', function() {
         12,
         123,
         1234,
-        12345
+        12345,
+        "profilePhotoUrl"
       )
       assert.equal(u.id, "id");
       assert.equal(u.first_name, "fn");
@@ -32,6 +33,7 @@ describe('User', function() {
       assert.equal(u.last_login_timestamp, 123);
       assert.equal(u.created_on_timestamp, 1234);
       assert.equal(u.member_since_timestamp, 12345);
+      assert.equal(u.profilePhotoUrl, "profilePhotoUrl");
     });
   });
 });

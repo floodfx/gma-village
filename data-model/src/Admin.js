@@ -13,8 +13,9 @@ class Admin extends User {
     ak_token_last_renewed_timestamp,
     last_login_timestamp,
     created_on_timestamp,
-    member_since_timestamp,
-    roles
+    member_since_timestamp,    
+    roles,
+    profilePhotoUrl
   ) {
     super(
       id,
@@ -29,7 +30,8 @@ class Admin extends User {
       ak_token_last_renewed_timestamp,
       last_login_timestamp,
       created_on_timestamp,
-      member_since_timestamp
+      member_since_timestamp,
+      profilePhotoUrl
     )
     this.roles = roles;
   }

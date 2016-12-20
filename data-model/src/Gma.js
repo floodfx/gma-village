@@ -29,7 +29,8 @@ class Gma extends User {
     otherNeighborhood,
     isAvailableOutsideNeighborhood,
     whyCareForKidsText,
-    additionalInformationText
+    additionalInformationText,
+    profilePhotoUrl
   ) {
     super(
       id,
@@ -44,7 +45,8 @@ class Gma extends User {
       ak_token_last_renewed_timestamp,
       last_login_timestamp,
       created_on_timestamp,
-      member_since_timestamp
+      member_since_timestamp,
+      profilePhotoUrl
     )
     this.availabilities = availabilities;
     this.otherAvailability = otherAvailability;
@@ -62,6 +64,7 @@ class Gma extends User {
     this.isAvailableOutsideNeighborhood = isAvailableOutsideNeighborhood;
     this.whyCareForKidsText = whyCareForKidsText;
     this.additionalInformationText = additionalInformationText;
+    this.profilePhotoUrl = profilePhotoUrl;
   }
 
   toString() {
@@ -84,6 +87,7 @@ class Gma extends User {
       isAvailableOutsideNeighborhood\t${this.isAvailableOutsideNeighborhood}\n
       whyCareForKidsText\t${this.whyCareForKidsText}\n
       additionalInformationText\t${this.additionalInformationText}\n
+      profilePhotoUrl\t${this.profilePhotoUrl}\n
     `
   }
 }

@@ -42,7 +42,8 @@ describe('Gma', function() {
         ["Rockridge"],
         true,
         "Because they are the future",
-        "Add"
+        "Add",
+        "profilePhotoUrl"
       )
       assert.equal(g.id, "id");
       assert.equal(g.first_name, "fn");
@@ -73,6 +74,7 @@ describe('Gma', function() {
       assert.ok(g.isAvailableOutsideNeighborhood)
       assert.equal(g.whyCareForKidsText, "Because they are the future")
       assert.equal(g.additionalInformationText, "Add")
+      assert.equal(g.profilePhotoUrl, "profilePhotoUrl")
     });
   });
 });

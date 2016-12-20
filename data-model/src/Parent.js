@@ -13,7 +13,8 @@ class Parent extends User {
     ak_token_last_renewed_timestamp,
     last_login_timestamp,
     created_on_timestamp,
-    member_since_timestamp
+    member_since_timestamp,
+    profilePhotoUrl
   ) {
     super(
       id,
@@ -28,7 +29,8 @@ class Parent extends User {
       ak_token_last_renewed_timestamp,
       last_login_timestamp,
       created_on_timestamp,
-      member_since_timestamp
+      member_since_timestamp,
+      profilePhotoUrl
     )
   }
 

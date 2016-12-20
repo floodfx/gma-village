@@ -17,7 +17,8 @@ describe('Admin', function() {
         123,
         1234,
         12345,
-        [Role.ADMIN.name]
+        [Role.ADMIN.name],
+        "profilePhotoUrl"
       )
       assert.equal(a.id, "id");
       assert.equal(a.first_name, "fn");
@@ -31,8 +32,9 @@ describe('Admin', function() {
       assert.equal(a.ak_token_last_renewed_timestamp, 12);
       assert.equal(a.last_login_timestamp, 123);
       assert.equal(a.created_on_timestamp, 1234);
-      assert.equal(a.member_since_timestamp, 12345);
+      assert.equal(a.member_since_timestamp, 12345);      
       assert.deepEqual(a.roles, [Role.ADMIN.name])
+      assert.equal(a.profilePhotoUrl, "profilePhotoUrl");
     });
   });
 });

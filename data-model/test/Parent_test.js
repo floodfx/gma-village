@@ -16,7 +16,8 @@ describe('Parent', function() {
         12,
         123,
         1234,
-        12345
+        12345,
+        "profilePhotoUrl"
       )
       assert.equal(p.id, "id");
       assert.equal(p.first_name, "fn");
@@ -31,6 +32,7 @@ describe('Parent', function() {
       assert.equal(p.last_login_timestamp, 123);
       assert.equal(p.created_on_timestamp, 1234);
       assert.equal(p.member_since_timestamp, 12345);
+      assert.equal(p.profilePhotoUrl, "profilePhotoUrl")
     });
   });
 });
