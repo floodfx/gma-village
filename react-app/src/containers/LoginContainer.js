@@ -20,13 +20,15 @@ class LoginContainer extends Component {
     // found current user
     else if(!this.props.user && nextProps.user) {
       const { user } = nextProps;
-      const cookie = {
-        id: user.id,
-        phone: user.phone,
-        ak_access_token: user.ak_access_token,
-        ak_user_id: user.ak_user_id
+      if(!this.props.cookie) {
+        const cookie = {
+          id: user.id,
+          phone: user.phone,
+          ak_access_token: user.ak_access_token,
+          ak_user_id: user.ak_user_id
+        }
+        this.props.dispatch(saveAuthCookie(cookie));
       }
-      this.props.dispatch(saveAuthCookie(cookie));
       console.log("this.props.location.query.redirect", this.props.location.query.redirect)
       let redirect = this.props.location.query.redirect || "/home"
       browserHistory.push(redirect)
