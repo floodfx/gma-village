@@ -40,7 +40,7 @@ class BaseDAO {
         }
         var nextToken = nextQuery.moreResults !== Datastore.NO_MORE_RESULTS ? nextQuery.endCursor : false;
         var list = entities.map((entity) => {
-          return this._buildEntity(entity.id, entity)
+          return this._buildEntity(entity[this.db.KEY].id, entity)
         })
         resolve({list, nextToken});
       });
