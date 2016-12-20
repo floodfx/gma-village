@@ -37,7 +37,7 @@ export const uploadImage = (auth, image) => {
     fetch('//localhost:8080/profilePhoto', {
       method: 'POST',
       body: data,
-      headers: {Authorization: `Bearer ${auth.ak_access_token}`}
+      headers: auth ? {Authorization: `Bearer ${auth.ak_access_token}`} : {}
     })
     .then(checkForErrors)
     .then(response => response.json())

@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 import { reducer as formReducer } from 'redux-form'
+
+// reducers
 import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
+import createGma  from './reducers/CreateGma'
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
 import uploadImage  from './reducers/UploadImage'
@@ -30,6 +33,7 @@ const store = createStore(
   combineReducers({
     gmasList,
     gmaProfile,
+    createGma,
     accountKitInit,
     auth,
     uploadImage,
