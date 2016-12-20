@@ -47,8 +47,8 @@ class User {
       ak_token_refresh_interval_sec\t${this.ak_token_refresh_interval_sec}\n
       ak_token_last_renewed_timestamp\t${this.ak_token_last_renewed_timestamp}\n
       last_login_timestamp\t${this.last_login_timestamp}\n
-      created_on_date\t${this.created_on_date}\n
-      member_since_date\t${this.member_since_date}\n
+      created_on_timestamp\t${this.created_on_timestamp}\n
+      member_since_timestamp\t${this.member_since_timestamp}\n
       profilePhotoUrl\t${this.profilePhotoUrl}\n
     `
   }
