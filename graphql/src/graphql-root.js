@@ -13,6 +13,11 @@ var {
 var config = require('./config')
 var { UserError } = require('graphql-errors');
 
+const setTimestamps = (input) => {
+  const nowTimestamp = Math.floor(new Date().getTime()/1000)
+  input.created_on_timestamp = input.created_on_timestamp ? input.created_on_timestamp : nowTimestamp
+  input.member_since_timestamp = input.member_since_timestamp ? input.member_since_timestamp : nowTimestamp
+}
 
 const root = {
   // QUERIES
@@ -123,6 +128,7 @@ const root = {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
       if(isAdmin(appUser)) {
+        setTimestamps(input)
         resolve(saveUser(input, "Gma"));
       } else {
         reject("Not Authorized")

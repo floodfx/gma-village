@@ -71,6 +71,7 @@ app.use('/graphiql', graphiqlExpress({
 // FILE UPLOAD
 app.use(fileUpload());
 app.post('/profilePhoto',
+  loadAccountKitUserMiddleware,
   isAuthenticated,
   images.sendUploadToGCS,
   function(req, res) {

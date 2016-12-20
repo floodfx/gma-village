@@ -10,7 +10,8 @@ interface User {
   ak_token_refresh_interval_sec: String,
   last_login_timestamp: Int
   created_on_timestamp: Int!
-  member_since_timestamp: Int!
+  member_since_timestamp: Int!,
+  profilePhotoUrl: String
 }
 
 type Admin implements User {
@@ -27,6 +28,7 @@ type Admin implements User {
   created_on_timestamp: Int!
   member_since_timestamp: Int!
   roles: [Role!]!
+  profilePhotoUrl: String
 }
 
 type Gma implements User {
@@ -58,6 +60,7 @@ type Gma implements User {
   isAvailableOutsideNeighborhood: Boolean!
   whyCareForKidsText: String!
   additionalInformationText: String!
+  profilePhotoUrl: String
 }
 
 type Parent implements User {
@@ -73,6 +76,7 @@ type Parent implements User {
   last_login_timestamp: Int
   created_on_timestamp: Int!
   member_since_timestamp: Int!
+  profilePhotoUrl: String
 }
 
 type UserListResult {
@@ -190,17 +194,15 @@ input AdminInput {
   created_on_timestamp: Int!
   member_since_timestamp: Int!
   roles: [Role!]!
+  profilePhotoUrl: String
 }
 
 input GmaInput {
-  id: ID!
+  id: ID
   first_name: String!
   last_name: String!
   phone: String!
   active: Boolean!
-  last_login_timestamp: Int
-  created_on_timestamp: Int!
-  member_since_timestamp: Int!
   availabilities: [Availability!]
   otherAvailability: String
   careAges: [CareAge!]
@@ -217,6 +219,7 @@ input GmaInput {
   isAvailableOutsideNeighborhood: Boolean!
   whyCareForKidsText: String!
   additionalInformationText: String!
+  profilePhotoUrl: String
 }
 
 input ParentInput {
@@ -228,6 +231,7 @@ input ParentInput {
   last_login_timestamp: Int
   created_on_timestamp: Int!
   member_since_timestamp: Int!
+  profilePhotoUrl: String
 }
 
 type Mutation {

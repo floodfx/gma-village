@@ -1,6 +1,7 @@
 var Storage = require('@google-cloud/storage');
 var config = require('../config');
-var uuid = require('node-uuid')
+var uuid = require('node-uuid');
+var mime = require('mime-types');
 
 const CLOUD_BUCKET = config.get('GOOGLE_CLOUD_BUCKET');
 
@@ -19,7 +20,9 @@ function sendUploadToGCS (req, res, next) {
     return next();
   }
 
-  const gcsname = `gma/${uuid.v1()}`
+  var extension = mime.extension(req.files.file.mimetype);
+  extension = extension ? `.${extension}` : ''
+  const gcsname = `gma/${uuid.v1()}${extension}`
   const file = bucket.file(gcsname);
 
   file.save(req.files.file.data, {
