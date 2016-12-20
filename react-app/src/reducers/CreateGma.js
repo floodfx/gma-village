@@ -15,13 +15,15 @@ const createGma = (state = {
     }
     case SAVE_GMA_USER_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
-        loading: false,
+        saving: false,
+        saved: true,
         gma: action.gma
       })
     }
     case SAVE_GMA_USER_REQUEST_FAILURE: {
       return Object.assign({}, state, {
-        loading: false,
+        saving: false,
+        saved: false,
         error: action.error
       })
     }

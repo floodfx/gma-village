@@ -52,10 +52,12 @@ export const saveGmaUser = (gma) => {
           isAvailableOutsideNeighborhood,
           whyCareForKidsText,
           additionalInformationText,
+          profilePhotoUrl
         }
       }
     `, {input: gma}).then(data => {
-        dispatch(saveGmaUserRequestSuccess(data.gma))
+        console.log("savedGma", data)
+        dispatch(saveGmaUserRequestSuccess(data.saveGma))
     }).catch(err => {
       dispatch(saveGmaUserRequestFailure(err))
     });

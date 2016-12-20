@@ -23,6 +23,7 @@ import {
   yesOrNo
 } from './forms/Validate'
 
+import FontAwesome from 'react-fontawesome'
 import MultiCheckbox from './forms/MultiCheckbox'
 import MultiRadio from './forms/MultiRadio'
 import TextField from './forms/TextField'
@@ -67,7 +68,16 @@ class GmaForm extends Component {
             component={TextField}
             type="text"
             placeholder="First Name"
-            validate={[required, minLength(2), maxLength(20)]} />
+            validate={[required, minLength(2), maxLength(20)]} />            
+        </div>
+        <div className="mt4">
+          <Field
+            label="My last name is:"
+            name="last_name"
+            component={TextField}
+            type="text"
+            placeholder="Last Name"
+            validate={[required, minLength(2), maxLength(30)]} />
         </div>
         <div className="mt4">
           <Field
@@ -92,6 +102,15 @@ class GmaForm extends Component {
           <Field
             label="I can care for kids outside my area:"
             name="isAvailableOutsideNeighborhood"
+            component={Checkbox}
+            defaultValue={false}
+            type="checkbox" />
+        </div>
+        <div className="mt4">
+          <Field
+            label="Active:"
+            name="active"
+            defaultValue={true}
             component={Checkbox}
             type="checkbox" />
         </div>
@@ -165,8 +184,7 @@ class GmaForm extends Component {
               name="profilePhoto" 
               component="input" 
               type="file" 
-              onChange={(e) => handleFile(e)} 
-              validate={[required]} />
+              onChange={(e) => handleFile(e)} />
           </div>          
         </div>
         <Field name="otherNeighborhood" component="input" type="hidden" />          
@@ -175,10 +193,13 @@ class GmaForm extends Component {
         <Field name="otherCareExperience" component="input" type="hidden" />
         <Field name="otherCareTraining" component="input" type="hidden" />  
         <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
-        <Field name="city" component="input" type="hidden" value={City.OAKLAND.name} />
-        <Field name="active" component="input" type="hidden" value={false} />
         <div className="mt4">
-          <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>Submit</button>
+          <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
+            {this.props.saving &&
+              <FontAwesome name='spinner' spin={true} className="mr1"/>
+            }
+            Submit
+          </button>
         </div>
       </form>
     )
@@ -233,7 +254,12 @@ const validateOthers = values => {
 
 GmaForm = reduxForm({
   form: 'gmaForm',   // a unique identifier for this form
-  validate: validateOthers
+  validate: validateOthers,
+  initialValues: {
+    city: City.OAKLAND.name,
+    active: false,
+    isAvailableOutsideNeighborhood: false
+  }
 })(GmaForm)
 
 const mapStateToProps = (state) => {

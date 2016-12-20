@@ -14,21 +14,9 @@ class GmaCreateFormContainer extends Component {
     this.props.dispatch(fetchAuthCookie())
   }
 
-  handleSubmit = (values) => {
-    var removeEmpty = (a, b) => {
-      if(b) {
-        return a.concat(b)
-      }
-    }
-    values.profilePhotoUrl = this.props.profilePhotoUrl;
-    values.city = City.OAKLAND.name
-    values.availabilities = values.availabilities.reduce(removeEmpty, []);
-    values.careAges = values.careAges.reduce(removeEmpty, []);
-    values.careExperiences = values.careExperiences.reduce(removeEmpty, []);
-    values.careLocations = values.careLocations.reduce(removeEmpty, []);
-    values.careTrainings = values.careTrainings.reduce(removeEmpty, []);
-    values.demeanors = values.demeanors.reduce(removeEmpty, []);
+  handleSubmit = (values) => {    
     console.log("handleSubmit", values)
+    delete values.profilePhoto
     this.props.dispatch(saveGmaUser(values))
   }
 
@@ -48,6 +36,7 @@ const mapStateToProps = (state) => {
     saving: createGma.saving,
     error: createGma.error,
     gma: createGma.gma,
+    saved: createGma.saved,
     profilePhotoUrl: uploadImage.image_url
   }
 }
