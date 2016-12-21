@@ -25,29 +25,31 @@ export const filterGmasList = (filter) => ({
 })
 
 
-export const fetchGmas = (auth) => {
+export const fetchGmas = (active=true, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
     return graphql.client.query(`
-      query fetchGmas($id: ID!, $phone: String!, $ak_access_token: String!, $ak_user_id:String!) {
-        gmas(auth:{id:$id, phone:$phone, ak_access_token:$ak_access_token, ak_user_id:$ak_user_id}) {
+      query fetchGmas($active: Boolean, $limit: Int, $nextToken: String) {
+        gmas(active: $active, limit: $limit, nextToken: $nextToken) {
           list {
             ... on Gma {
               id,
               first_name,
               last_name,
               phone,
+              active,
               availabilities,
               neighborhood,
               careAges,
               careLocations,
-              isAvailableOutsideNeighborhood
+              isAvailableOutsideNeighborhood,
+              profilePhotoUrl
             }
           },
           nextToken
         }
       }
-    `, auth).then(data => {
+    `,{active, limit, nextToken}).then(data => {
         dispatch(initGmasListRequestSuccess(data.gmas.list))
     }).catch(err => {
       dispatch(initGmasListRequestFailure(err))
