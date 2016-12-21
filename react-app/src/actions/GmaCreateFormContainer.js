@@ -56,7 +56,6 @@ export const saveGmaUser = (gma) => {
         }
       }
     `, {input: gma}).then(data => {
-        console.log("savedGma", data)
         dispatch(saveGmaUserRequestSuccess(data.saveGma))
     }).catch(err => {
       dispatch(saveGmaUserRequestFailure(err))
