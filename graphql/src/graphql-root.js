@@ -19,6 +19,15 @@ const setTimestamps = (input) => {
   input.member_since_timestamp = input.member_since_timestamp ? input.member_since_timestamp : nowTimestamp
 }
 
+const isNewSession = (user) => {
+  const nowTimestamp = Math.floor(new Date().getTime()/1000)
+  if(!user.last_login_timestamp || user.last_login_timestamp+(60*30) < nowTimestamp) {
+    user.last_login_timestamp = nowTimestamp;
+    return true
+  }
+  return false  
+}
+
 const root = {
   // QUERIES
   accountKitInit: () => {
@@ -43,7 +52,16 @@ const root = {
       if(appUser) {
         // ensure user is active before logging them in
         if(appUser.active) {
-          resolve(appUser)
+          // track new sessions
+          if(isNewSession(appUser)) {
+            saveUser(appUser).then((user) => {
+              resolve(user);
+            }).catch((err) => {
+              reject(err);
+            })
+          } else {
+            resolve(appUser);
+          }
         } else {
           reject("User is not active.")
         }
@@ -103,7 +121,15 @@ const root = {
                   user.ak_token_refresh_interval_sec = json.token_refresh_interval_sec
                    // ensure user is active before logging them in
                   if(user.active) {
-                    resolve(user)
+                    if(isNewSession(user)) {
+                      saveUser(user).then((u) => {
+                        resolve(u);
+                      }).catch((err) => {
+                        reject(err);
+                      })
+                    } else {
+                      resolve(user);
+                    }
                   } else {
                     reject("User not active.")
                   }
@@ -129,6 +155,7 @@ const root = {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
       if(isAdmin(appUser)) {
+        setTimestamps(input)
         resolve(saveUser(input, "Admin"));
       } else {
         reject("Not Authorized")
@@ -150,6 +177,7 @@ const root = {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
       if(isAdmin(appUser)) {
+        setTimestamps(input)
         resolve(saveUser(input, "Parent"));
       } else {
         reject("Not Authorized")
