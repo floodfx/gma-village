@@ -40,7 +40,8 @@ class AuthListener {
 
   replaceWithNextPath = (nextState, replace) => {
     replace({
-      pathname: `/login/?redirect=${nextState.location.pathname}`
+      pathname: '/login/',
+      query: {redirect: nextState.location.pathname}
     })
   }
 
