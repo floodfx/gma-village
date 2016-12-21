@@ -6,7 +6,9 @@ const namespace = isProd ? null : "dev"
 const userDao = new UserDAO(namespace)
 
 var saveUser = (input, userKind) => {
-  input.kind = userKind
+  if(!input.kind && userKind) {
+    input.kind = userKind
+  }
   return userDao.save(input)
     .then(user => {
       return user

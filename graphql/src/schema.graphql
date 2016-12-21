@@ -185,14 +185,11 @@ type Query {
 }
 
 input AdminInput {
-  id: ID!
+  id: ID
   first_name: String!
   last_name: String!
   phone: String!
   active: Boolean!
-  last_login_timestamp: Int
-  created_on_timestamp: Int!
-  member_since_timestamp: Int!
   roles: [Role!]!
   profilePhotoUrl: String
 }
@@ -223,14 +220,11 @@ input GmaInput {
 }
 
 input ParentInput {
-  id: ID!
+  id: ID
   first_name: String!
   last_name: String!
   phone: String!
   active: Boolean!
-  last_login_timestamp: Int
-  created_on_timestamp: Int!
-  member_since_timestamp: Int!
   profilePhotoUrl: String
 }
 
