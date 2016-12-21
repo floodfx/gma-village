@@ -14,7 +14,10 @@ class Parent extends User {
     last_login_timestamp,
     created_on_timestamp,
     member_since_timestamp,
-    profilePhotoUrl
+    profilePhotoUrl,
+    neighborhood,
+    otherNeighborhood,
+    kids
   ) {
     super(
       id,
@@ -32,12 +35,18 @@ class Parent extends User {
       member_since_timestamp,
       profilePhotoUrl
     )
+    this.neighborhood = neighborhood;
+    this.otherNeighborhood = otherNeighborhood;
+    this.kids = kids;
   }
 
   toString() {
     return `
       Parent\n
       ${super.toString()}
+      neighborhood\t${this.neighborhood}\n
+      otherNeighborhood\t${this.otherNeighborhood}\n
+      kids\t${this.kids}\n
     `
   }
 }

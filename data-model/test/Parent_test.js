@@ -1,5 +1,5 @@
 var assert = require('assert');
-var {Parent} = require('../lib/index')
+var {Parent, Neighborhood} = require('../lib/index')
 
 describe('Parent', function() {
   describe('constructor', function() {
@@ -17,7 +17,13 @@ describe('Parent', function() {
         123,
         1234,
         12345,
-        "profilePhotoUrl"
+        "profilePhotoUrl",
+        Neighborhood.OTHER.name,
+        "South Berkeley",
+        [
+          {first_name: "Raili", birthday:1380758400},
+          {first_name: "Rowen", birthday:1461456000}
+        ]
       )
       assert.equal(p.id, "id");
       assert.equal(p.first_name, "fn");
@@ -33,6 +39,12 @@ describe('Parent', function() {
       assert.equal(p.created_on_timestamp, 1234);
       assert.equal(p.member_since_timestamp, 12345);
       assert.equal(p.profilePhotoUrl, "profilePhotoUrl")
+      assert.equal(p.neighborhood, Neighborhood.OTHER.name)
+      assert.equal(p.otherNeighborhood, "South Berkeley")
+      assert.deepEqual(p.kids, [
+          {first_name: "Raili", birthday:1380758400},
+          {first_name: "Rowen", birthday:1461456000}
+        ])
     });
   });
 });
