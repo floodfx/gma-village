@@ -19,29 +19,34 @@ export const fetchGmaRequestFailure = (error) => ({
 })
 
 const fetchGmaQuery = `
-  query fetchGma($id: ID!, $phone: String!, $ak_access_token: String!, $ak_user_id:String!, $gmaId: ID!) {
-    gma(auth:{id:$id, phone:$phone, ak_access_token:$ak_access_token, ak_user_id:$ak_user_id}, id: $gmaId) {
+  query fetchGma($gmaId: ID!) {
+    gma(id: $gmaId) {
       id,
       phone,
       first_name,
       availabilities,
+      otherAvailability,
       careAges,
       neighborhood,
-      careLocations,
+      otherNeighborhood,
+      careLocations,      
       careExperiences,
+      otherCareExperience,
       careTrainings,
+      otherCareTraining,
       demeanors,
+      otherDemeanor,
       additionalInformationText,
-      whyCareForKidsText
+      whyCareForKidsText,
+      profilePhotoUrl
     }
   }
 `;
 
-export const fetchGma = (auth, id) => {
+export const fetchGma = (gmaId) => {
   return (dispatch) => {
     dispatch(fetchGmaRequest());
-    let input = Object.assign(auth, {gmaId: id})
-    return graphql.client.query(fetchGmaQuery, input).then(data => {
+    return graphql.client.query(fetchGmaQuery, {gmaId}).then(data => {
         dispatch(fetchGmaRequestSuccess(data.gma))
     }).catch(err => {
       dispatch(fetchGmaRequestFailure(err))

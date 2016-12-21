@@ -8,7 +8,7 @@ class GmaProfileContainer extends Component {
 
   componentWillMount() {
     const gmaId = this.props.params.gmaId;
-    this.props.dispatch(fetchGma(this.props.auth, gmaId))
+    this.props.dispatch(fetchGma(gmaId))
   }
 
   render() {
@@ -19,12 +19,11 @@ class GmaProfileContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { gmaProfile, auth } = state
+  const { gmaProfile } = state
   return {
     loading: gmaProfile.loading,
     gma: gmaProfile.gma,
-    error: gmaProfile.error,
-    auth: auth.cookie
+    error: gmaProfile.error
   }
 }
 
