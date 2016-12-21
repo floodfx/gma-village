@@ -42,11 +42,12 @@ var findByPhone = (phone) => {
   });
 }
 
-var listUserByType = (userType) => {
+var listUserByType = (userType, active) => {
   console.log("listUserByType", userType)
   return new Promise((resolve, reject) => {
-    userDao.list(userType)
+    userDao.list(userType, active)
       .then(userList => {
+        console.log("userList", userList)
         resolve(userList)
       })
       .catch(err => {

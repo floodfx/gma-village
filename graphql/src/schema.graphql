@@ -177,11 +177,11 @@ enum Role {
 
 type Query {
   accountKitInit: AKInit!
-  admins(limit: Int, nextToken: String): UserListResult
+  admins(active: Boolean, limit: Int, nextToken: String): UserListResult
   currentUser: User
   gma(id: ID!): Gma
-  gmas(limit: Int, nextToken: String): UserListResult
-  parents(limit: Int, nextToken: String): UserListResult
+  gmas(active: Boolean, limit: Int, nextToken: String): UserListResult
+  parents(active: Boolean, limit: Int, nextToken: String): UserListResult
 }
 
 input AdminInput {

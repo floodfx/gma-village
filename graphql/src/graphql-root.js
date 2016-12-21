@@ -28,10 +28,10 @@ const root = {
       version: config.get('AK_APP_VERSION')
     }
   },
-  admins: (root, {limit, nextToken}, context, info) => {
+  admins: (root, {active, limit, nextToken}, context, info) => {
     return new Promise((resolve, reject) => {
       if(isAdmin(context.appUser)) {
-        resolve(listByType("Admin"));
+        resolve(listUserByType("Admin", active));
       } else {
         reject("Not Authorized")
       }
@@ -41,7 +41,12 @@ const root = {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
       if(appUser) {
-        resolve(appUser)
+        // ensure user is active before logging them in
+        if(appUser.active) {
+          resolve(appUser)
+        } else {
+          reject("User is not active.")
+        }
       } else {
         reject("Error fetching currentUser")
       }
@@ -57,21 +62,22 @@ const root = {
       }
     })
   },
-  gmas: (root, {limit, nextToken}, context, info) => {
+  gmas: (root, {active, limit, nextToken}, context, info) => {
     return new Promise((resolve, reject) => {
+      console.log("gmas", "active", active)
       const { appUser } = context;
       if(appUser && !isGma(appUser)) {
-        resolve(listByType("Gma"));
+        resolve(listUserByType("Gma", active));
       } else {
         reject("Not Authorized")
       }
     })
   },
-  parents: (root, {limit, nextToken}, context, info) => {
+  parents: (root, {active, limit, nextToken}, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
       if(isAdmin(appUser)) {
-        resolve(listByType("Parent"));
+        resolve(listUserByType("Parent", active));
       } else {
         reject("Not Authorized")
       }
@@ -95,7 +101,12 @@ const root = {
                   user.ak_user_id = json.id
                   user.ak_access_token = json.access_token
                   user.ak_token_refresh_interval_sec = json.token_refresh_interval_sec
-                  resolve(user)
+                   // ensure user is active before logging them in
+                  if(user.active) {
+                    resolve(user)
+                  } else {
+                    reject("User not active.")
+                  }
                 }).catch((err) => {
                   reject(new UserError(err))
                 })

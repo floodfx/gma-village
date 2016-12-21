@@ -29,7 +29,7 @@
     "express-bearer-token": "2.1.0",
     "express-fileupload": "0.0.5",
     "express-graphql": "0.5.4",
-    "gma-village-data-access": "0.2.3",
+    "gma-village-data-access": "0.3.2",
     "gma-village-data-model": "0.4.7",
     "graphql": "0.7.2",
     "graphql-errors": "2.1.0",
