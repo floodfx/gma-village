@@ -142,13 +142,13 @@ describe('UserDAO', function() {
 
     it('should list users based on kind and activity', function(done) {
       this.timeout(10000)
-      p.active = false;
+      p.active = true;
       new UserDAO("test").save(p).then((parent) => {
         new UserDAO("test").list("Parent").then((parents) => {
-          assert.equal(parents.list.length, 0);
+          assert.equal(parents.list.length, 1);
           new UserDAO("test").list("Parent", false).then((plist) => {
-            assert.equal(plist.list.length, 1);
-            new UserDAO("test").delete(plist.list[0]).then(res => done()).catch((err) => done(err))
+            assert.equal(plist.list.length, 0);
+            new UserDAO("test").delete(parents.list[0]).then(res => done()).catch((err) => done(err))
           }).catch((err) => {
           done(err)
         })        

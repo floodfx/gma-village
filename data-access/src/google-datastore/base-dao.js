@@ -27,14 +27,16 @@ class BaseDAO {
     });
   }
 
-  list(userType=undefined, active=true, limit=100, nextToken) {
+  list(userType=undefined, active=undefined, limit=100, nextToken) {
     return new Promise((resolve, reject) => {
-      var q = this.db.createQuery([this.kind])
-      q.filter("active", active)
+      var q = this.db.createQuery([this.kind])      
       q.limit(limit)
       if(userType) {
         q.filter('kind', userType)
       }
+      if(active !== undefined) {
+        q.filter("active", active)
+      } 
       this.db.runQuery(q, (err, entities, nextQuery) => {
         if (err) {
           reject(err);
