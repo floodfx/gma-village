@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AdminForm from '../components/AdminForm'
-import Loading from '../components/Loading'
 import { connect } from 'react-redux'
 import  { fetchAuthCookie }  from '../actions/Auth'
 import  { saveAdminUser }  from '../actions/AdminCreateFormContainer'

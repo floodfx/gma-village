@@ -8,7 +8,7 @@ class UserNavContainer extends Component {
 
   onLogoutClick = () => {
     this.props.dispatch(logout())
-    browserHistory.push("/login")
+    browserHistory.push("/login/")
   }
 
   render() {

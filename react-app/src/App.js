@@ -45,7 +45,7 @@ const App = ({ store, authListener }) => {
           <Route path="gmas" component={GmasListContainer} onEnter={authListener.requireParent}/>
           <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>
           <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>
-          <Route path="login/*" component={LoginContainer}/>
+          <Route path="login" component={LoginContainer}/>
           <Route path="home" component={HomeContainer} onEnter={authListener.requireUser}/>
           <Route path="me" component={ProfileContainer} onEnter={authListener.requireUser}/>
         </Route>

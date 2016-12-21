@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GmaForm from '../components/GmaForm'
-import Loading from '../components/Loading'
 import { connect } from 'react-redux'
 import  { fetchAuthCookie }  from '../actions/Auth'
 import  { saveGmaUser }  from '../actions/GmaCreateFormContainer'
