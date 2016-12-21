@@ -27,14 +27,16 @@ const checkForErrors = (response) => {
   return response;
 }
 
+const prod = process.env.NODE_ENV === 'production'
+var urlPrefix = prod ? 'https://gma-village-graphql-dev-dot-gma-village.appspot.com' : 'http://localhost:8080'
+
 export const uploadImage = (auth, image) => {
   return (dispatch) => {
     dispatch(uploadImageRequest());
     var data = new FormData()
     data.append('file', image)
 
-    //TODO use configured url
-    fetch('//localhost:8080/profilePhoto', {
+    fetch(`${urlPrefix}/profilePhoto`, {
       method: 'POST',
       body: data,
       headers: auth ? {Authorization: `Bearer ${auth.ak_access_token}`} : {}
@@ -42,7 +44,6 @@ export const uploadImage = (auth, image) => {
     .then(checkForErrors)
     .then(response => response.json())
     .then((json) => {
-      console.log(json)
       dispatch(uploadImageRequestSuccess(json.image_url))
     })
     .catch(err => {
