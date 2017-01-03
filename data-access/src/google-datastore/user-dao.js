@@ -62,7 +62,11 @@ class UserDAO extends BaseDAO {
       data.ak_token_last_renewed_timestamp,
       data.last_login_timestamp,
       data.created_on_timestamp,
-      data.member_since_timestamp
+      data.member_since_timestamp,
+      data.profilePhotoUrl,
+      data.neighborhood,
+      data.otherNeighborhood,
+      data.kids
     )
   }
 
@@ -80,6 +84,7 @@ class UserDAO extends BaseDAO {
       data.last_login_timestamp,
       data.created_on_timestamp,
       data.member_since_timestamp,
+      data.profilePhotoUrl,
       data.roles
     )
   }
@@ -98,6 +103,7 @@ class UserDAO extends BaseDAO {
       data.last_login_timestamp,
       data.created_on_timestamp,
       data.member_since_timestamp,
+      data.profilePhotoUrl,
       data.availabilities,
       data.otherAvailability,
       data.careAges,

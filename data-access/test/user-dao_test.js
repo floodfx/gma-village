@@ -29,6 +29,7 @@ var a = new Admin(
   123,
   1234,
   12345,
+  "profilePhotoUrl",
   [Role.ADMIN.name]
 )
 
@@ -45,6 +46,7 @@ var g = new Gma(
   123,
   1234,
   12345,
+  "profilePhotoUrl",
   [Availability.DAYTIME.name],
   ["Holidays"],
   [CareAge.ZERO_TO_SIX_MONTHS.name],
@@ -60,7 +62,7 @@ var g = new Gma(
   ["Rockridge"],
   true,
   "Because they are the future",
-  "Add"
+  "Additional"
 )
 
 var p = new Parent(
@@ -75,14 +77,18 @@ var p = new Parent(
   12,
   123,
   1234,
-  12345
+  12345,
+  "profilePhotoUrl",
+  Neighborhood.OTHER.name,
+  "Rockridge",
+  [{first_name:"Raili", birthday:1454396400}]
 )
 
 var userDao = new UserDAO("test")
 
 describe('UserDAO', function() {
   describe('test', function() {
-    it('should save and delete a user', function(done) {
+    it('should save and delete a parent', function(done) {
       this.timeout(10000)
       userDao.save(p).then((user) => {
         assert.ok(user.id);
@@ -98,6 +104,67 @@ describe('UserDAO', function() {
         assert.equal(user.last_login_timestamp, 123);
         assert.equal(user.created_on_timestamp, 1234);
         assert.equal(user.member_since_timestamp, 12345);
+        assert.equal(user.profilePhotoUrl, "profilePhotoUrl");
+        assert.equal(user.neighborhood, Neighborhood.OTHER.name);
+        assert.equal(user.otherNeighborhood, "Rockridge");
+        assert.deepEqual(user.kids, [{first_name:"Raili", birthday:1454396400}]);
+        new UserDAO("test").delete(user).then(res => done()).catch((err) => done(err))
+      }).catch(err => done(err))
+    });
+    it('should save and delete an admin', function(done) {
+      this.timeout(10000)
+      userDao.save(a).then((user) => {
+        assert.ok(user.id);
+        assert.equal(user.first_name, "fn");
+        assert.equal(user.last_name, "ln");
+        assert.equal(user.phone, "ph");
+        assert.equal(user.kind, "Admin");
+        assert.ok(user.active);
+        assert.equal(user.ak_access_token, "ak_token");
+        assert.equal(user.ak_user_id, "ak_uid");
+        assert.equal(user.ak_token_refresh_interval_sec, 1);
+        assert.equal(user.ak_token_last_renewed_timestamp, 12);
+        assert.equal(user.last_login_timestamp, 123);
+        assert.equal(user.created_on_timestamp, 1234);
+        assert.equal(user.member_since_timestamp, 12345);
+        assert.equal(user.profilePhotoUrl, "profilePhotoUrl");
+        assert.deepEqual(user.roles, [Role.ADMIN.name]);
+        new UserDAO("test").delete(user).then(res => done()).catch((err) => done(err))
+      }).catch(err => done(err))
+    });
+    it('should save and delete a gma', function(done) {
+      this.timeout(10000)
+      userDao.save(g).then((user) => {
+        assert.ok(user.id);
+        assert.equal(user.first_name, "fn");
+        assert.equal(user.last_name, "ln");
+        assert.equal(user.phone, "ph");
+        assert.equal(user.kind, "Gma");
+        assert.ok(user.active);
+        assert.equal(user.ak_access_token, "ak_token");
+        assert.equal(user.ak_user_id, "ak_uid");
+        assert.equal(user.ak_token_refresh_interval_sec, 1);
+        assert.equal(user.ak_token_last_renewed_timestamp, 12);
+        assert.equal(user.last_login_timestamp, 123);
+        assert.equal(user.created_on_timestamp, 1234);
+        assert.equal(user.member_since_timestamp, 12345);
+        assert.equal(user.profilePhotoUrl, "profilePhotoUrl");
+        assert.deepEqual(user.availabilities, [Availability.DAYTIME.name]);
+        assert.deepEqual(user.otherAvailability, ["Holidays"]);
+        assert.deepEqual(user.careAges, [CareAge.ZERO_TO_SIX_MONTHS.name]);
+        assert.deepEqual(user.careExperiences, [CareExperience.WORKED_BABYSITTING.name]);
+        assert.deepEqual(user.otherCareExperience, ["Foster"]);
+        assert.deepEqual(user.careLocations, [CareLocation.CHILDS_HOME.name]);
+        assert.deepEqual(user.careTrainings, [CareTraining.CPR_AND_FIRST_AID.name]);
+        assert.deepEqual(user.otherCareTraining, ["Classes"]);
+        assert.equal(user.city, City.OAKLAND.name);
+        assert.deepEqual(user.demeanors, [Demeanor.PATIENT.name]);
+        assert.deepEqual(user.otherDemeanor, ["Cool"]);
+        assert.deepEqual(user.neighborhood, Neighborhood.NORTH_OAKLAND.name);
+        assert.equal(user.otherNeighborhood, "Rockridge");
+        assert.ok(user.isAvailableOutsideNeighborhood)
+        assert.equal(user.whyCareForKidsText, "Because they are the future");
+        assert.equal(user.additionalInformationText, "Additional");
         new UserDAO("test").delete(user).then(res => done()).catch((err) => done(err))
       }).catch(err => done(err))
     });
@@ -139,6 +206,7 @@ describe('UserDAO', function() {
       }).catch(err => done(err))
 
     });
+    
 
     it('should list users based on kind and activity', function(done) {
       this.timeout(10000)
