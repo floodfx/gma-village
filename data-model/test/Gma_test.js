@@ -27,6 +27,7 @@ describe('Gma', function() {
         123,
         1234,
         12345,
+        "profilePhotoUrl",
         [Availability.DAYTIME.name],
         ["Holidays"],
         [CareAge.ZERO_TO_SIX_MONTHS.name],
@@ -42,8 +43,7 @@ describe('Gma', function() {
         ["Rockridge"],
         true,
         "Because they are the future",
-        "Add",
-        "profilePhotoUrl"
+        "Add"        
       )
       assert.equal(g.id, "id");
       assert.equal(g.first_name, "fn");
