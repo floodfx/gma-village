@@ -156,7 +156,11 @@ const root = {
       const { appUser } = context;
       if(isAdmin(appUser)) {
         setTimestamps(input)
-        resolve(saveUser(input, "Admin"));
+        saveUser(input, "Admin").then((u) => {
+          resolve(u);
+        }).catch((err) => {
+          reject(err);
+        })
       } else {
         reject("Not Authorized")
       }
@@ -167,7 +171,11 @@ const root = {
       const { appUser } = context;
       if(isAdmin(appUser)) {
         setTimestamps(input)
-        resolve(saveUser(input, "Gma"));
+        saveUser(input, "Gma").then((u) => {
+          resolve(u);
+        }).catch((err) => {
+          reject(err);
+        })
       } else {
         reject("Not Authorized")
       }
@@ -178,7 +186,12 @@ const root = {
       const { appUser } = context;
       if(isAdmin(appUser)) {
         setTimestamps(input)
-        resolve(saveUser(input, "Parent"));
+        console.log("input", input)
+        saveUser(input, "Parent").then((u) => {
+          resolve(u);
+        }).catch((err) => {
+          reject(err);
+        })
       } else {
         reject("Not Authorized")
       }

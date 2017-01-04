@@ -77,6 +77,14 @@ type Parent implements User {
   created_on_timestamp: Int!
   member_since_timestamp: Int!
   profilePhotoUrl: String
+  neighborhood: Neighborhood!
+  otherNeighborhood: String
+  kids: [Kid!]!
+}
+
+type Kid {
+  first_name: String!
+  birthday: Int!  
 }
 
 type UserListResult {
@@ -226,6 +234,14 @@ input ParentInput {
   phone: String!
   active: Boolean!
   profilePhotoUrl: String
+  neighborhood: Neighborhood!
+  otherNeighborhood: String
+  kids: [KidInput!]!
+}
+
+input KidInput {
+  first_name: String!
+  birthday: Int!  
 }
 
 type Mutation {
