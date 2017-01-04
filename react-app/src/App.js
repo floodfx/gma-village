@@ -8,6 +8,8 @@ import HomeContainer from './containers/HomeContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import GmaCreateFormContainer from './containers/GmaCreateFormContainer';
 import AdminCreateFormContainer from './containers/AdminCreateFormContainer';
+import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
+import UserNavContainer from './containers/UserNavContainer';
 import moment from 'moment'
 import './App.css'
 import Navi from './Navi'
@@ -30,6 +32,7 @@ const Footer = () => {
 const Main = ({children}) => (
   <div className="container">
     <Navi />
+    <UserNavContainer />
     {children}
     <Footer />
   </div>
@@ -41,9 +44,10 @@ const App = ({ store, authListener }) => {
       <Router history={browserHistory}>
         <Route path="/" component={Main}>
           <IndexRedirect to="home" />
-          <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>
-          <Route path="gmas" component={GmasListContainer} onEnter={authListener.requireParent}/>
+          <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>          
           <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="gmas" component={GmasListContainer} onEnter={authListener.requireParent}/>
           <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>
           <Route path="login" component={LoginContainer}/>
           <Route path="home" component={HomeContainer} onEnter={authListener.requireUser}/>

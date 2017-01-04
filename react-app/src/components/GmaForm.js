@@ -262,9 +262,4 @@ GmaForm = reduxForm({
   }
 })(GmaForm)
 
-const mapStateToProps = (state) => {
-  const { gma } = state
-  return {}
-}
-
-export default connect(mapStateToProps)(GmaForm)
+export default GmaForm

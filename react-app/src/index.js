@@ -7,8 +7,9 @@ import { reducer as formReducer } from 'redux-form'
 // reducers
 import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
-import createGma  from './reducers/CreateGma'
 import createAdmin  from './reducers/CreateAdmin'
+import createGma  from './reducers/CreateGma'
+import createParent  from './reducers/CreateParent'
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
 import uploadImage  from './reducers/UploadImage'
@@ -34,8 +35,9 @@ const store = createStore(
   combineReducers({
     gmasList,
     gmaProfile,
-    createGma,
     createAdmin,
+    createGma,
+    createParent,
     accountKitInit,
     auth,
     uploadImage,

@@ -10,7 +10,7 @@ export const WILLING_TO_TRAVEL = "willingToTravel"
 class GmasListContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchGmas(this.props.auth))
+    this.props.dispatch(fetchGmas())
   }
 
   onFilterClick = (vals) => {

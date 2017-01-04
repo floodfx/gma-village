@@ -20,7 +20,6 @@ class ProfileContainer extends Component {
       const {user} = this.props
       return (
         <div>
-          <UserNavContainer />
           {user.kind === "Admin" &&
             <AdminProfileForm onSubmit={this.onAdminProfileSubmit}/>
           }
