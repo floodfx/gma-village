@@ -17,8 +17,8 @@ describe('Admin', function() {
         123,
         1234,
         12345,
-        [Role.ADMIN.name],
-        "profilePhotoUrl"
+        "profilePhotoUrl",
+        [Role.ADMIN.name]
       )
       assert.equal(a.id, "id");
       assert.equal(a.first_name, "fn");

@@ -14,8 +14,8 @@ class Admin extends User {
     last_login_timestamp,
     created_on_timestamp,
     member_since_timestamp,    
-    roles,
-    profilePhotoUrl
+    profilePhotoUrl,
+    roles
   ) {
     super(
       id,
