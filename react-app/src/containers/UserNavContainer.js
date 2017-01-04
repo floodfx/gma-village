@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import  { logout }  from '../actions/Auth';
-import { browserHistory } from 'react-router';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 class UserNavContainer extends Component {
 
@@ -11,18 +10,44 @@ class UserNavContainer extends Component {
     browserHistory.push("/login/")
   }
 
+  matchRoute = (routeName) => {
+    const {location} = this.props;
+    console.log("this.props.location",location)
+    console.log("indexOf",routeName, location.pathname.indexOf(routeName))
+    return location.pathname.indexOf(routeName) >= 0 ? "active" : undefined
+  }
+
   render() {
-    const {user} = this.props;
+    const {user, location} = this.props;
     if(user) {
       return (
-        <div className="dt w-100 border-box tr v-mid pv2 ph3 br3">
-          <div className="dtc ttc w-20 tl">
-            Hello,&nbsp;<Link to="me">{user.kind} {user.first_name}</Link>
-          </div>
-          <div className="dtc w-10 tr">
-            <button onClick={() => this.onLogoutClick()} className="btn gma-orange-bg">Log out</button>
-          </div>
-        </div>
+        <nav >
+          <ul className="nav nav-tabs">
+            <li role="presentation" className={this.matchRoute("home")}>
+              <Link to="/home" activeClassName="active">Home</Link>
+            </li>
+            <li role="presentation" className={this.matchRoute("profile")}>
+              <Link to="/profile">My Profile</Link>
+            </li>
+            { user.kind === "Admin" &&
+              <li role="presentation" className={this.matchRoute("admin")}>
+                <Link to="/admin/list">Admins</Link>
+              </li>              
+            }
+            { (user.kind === "Admin" || user.kind === "Parent") &&
+              <li role="presentation" className={this.matchRoute("gma")}>
+                <Link to="/gma/list">Gmas</Link>
+              </li>
+            }
+            { user.kind === "Admin" &&
+              <li role="presentation" className={this.matchRoute("parent")}>
+                <Link to="/parent/list">Parents</Link>
+              </li>
+            }   
+            
+            
+          </ul>
+        </nav>
       )
     } else {
       return null;
