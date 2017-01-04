@@ -1,14 +1,20 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, IndexRedirect, browserHistory, withRouter } from 'react-router';
+
+import AdminListContainer from './containers/AdminListContainer';
+import AdminCreateFormContainer from './containers/AdminCreateFormContainer';
+
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
+import GmaCreateFormContainer from './containers/GmaCreateFormContainer';
+
+import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
+
 import LoginContainer from './containers/LoginContainer';
 import HomeContainer from './containers/HomeContainer';
 import ProfileContainer from './containers/ProfileContainer';
-import GmaCreateFormContainer from './containers/GmaCreateFormContainer';
-import AdminCreateFormContainer from './containers/AdminCreateFormContainer';
-import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
+
 import UserNavContainer from './containers/UserNavContainer';
 import moment from 'moment'
 import './App.css'
@@ -47,7 +53,7 @@ const App = ({ store, authListener }) => {
         <Route path="/" component={Main}>
           <IndexRedirect to="home" />
           <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>          
-          <Route path="/admin/list" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>          
+          <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>          
           
           <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireParent}/>
           <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>

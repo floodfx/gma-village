@@ -5,6 +5,7 @@ import createLogger from 'redux-logger'
 import { reducer as formReducer } from 'redux-form'
 
 // reducers
+import adminList from './reducers/AdminList'
 import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
 import createAdmin  from './reducers/CreateAdmin'
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const store = createStore(
   combineReducers({
+    adminList,
     gmasList,
     gmaProfile,
     createAdmin,
