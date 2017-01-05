@@ -4,7 +4,6 @@ import { Link } from 'react-router';
 const AdminHome = ({user}) => (
 
   <div>
-    <div className="gma-flags-bg ma3">&nbsp;</div>
     <div className="pv3 ph4 gma-orange-border">
       <h1 className="lh-title f1 serif gma-orange">Welcome Admin {user.first_name}!</h1>
       <p className="lh-copy f3">
