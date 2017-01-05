@@ -54,7 +54,7 @@ class BaseDAO {
     return new Promise((resolve, reject) => {
       var key;
       if (user.id) {
-        key = this.db.key([this.kind, user.id]);
+        key = this.db.key([this.kind, parseInt(user.id)]);
       } else {
         key = this.db.key([this.kind]);
       }

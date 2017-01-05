@@ -132,6 +132,35 @@ describe('UserDAO', function() {
         new UserDAO("test").delete(user).then(res => done()).catch((err) => done(err))
       }).catch(err => done(err))
     });
+
+    it('should save, resave, then delete an admin', function(done) {
+      this.timeout(10000)
+      userDao.save(a).then((user) => {
+        assert.ok(user.id);
+        assert.equal(user.first_name, "fn");
+        assert.equal(user.last_name, "ln");
+        assert.equal(user.phone, "ph");
+        assert.equal(user.kind, "Admin");
+        assert.ok(user.active);
+        assert.equal(user.ak_access_token, "ak_token");
+        assert.equal(user.ak_user_id, "ak_uid");
+        assert.equal(user.ak_token_refresh_interval_sec, 1);
+        assert.equal(user.ak_token_last_renewed_timestamp, 12);
+        assert.equal(user.last_login_timestamp, 123);
+        assert.equal(user.created_on_timestamp, 1234);
+        assert.equal(user.member_since_timestamp, 12345);
+        assert.equal(user.profilePhotoUrl, "profilePhotoUrl");
+        assert.deepEqual(user.roles, [Role.ADMIN.name]);
+        user.first_name="first";
+        userDao.save(user).then((resavedUser) => {
+          assert.equal(user.id, resavedUser.id);
+          assert.equal(resavedUser.first_name, "first");
+          new UserDAO("test").delete(user).then(res => done()).catch((err) => done(err))
+        }).catch(err => done(err));
+        
+      }).catch(err => done(err))
+    });
+
     it('should save and delete a gma', function(done) {
       this.timeout(10000)
       userDao.save(g).then((user) => {
