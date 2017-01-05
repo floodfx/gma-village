@@ -20,33 +20,33 @@ const Navi = () => (
         </a>
       </div>
       <div className="collapse navbar-collapse" id="gma-navbar-collapse">
-        <ul className="nav navbar-nav">
+        <ul className="nav navbar-nav pl4">
           <li className="nav-item">
-            <a className="navbar-link" href="http://www.gmavillage.com">The Gma Village</a>
+            <a className="navbar-link gma-nav-font" href="http://www.gmavillage.com">The Gma Village</a>
             <span className="delimiter">/</span>
           </li>
           <li className="nav-item">
-            <a className="navbar-link" href="http://www.gmavillage.com/about/">About</a>
+            <a className="navbar-link gma-nav-font" href="http://www.gmavillage.com/about/">About</a>
             <span className="delimiter">/</span>
           </li>
           <li className="nav-item">
-            <Link activeClassName="active" className="navbar-link" to="/gmas">Gmas</Link>
+            <Link activeClassName="active" className="navbar-link gma-nav-font" to="/gma/list">Gmas</Link>
             <span className="delimiter">/</span>
           </li>
           <li className="nav-item">
-            <a className="navbar-link" href="http://www.gmavillage.com/photos/">Photo Gallery</a>
+            <a className="navbar-link gma-nav-font" href="http://www.gmavillage.com/photos/">Photo Gallery</a>
             <span className="delimiter">/</span>
           </li>
           <li className="nav-item">
-            <a className="navbar-link" href="http://www.gmavillage.com/our-team/">Our Team</a>
+            <a className="navbar-link gma-nav-font" href="http://www.gmavillage.com/our-team/">Our Team</a>
             <span className="delimiter">/</span>
           </li>
           <li className="nav-item">
-            <a className="navbar-link" href="http://www.gmavillage.com/gma-village/">Blog</a>
+            <a className="navbar-link gma-nav-font" href="http://www.gmavillage.com/gma-village/">Blog</a>
             <span className="delimiter">/</span>
           </li>
           <li className="nav-item">
-            <a className="navbar-link" href="http://www.gmavillage.com/contactus/">Contact</a>
+            <a className="navbar-link gma-nav-font" href="http://www.gmavillage.com/contactus/">Contact</a>
           </li>
         </ul>
       </div>

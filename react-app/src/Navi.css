@@ -33,6 +33,10 @@ a.active {
   color: #000;
 }
 
+.delimiter {
+  color: #ddd;
+}
+
 @media (max-width: 768px) {
   .nav-item {
     line-height: normal;
