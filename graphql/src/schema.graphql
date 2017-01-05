@@ -194,16 +194,24 @@ type Query {
 
 input AdminInput {
   id: ID
+  kind: String!
   first_name: String!
   last_name: String!
   phone: String!
   active: Boolean!
   roles: [Role!]!
   profilePhotoUrl: String
+  ak_access_token: String
+  ak_user_id: String
+  ak_token_refresh_interval_sec: String
+  last_login_timestamp: Int
+  created_on_timestamp: Int
+  member_since_timestamp: Int
 }
 
 input GmaInput {
   id: ID
+  kind: String!
   first_name: String!
   last_name: String!
   phone: String!
@@ -225,10 +233,17 @@ input GmaInput {
   whyCareForKidsText: String!
   additionalInformationText: String!
   profilePhotoUrl: String
+  ak_access_token: String
+  ak_user_id: String
+  ak_token_refresh_interval_sec: String
+  last_login_timestamp: Int
+  created_on_timestamp: Int
+  member_since_timestamp: Int
 }
 
 input ParentInput {
   id: ID
+  kind: String!
   first_name: String!
   last_name: String!
   phone: String!
@@ -237,6 +252,12 @@ input ParentInput {
   neighborhood: Neighborhood!
   otherNeighborhood: String
   kids: [KidInput!]!
+  ak_access_token: String
+  ak_user_id: String
+  ak_token_refresh_interval_sec: String
+  last_login_timestamp: Int
+  created_on_timestamp: Int
+  member_since_timestamp: Int
 }
 
 input KidInput {
