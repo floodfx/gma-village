@@ -37,53 +37,56 @@ class AdminForm extends Component {
   render() {
     const { handleSubmit, handleFile, pristine, invalid, reset, submitting } = this.props
     return (
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div>
-          <Field
-            label="Hi, My name is:"
-            name="first_name"
-            component={TextField}
-            type="text"
-            placeholder="First Name"
-            validate={[required, minLength(2), maxLength(20)]} />            
-        </div>
-        <div className="mt4">
-          <Field
-            label="My last name is:"
-            name="last_name"
-            component={TextField}
-            type="text"
-            placeholder="Last Name"
-            validate={[required, minLength(2), maxLength(30)]} />
-        </div>
-        <div className="mt4">
-          <Field
-            label="My phone # is:"
-            name="phone"
-            component={TextField}
-            type="text"
-            placeholder="Phone Number"
-            normalize={normalizePhone}
-            validate={[required, phone]} />
-        </div>
-        <div className="mt4">
-          <Field
-            label="Active:"
-            name="active"
-            defaultValue={true}
-            component={Checkbox}
-            type="checkbox" />
-        </div>
-        <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
-        <div className="mt4">
-          <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
-            {this.props.saving &&
-              <FontAwesome name='spinner' spin={true} className="mr1"/>
-            }
-            Submit
-          </button>
-        </div>
-      </form>
+      <div>
+        <h2 className="lh-title fw2 f2">Create an Admin User</h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div>
+            <Field
+              label="First Name"
+              name="first_name"
+              component={TextField}
+              type="text"
+              placeholder="First Name"
+              validate={[required, minLength(2), maxLength(20)]} />            
+          </div>
+          <div className="mt4">
+            <Field
+              label="Last Name"
+              name="last_name"
+              component={TextField}
+              type="text"
+              placeholder="Last Name"
+              validate={[required, minLength(2), maxLength(30)]} />
+          </div>
+          <div className="mt4">
+            <Field
+              label="Phone Number"
+              name="phone"
+              component={TextField}
+              type="text"
+              placeholder="Phone Number"
+              normalize={normalizePhone}
+              validate={[required, phone]} />
+          </div>
+          <div className="mt4">
+            <Field
+              label="Active:"
+              name="active"
+              defaultValue={true}
+              component={Checkbox}
+              type="checkbox" />
+          </div>
+          <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
+          <div className="mt4">
+            <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
+              {this.props.saving &&
+                <FontAwesome name='spinner' spin={true} className="mr1"/>
+              }
+              Create Admin
+            </button>
+          </div>
+        </form>
+      </div>
     )
   }
 }

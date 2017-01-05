@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import  { logout }  from '../actions/Auth';
 import { browserHistory, Link } from 'react-router';
+import FlagsBanner from '../components/FlagsBanner';
 
 class UserNavContainer extends Component {
 
@@ -21,6 +22,7 @@ class UserNavContainer extends Component {
     const {user, location} = this.props;
     if(user) {
       return (
+        <div>
         <nav className="mb4">
           <ul className="nav nav-tabs">
             <li role="presentation" className={this.matchRoute("home")}>
@@ -48,6 +50,8 @@ class UserNavContainer extends Component {
           </ul>
           
         </nav>
+        <FlagsBanner />
+        </div>
       )
     } else {
       return null;

@@ -18,7 +18,7 @@ export const initAdminListRequestFailure = (error) => ({
   error
 })
 
-export const fetchAdmins = (active=true, limit=undefined, nextToken=undefined) => {
+export const fetchAdmins = (active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initAdminListRequest());
     return graphql.client.query(`

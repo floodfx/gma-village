@@ -11,21 +11,11 @@ class AdminListContainer extends Component {
 
   render() {
     return (
-      <div>
-        <div className="row">
-          <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
-            <h3 className="gma-orange">Welcome!</h3>
-            <p>
-              We look forward to connecting you to our community of Gma's.
-              Please select all the apply below to find a Gma that matches your needs.
-            </p>
-          </div>
-        </div>        
-        <div className="row">
-          <AdminList admins={this.props.admins}
-            loading={this.props.loading}
-            error={this.props.error} />
-        </div>
+      <div>        
+        <AdminList 
+          admins={this.props.admins}
+          loading={this.props.loading}
+          error={this.props.error} />
       </div>
     );
   }
