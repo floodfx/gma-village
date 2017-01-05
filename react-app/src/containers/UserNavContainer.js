@@ -24,24 +24,24 @@ class UserNavContainer extends Component {
         <nav className="mb4">
           <ul className="nav nav-tabs">
             <li role="presentation" className={this.matchRoute("home")}>
-              <Link to="/home" activeClassName="active">Home</Link>
+              <Link className="gma-nav-font fw6 ttu gray" to="/home">Home</Link>
             </li>
             <li role="presentation" className={this.matchRoute("profile")}>
-              <Link to="/profile">My Profile</Link>
+              <Link className="gma-nav-font fw6 ttu gray" to="/profile">My Profile</Link>
             </li>
             { user.kind === "Admin" &&
               <li role="presentation" className={this.matchRoute("admin")}>
-                <Link to="/admin/list">Admins</Link>
+                <Link className="gma-nav-font fw6 ttu gray" to="/admin/list">Admins</Link>
               </li>              
             }
             { (user.kind === "Admin" || user.kind === "Parent") &&
               <li role="presentation" className={this.matchRoute("gma")}>
-                <Link to="/gma/list">Gmas</Link>
+                <Link className="gma-nav-font fw6 ttu gray" to="/gma/list">Gmas</Link>
               </li>
             }
             { user.kind === "Admin" &&
               <li role="presentation" className={this.matchRoute("parent")}>
-                <Link to="/parent/list">Parents</Link>
+                <Link className="gma-nav-font fw6 ttu gray" to="/parent/list">Parents</Link>
               </li>
             }     
             <button className="pull-right mt1 btn gma-orange-bg" onClick={() => this.onLogoutClick()}>Log out</button>

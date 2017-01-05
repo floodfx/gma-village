@@ -76,3 +76,7 @@
     border: 1px solid #f9ac8e;
     border-bottom-color: #f37441;
 }
+
+.gma-nav-font {
+  font-family: proxima-nova;  
+}
