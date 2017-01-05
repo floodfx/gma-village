@@ -21,7 +21,7 @@ class UserNavContainer extends Component {
     const {user, location} = this.props;
     if(user) {
       return (
-        <nav >
+        <nav className="mb4">
           <ul className="nav nav-tabs">
             <li role="presentation" className={this.matchRoute("home")}>
               <Link to="/home" activeClassName="active">Home</Link>
@@ -43,10 +43,10 @@ class UserNavContainer extends Component {
               <li role="presentation" className={this.matchRoute("parent")}>
                 <Link to="/parent/list">Parents</Link>
               </li>
-            }   
-            
-            
+            }     
+            <button className="pull-right mt1 btn gma-orange-bg" onClick={() => this.onLogoutClick()}>Log out</button>
           </ul>
+          
         </nav>
       )
     } else {

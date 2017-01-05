@@ -2,7 +2,7 @@ import React from 'react';
 import AccountKitContainer from '../containers/AccountKitContainer';
 import FontAwesome from 'react-fontawesome';
 
-const Login = ({onLoginClick, initialized, loading, errors, debug}) => {
+const Login = ({onLoginClick, initialized, loading, errors, debug}) => {  
   let phoneInput
   return (
   <div>

@@ -61,3 +61,18 @@
 .gma-font {
   font-family: Georgia, serif;
 }
+
+.nav-tabs {
+    border-bottom: 1px solid #f37441;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    border: 1px solid #f37441;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs > li > a:hover {
+    background-color: #f9ac8e;
+    border: 1px solid #f9ac8e;
+    border-bottom-color: #f37441;
+}
