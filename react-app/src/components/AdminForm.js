@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-import { Role } from 'gma-village-data-model'
+import { Role } from 'gma-village-data-model';
 import { normalizePhone } from './forms/Normalize'
 import {
   required,
@@ -82,13 +82,12 @@ class AdminForm extends Component {
             <Field
               label="Active:"
               name="active"
-              defaultValue={true}
               component={Checkbox}
               type="checkbox" />
           </div>          
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
-          <Field name="kind" component="input" type="hidden" value="Admin" />          
-          <Field name="roles" component="input" type="hidden" value={[Role.ADMIN.name]} />
+          <Field name="kind" component="input" type="hidden" />
+          <Field name="roles" component="input" type="hidden" />
           
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>

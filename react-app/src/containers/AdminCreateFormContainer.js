@@ -6,6 +6,7 @@ import  { fetchAuthCookie }  from '../actions/Auth';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import { Link } from 'react-router';
+import { Role } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 
@@ -50,8 +51,12 @@ class AdminCreateFormContainer extends Component {
             handleFile={this.handleFile} 
             saving={this.props.saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            admin={admin}
-            />
+            initialValues={{
+              active: false,
+              roles: [Role.ADMIN.name],
+              kind: "Admin"
+            }}
+          />
         </div>
       )
     }
@@ -59,7 +64,6 @@ class AdminCreateFormContainer extends Component {
 }
 
 AdminCreateFormContainer.defaultProps = {
-  admin: undefined,
   saving: false,
   saved: false
 };
@@ -70,7 +74,6 @@ const mapStateToProps = (state) => {
     auth: auth.cookie,
     saving: saveAdmin.saving,
     error: saveAdmin.error,
-    admin: saveAdmin.admin,
     saved: saveAdmin.saved,
     profilePhotoUrl: uploadImage.image_url
   }

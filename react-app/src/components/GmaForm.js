@@ -115,7 +115,6 @@ class GmaForm extends Component {
               label="I can care for kids outside my area:"
               name="isAvailableOutsideNeighborhood"
               component={Checkbox}
-              defaultValue={false}
               type="checkbox" />
           </div>
           <div className="mt4">
@@ -207,8 +206,8 @@ class GmaForm extends Component {
           <Field name="otherDemeanor" component="input" type="hidden" />
           <Field name="otherCareExperience" component="input" type="hidden" />
           <Field name="otherCareTraining" component="input" type="hidden" />  
-          <Field name="kind" component="input" type="hidden" value="Gma"/>  
-          <Field name="city" component="input" type="hidden" value={City.OAKLAND.name}/>  
+          <Field name="kind" component="input" type="hidden"/>  
+          <Field name="city" component="input" type="hidden"/>  
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>

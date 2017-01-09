@@ -42,11 +42,15 @@ class ParentCreateFormContainer extends Component {
             <Alert type="danger" heading="Error" text={error} />
           }
           <ParentForm 
-            heading="Edit Parent"
+            heading="Create Parent"
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
             saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
+            initialValues={{
+              kind: "Parent",
+              active: false
+            }}
           />
         </div>
       )

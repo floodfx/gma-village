@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import  { fetchAuthCookie }  from '../actions/Auth'
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave'
 import  { uploadImage }  from '../actions/UploadImage'
-import { City } from 'gma-village-data-model'
+import { City } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 
@@ -49,8 +49,13 @@ class GmaCreateFormContainer extends Component {
             handleFile={this.handleFile} 
             saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            initialValues={{}}
-            />
+            initialValues={{
+              active: false,
+              kind: "Gma",
+              isAvailableOutsideNeighborhood: false,
+              city: City.OAKLAND.name
+            }}
+          />
         </div>
       )
     }
