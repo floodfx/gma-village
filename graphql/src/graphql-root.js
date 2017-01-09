@@ -46,6 +46,15 @@ const root = {
       }
     })
   },
+  admin: (root, {id}, context, info) => {
+    return new Promise((resolve, reject) => {
+      if(isAdmin(context.appUser)) {
+        resolve(userById(id));
+      } else {
+        reject("Not Authorized")
+      }
+    })
+  },
   currentUser: (root, input, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
@@ -96,6 +105,15 @@ const root = {
       const { appUser } = context;
       if(isAdmin(appUser)) {
         resolve(listUserByType("Parent", active));
+      } else {
+        reject("Not Authorized")
+      }
+    })
+  },
+  parent: (root, {id}, context, info) => {
+    return new Promise((resolve, reject) => {
+      if(isAdmin(context.appUser)) {
+        resolve(userById(id));
       } else {
         reject("Not Authorized")
       }

@@ -4,10 +4,12 @@ const resolvers = {
   Query: {
     accountKitInit: root.accountKitInit,
     admins: root.admins,
+    admin: root.admin,
     currentUser: root.currentUser,
     gma: root.gma,
     gmas: root.gmas,
-    parents: root.parents
+    parents: root.parents,
+    parent: root.parent
   },
   Mutation: {
     saveAdmin: root.saveAdmin,

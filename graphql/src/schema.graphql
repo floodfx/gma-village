@@ -186,10 +186,12 @@ enum Role {
 type Query {
   accountKitInit: AKInit!
   admins(active: Boolean, limit: Int, nextToken: String): UserListResult
+  admin(id: ID!): Admin
   currentUser: User
   gma(id: ID!): Gma
   gmas(active: Boolean, limit: Int, nextToken: String): UserListResult
   parents(active: Boolean, limit: Int, nextToken: String): UserListResult
+  parent(id: ID!): Parent
 }
 
 input AdminInput {
