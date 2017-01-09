@@ -96,6 +96,7 @@ class ProfileContainer extends Component {
               saving={saving} 
               profilePhotoUrl={this.props.profilePhotoUrl}
               initialValues={user}
+              currentUser={user}
             />
           }
         </div>

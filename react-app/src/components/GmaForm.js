@@ -54,7 +54,8 @@ class GmaForm extends Component {
       submitting,
       heading,
       initialValues,
-      saving
+      saving,
+      currentUser
      } = this.props
     return (
       <div>
@@ -165,6 +166,7 @@ class GmaForm extends Component {
           </div>
           <div className="mt4">
             <Field
+              disabled={currentUser.kind !== "Admin"}
               heading="Trainings:"
               name="careTrainings"
               options={CareTraining.enumValues.map((val) => { return { id: val.name, label: val.text } })}

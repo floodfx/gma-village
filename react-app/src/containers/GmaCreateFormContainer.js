@@ -29,7 +29,7 @@ class GmaCreateFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, error, loading} = this.props;
+    const {saving, saved, error, loading, currentUser} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -55,6 +55,7 @@ class GmaCreateFormContainer extends Component {
               isAvailableOutsideNeighborhood: false,
               city: City.OAKLAND.name
             }}
+            currentUser={currentUser}
           />
         </div>
       )
@@ -66,6 +67,7 @@ const mapStateToProps = (state) => {
   const { saveGma, uploadImage, auth } = state
   return {
     auth: auth.cookie,
+    currentUser: auth.user,
     saving: saveGma.saving,
     error: saveGma.error,
     saved: saveGma.saved,

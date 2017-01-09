@@ -49,7 +49,8 @@ class MultiCheckbox extends Component {
       options,
       heading,
       input: { onBlur },
-      meta: { touched, error, warning }
+      meta: { touched, error, warning },
+      disabled
     } = this.props
     const { selected } = this.state;
 
@@ -67,6 +68,7 @@ class MultiCheckbox extends Component {
               onBlur={() => onBlur(selected)}
               checked={isChecked}
               value={option.id}
+              disabled={disabled}
               />
             {option.label}
           </label>
@@ -77,6 +79,7 @@ class MultiCheckbox extends Component {
               name={"other" + name }
               value={this.state.otherTextValue}
               onChange={event => this.handleOtherTextValueChange(event)}
+              disabled={disabled}
               />
           }
         </div>
@@ -95,6 +98,10 @@ class MultiCheckbox extends Component {
   }
 }
 
+MultiCheckbox.defaultProps = {
+  disabled: false
+}
+
 MultiCheckbox.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -106,7 +113,8 @@ MultiCheckbox.propTypes = {
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
   onOtherValueChange: PropTypes.func,
-  initialValue: PropTypes.any
+  initialValue: PropTypes.any,
+  disabled: PropTypes.bool
 };
 
 export default MultiCheckbox;

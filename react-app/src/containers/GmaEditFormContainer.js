@@ -29,7 +29,7 @@ class GmaEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, gma, error, loading} = this.props;
+    const {saving, saved, gma, error, loading, currentUser} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -50,6 +50,7 @@ class GmaEditFormContainer extends Component {
             saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={gma}
+            currentUser={currentUser}
             />
         </div>
       )
@@ -65,8 +66,9 @@ GmaEditFormContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { gmaProfile, saveGma, uploadImage } = state
+  const { auth, gmaProfile, saveGma, uploadImage } = state
   return {
+    currentUser: auth.user,
     saving: saveGma.saving,
     error: saveGma.error,
     gma: gmaProfile.gma,
