@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 class ParentProfile extends Component {
 
@@ -12,7 +13,9 @@ class ParentProfile extends Component {
             <img className="img-rounded img-responsive gma-orange-border" style={{ objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px' }} src={parent.profilePhotoUrl} alt="profile photo" />
           }
           <div className="">
-            <h3 className="gma-orange tc gma-font fw3">{parent.first_name} {parent.last_name}</h3>
+            <h3 className="gma-orange tc gma-font fw3">
+              <Link to={`/parent/edit/${parent.id}`}>Parent {parent.first_name} {parent.last_name}</Link>
+            </h3>
             <h4 className="tc fw4">
               Phone: {parent.phone} 
             </h4>

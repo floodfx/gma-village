@@ -52,9 +52,7 @@ class GmaForm extends Component {
   }
 
   onOtherValueChange = (name, value) => {
-    console.log("onOtherValueChange", name, value)
     const otherField = otherFieldMap[name];
-    console.log("changingOtherValue", name, otherField, value)
     this.props.change(otherField, value);
   }
 

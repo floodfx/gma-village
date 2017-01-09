@@ -3,6 +3,7 @@ import graphql from '../graphql/client'
 export const SAVE_PARENT_USER_REQUEST = "SAVE_PARENT_USER_REQUEST"
 export const SAVE_PARENT_USER_REQUEST_SUCCESS = "SAVE_PARENT_USER_REQUEST_SUCCESS"
 export const SAVE_PARENT_USER_REQUEST_FAILURE = "SAVE_PARENT_USER_REQUEST_FAILURE"
+export const RESET_SAVE_PARENT_USER_REQUEST = "RESET_SAVE_PARENT_USER_REQUEST"
 
 
 export const saveParentUserRequest = () => ({
@@ -17,6 +18,16 @@ export const saveParentUserRequestSuccess = (parent) => ({
 export const saveParentUserRequestFailure = () => ({
   type: SAVE_PARENT_USER_REQUEST_FAILURE
 })
+
+export const resetParentUserRequest = () => ({
+  type: RESET_SAVE_PARENT_USER_REQUEST
+})
+
+export const resetParentUser = () => {
+  return (dispatch) => {
+    dispatch(resetParentUserRequest());
+  }
+}
 
 export const saveParentUser = (parent) => {
   return (dispatch) => {

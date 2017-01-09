@@ -46,7 +46,7 @@ class AuthListener {
   }
 
   requireParent = (nextState, replace) => {
-    console.log("requireParent")
+    console.log("requireParent", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     } else if(!(this.isParent() || this.isAdmin())) {
@@ -57,7 +57,7 @@ class AuthListener {
   }
 
   requireGma = (nextState, replace) => {
-    console.log("requireGma")
+    console.log("requireGma", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     } else if(!(this.isGma() || this.isAdmin())) {
@@ -68,7 +68,7 @@ class AuthListener {
   }
 
   requireAdmin = (nextState, replace) => {
-    console.log("requireAdmin")
+    console.log("requireAdmin", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     } else if(!this.isAdmin()) {
@@ -79,7 +79,7 @@ class AuthListener {
   }
 
   requireUser = (nextState, replace) => {
-    console.log("requireUser")
+    console.log("requireUser", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     }

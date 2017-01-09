@@ -7,12 +7,16 @@ import { reducer as formReducer } from 'redux-form'
 // reducers
 import adminList from './reducers/AdminList'
 import adminProfile  from './reducers/AdminProfile'
+import saveAdmin  from './reducers/SaveAdmin'
+
 import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
-import saveAdmin  from './reducers/SaveAdmin'
 import saveGma  from './reducers/SaveGma'
-import createParent  from './reducers/CreateParent'
+
+import saveParent  from './reducers/SaveParent'
+import parentProfile  from './reducers/ParentProfile'
 import parentList  from './reducers/ParentList'
+
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
 import uploadImage  from './reducers/UploadImage'
@@ -38,11 +42,12 @@ const store = createStore(
   combineReducers({
     adminList,
     adminProfile,
-    gmasList,
-    gmaProfile,
     saveAdmin,
+    gmasList,
+    gmaProfile,    
     saveGma,
-    createParent,
+    saveParent,
+    parentProfile,
     parentList,
     accountKitInit,
     auth,

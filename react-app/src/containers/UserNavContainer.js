@@ -13,8 +13,6 @@ class UserNavContainer extends Component {
 
   matchRoute = (routeName) => {
     const {location} = this.props;
-    console.log("this.props.location",location)
-    console.log("indexOf",routeName, location.pathname.indexOf(routeName))
     return location.pathname.indexOf(routeName) >= 0 ? "active" : undefined
   }
 

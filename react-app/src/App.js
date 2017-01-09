@@ -13,7 +13,7 @@ import GmaEditFormContainer from './containers/GmaEditFormContainer';
 
 import ParentListContainer from './containers/ParentListContainer';
 import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
-// import ParentEditFormContainer from './containers/ParentEditFormContainer';
+import ParentEditFormContainer from './containers/ParentEditFormContainer';
 
 import LoginContainer from './containers/LoginContainer';
 import HomeContainer from './containers/HomeContainer';
@@ -49,8 +49,7 @@ const Main = ({children}) => (
     <Footer />
   </div>
 )
-// 
-//<Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
+
 const App = ({ store, authListener }) => {
   return (
     <Provider store={store}>
@@ -68,7 +67,7 @@ const App = ({ store, authListener }) => {
 
           <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>
           <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>
-          
+          <Route path="/parent/edit/:parentId" component={ParentEditFormContainer} onEnter={authListener.requireAdmin}/>
           
           <Route path="/login" component={LoginContainer}/>
           <Route path="/home" component={HomeContainer} onEnter={authListener.requireUser}/>

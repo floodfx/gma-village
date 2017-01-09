@@ -34,7 +34,7 @@ class ParentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      kids: [],
+      kids: props.initialValues.kids || [],
       kidFirstName: '',
       kidBirthDay: "0",
       kidBirthMonth: "0",
@@ -63,7 +63,7 @@ class ParentForm extends Component {
   componentWillUpdate(nextProps, nextState) {
     console.log(nextState)
 
-    const validKid = (nextState.kidFirstName.length > 2 && 
+    const validKid = (nextState.kidFirstName.length > 1 && 
                       nextState.kidBirthDay != "0" && 
                       nextState.kidBirthMonth != "0" && 
                       nextState.kidBirthYear != "0")
@@ -72,7 +72,6 @@ class ParentForm extends Component {
     }
     if(this.state.kids !== nextState.kids) {
       this.props.change("kids", nextState.kids);
-      console.log("kids change", this.state.kids, nextState.kids)
       this.resetKidInput()
     }
   }
@@ -84,7 +83,6 @@ class ParentForm extends Component {
   }
 
   addKid = () => {
-    console.log("addKid", this.state)
     const m = leftPad(this.state.kidBirthMonth, 2, '0');
     const d = leftPad(this.state.kidBirthDay, 2, '0');
     const newKid = {
@@ -97,7 +95,6 @@ class ParentForm extends Component {
   }
 
   kidFirstNameChange = (kidFirstName) => {
-    console.log("kidFirstName", kidFirstName)
     this.setState({
       kidFirstName 
     })    
@@ -109,7 +106,15 @@ class ParentForm extends Component {
   }
 
   render() {
-    const { handleSubmit, handleFile, pristine, invalid, reset, submitting } = this.props
+    const { 
+      handleSubmit, 
+      handleFile, 
+      pristine, 
+      invalid, 
+      reset, 
+      submitting,
+      initialValues
+    } = this.props
     const { kids } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
@@ -214,6 +219,7 @@ class ParentForm extends Component {
             name="neighborhood"
             options={Neighborhood.enumValues.map((val) => { return { id: val.name, label: val.text } })}
             component={MultiRadio}
+            otherTextValue={initialValues.otherNeighborhood}
             onOtherValueChange={this.onOtherValueChange}
             />          
         </div>
@@ -260,12 +266,20 @@ const validateOthers = values => {
 
 ParentForm = reduxForm({
   form: 'parentForm',   // a unique identifier for this form
-  validate: validateOthers,
-  initialValues: {
+  validate: validateOthers
+})(ParentForm)
+
+const mapStateToProps = (state) => {
+  const { parentProfile } = state;
+  var initialValues = parentProfile.parent || {
     kids: [],
     active: false,
     kind: "Parent"
   }
-})(ParentForm)
+  return {
+    initialValues
+  }
+}
 
-export default ParentForm
+
+export default connect(mapStateToProps)(ParentForm)

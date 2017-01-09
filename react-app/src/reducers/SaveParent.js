@@ -1,11 +1,13 @@
 import {
   SAVE_PARENT_USER_REQUEST,
   SAVE_PARENT_USER_REQUEST_SUCCESS,
-  SAVE_PARENT_USER_REQUEST_FAILURE
-} from '../actions/ParentCreateFormContainer'
+  SAVE_PARENT_USER_REQUEST_FAILURE,
+  RESET_SAVE_PARENT_USER_REQUEST
+} from '../actions/ParentSave';
 
-const createParent = (state = {
+const saveParent = (state = {
   saving: false,
+  saved: false
 }, action) => {
   switch(action.type) {
     case SAVE_PARENT_USER_REQUEST: {
@@ -27,9 +29,16 @@ const createParent = (state = {
         error: action.error
       })
     }
+    case RESET_SAVE_PARENT_USER_REQUEST: {
+      return Object.assign({}, state, {
+        saving: false,
+        saved: false,
+        parent: undefined
+      })
+    }
     default:
       return state;
   }
 }
 
-export default createParent
+export default saveParent;

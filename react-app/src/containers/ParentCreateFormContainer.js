@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import ParentForm from '../components/ParentForm'
-import  { fetchAuthCookie }  from '../actions/Auth'
-import { connect } from 'react-redux'
-import  { saveParentUser }  from '../actions/ParentCreateFormContainer'
-import  { uploadImage }  from '../actions/UploadImage'
+import ParentForm from '../components/ParentForm';
+import  { fetchAuthCookie }  from '../actions/Auth';
+import { connect } from 'react-redux';
+import  { saveParentUser }  from '../actions/ParentSave';
+import  { uploadImage }  from '../actions/UploadImage';
 
 class ParentCreateFormContainer extends Component {
 
@@ -27,13 +27,13 @@ class ParentCreateFormContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { createParent, uploadImage, auth } = state
+  const { saveParent, uploadImage, auth } = state
   return {
     auth: auth.cookie,
-    saving: createParent.saving,
-    error: createParent.error,
-    parent: createParent.parent,
-    saved: createParent.saved,
+    saving: saveParent.saving,
+    error: saveParent.error,
+    parent: saveParent.parent,
+    saved: saveParent.saved,
     profilePhotoUrl: uploadImage.image_url
   }
 }
