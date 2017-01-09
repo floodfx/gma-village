@@ -1,11 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import GmaForm from '../components/GmaForm';
-import GmaProfile from '../components/GmaProfile';
 import { connect } from 'react-redux';
 import  { fetchGma }  from '../actions/GmaProfile';
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
 import  { uploadImage }  from '../actions/UploadImage';
-import { Link } from 'react-router';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 

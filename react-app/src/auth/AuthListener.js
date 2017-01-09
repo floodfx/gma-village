@@ -6,11 +6,11 @@ class AuthListener {
   }
 
   listen = () => {
-    let previousUser = this.currentUser;
+    // let previousUser = this.currentUser;
     this.currentUser = this.store.getState().auth.user
-    if(this.currentUser !== previousUser) {
-      console.log("user changed", this.currentUser)
-    }
+    // if(this.currentUser !== previousUser) {
+    //   console.log("user changed", this.currentUser)
+    // }
   }
 
   loggedIn = () => {
@@ -46,7 +46,6 @@ class AuthListener {
   }
 
   requireParent = (nextState, replace) => {
-    console.log("requireParent", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     } else if(!(this.isParent() || this.isAdmin())) {
@@ -57,7 +56,6 @@ class AuthListener {
   }
 
   requireGma = (nextState, replace) => {
-    console.log("requireGma", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     } else if(!(this.isGma() || this.isAdmin())) {
@@ -68,7 +66,6 @@ class AuthListener {
   }
 
   requireAdmin = (nextState, replace) => {
-    console.log("requireAdmin", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     } else if(!this.isAdmin()) {
@@ -79,7 +76,6 @@ class AuthListener {
   }
 
   requireUser = (nextState, replace) => {
-    console.log("requireUser", nextState)
     if (!this.loggedIn()) {
       this.replaceWithNextPath(nextState, replace);
     }

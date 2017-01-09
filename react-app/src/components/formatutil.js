@@ -1,5 +1,4 @@
-import React from 'react'
-import { CareAge } from 'gma-village-data-model'
+import React from 'react';
 
 export const capitalizeWords = (word) => {
   return <span style={{textTransform:'capitalize'}}>{word.toLowerCase().replace(/_/g, " ")}</span>

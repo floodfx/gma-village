@@ -1,11 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import AdminForm from '../components/AdminForm';
-import AdminProfile from '../components/AdminProfile';
 import { connect } from 'react-redux';
 import  { fetchAdmin }  from '../actions/AdminProfile';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { uploadImage }  from '../actions/UploadImage';
-import { Link } from 'react-router';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 
@@ -49,7 +47,7 @@ class AdminEditFormContainer extends Component {
             heading="Edit Admin"
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
-            saving={this.props.saving} 
+            saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={admin}
             />

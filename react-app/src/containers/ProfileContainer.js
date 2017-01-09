@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UserNavContainer from './UserNavContainer';
 import AdminForm from '../components/AdminForm';
 import GmaForm from '../components/GmaForm';
+import ParentForm from '../components/ParentForm';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
 import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';

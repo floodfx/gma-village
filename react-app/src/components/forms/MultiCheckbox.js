@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import isUndefined from 'lodash/isUndefined';
-import isArray from 'lodash/isArray';
 
 class MultiCheckbox extends Component {
   constructor(props) {
     super(props);
-    console.log("props", props)
     this.state = {
       selected: props.input.value || [],
       otherTextValue: props.otherTextValue || ''
@@ -51,8 +48,7 @@ class MultiCheckbox extends Component {
       name,
       options,
       heading,
-      otherOption,
-      input: { value, onChange, onBlur },
+      input: { onBlur },
       meta: { touched, error, warning }
     } = this.props
     const { selected } = this.state;

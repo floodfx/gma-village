@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import  { accountKitAuth }  from '../actions/AccountKitContainer';
-import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth';
 import AdminHome from '../components/AdminHome';
+import GmaHome from '../components/GmaHome';
+import ParentHome from '../components/ParentHome';
 import LoadingIndicator from '../components/LoadingIndicator';
-import cookie from 'react-cookie';
 
 class HomeContainer extends Component {
 

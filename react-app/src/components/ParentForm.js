@@ -1,33 +1,26 @@
 import React, { Component } from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
-import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 import moment from 'moment';
 import leftPad from 'left-pad';
 import {  
   Neighborhood
-} from 'gma-village-data-model'
-import { normalizePhone } from './forms/Normalize'
+} from 'gma-village-data-model';
+import { normalizePhone } from './forms/Normalize';
 import {
   required,
   requiredArray,
   minLength,
   maxLength,
-  minValue,
-  number,
-  phone,
-  yesOrNo
-} from './forms/Validate'
-
-import FontAwesome from 'react-fontawesome'
-import MultiCheckbox from './forms/MultiCheckbox'
-import MultiRadio from './forms/MultiRadio'
-import TextField from './forms/TextField'
-import TextArea from './forms/TextArea'
-import Checkbox from './forms/Checkbox'
-import Hidden from './forms/Hidden'
+  phone
+} from './forms/Validate';
+import FontAwesome from 'react-fontawesome';
+import MultiRadio from './forms/MultiRadio';
+import TextField from './forms/TextField';
+import Checkbox from './forms/Checkbox';
+import Hidden from './forms/Hidden';
 
 const otherFieldMap = {
-  neighborhood: "otherNeighborhood",  
+  neighborhood: "otherNeighborhood"  
 }
 
 class ParentForm extends Component {
@@ -42,6 +35,7 @@ class ParentForm extends Component {
     }
     this.state = {
       kids,
+      otherNeighborhood,
       kidFirstName: '',
       kidBirthDay: "0",
       kidBirthMonth: "0",
@@ -69,9 +63,9 @@ class ParentForm extends Component {
 
   componentWillUpdate(nextProps, nextState) {
     const validKid = (nextState.kidFirstName.length > 1 && 
-                      nextState.kidBirthDay != "0" && 
-                      nextState.kidBirthMonth != "0" && 
-                      nextState.kidBirthYear != "0")
+                      nextState.kidBirthDay !== "0" && 
+                      nextState.kidBirthMonth !== "0" && 
+                      nextState.kidBirthYear !== "0")
     if(validKid !== this.state.validKid) {
       this.setState({validKid})
     }
@@ -116,9 +110,7 @@ class ParentForm extends Component {
       handleFile, 
       pristine, 
       invalid, 
-      reset, 
       submitting,
-      initialValues,
       heading
     } = this.props
     const { kids, otherNeighborhood } = this.state;

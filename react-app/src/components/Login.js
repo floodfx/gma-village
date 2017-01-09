@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 
 class Login extends Component {
   
 
   render() {
-    const {onLoginClick, initialized, isLoggingIn, errors, debug} = this.props;
+    const {onLoginClick, initialized, isLoggingIn, errors} = this.props;
     let phoneInput;
     return (
       <div>

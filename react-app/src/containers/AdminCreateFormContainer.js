@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import AdminForm from '../components/AdminForm';
-import AdminProfile from '../components/AdminProfile';
 import { connect } from 'react-redux';
 import  { fetchAuthCookie }  from '../actions/Auth';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { uploadImage }  from '../actions/UploadImage';
-import { Link } from 'react-router';
 import { Role } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
@@ -31,7 +29,7 @@ class AdminCreateFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, admin, error, loading} = this.props;
+    const {saving, saved, error, loading} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -49,7 +47,7 @@ class AdminCreateFormContainer extends Component {
             heading="Create Admin"
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
-            saving={this.props.saving} 
+            saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={{
               active: false,

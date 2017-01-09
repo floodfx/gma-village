@@ -11,11 +11,11 @@ class Client {
 
   set store (store) {
     store.subscribe(() => {
-      let previousAuth = this.auth;
+      // let previousAuth = this.auth;
       this.auth = store.getState().auth.cookie;
-      if(this.auth !== previousAuth) {
-        console.log("auth changed", this.auth)
-      }
+      // if(this.auth !== previousAuth) {
+      //   console.log("auth changed", this.auth)
+      // }
     });
   }
 
@@ -24,7 +24,6 @@ class Client {
     if(this.auth) {
       headers = Object.assign(headers, {Authorization: `Bearer ${this.auth.ak_access_token}`});
     }
-    console.log("headers", headers)
     return new Lokka({
       transport: new Transport(url, {credentials: false, headers})
     })

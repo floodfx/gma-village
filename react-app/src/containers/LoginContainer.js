@@ -4,9 +4,7 @@ import AccountKitContainer from './AccountKitContainer';
 import { connect } from 'react-redux';
 import  { accountKitAuth }  from '../actions/AccountKitContainer';
 import LoadingIndicator from '../components/LoadingIndicator';
-
 import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
-import cookie from 'react-cookie';
 import { browserHistory } from 'react-router'
 
 class LoginContainer extends Component {

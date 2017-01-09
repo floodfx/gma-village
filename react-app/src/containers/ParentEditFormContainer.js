@@ -1,11 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ParentForm from '../components/ParentForm';
-import ParentProfile from '../components/ParentProfile';
 import { connect } from 'react-redux';
 import  { fetchParent }  from '../actions/ParentProfile';
 import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
 import  { uploadImage }  from '../actions/UploadImage';
-import { Link } from 'react-router';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 

@@ -1,14 +1,10 @@
 import { normalizePhone } from './Normalize';
 
-export const required = (value) => {
-  console.log("required validate", value) 
-  return value ? undefined : 'Required'
-} 
+export const required = value => 
+  value ? undefined : 'Required'
 
-export const requiredArray = (value) => {
-  console.log("requiredArray validate", value) 
-  return (value === undefined || value === null || (value instanceof Array && value.length !== 0)) ? undefined : 'Required'
-} 
+export const requiredArray = value => 
+  (value === undefined || value === null || (value instanceof Array && value.length !== 0)) ? undefined : 'Required'
 
 export const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined

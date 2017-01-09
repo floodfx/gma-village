@@ -1,34 +1,27 @@
 import React, { Component } from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
-import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 import {
   Availability,
   CareAge,
   CareExperience,
   CareLocation,
   CareTraining,
-  City,
   Demeanor,
   Neighborhood
 } from 'gma-village-data-model'
 import { normalizePhone } from './forms/Normalize'
 import {
   required,
-  requiredArray,
   minLength,
   maxLength,
-  minValue,
-  number,
-  phone,
-  yesOrNo
-} from './forms/Validate'
-
-import FontAwesome from 'react-fontawesome'
-import MultiCheckbox from './forms/MultiCheckbox'
-import MultiRadio from './forms/MultiRadio'
-import TextField from './forms/TextField'
-import TextArea from './forms/TextArea'
-import Checkbox from './forms/Checkbox'
+  phone
+} from './forms/Validate';
+import FontAwesome from 'react-fontawesome';
+import MultiCheckbox from './forms/MultiCheckbox';
+import MultiRadio from './forms/MultiRadio';
+import TextField from './forms/TextField';
+import TextArea from './forms/TextArea';
+import Checkbox from './forms/Checkbox';
 
 const otherFieldMap = {
   neighborhood: "otherNeighborhood",
@@ -39,10 +32,6 @@ const otherFieldMap = {
 }
 
 class GmaForm extends Component {
-  constructor(props) {
-    super(props);
-    console.log("GmaForm props", props);
-  }
 
   componentWillReceiveProps(newProps) {
     const {change, profilePhotoUrl} = this.props;
@@ -62,7 +51,6 @@ class GmaForm extends Component {
       handleFile, 
       pristine, 
       invalid, 
-      reset, 
       submitting,
       heading,
       initialValues,

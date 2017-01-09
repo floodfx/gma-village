@@ -17,7 +17,7 @@ class UserNavContainer extends Component {
   }
 
   render() {
-    const {user, location} = this.props;
+    const { user } = this.props;
     if(user) {
       return (
         <div>

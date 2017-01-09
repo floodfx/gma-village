@@ -10,7 +10,7 @@ class AdminProfile extends Component {
 
         <div className="thumbnail">
           {admin.profilePhotoUrl &&
-            <img className="img-rounded img-responsive gma-orange-border" style={{ objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px' }} src={admin.profilePhotoUrl} alt="profile photo" />
+            <img className="img-rounded img-responsive gma-orange-border" style={{ objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px' }} src={admin.profilePhotoUrl} alt="profile" />
           }
           <div className="">
             <h3 className="gma-orange tc gma-font fw3">

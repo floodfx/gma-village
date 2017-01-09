@@ -6,7 +6,8 @@ import {
 
 const gmaProfile = (state = {
   loading: true,
-  error: ''
+  error: undefined,
+  gma: undefined
 }, action) => {
   switch(action.type) {
     case FETCH_GMA_REQUEST: {

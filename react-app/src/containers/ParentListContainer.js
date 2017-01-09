@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import ParentList from '../components/ParentList'
-import { connect } from 'react-redux'
-import  { fetchParents }  from '../actions/ParentListContainer'
-import  { Neighborhood }  from 'gma-village-data-model'
-
+import ParentList from '../components/ParentList';
+import { connect } from 'react-redux';
+import  { fetchParents }  from '../actions/ParentListContainer';
 
 class ParentListContainer extends Component {
 

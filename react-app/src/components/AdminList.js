@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import FontAwesome from 'react-fontawesome';
 import AdminProfile from './AdminProfile';
 import LoadingIndicator from './LoadingIndicator';
 

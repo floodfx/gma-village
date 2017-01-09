@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import isUndefined from 'lodash/isUndefined';
-import isArray from 'lodash/isArray';
 
 class MultiRadio extends Component {
   constructor(props) {
     super(props);
-    console.log("MutiRadio props", props)
     this.state = {
       selected: props.input.value,
       otherTextValue: props.otherTextValue || ''
@@ -44,7 +41,7 @@ class MultiRadio extends Component {
       name,
       options,
       heading,
-      input: { value, onChange, onBlur },
+      input: { value, onBlur },
       meta: { touched, error, warning }
     } = this.props
     const { selected } = this.state;

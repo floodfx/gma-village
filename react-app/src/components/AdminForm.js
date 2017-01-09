@@ -1,32 +1,17 @@
 import React, { Component } from 'react';
-import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
-import { connect } from 'react-redux';
-import { Role } from 'gma-village-data-model';
-import { normalizePhone } from './forms/Normalize'
+import { Field, reduxForm } from 'redux-form';
+import { normalizePhone } from './forms/Normalize';
 import {
   required,
-  requiredArray,
   minLength,
   maxLength,
-  minValue,
-  number,
-  phone,
-  yesOrNo
-} from './forms/Validate'
-
-import FontAwesome from 'react-fontawesome'
-import MultiCheckbox from './forms/MultiCheckbox'
-import MultiRadio from './forms/MultiRadio'
-import TextField from './forms/TextField'
-import TextArea from './forms/TextArea'
-import Checkbox from './forms/Checkbox'
+  phone
+} from './forms/Validate';
+import FontAwesome from 'react-fontawesome';
+import TextField from './forms/TextField';
+import Checkbox from './forms/Checkbox';
 
 class AdminForm extends Component {
-
-  constructor(props) {
-    super(props);
-    console.log("AdminForm props", props)
-  }
 
   componentWillReceiveProps(newProps) {
     // change value of profilePhotoUrl when prop comes in
@@ -42,7 +27,6 @@ class AdminForm extends Component {
       handleFile, 
       pristine, 
       invalid, 
-      reset, 
       submitting,
       heading
     } = this.props
@@ -84,7 +68,17 @@ class AdminForm extends Component {
               name="active"
               component={Checkbox}
               type="checkbox" />
-          </div>          
+          </div>   
+          <div className="mt4">
+            <label>Profile Photo:</label>
+            <div>
+              <Field 
+                name="profilePhoto" 
+                component="input" 
+                type="file" 
+                onChange={(e) => handleFile(e)} />
+            </div>          
+          </div>        
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
           <Field name="kind" component="input" type="hidden" />
           <Field name="roles" component="input" type="hidden" />

@@ -8,8 +8,7 @@ import {
   CareExperience,
   CareLocation,
   CareTraining,
-  Demeanor,
-  Neighborhood
+  Demeanor
 } from 'gma-village-data-model';
 
 class GmaProfile extends Component {
