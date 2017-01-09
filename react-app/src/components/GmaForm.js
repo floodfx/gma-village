@@ -206,13 +206,14 @@ class GmaForm extends Component {
           <Field name="otherDemeanor" component="input" type="hidden" />
           <Field name="otherCareExperience" component="input" type="hidden" />
           <Field name="otherCareTraining" component="input" type="hidden" />  
+          <Field name="kind" component="input" type="hidden" />  
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
                 <FontAwesome name='spinner' spin={true} className="mr1"/>
               }
-              Submit
+              Save
             </button>
           </div>
         </form>
@@ -277,7 +278,8 @@ const mapStateToProps = (state) => {
   var initialValues = gmaProfile.gma || {
     city: City.OAKLAND.name,
     active: false,
-    isAvailableOutsideNeighborhood: false
+    isAvailableOutsideNeighborhood: false,
+    kind: "Gma"
   }
   return {
     initialValues

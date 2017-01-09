@@ -66,7 +66,6 @@ AdminCreateFormContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const { saveAdmin, uploadImage, auth } = state
-  console.log("saveAdmin", saveAdmin)
   return {
     auth: auth.cookie,
     saving: saveAdmin.saving,

@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import GmaForm from '../components/GmaForm'
 import { connect } from 'react-redux'
 import  { fetchAuthCookie }  from '../actions/Auth'
-import  { saveGmaUser }  from '../actions/GmaSave'
+import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave'
 import  { uploadImage }  from '../actions/UploadImage'
 import { City } from 'gma-village-data-model'
+import LoadingIndicator from '../components/LoadingIndicator';
+import Alert from '../components/Alert';
 
 
 class GmaCreateFormContainer extends Component {
@@ -13,8 +15,11 @@ class GmaCreateFormContainer extends Component {
     this.props.dispatch(fetchAuthCookie())
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(resetGmaUser())
+  }
+
   handleSubmit = (values) => {    
-    console.log("handleSubmit", values)
     delete values.profilePhoto
     this.props.dispatch(saveGmaUser(values))
   }
@@ -24,15 +29,31 @@ class GmaCreateFormContainer extends Component {
   }
 
   render() {
-    return (
-      <GmaForm 
-        heading="Create Gma"
-        onSubmit={this.handleSubmit} 
-        handleFile={this.handleFile} 
-        saving={this.props.saving} 
-        profilePhotoUrl={this.props.profilePhotoUrl}
-        />
-    )
+    const {saving, saved, gma, error, loading} = this.props;
+    if(loading) {
+      return (
+        <LoadingIndicator text="Loading..." />
+      );
+    } else {
+      return (
+        <div>
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Gma." />
+          }
+          {error && 
+            <Alert type="danger" heading="Error" text={error} />
+          }
+          <GmaForm 
+            heading="Create Gma"
+            onSubmit={this.handleSubmit} 
+            handleFile={this.handleFile} 
+            saving={saving} 
+            profilePhotoUrl={this.props.profilePhotoUrl}
+            gma={gma}
+            />
+        </div>
+      )
+    }
   }
 }
 
