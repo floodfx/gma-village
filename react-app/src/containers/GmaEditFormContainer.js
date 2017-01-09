@@ -1,29 +1,29 @@
 import React, { Component, PropTypes } from 'react';
-import AdminForm from '../components/AdminForm';
-import AdminProfile from '../components/AdminProfile';
+import GmaForm from '../components/GmaForm';
+import GmaProfile from '../components/GmaProfile';
 import { connect } from 'react-redux';
-import  { fetchAdmin }  from '../actions/AdminProfile';
-import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
+import  { fetchGma }  from '../actions/GmaProfile';
+import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import { Link } from 'react-router';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 
 
-class AdminEditFormContainer extends Component {
+class GmaEditFormContainer extends Component {
 
   componentWillMount() {
-    const adminId = this.props.params.adminId;
-    this.props.dispatch(fetchAdmin(adminId))
+    const gmaId = this.props.params.gmaId;
+    this.props.dispatch(fetchGma(gmaId))
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetAdminUser())
+    this.props.dispatch(resetGmaUser())
   }
 
   handleSubmit = (values) => {    
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveAdminUser(values))
+    this.props.dispatch(saveGmaUser(values))
   }
 
   handleFile = (e) => {
@@ -31,7 +31,7 @@ class AdminEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, admin, error, loading} = this.props;
+    const {saving, saved, gma, error, loading} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -40,18 +40,18 @@ class AdminEditFormContainer extends Component {
       return (
         <div>
           {saved && 
-            <Alert type="success" heading="Success" text="Saved Admin." />
+            <Alert type="success" heading="Success" text="Saved Gma." />
           }
           {error && 
             <Alert type="danger" heading="Error" text={error} />
           }
-          <AdminForm 
-            heading="Edit Admin"
+          <GmaForm 
+            heading="Edit Gma"
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
-            saving={this.props.saving} 
+            saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            admin={admin}
+            gma={gma}
             />
         </div>
       )
@@ -59,23 +59,23 @@ class AdminEditFormContainer extends Component {
   }
 }
 
-AdminEditFormContainer.defaultProps = {
-  admin: undefined,
+GmaEditFormContainer.defaultProps = {
+  gma: undefined,
   saving: false,
   saved: false,
   loading: true,
 };
 
 const mapStateToProps = (state) => {
-  const { adminProfile, saveAdmin, uploadImage } = state
+  const { gmaProfile, saveGma, uploadImage } = state
   return {
-    saving: saveAdmin.saving,
-    error: saveAdmin.error,
-    admin: saveAdmin.admin,
-    saved: saveAdmin.saved,
+    saving: saveGma.saving,
+    error: saveGma.error,
+    gma: saveGma.gma,
+    saved: saveGma.saved,
     profilePhotoUrl: uploadImage.image_url,
-    loading: adminProfile.loading,
+    loading: gmaProfile.loading,
   }
 }
 
-export default connect(mapStateToProps)(AdminEditFormContainer)
+export default connect(mapStateToProps)(GmaEditFormContainer)

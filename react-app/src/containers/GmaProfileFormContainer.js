@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import GmaProfile from '../components/GmaProfile'
-import LoadingIndicator from '../components/LoadingIndicator'
-import { connect } from 'react-redux'
-import  { fetchGma }  from '../actions/GmaProfileContainer'
+import GmaProfile from '../components/GmaProfile';
+import LoadingIndicator from '../components/LoadingIndicator';
+import { connect } from 'react-redux';
+import  { fetchGma }  from '../actions/GmaProfile';
 
 
 class GmaProfileFormContainer extends Component {

@@ -24,7 +24,15 @@ class GmaCreateFormContainer extends Component {
   }
 
   render() {
-    return <GmaForm onSubmit={this.handleSubmit} handleFile={this.handleFile} saving={this.props.saving} profilePhotoUrl={this.props.profilePhotoUrl}/>;
+    return (
+      <GmaForm 
+        heading="Create Gma"
+        onSubmit={this.handleSubmit} 
+        handleFile={this.handleFile} 
+        saving={this.props.saving} 
+        profilePhotoUrl={this.props.profilePhotoUrl}
+        />
+    )
   }
 }
 

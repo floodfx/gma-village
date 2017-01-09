@@ -2,7 +2,7 @@ import {
   FETCH_ADMIN_REQUEST,
   FETCH_ADMIN_REQUEST_SUCCESS,
   FETCH_ADMIN_REQUEST_FAILURE
-} from '../actions/AdminProfileContainer'
+} from '../actions/AdminProfile';
 
 const adminProfile = (state = {
   loading: true,

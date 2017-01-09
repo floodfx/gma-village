@@ -103,7 +103,6 @@ AdminForm = reduxForm({
 
 const mapStateToProps = (state) => {
   const { adminProfile } = state;
-  console.log("adminProfile", adminProfile)
   return {
     initialValues: adminProfile.admin,
   }

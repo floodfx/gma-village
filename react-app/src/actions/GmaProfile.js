@@ -22,22 +22,27 @@ const fetchGmaQuery = `
   query fetchGma($gmaId: ID!) {
     gma(id: $gmaId) {
       id,
-      phone,
       first_name,
+      last_name,
+      phone,
+      kind,
+      active,
       availabilities,
       otherAvailability,
       careAges,
-      neighborhood,
-      otherNeighborhood,
-      careLocations,      
       careExperiences,
       otherCareExperience,
+      careLocations,
       careTrainings,
       otherCareTraining,
+      city,
       demeanors,
       otherDemeanor,
-      additionalInformationText,
+      neighborhood,
+      otherNeighborhood,
+      isAvailableOutsideNeighborhood,
       whyCareForKidsText,
+      additionalInformationText,
       profilePhotoUrl
     }
   }

@@ -15,7 +15,7 @@ import {
 class GmaProfile extends Component {
 
   render() {
-    const { gma } = this.props;
+    const { currentUser, gma } = this.props;
     if(this.props.loading) {
       return <div>Loading...</div>
     } if(this.props.error) {
@@ -25,11 +25,8 @@ class GmaProfile extends Component {
         <div>
           <div>
             <ol className="breadcrumb">
-              <li><Link to={'/gmas'}>&larr; Back</Link></li>
+              <li><Link to={'/gma/list'}>&larr; Back</Link></li>
             </ol>
-          </div>
-          <div className="row">
-            <div className="gma-flags-bg" style={{marginBottom: '30px'}}>&nbsp;</div>
           </div>
           <div className="row">
             <div className="media col-md-12 col-sm-6">
@@ -38,10 +35,15 @@ class GmaProfile extends Component {
               </div>
 
               <div className="media-body gma-orange-border" style={{padding: '20px'}}>
-                <div className="pull-right">
-                  <a className="btn gma-orange-bg" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
+                <div className="pull-right">                  
+                  <a className="btn gma-orange-bg" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>                  
                 </div>
-                <h1 className="media-heading gma-orange">Gma {gma.first_name}</h1>
+                <h1 className="media-heading gma-orange">
+                  Gma {gma.first_name}
+                  {currentUser.kind === "Admin" &&
+                    <Link className="btn gma-orange-bg ml2" to={`/gma/edit/${gma.id}`}>Edit</Link>
+                  }
+                </h1>
 
                 <h4>I live in: <span className="normal">{gma.neighborhood.text}</span></h4>
                 {gma.isAvailableOutsideNeighborhood &&

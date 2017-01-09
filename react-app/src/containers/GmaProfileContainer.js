@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import GmaProfile from '../components/GmaProfile'
-import { connect } from 'react-redux'
-import  { fetchGma }  from '../actions/GmaProfileContainer'
+import GmaProfile from '../components/GmaProfile';
+import { connect } from 'react-redux';
+import  { fetchGma }  from '../actions/GmaProfile';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 
 class GmaProfileContainer extends Component {
@@ -12,18 +13,29 @@ class GmaProfileContainer extends Component {
   }
 
   render() {
-    return <GmaProfile gma={this.props.gma}
-                       loading={this.props.loading}
-                       error={this.props.error}/>;
+    const {loading, auth, error, gma} = this.props;
+    if(loading) {
+      return (
+        <LoadingIndicator text="Loading..." />
+      );
+    } else {
+      return (
+        <GmaProfile gma={gma}
+          loading={loading}
+          error={error}
+          currentUser={auth.user}/>
+      )
+    }
   }
 }
 
 const mapStateToProps = (state) => {
-  const { gmaProfile } = state
+  const { auth, gmaProfile } = state
   return {
     loading: gmaProfile.loading,
     gma: gmaProfile.gma,
-    error: gmaProfile.error
+    error: gmaProfile.error,
+    auth: auth
   }
 }
 

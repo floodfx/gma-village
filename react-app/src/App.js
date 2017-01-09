@@ -9,7 +9,7 @@ import AdminEditFormContainer from './containers/AdminEditFormContainer';
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
 import GmaCreateFormContainer from './containers/GmaCreateFormContainer';
-// import GmaEditFormContainer from './containers/GmaEditFormContainer';
+import GmaEditFormContainer from './containers/GmaEditFormContainer';
 
 import ParentListContainer from './containers/ParentListContainer';
 import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
@@ -49,8 +49,7 @@ const Main = ({children}) => (
     <Footer />
   </div>
 )
-//<Route path="/admin/edit/:adminId" component={AdminEditFormContainer} onEnter={authListener.requireAdmin}/>
-// <Route path="/gma/edit/:gmaId" component={ParentEditFormContainer} onEnter={authListener.requireAdmin}/>
+// 
 //<Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
 const App = ({ store, authListener }) => {
   return (
@@ -64,7 +63,7 @@ const App = ({ store, authListener }) => {
           
           <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireParent}/>
           <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>          
-          
+          <Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
           <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>
 
           <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>

@@ -2,11 +2,10 @@ import {
   FETCH_GMA_REQUEST,
   FETCH_GMA_REQUEST_SUCCESS,
   FETCH_GMA_REQUEST_FAILURE
-} from '../actions/GmaProfileContainer'
+} from '../actions/GmaProfile';
 
 const gmaProfile = (state = {
   loading: true,
-  gma: {},
   error: ''
 }, action) => {
   switch(action.type) {

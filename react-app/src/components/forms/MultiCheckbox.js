@@ -5,17 +5,14 @@ import isArray from 'lodash/isArray';
 class MultiCheckbox extends Component {
   constructor(props) {
     super(props);
-
+    console.log("props", props)
     this.state = {
-      selected: props.initialValue ? props.initialValue : [],
-      otherTextValue: ''
+      selected: props.input.value || [],
+      otherTextValue: props.otherTextValue || ''
     }
-    
-    this.handleChange = this.handleChange.bind(this);
-    this.handleOtherTextValueChange = this.handleOtherTextValueChange.bind(this);
   }
 
-  handleChange(event, id) {
+  handleChange = (event, id) => {
     const {input} = this.props;
     var {selected} = this.state;
     if(event.target.checked) {
@@ -35,7 +32,7 @@ class MultiCheckbox extends Component {
     return input.onChange(selected);
   }
 
-  handleOtherTextValueChange(event) {
+  handleOtherTextValueChange = (event) => {
     const {input} = this.props;
     var otherTextValue = event.target.value;
     this.setState({
@@ -82,6 +79,7 @@ class MultiCheckbox extends Component {
               className="ml2 lh-solid"
               type="text"
               name={"other" + name }
+              value={this.state.otherTextValue}
               onChange={event => this.handleOtherTextValueChange(event)}
               />
           }
