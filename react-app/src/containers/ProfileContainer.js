@@ -5,6 +5,7 @@ import AdminForm from '../components/AdminForm';
 import GmaForm from '../components/GmaForm';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
+import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
 import  { currentUser }  from '../actions/Auth';
 import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -18,6 +19,8 @@ class ProfileContainer extends Component {
       dispatch(resetAdminUser());
     } else if(user.kind === "Gma") {
       dispatch(resetGmaUser());
+    } else if(user.kind === "Parent") {
+      dispatch(resetParentUser());
     }
   }
 
@@ -38,6 +41,12 @@ class ProfileContainer extends Component {
     console.log("onGmaProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
     this.props.dispatch(saveGmaUser(values))
+  }
+
+  onParentProfileSubmit = (values) => {
+    console.log("onParentProfileSubmit", values)
+    delete values.profilePhoto; // remove profile photo from form (uploaded already)
+    this.props.dispatch(saveParentUser(values))
   }
 
   handleFile = (e) => {
@@ -79,6 +88,16 @@ class ProfileContainer extends Component {
               initialValues={user}
             />
           }
+          {user.kind === "Parent" &&
+            <ParentForm 
+              heading="Edit My Profile"
+              onSubmit={this.onParentProfileSubmit} 
+              handleFile={this.handleFile} 
+              saving={saving} 
+              profilePhotoUrl={this.props.profilePhotoUrl}
+              initialValues={user}
+            />
+          }
         </div>
       )
     }
@@ -87,14 +106,14 @@ class ProfileContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { auth, saveAdmin, saveGma } = state
+  const { auth, saveAdmin, saveGma, saveParent } = state
   return {
     user: auth.user,
     authCookie: auth.cookie,
     loading: auth.loading,
-    saving: saveAdmin.saving || saveGma.saving,
-    error: saveAdmin.error || saveGma.error,
-    saved: saveAdmin.saved || saveGma.saved,
+    saving: saveAdmin.saving || saveGma.saving || saveParent.saving,
+    error: saveAdmin.error || saveGma.error || saveParent.error,
+    saved: saveAdmin.saved || saveGma.saved || saveParent.saved
   }
 }
 
