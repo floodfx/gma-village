@@ -3,7 +3,7 @@ import AdminForm from '../components/AdminForm';
 import AdminProfile from '../components/AdminProfile';
 import { connect } from 'react-redux';
 import  { fetchAuthCookie }  from '../actions/Auth';
-import  { saveAdminUser }  from '../actions/AdminCreateFormContainer';
+import  { saveAdminUser }  from '../actions/AdminSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import { Link } from 'react-router';
 
@@ -39,7 +39,8 @@ class AdminCreateFormContainer extends Component {
       )
     } else {
       return <AdminForm 
-                onSubmit={this.handleSubmit} 
+                heading="Create an Admin"
+                onSubmit={this.handleSubmit}
                 handleFile={this.handleFile} 
                 saving={this.props.saving} 
                 profilePhotoUrl={this.props.profilePhotoUrl}/>;

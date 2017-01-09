@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GmaForm from '../components/GmaForm'
 import { connect } from 'react-redux'
 import  { fetchAuthCookie }  from '../actions/Auth'
-import  { saveGmaUser }  from '../actions/GmaCreateFormContainer'
+import  { saveGmaUser }  from '../actions/GmaSave'
 import  { uploadImage }  from '../actions/UploadImage'
 import { City } from 'gma-village-data-model'
 

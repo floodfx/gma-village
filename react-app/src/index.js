@@ -6,6 +6,7 @@ import { reducer as formReducer } from 'redux-form'
 
 // reducers
 import adminList from './reducers/AdminList'
+import adminProfile  from './reducers/AdminProfile'
 import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
 import saveAdmin  from './reducers/SaveAdmin'
@@ -36,6 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
 const store = createStore(
   combineReducers({
     adminList,
+    adminProfile,
     gmasList,
     gmaProfile,
     saveAdmin,

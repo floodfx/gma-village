@@ -1,8 +1,9 @@
 import {
   SAVE_GMA_USER_REQUEST,
   SAVE_GMA_USER_REQUEST_SUCCESS,
-  SAVE_GMA_USER_REQUEST_FAILURE
-} from '../actions/GmaCreateFormContainer'
+  SAVE_GMA_USER_REQUEST_FAILURE,
+  RESET_SAVE_GMA_USER_REQUEST
+} from '../actions/GmaSave'
 
 const saveGma = (state = {
   saving: false,
@@ -25,6 +26,13 @@ const saveGma = (state = {
         saving: false,
         saved: false,
         error: action.error
+      })
+    }
+    case RESET_SAVE_GMA_USER_REQUEST: {
+      return Object.assign({}, state, {
+        saving: false,
+        saved: false,
+        gma: {}
       })
     }
     default:

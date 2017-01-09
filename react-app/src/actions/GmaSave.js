@@ -3,6 +3,7 @@ import graphql from '../graphql/client'
 export const SAVE_GMA_USER_REQUEST = "SAVE_GMA_USER_REQUEST"
 export const SAVE_GMA_USER_REQUEST_SUCCESS = "SAVE_GMA_USER_REQUEST_SUCCESS"
 export const SAVE_GMA_USER_REQUEST_FAILURE = "SAVE_GMA_USER_REQUEST_FAILURE"
+export const RESET_SAVE_GMA_USER_REQUEST = "RESET_SAVE_GMA_USER_REQUEST"
 
 
 export const saveGmaUserRequest = () => ({
@@ -17,6 +18,16 @@ export const saveGmaUserRequestSuccess = (gma) => ({
 export const saveGmaUserRequestFailure = () => ({
   type: SAVE_GMA_USER_REQUEST_FAILURE
 })
+
+export const resetGmaUserRequest = () => ({
+  type: RESET_SAVE_GMA_USER_REQUEST
+})
+
+export const resetGmaUser = () => {
+  return (dispatch) => {
+    dispatch(resetGmaUserRequest());
+  }
+}
 
 export const saveGmaUser = (gma) => {
   return (dispatch) => {

@@ -22,9 +22,6 @@ import TextArea from './forms/TextArea'
 import Checkbox from './forms/Checkbox'
 
 class AdminForm extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentWillReceiveProps(newProps) {
     // change value of profilePhotoUrl when prop comes in
@@ -35,10 +32,18 @@ class AdminForm extends Component {
   }
 
   render() {
-    const { handleSubmit, handleFile, pristine, invalid, reset, submitting } = this.props
+    const { 
+      handleSubmit, 
+      handleFile, 
+      pristine, 
+      invalid, 
+      reset, 
+      submitting,
+      heading
+    } = this.props
     return (
       <div>
-        <h2 className="lh-title fw2 f2">Create an Admin User</h2>
+        <h2 className="lh-title fw2 f2">{heading}</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div>
             <Field
@@ -82,7 +87,7 @@ class AdminForm extends Component {
               {this.props.saving &&
                 <FontAwesome name='spinner' spin={true} className="mr1"/>
               }
-              Create Admin
+              Save
             </button>
           </div>
         </form>
@@ -93,12 +98,16 @@ class AdminForm extends Component {
 
 
 AdminForm = reduxForm({
-  form: 'adminForm',   // a unique identifier for this form
-  initialValues: {
-    active: false,
-    roles: [Role.ADMIN.name]
-  }
+  form: 'adminForm'
 })(AdminForm)
 
+const mapStateToProps = (state) => {
+  const { adminProfile } = state;
+  console.log("adminProfile", adminProfile)
+  return {
+    initialValues: adminProfile.admin,
+  }
+}
 
-export default AdminForm
+
+export default connect(mapStateToProps)(AdminForm)

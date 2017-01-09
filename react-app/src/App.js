@@ -4,7 +4,7 @@ import { Router, Route, IndexRedirect, browserHistory, withRouter } from 'react-
 
 import AdminListContainer from './containers/AdminListContainer';
 import AdminCreateFormContainer from './containers/AdminCreateFormContainer';
-// import AdminEditFormContainer from './containers/AdminEditFormContainer';
+import AdminEditFormContainer from './containers/AdminEditFormContainer';
 
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
@@ -60,7 +60,7 @@ const App = ({ store, authListener }) => {
           <IndexRedirect to="home" />
           <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>
           <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>
-          
+          <Route path="/admin/edit/:adminId" component={AdminEditFormContainer} onEnter={authListener.requireAdmin}/>
           
           <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireParent}/>
           <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>          

@@ -3,6 +3,7 @@ import graphql from '../graphql/client'
 export const SAVE_ADMIN_USER_REQUEST = "SAVE_ADMIN_USER_REQUEST"
 export const SAVE_ADMIN_USER_REQUEST_SUCCESS = "SAVE_ADMIN_USER_REQUEST_SUCCESS"
 export const SAVE_ADMIN_USER_REQUEST_FAILURE = "SAVE_ADMIN_USER_REQUEST_FAILURE"
+export const RESET_SAVE_ADMIN_USER_REQUEST = "RESET_SAVE_ADMIN_USER_REQUEST"
 
 
 export const saveAdminUserRequest = () => ({
@@ -17,6 +18,16 @@ export const saveAdminUserRequestSuccess = (admin) => ({
 export const saveAdminUserRequestFailure = () => ({
   type: SAVE_ADMIN_USER_REQUEST_FAILURE
 })
+
+export const resetAdminUserRequest = () => ({
+  type: RESET_SAVE_ADMIN_USER_REQUEST
+})
+
+export const resetAdminUser = () => {
+  return (dispatch) => {
+    dispatch(resetAdminUserRequest());
+  }
+}
 
 export const saveAdminUser = (admin) => {
   return (dispatch) => {
