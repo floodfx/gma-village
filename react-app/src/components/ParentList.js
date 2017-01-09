@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import imgUrl from './ImageUrl';
 import LoadingIndicator from './LoadingIndicator';
+import ParentProfile from './ParentProfile';
 
 class ParentList extends Component {
 

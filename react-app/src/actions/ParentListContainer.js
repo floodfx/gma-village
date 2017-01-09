@@ -19,7 +19,7 @@ export const initParentListRequestFailure = (error) => ({
 })
 
 
-export const fetchParents = (active=true, limit=undefined, nextToken=undefined) => {
+export const fetchParents = (active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initParentListRequest());
     return graphql.client.query(`
