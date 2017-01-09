@@ -19,7 +19,6 @@ var saveUser = (input, userKind) => {
 }
 
 var userById = (id) => {
-  console.log("userById", id)
   return new Promise((resolve, reject) => {
     userDao.get(parseInt(id, 10))
       .then(user => {
@@ -32,7 +31,6 @@ var userById = (id) => {
 }
 
 var findByPhone = (phone) => {
-  console.log("findByPhone", phone)
   return new Promise((resolve, reject) => {
     userDao.findByPhone(phone)
       .then((user) => {
@@ -45,11 +43,9 @@ var findByPhone = (phone) => {
 }
 
 var listUserByType = (userType, active) => {
-  console.log("listUserByType", userType)
   return new Promise((resolve, reject) => {
     userDao.list(userType, active)
       .then(userList => {
-        console.log("userList", userList)
         resolve(userList)
       })
       .catch(err => {
@@ -69,12 +65,9 @@ var isParent = (user) => {
 }
 
 var loadAppUserMiddleware = (req, res, next) => {
-  console.log("fetching app user")
   if(req.accountKitUser) {
-    console.log("have account kit user")
     userDao.findByPhone(req.accountKitUser.phone.national_number)
       .then((user) => {
-        console.log("findByPhone user", user)
         req.appUser = user;
         next();
       })

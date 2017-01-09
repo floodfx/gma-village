@@ -91,7 +91,6 @@ const root = {
   },
   gmas: (root, {active, limit, nextToken}, context, info) => {
     return new Promise((resolve, reject) => {
-      console.log("gmas", "active", active)
       const { appUser } = context;
       if(appUser && !isGma(appUser)) {
         resolve(listUserByType("Gma", active));
@@ -205,7 +204,6 @@ const root = {
       const { appUser } = context;
       if(isAdmin(appUser)) {
         setTimestamps(input)
-        console.log("input", input)
         saveUser(input, "Parent").then((u) => {
           resolve(u);
         }).catch((err) => {
