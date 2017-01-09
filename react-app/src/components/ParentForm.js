@@ -229,6 +229,7 @@ class ParentForm extends Component {
           </div>          
         </div>        
         <Field name="otherNeighborhood" component="input" type="hidden" />
+        <Field name="kind" component="input" type="hidden" />
         <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
         <div className="mt4">
           <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
@@ -262,7 +263,8 @@ ParentForm = reduxForm({
   validate: validateOthers,
   initialValues: {
     kids: [],
-    active: false
+    active: false,
+    kind: "Parent"
   }
 })(ParentForm)
 

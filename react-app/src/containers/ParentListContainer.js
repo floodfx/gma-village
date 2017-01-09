@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import ParentsList from '../components/ParentsList'
+import ParentList from '../components/ParentList'
 import { connect } from 'react-redux'
-import  { fetchParents }  from '../actions/ParentsListContainer'
+import  { fetchParents }  from '../actions/ParentListContainer'
 import  { Neighborhood }  from 'gma-village-data-model'
 
 
-class ParentsListContainer extends Component {
+class ParentListContainer extends Component {
 
   componentWillMount() {
     this.props.dispatch(fetchParents())
@@ -15,7 +15,7 @@ class ParentsListContainer extends Component {
     return (
       <div>
         <div className="row">
-          <ParentsList parents={this.props.parents}
+          <ParentList parents={this.props.parents}
             loading={this.props.loading}
             error={this.props.error} />
         </div>
@@ -24,18 +24,18 @@ class ParentsListContainer extends Component {
   }
 }
 
-ParentsListContainer.propTypes = {
+ParentListContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   parents: PropTypes.arrayOf(PropTypes.object)
 };
 
 const mapStateToProps = (state) => {
-  const { parentsList } = state
+  const { parentList } = state
   return {
-    loading: parentsList.loading,
-    parents: parents,
-    error: parentsList.error,
+    loading: parentList.loading,
+    parents: parentList.parents,
+    error: parentList.error,
   }
 }
 
-export default connect(mapStateToProps)(ParentsListContainer)
+export default connect(mapStateToProps)(ParentListContainer)

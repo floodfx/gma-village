@@ -11,6 +11,7 @@ import gmaProfile  from './reducers/GmaProfile'
 import saveAdmin  from './reducers/SaveAdmin'
 import saveGma  from './reducers/SaveGma'
 import createParent  from './reducers/CreateParent'
+import parentList  from './reducers/ParentList'
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
 import uploadImage  from './reducers/UploadImage'
@@ -40,6 +41,7 @@ const store = createStore(
     saveAdmin,
     saveGma,
     createParent,
+    parentList,
     accountKitInit,
     auth,
     uploadImage,

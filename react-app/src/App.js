@@ -4,12 +4,16 @@ import { Router, Route, IndexRedirect, browserHistory, withRouter } from 'react-
 
 import AdminListContainer from './containers/AdminListContainer';
 import AdminCreateFormContainer from './containers/AdminCreateFormContainer';
+// import AdminEditFormContainer from './containers/AdminEditFormContainer';
 
 import GmasListContainer from './containers/GmasListContainer';
 import GmaProfileContainer from './containers/GmaProfileContainer';
 import GmaCreateFormContainer from './containers/GmaCreateFormContainer';
+// import GmaEditFormContainer from './containers/GmaEditFormContainer';
 
+import ParentListContainer from './containers/ParentListContainer';
 import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
+// import ParentEditFormContainer from './containers/ParentEditFormContainer';
 
 import LoginContainer from './containers/LoginContainer';
 import HomeContainer from './containers/HomeContainer';
@@ -45,22 +49,27 @@ const Main = ({children}) => (
     <Footer />
   </div>
 )
-
+//<Route path="/admin/edit/:adminId" component={AdminEditFormContainer} onEnter={authListener.requireAdmin}/>
+// <Route path="/gma/edit/:gmaId" component={ParentEditFormContainer} onEnter={authListener.requireAdmin}/>
+//<Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
 const App = ({ store, authListener }) => {
   return (
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={Main}>
           <IndexRedirect to="home" />
-          <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>          
-          <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>          
+          <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>
+          
           
           <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireParent}/>
-          <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>          
+          
           <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>
 
-          <Route path="/parent/list" component={GmasListContainer} onEnter={authListener.requireParent}/>
+          <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>
           <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          
           
           <Route path="/login" component={LoginContainer}/>
           <Route path="/home" component={HomeContainer} onEnter={authListener.requireUser}/>
