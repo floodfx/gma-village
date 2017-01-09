@@ -3,15 +3,21 @@ import AdminForm from '../components/AdminForm';
 import AdminProfile from '../components/AdminProfile';
 import { connect } from 'react-redux';
 import  { fetchAuthCookie }  from '../actions/Auth';
-import  { saveAdminUser }  from '../actions/AdminSave';
+import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import { Link } from 'react-router';
+import LoadingIndicator from '../components/LoadingIndicator';
+import Alert from '../components/Alert';
 
 
 class AdminCreateFormContainer extends Component {
 
   componentWillMount() {
     this.props.dispatch(fetchAuthCookie())
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(resetAdminUser())
   }
 
   handleSubmit = (values) => {    
@@ -24,26 +30,30 @@ class AdminCreateFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, admin} = this.props;
-    if(saved) {
+    const {saving, saved, admin, error, loading} = this.props;
+    if(loading) {
+      return (
+        <LoadingIndicator text="Loading..." />
+      );
+    } else {
       return (
         <div>
-          <h2 className="lh-title fw2 f2">Create an Admin User</h2>
-          <h3 className="lh-title fw4 f3">Successfully Created Admin User</h3>
-          <AdminProfile admin={admin} />
-          <div>
-            Maybe you want to <Link to="/admin/list">View All Admins</Link> or 
-            go back <Link to="/home">Home</Link>
-          </div>
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Admin." />
+          }
+          {error && 
+            <Alert type="danger" heading="Error" text={error} />
+          }
+          <AdminForm 
+            heading="Create Admin"
+            onSubmit={this.handleSubmit} 
+            handleFile={this.handleFile} 
+            saving={this.props.saving} 
+            profilePhotoUrl={this.props.profilePhotoUrl}
+            admin={admin}
+            />
         </div>
       )
-    } else {
-      return <AdminForm 
-                heading="Create an Admin"
-                onSubmit={this.handleSubmit}
-                handleFile={this.handleFile} 
-                saving={this.props.saving} 
-                profilePhotoUrl={this.props.profilePhotoUrl}/>;
     }
   }
 }
@@ -56,6 +66,7 @@ AdminCreateFormContainer.defaultProps = {
 
 const mapStateToProps = (state) => {
   const { saveAdmin, uploadImage, auth } = state
+  console.log("saveAdmin", saveAdmin)
   return {
     auth: auth.cookie,
     saving: saveAdmin.saving,

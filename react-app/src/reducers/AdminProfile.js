@@ -6,8 +6,8 @@ import {
 
 const adminProfile = (state = {
   loading: true,
-  admin: {},
-  error: ''
+  admin: undefined,
+  error: undefined
 }, action) => {
   switch(action.type) {
     case FETCH_ADMIN_REQUEST: {
@@ -18,13 +18,14 @@ const adminProfile = (state = {
     case FETCH_ADMIN_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
-        admin: action.admin
+        admin: action.admin,
+        error: undefined
       })
     }
     case FETCH_ADMIN_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
-        admin: {},
+        admin: undefined,
         error: action.error
       })
     }

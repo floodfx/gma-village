@@ -5,7 +5,9 @@ import {
 } from '../actions/ParentProfile';
 
 const parentProfile = (state = {
-  loading: true
+  loading: true,
+  error: undefined,
+  parent: undefined
 }, action) => {
   switch(action.type) {
     case FETCH_PARENT_REQUEST: {

@@ -279,7 +279,6 @@ const mapStateToProps = (state) => {
     active: false,
     isAvailableOutsideNeighborhood: false
   }
-  console.log("initVals", initialValues)
   return {
     initialValues
   }

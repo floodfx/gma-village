@@ -80,8 +80,11 @@ class AdminForm extends Component {
               defaultValue={true}
               component={Checkbox}
               type="checkbox" />
-          </div>
+          </div>          
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
+          <Field name="kind" component="input" type="hidden" />          
+          <Field name="roles" component="input" type="hidden" />
+          
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
@@ -103,10 +106,15 @@ AdminForm = reduxForm({
 
 const mapStateToProps = (state) => {
   const { adminProfile } = state;
+  var initialValues = adminProfile.admin || {
+    roles: [Role.ADMIN.name],
+    kind: "Admin",
+    active: false
+  }
   return {
-    initialValues: adminProfile.admin,
+    initialValues
   }
 }
 
 
-export default connect(mapStateToProps)(AdminForm)
+export default connect(mapStateToProps)(AdminForm);

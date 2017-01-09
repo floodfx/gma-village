@@ -21,7 +21,7 @@ class Checkbox extends Component {
               type="checkbox" 
               {...input} />
             Yes
-      </label>
+          </label>
         </div>
       </div>
     )
