@@ -12,6 +12,16 @@ const customSortNeighborhoods = (n1, n2) => {
 
 
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
+  var checkboxes = enumValues.map((val) => {
+        return (
+          <label key={val.name} style={{whiteSpace: 'nowrap'}}>
+            <input checked={filters.includes(val)} onChange={(event) => onFilterClick([val], event)} type="checkbox" value={val.ordinal}/>&nbsp;
+              {val.text}
+              &nbsp;
+              &nbsp;
+          </label>
+        )
+      });
   return (
     <div>
       <h4><u>{header}</u>&nbsp;
@@ -21,17 +31,8 @@ const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=f
              <a onClick={(event) => onFilterClick(filters.filter((filter) => enumValues.includes(filter)))}>none</a>)
           </span>
         }
-      </h4>
-      {enumValues.map((val) => {
-        return (
-          <label key={val.name} style={{whiteSpace: 'nowrap'}}>
-            <input checked={filters.includes(val)} onChange={(event) => onFilterClick([val], event)} type="checkbox" value={val.ordinal}/>&nbsp;
-              {val.text}
-              &nbsp;
-              &nbsp;
-          </label>
-        )
-      })}
+      </h4>      
+      {checkboxes}
     </div>
   )
 }
@@ -50,7 +51,7 @@ const GmasFilter = ({filters, onFilterClick}) => (
         {filterBy('Care for kids ages:', CareAge.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Can provide care at:', CareLocation.enumValues, filters, onFilterClick)}
+        {filterBy('Can provide care at:', CareLocation.enumValues.slice(0).reverse(), filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Are generally available:', Availability.enumValues, filters, onFilterClick)}

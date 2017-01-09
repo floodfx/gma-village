@@ -20,7 +20,8 @@ class GmaProfileContainer extends Component {
       );
     } else {
       return (
-        <GmaProfile gma={gma}
+        <GmaProfile 
+          gma={gma}
           loading={loading}
           error={error}
           currentUser={auth.user}/>
