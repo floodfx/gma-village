@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import Login from '../components/Login'
-import { connect } from 'react-redux'
-import  { accountKitAuth }  from '../actions/AccountKitContainer'
+import Login from '../components/Login';
+import AccountKitContainer from './AccountKitContainer';
+import { connect } from 'react-redux';
+import  { accountKitAuth }  from '../actions/AccountKitContainer';
+import LoadingIndicator from '../components/LoadingIndicator';
+
 import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router'
@@ -77,22 +80,36 @@ class LoginContainer extends Component {
   }
 
   render() {
+    const {loading, accountKitInited, errors} = this.props;
     return (
-      <Login onLoginClick={this.onLoginClick}
-             initialized={this.props.inited}
-             errors={this.props.errors}
-             loadingMsg={this.props.loading}
-             debug={process.env.NODE_ENV !== 'production'}/>
-    )
+      <div>
+      <AccountKitContainer />
+      {(loading || !accountKitInited) &&
+        <LoadingIndicator text="Attempting to Login..." />  
+      }
+      {(!loading && accountKitInited) &&
+        <Login 
+          onLoginClick={this.onLoginClick}
+          errors={errors}
+          debug={process.env.NODE_ENV !== 'production'}/>
+      }
+      </div>
+    )    
   }
 
 }
 
 const mapStateToProps = (state) => {
-  const { accountKitInit, auth } = state
-  var errors = [auth.error, accountKitInit.error].filter(e => e);
+  const { accountKitInit, auth } = state;
+  var errors = [];
+  if(auth.error) {
+    errors.push(auth.error);
+  }
+  if(accountKitInit.error) {
+    errors.push(accountKitInit.error);
+  }
   return {
-    inited: accountKitInit.inited,
+    accountKitInited: accountKitInit.inited,
     errors: errors,
     user: auth.user,
     loading: accountKitInit.loading || auth.loading,

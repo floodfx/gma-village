@@ -1,26 +1,26 @@
 import {
-  SAVE_GMA_USER_REQUEST,
-  SAVE_GMA_USER_REQUEST_SUCCESS,
-  SAVE_GMA_USER_REQUEST_FAILURE
-} from '../actions/GmaCreateFormContainer'
+  SAVE_ADMIN_USER_REQUEST,
+  SAVE_ADMIN_USER_REQUEST_SUCCESS,
+  SAVE_ADMIN_USER_REQUEST_FAILURE
+} from '../actions/AdminCreateFormContainer'
 
-const createGma = (state = {
+const saveAdmin = (state = {
   saving: false,
 }, action) => {
   switch(action.type) {
-    case SAVE_GMA_USER_REQUEST: {
+    case SAVE_ADMIN_USER_REQUEST: {
       return Object.assign({}, state, {
         saving: true
       })
     }
-    case SAVE_GMA_USER_REQUEST_SUCCESS: {
+    case SAVE_ADMIN_USER_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         saving: false,
         saved: true,
-        gma: action.gma
+        admin: action.admin
       })
     }
-    case SAVE_GMA_USER_REQUEST_FAILURE: {
+    case SAVE_ADMIN_USER_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         saving: false,
         saved: false,
@@ -32,4 +32,4 @@ const createGma = (state = {
   }
 }
 
-export default createGma
+export default saveAdmin

@@ -29,13 +29,13 @@ class GmaCreateFormContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { createGma, uploadImage, auth } = state
+  const { saveGma, uploadImage, auth } = state
   return {
     auth: auth.cookie,
-    saving: createGma.saving,
-    error: createGma.error,
-    gma: createGma.gma,
-    saved: createGma.saved,
+    saving: saveGma.saving,
+    error: saveGma.error,
+    gma: saveGma.gma,
+    saved: saveGma.saved,
     profilePhotoUrl: uploadImage.image_url
   }
 }

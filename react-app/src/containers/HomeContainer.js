@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import  { accountKitAuth }  from '../actions/AccountKitContainer';
 import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth';
 import AdminHome from '../components/AdminHome';
+import LoadingIndicator from '../components/LoadingIndicator';
 import cookie from 'react-cookie';
 
 class HomeContainer extends Component {
@@ -11,7 +12,7 @@ class HomeContainer extends Component {
     const {user} = this.props;
     if(this.props.loading) {
       return (
-        <div>Loading...</div>
+        <LoadingIndicator text="Loading" />
       )
     } else {
       return (

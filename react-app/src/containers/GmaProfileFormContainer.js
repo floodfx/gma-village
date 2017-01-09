@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import GmaProfile from '../components/GmaProfile'
-import Loading from '../components/Loading'
+import LoadingIndicator from '../components/LoadingIndicator'
 import { connect } from 'react-redux'
 import  { fetchGma }  from '../actions/GmaProfileContainer'
 
@@ -22,7 +22,7 @@ class GmaProfileFormContainer extends Component {
 
   render() {
     if(loading) {
-      return <Loading loading={loading} />
+      return <LoadingIndicator text="Loading..." />
     } else {
       return <GmaProfileForm onSubmit={this.handleSubmit} initialValues={this.props.gma}/>;
     }

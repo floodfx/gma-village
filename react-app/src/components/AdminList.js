@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import FontAwesome from 'react-fontawesome';
 import AdminProfile from './AdminProfile';
+import LoadingIndicator from './LoadingIndicator';
 
 class AdminList extends Component {
 
@@ -9,10 +10,7 @@ class AdminList extends Component {
     const {loading, admins} = this.props;
     if (loading) {
       return (
-        <div>
-          <FontAwesome name='spinner' spin={true} className="mr1" />
-          Loading... 
-        </div>
+        <LoadingIndicator text="Loading..." />
       )
     }
     else {

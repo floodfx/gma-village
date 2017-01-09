@@ -8,8 +8,8 @@ import { reducer as formReducer } from 'redux-form'
 import adminList from './reducers/AdminList'
 import gmasList from './reducers/GmasList'
 import gmaProfile  from './reducers/GmaProfile'
-import createAdmin  from './reducers/CreateAdmin'
-import createGma  from './reducers/CreateGma'
+import saveAdmin  from './reducers/SaveAdmin'
+import saveGma  from './reducers/SaveGma'
 import createParent  from './reducers/CreateParent'
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
@@ -37,8 +37,8 @@ const store = createStore(
     adminList,
     gmasList,
     gmaProfile,
-    createAdmin,
-    createGma,
+    saveAdmin,
+    saveGma,
     createParent,
     accountKitInit,
     auth,
