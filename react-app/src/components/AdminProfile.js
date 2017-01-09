@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 class AdminProfile extends Component {
 
   render() {
-    const { admin } = this.props;
+    const { admin, isSelf } = this.props;
     return (
       <div className="fl w-100 w-25-ns pa2">
 
@@ -14,7 +14,12 @@ class AdminProfile extends Component {
           }
           <div className="">
             <h3 className="gma-orange tc gma-font fw3">
-              <Link to={`/admin/edit/${admin.id}`}>{admin.first_name} {admin.last_name}</Link>              
+              {isSelf && 
+                <Link to="/profile">{admin.first_name} {admin.last_name}</Link>  
+              }
+              {!isSelf &&
+                <Link to={`/admin/edit/${admin.id}`}>{admin.first_name} {admin.last_name}</Link>
+              }
             </h3>
             <h4 className="tc fw4">
               Phone: {admin.phone} 
@@ -31,7 +36,8 @@ class AdminProfile extends Component {
 }
 
 AdminProfile.propTypes = {
-  admin: PropTypes.object.isRequired
+  admin: PropTypes.object.isRequired,
+  isSelf: PropTypes.bool.isRequired
 };
 
 export default AdminProfile;

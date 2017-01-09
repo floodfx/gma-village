@@ -15,7 +15,8 @@ class AdminListContainer extends Component {
         <AdminList 
           admins={this.props.admins}
           loading={this.props.loading}
-          error={this.props.error} />
+          error={this.props.error}
+          currentUser={this.props.auth.user} />
       </div>
     );
   }
@@ -32,7 +33,7 @@ const mapStateToProps = (state) => {
     loading: adminList.loading,
     admins: adminList.admins,
     error: adminList.error,
-    auth: auth.cookie
+    auth: auth
   }
 }
 
