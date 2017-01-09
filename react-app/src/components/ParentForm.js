@@ -33,8 +33,15 @@ const otherFieldMap = {
 class ParentForm extends Component {
   constructor(props) {
     super(props);
+    const { initialValues } = props;
+    var kids = [];
+    var otherNeighborhood = '';
+    if(initialValues) {
+      kids = initialValues.kids || [];
+      otherNeighborhood = initialValues.otherNeighborhood || '';
+    }
     this.state = {
-      kids: props.initialValues.kids || [],
+      kids,
       kidFirstName: '',
       kidBirthDay: "0",
       kidBirthMonth: "0",
@@ -61,8 +68,6 @@ class ParentForm extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log(nextState)
-
     const validKid = (nextState.kidFirstName.length > 1 && 
                       nextState.kidBirthDay != "0" && 
                       nextState.kidBirthMonth != "0" && 
@@ -115,7 +120,7 @@ class ParentForm extends Component {
       submitting,
       initialValues
     } = this.props
-    const { kids } = this.state;
+    const { kids, otherNeighborhood } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
     const years = [...Array(10)].map((v, i) => i + 1);
@@ -159,12 +164,14 @@ class ParentForm extends Component {
           {kids.length > 0 &&
             <ul>
               {kids.map((kid, index) => {              
-                return <li key={index} className="ph3 pv2">
-                        {kid.first_name} (born: {moment.unix(kid.birthday).format("MM-DD-YYYY")}) 
-                        <button type="button" className="btn btn-sm gma-orange-bg ml2" onClick={() => this.removeKid(index)}>
-                          <FontAwesome name="trash"/>
-                        </button>
-                      </li>
+                return (
+                  <li key={index} className="ph3 pv2">
+                    {kid.first_name} (born: {moment.unix(kid.birthday).format("MM-DD-YYYY")}) 
+                    <button type="button" className="btn btn-sm gma-orange-bg ml2" onClick={() => this.removeKid(index)}>
+                      <FontAwesome name="trash"/>
+                    </button>
+                  </li>
+                )
               })}
             </ul>  
           }
@@ -219,7 +226,7 @@ class ParentForm extends Component {
             name="neighborhood"
             options={Neighborhood.enumValues.map((val) => { return { id: val.name, label: val.text } })}
             component={MultiRadio}
-            otherTextValue={initialValues.otherNeighborhood}
+            otherTextValue={otherNeighborhood}
             onOtherValueChange={this.onOtherValueChange}
             />          
         </div>
@@ -235,7 +242,7 @@ class ParentForm extends Component {
           </div>          
         </div>        
         <Field name="otherNeighborhood" component="input" type="hidden" />
-        <Field name="kind" component="input" type="hidden" />
+        <Field name="kind" component="input" type="hidden" value="Parent" />
         <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
         <div className="mt4">
           <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
@@ -269,17 +276,4 @@ ParentForm = reduxForm({
   validate: validateOthers
 })(ParentForm)
 
-const mapStateToProps = (state) => {
-  const { parentProfile } = state;
-  var initialValues = parentProfile.parent || {
-    kids: [],
-    active: false,
-    kind: "Parent"
-  }
-  return {
-    initialValues
-  }
-}
-
-
-export default connect(mapStateToProps)(ParentForm)
+export default ParentForm;

@@ -23,6 +23,11 @@ import Checkbox from './forms/Checkbox'
 
 class AdminForm extends Component {
 
+  constructor(props) {
+    super(props);
+    console.log("AdminForm props", props)
+  }
+
   componentWillReceiveProps(newProps) {
     // change value of profilePhotoUrl when prop comes in
     const {change, profilePhotoUrl} = this.props;
@@ -82,8 +87,8 @@ class AdminForm extends Component {
               type="checkbox" />
           </div>          
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
-          <Field name="kind" component="input" type="hidden" />          
-          <Field name="roles" component="input" type="hidden" />
+          <Field name="kind" component="input" type="hidden" value="Admin" />          
+          <Field name="roles" component="input" type="hidden" value={[Role.ADMIN.name]} />
           
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
@@ -99,22 +104,8 @@ class AdminForm extends Component {
   }
 }
 
-
 AdminForm = reduxForm({
   form: 'adminForm'
 })(AdminForm)
 
-const mapStateToProps = (state) => {
-  const { adminProfile } = state;
-  var initialValues = adminProfile.admin || {
-    roles: [Role.ADMIN.name],
-    kind: "Admin",
-    active: false
-  }
-  return {
-    initialValues
-  }
-}
-
-
-export default connect(mapStateToProps)(AdminForm);
+export default AdminForm;

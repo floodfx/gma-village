@@ -51,7 +51,7 @@ class ParentEditFormContainer extends Component {
             handleFile={this.handleFile} 
             saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            parent={parent}
+            initialValues={parent}
             />
         </div>
       )
@@ -60,7 +60,6 @@ class ParentEditFormContainer extends Component {
 }
 
 ParentEditFormContainer.defaultProps = {
-  parent: undefined,
   saving: false,
   saved: false,
   loading: true,
@@ -71,7 +70,7 @@ const mapStateToProps = (state) => {
   return {
     saving: saveParent.saving,
     error: saveParent.error,
-    parent: saveParent.parent,
+    parent: parentProfile.parent,
     saved: saveParent.saved,
     profilePhotoUrl: uploadImage.image_url,
     loading: parentProfile.loading,

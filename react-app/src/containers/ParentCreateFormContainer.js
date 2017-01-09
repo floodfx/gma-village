@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import ParentForm from '../components/ParentForm';
 import  { fetchAuthCookie }  from '../actions/Auth';
 import { connect } from 'react-redux';
-import  { saveParentUser }  from '../actions/ParentSave';
+import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
 import  { uploadImage }  from '../actions/UploadImage';
+import LoadingIndicator from '../components/LoadingIndicator';
+import Alert from '../components/Alert';
 
 class ParentCreateFormContainer extends Component {
 
@@ -11,8 +13,11 @@ class ParentCreateFormContainer extends Component {
     this.props.dispatch(fetchAuthCookie())
   }
 
+  componentWillUnmount() {
+    this.props.dispatch(resetParentUser())
+  }
+
   handleSubmit = (values) => {    
-    console.log("handleSubmit", values)
     delete values.profilePhoto
     this.props.dispatch(saveParentUser(values))
   }
@@ -22,7 +27,30 @@ class ParentCreateFormContainer extends Component {
   }
 
   render() {
-    return <ParentForm onSubmit={this.handleSubmit} handleFile={this.handleFile} saving={this.props.saving} profilePhotoUrl={this.props.profilePhotoUrl}/>;
+    const {saving, saved, error, loading} = this.props;
+    if(loading) {
+      return (
+        <LoadingIndicator text="Loading..." />
+      );
+    } else {
+      return (
+        <div>
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Parent." />
+          }
+          {error && 
+            <Alert type="danger" heading="Error" text={error} />
+          }
+          <ParentForm 
+            heading="Edit Parent"
+            onSubmit={this.handleSubmit} 
+            handleFile={this.handleFile} 
+            saving={saving} 
+            profilePhotoUrl={this.props.profilePhotoUrl}
+          />
+        </div>
+      )
+    }
   }
 }
 
@@ -32,7 +60,6 @@ const mapStateToProps = (state) => {
     auth: auth.cookie,
     saving: saveParent.saving,
     error: saveParent.error,
-    parent: saveParent.parent,
     saved: saveParent.saved,
     profilePhotoUrl: uploadImage.image_url
   }

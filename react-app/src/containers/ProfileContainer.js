@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserNavContainer from './UserNavContainer';
-import AdminProfileForm from '../components/AdminProfileForm';
-import GmaProfileForm from '../components/GmaProfileForm';
+import AdminForm from '../components/AdminForm';
+import GmaForm from '../components/GmaForm';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
 import  { currentUser }  from '../actions/Auth';
+import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 
@@ -29,12 +30,18 @@ class ProfileContainer extends Component {
 
   onAdminProfileSubmit = (values) => {
     console.log("onAdminProfileSubmit", values)
-    this.props.dispatch(saveAdminUser(values));
+    delete values.profilePhoto; // remove profile photo from form (uploaded already)
+    this.props.dispatch(saveAdminUser(values))
   }
 
   onGmaProfileSubmit = (values) => {
     console.log("onGmaProfileSubmit", values)
-    this.props.dispatch(saveGmaUser(values));
+    delete values.profilePhoto; // remove profile photo from form (uploaded already)
+    this.props.dispatch(saveGmaUser(values))
+  }
+
+  handleFile = (e) => {
+    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
   }
 
   render() {
@@ -43,10 +50,9 @@ class ProfileContainer extends Component {
         <LoadingIndicator text="Loading..." />
       )
     } else {
-      const {user, saving, saved, admin, gma, error} = this.props
+      const {user, saving, saved, error} = this.props
       return (
         <div>
-          <h2 className="fw4">Edit My Profile</h2>
           {saved && 
             <Alert type="success" heading="Success" text="We have updated your profile." />
           }
@@ -54,10 +60,24 @@ class ProfileContainer extends Component {
             <Alert type="danger" heading="Error" text={"Error updating your profile: "+error} />
           }
           {user.kind === "Admin" &&
-            <AdminProfileForm onSubmit={this.onAdminProfileSubmit} saving={saving}/>
+            <AdminForm 
+              heading="Edit My Profile"
+              onSubmit={this.onAdminProfileSubmit} 
+              handleFile={this.handleFile} 
+              saving={this.props.saving} 
+              profilePhotoUrl={this.props.profilePhotoUrl}
+              initialValues={user} 
+            />
           }
           {user.kind === "Gma" &&
-            <GmaProfileForm onSubmit={this.onGmaProfileSubmit} saving={saving}/>
+            <GmaForm 
+              heading="Edit My Profile"
+              onSubmit={this.onGmaProfileSubmit} 
+              handleFile={this.handleFile} 
+              saving={saving} 
+              profilePhotoUrl={this.props.profilePhotoUrl}
+              initialValues={user}
+            />
           }
         </div>
       )
@@ -74,8 +94,6 @@ const mapStateToProps = (state) => {
     loading: auth.loading,
     saving: saveAdmin.saving || saveGma.saving,
     error: saveAdmin.error || saveGma.error,
-    admin: saveAdmin.admin,
-    gma: saveGma.gma,
     saved: saveAdmin.saved || saveGma.saved,
   }
 }

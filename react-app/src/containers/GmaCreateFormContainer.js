@@ -29,7 +29,7 @@ class GmaCreateFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, gma, error, loading} = this.props;
+    const {saving, saved, error, loading} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -49,7 +49,7 @@ class GmaCreateFormContainer extends Component {
             handleFile={this.handleFile} 
             saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            gma={gma}
+            initialValues={{}}
             />
         </div>
       )
@@ -63,7 +63,6 @@ const mapStateToProps = (state) => {
     auth: auth.cookie,
     saving: saveGma.saving,
     error: saveGma.error,
-    gma: saveGma.gma,
     saved: saveGma.saved,
     profilePhotoUrl: uploadImage.image_url
   }

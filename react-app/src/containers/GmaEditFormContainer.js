@@ -51,7 +51,7 @@ class GmaEditFormContainer extends Component {
             handleFile={this.handleFile} 
             saving={saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            gma={gma}
+            initialValues={gma}
             />
         </div>
       )
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   return {
     saving: saveGma.saving,
     error: saveGma.error,
-    gma: saveGma.gma,
+    gma: gmaProfile.gma,
     saved: saveGma.saved,
     profilePhotoUrl: uploadImage.image_url,
     loading: gmaProfile.loading,

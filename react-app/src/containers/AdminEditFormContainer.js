@@ -51,7 +51,7 @@ class AdminEditFormContainer extends Component {
             handleFile={this.handleFile} 
             saving={this.props.saving} 
             profilePhotoUrl={this.props.profilePhotoUrl}
-            admin={admin}
+            initialValues={admin}
             />
         </div>
       )
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   return {
     saving: saveAdmin.saving,
     error: saveAdmin.error,
-    admin: saveAdmin.admin,
+    admin: adminProfile.admin,
     saved: saveAdmin.saved,
     profilePhotoUrl: uploadImage.image_url,
     loading: adminProfile.loading,
