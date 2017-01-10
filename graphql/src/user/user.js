@@ -1,7 +1,7 @@
 var { UserDAO } = require('gma-village-data-access');
 
 const isProd = process.env.NODE_ENV === 'production'
-const namespace = isProd ? null : "dev"
+const namespace = isProd ? "prod" : "dev"
 
 const userDao = new UserDAO(namespace)
 
