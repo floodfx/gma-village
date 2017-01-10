@@ -5,7 +5,7 @@ class Login extends Component {
   
 
   render() {
-    const {onLoginClick, initialized, isLoggingIn, errors} = this.props;
+    const {onLoginClick, isLoggingIn, accountKitInited, errors} = this.props;
     let phoneInput;
     return (
       <div>
@@ -31,7 +31,7 @@ class Login extends Component {
             }} type="phone" className="input-reset ba b--black-20 pa2 mb2 db w-100" id="phone" placeholder="555 867 5309" />
           <small className="f6 black-60 db mb2">Formatting not required</small>
           </div>
-          <button className="btn gma-orange-bg" type="submit" disabled={!initialized || errors.length > 0 || isLoggingIn}>
+          <button className="btn gma-orange-bg" type="submit" disabled={!accountKitInited || errors.length > 0 || isLoggingIn}>
             {isLoggingIn &&
               <FontAwesome name='spinner' spin={true} className="mr1"/>
             }

@@ -8,22 +8,19 @@ class AccountKitContainer extends Component {
     const script = document.createElement("script");
     script.src = "https://sdk.accountkit.com/en_US/sdk.js";
     document.body.appendChild(script);
-  }
-
-  componentDidMount() {
-    this.props.dispatch(initAccountKit())
+    window.AccountKit_OnInteractive = () => {
+      this.props.dispatch(initAccountKit())
+    }
   }
 
   componentWillUpdate(nextProps) {
     if(!this.props.inited && nextProps.inited) {
-      window.AccountKit_OnInteractive = () => {
-          window.AccountKit.init({
-            appId: nextProps.appId,
-            state: nextProps.csrf,
-            version: nextProps.version,
-            debug: process.env.NODE_ENV !== 'production' || this.props.debug
-        })
-      }
+        window.AccountKit.init({
+          appId: nextProps.appId,
+          state: nextProps.csrf,
+          version: nextProps.version,
+          debug: process.env.NODE_ENV !== 'production' || this.props.debug
+      })
     }
   }
 

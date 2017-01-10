@@ -41,10 +41,10 @@ class LoginContainer extends Component {
 
   onLoginClick = (e) => {
     console.log(e)
-    if(this.props.inited) {
+    if(this.props.accountKitInited) {
       this.phoneLogin("+1", e)
         .then((data) => {
-          console.log("phone login", data)
+          // console.log("phone login", data)
           const {csrfNonce, authCode} = data;
           this.auth(csrfNonce, authCode);
         })
@@ -81,15 +81,16 @@ class LoginContainer extends Component {
     const {loading, accountKitInited, errors} = this.props;
     return (
       <div>
-      <AccountKitContainer />
+      <AccountKitContainer 
+        debug={process.env.NODE_ENV !== 'production'}/>
       {(loading || !accountKitInited) &&
         <LoadingIndicator text="Attempting to Login..." />  
       }
       {(!loading && accountKitInited) &&
         <Login 
           onLoginClick={this.onLoginClick}
-          errors={errors}
-          debug={process.env.NODE_ENV !== 'production'}/>
+          errors={errors}          
+          accountKitInited={accountKitInited}/>
       }
       </div>
     )    
