@@ -76,8 +76,7 @@ class GmaForm extends Component {
               name="last_name"
               component={TextField}
               type="text"
-              placeholder="Last Name"
-              validate={[required, minLength(2), maxLength(30)]} />
+              placeholder="Last Name" />
           </div>
           <div className="mt4">
             <Field

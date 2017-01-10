@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 
 
 class Checkbox extends Component {
-  constructor(props) {
-    super(props);
-    console.log("props", props)
-  }
 
   render() {
     const { input, label, meta: { touched, error, warning } } = this.props;
