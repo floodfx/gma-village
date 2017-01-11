@@ -57,6 +57,9 @@ class GmaCreateFormContainer extends Component {
             }}
             currentUser={currentUser}
           />
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Gma." />
+          }
         </div>
       )
     }

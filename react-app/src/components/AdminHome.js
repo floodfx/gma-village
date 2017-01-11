@@ -8,8 +8,7 @@ const AdminHome = ({user}) => (
       <h1 className="lh-title f1 serif gma-orange">Welcome Admin {user.first_name}!</h1>
       <p className="lh-copy f3">
         As an Administrator, you have the power to create new Admins, Gmas,
-        and Parents amoung other things.  Please be careful and think twice
-        before making a change.
+        and Parents among other things.  
       </p>
     </div>
     <div>

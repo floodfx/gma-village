@@ -51,6 +51,9 @@ class ParentEditFormContainer extends Component {
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={parent}
             />
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Parent." />
+          }
         </div>
       )
     }

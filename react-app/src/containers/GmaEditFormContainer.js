@@ -52,6 +52,9 @@ class GmaEditFormContainer extends Component {
             initialValues={gma}
             currentUser={currentUser}
             />
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Gma." />
+          }
         </div>
       )
     }

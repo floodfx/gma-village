@@ -51,6 +51,9 @@ class AdminEditFormContainer extends Component {
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={admin}
             />
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Admin." />
+          }
         </div>
       )
     }

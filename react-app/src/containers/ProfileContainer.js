@@ -99,6 +99,9 @@ class ProfileContainer extends Component {
               currentUser={user}
             />
           }
+          {saved && 
+            <Alert type="success" heading="Success" text="We have updated your profile." />
+          }
         </div>
       )
     }

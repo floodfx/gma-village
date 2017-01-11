@@ -52,6 +52,9 @@ class ParentCreateFormContainer extends Component {
               active: false
             }}
           />
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Parent." />
+          }
         </div>
       )
     }

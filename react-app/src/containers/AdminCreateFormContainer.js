@@ -55,6 +55,9 @@ class AdminCreateFormContainer extends Component {
               kind: "Admin"
             }}
           />
+          {saved && 
+            <Alert type="success" heading="Success" text="Saved Admin." />
+          }
         </div>
       )
     }
