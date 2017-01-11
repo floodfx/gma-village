@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const FETCH_PARENT_REQUEST = "FETCH_PARENT_REQUEST"
 export const FETCH_PARENT_REQUEST_SUCCESS = "FETCH_PARENT_REQUEST_SUCCESS"
 export const FETCH_PARENT_REQUEST_FAILURE = "FETCH_PARENT_REQUEST_FAILURE"
@@ -41,10 +39,10 @@ const fetchParentQuery = `
   }
 `;
 
-export const fetchParent = (parentId) => {
+export const fetchParent = (graphQLClient, parentId) => {
   return (dispatch) => {
     dispatch(fetchParentRequest());
-    return graphql.client.query(fetchParentQuery, {parentId}).then(data => {
+    return graphQLClient.query(fetchParentQuery, {parentId}).then(data => {
         dispatch(fetchParentRequestSuccess(data.parent))
     }).catch(err => {
       dispatch(fetchParentRequestFailure(err))

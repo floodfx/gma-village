@@ -1,10 +1,7 @@
-import graphql from '../graphql/client'
-
 export const SAVE_GMA_USER_REQUEST = "SAVE_GMA_USER_REQUEST"
 export const SAVE_GMA_USER_REQUEST_SUCCESS = "SAVE_GMA_USER_REQUEST_SUCCESS"
 export const SAVE_GMA_USER_REQUEST_FAILURE = "SAVE_GMA_USER_REQUEST_FAILURE"
 export const RESET_SAVE_GMA_USER_REQUEST = "RESET_SAVE_GMA_USER_REQUEST"
-
 
 export const saveGmaUserRequest = () => ({
   type: SAVE_GMA_USER_REQUEST
@@ -29,10 +26,10 @@ export const resetGmaUser = () => {
   }
 }
 
-export const saveGmaUser = (gma) => {
+export const saveGmaUser = (graphQLClient, gma) => {
   return (dispatch) => {
     dispatch(saveGmaUserRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       mutation saveGmaMutation($input: GmaInput!) {
         saveGma(input:$input) {
           id,

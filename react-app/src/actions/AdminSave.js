@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const SAVE_ADMIN_USER_REQUEST = "SAVE_ADMIN_USER_REQUEST"
 export const SAVE_ADMIN_USER_REQUEST_SUCCESS = "SAVE_ADMIN_USER_REQUEST_SUCCESS"
 export const SAVE_ADMIN_USER_REQUEST_FAILURE = "SAVE_ADMIN_USER_REQUEST_FAILURE"
@@ -29,10 +27,10 @@ export const resetAdminUser = () => {
   }
 }
 
-export const saveAdminUser = (admin) => {
+export const saveAdminUser = (graphQLClient, admin) => {
   return (dispatch) => {
     dispatch(saveAdminUserRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       mutation saveAdminMutation($input: AdminInput!) {
         saveAdmin(input:$input) {
           id,

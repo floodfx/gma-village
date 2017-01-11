@@ -1,5 +1,4 @@
 import cookies from 'react-cookie';
-import graphql from '../graphql/client'
 
 export const CHECK_AUTH_COOKIE = "CHECK_AUTH_COOKIE"
 export const CHECK_AUTH_COOKIE_SUCCESS = "CHECK_AUTH_COOKIE_SUCCESS"
@@ -89,10 +88,10 @@ export const removeAuthCookie = () => {
   }
 }
 
-export const currentUser = (auth_cookie) => {
+export const currentUser = (graphQLClient, auth_cookie) => {
   return (dispatch) => {
     dispatch(currentUserRequest(auth_cookie));
-    return graphql.client.query(`
+    return graphQLClient.query(`
       {
        currentUser {
           ... on Admin {

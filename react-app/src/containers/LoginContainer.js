@@ -5,21 +5,37 @@ import { connect } from 'react-redux';
 import  { accountKitAuth }  from '../actions/AccountKitContainer';
 import LoadingIndicator from '../components/LoadingIndicator';
 import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class LoginContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      calledCurrentUser: false
+    };
+  }
 
   componentWillMount() {
     this.props.dispatch(fetchAuthCookie())
   }
 
   componentWillReceiveProps(nextProps) {
-    // found auth cookie
-    if(!this.props.cookie && nextProps.cookie) {
-      this.props.dispatch(currentUser(nextProps.cookie))
+    // call if fetchAuthCookie succeeds but only
+    // when graphQLClient has the Auth header
+    if(nextProps.cookie && 
+      nextProps.graphQLClient && 
+      nextProps.graphQLClient._transport._httpOptions.headers.Authorization &&
+      !this.state.calledCurrentUser) {
+      const { dispatch, graphQLClient } = nextProps;
+      dispatch(currentUser(graphQLClient, nextProps.cookie));
+      this.setState({calledCurrentUser: true});
+    } else if(this.props.cookie && !nextProps.cookie) {
+      this.setState({calledCurrentUser: false});
     }
-    // found current user
-    else if(!this.props.user && nextProps.user) {
+    // got current user
+    if(!this.props.user && nextProps.user) {
       const { user } = nextProps;
       if(!this.props.cookie) {
         const cookie = {
@@ -36,7 +52,8 @@ class LoginContainer extends Component {
   }
 
   auth = (csrfNonce, authCode) => {
-    this.props.dispatch(accountKitAuth(csrfNonce, authCode))
+    const { dispatch, graphQLClient } = this.props;    
+    dispatch(accountKitAuth(graphQLClient, csrfNonce, authCode))
   }
 
   onLoginClick = (e) => {
@@ -115,4 +132,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(LoginContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(LoginContainer))

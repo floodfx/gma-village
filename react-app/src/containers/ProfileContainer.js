@@ -10,6 +10,7 @@ import  { currentUser }  from '../actions/Auth';
 import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class ProfileContainer extends Component {
 
@@ -27,26 +28,30 @@ class ProfileContainer extends Component {
   componentWillReceiveProps(nextProps) {
     // refresh current user after profile save
     if(!this.props.saved && nextProps.saved) {
-      this.props.dispatch(currentUser(this.props.authCookie));
+      const { dispatch, graphQLClient } = this.props;
+      dispatch(currentUser(graphQLClient, this.props.authCookie));
     }
   }
 
   onAdminProfileSubmit = (values) => {
     console.log("onAdminProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveAdminUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveAdminUser(graphQLClient, values));
   }
 
   onGmaProfileSubmit = (values) => {
     console.log("onGmaProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveGmaUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveGmaUser(graphQLClient, values));
   }
 
   onParentProfileSubmit = (values) => {
     console.log("onParentProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveParentUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveParentUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
@@ -121,4 +126,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ProfileContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(ProfileContainer));

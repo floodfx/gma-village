@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import Alert from './Alert';
 
 class Login extends Component {
   
@@ -10,12 +11,7 @@ class Login extends Component {
     return (
       <div>
         { errors.length > 0 &&
-          <div>
-            <span className="b">Errors:</span>
-            {errors.map((error) => {
-              return <p key={error} className="">{error}</p>
-            })}
-          </div>
+          <Alert type="danger" heading="Error" text={JSON.stringify(errors)} />
         }
         <form className="pa4 black-80" onSubmit={e => {
           e.preventDefault();

@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const INIT_ACCOUNT_KIT_REQUEST = "INIT_ACCOUNT_KIT_REQUEST"
 export const INIT_ACCOUNT_KIT_REQUEST_SUCCESS = "INIT_ACCOUNT_KIT_REQUEST_SUCCESS"
 export const INIT_ACCOUNT_KIT_REQUEST_FAILURE = "INIT_ACCOUNT_KIT_REQUEST_FAILURE"
@@ -38,10 +36,10 @@ export const accountKitAuthRequestFailure = (error) => ({
 })
 
 
-export const initAccountKit = () => {
+export const initAccountKit = (graphQLClient) => {
   return (dispatch) => {
     dispatch(initAccountKitRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
         {
           accountKitInit {
             appId,
@@ -57,10 +55,10 @@ export const initAccountKit = () => {
   }
 }
 
-export const accountKitAuth = (csrfNonce, authCode) => {
+export const accountKitAuth = (graphQLClient, csrfNonce, authCode) => {
   return (dispatch) => {
     dispatch(accountKitAuthRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       mutation auth($csrfNonce: String!, $authCode: String!){
         accountKitAuth(csrfNonce:$csrfNonce, authCode:$authCode) {
           ... on Admin {

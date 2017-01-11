@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import AdminList from '../components/AdminList'
-import { connect } from 'react-redux'
-import  { fetchAdmins }  from '../actions/AdminListContainer'
+import AdminList from '../components/AdminList';
+import { connect } from 'react-redux';
+import  { fetchAdmins }  from '../actions/AdminListContainer';
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class AdminListContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchAdmins())
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(fetchAdmins(graphQLClient));
   }
 
   render() {
@@ -37,4 +39,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AdminListContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(AdminListContainer));

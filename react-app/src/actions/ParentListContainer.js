@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const INIT_PARENT_LIST_REQUEST = "INIT_PARENT_LIST_REQUEST"
 export const INIT_PARENT_LIST_REQUEST_SUCCESS = "INIT_PARENT_LIST_REQUEST_SUCCESS"
 export const INIT_PARENT_LIST_REQUEST_FAILURE = "INIT_PARENT_LIST_REQUEST_FAILURE"
@@ -18,11 +16,10 @@ export const initParentListRequestFailure = (error) => ({
   error
 })
 
-
-export const fetchParents = (active=undefined, limit=undefined, nextToken=undefined) => {
+export const fetchParents = (graphQLClient, active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initParentListRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       query fetchParents($active: Boolean, $limit: Int, $nextToken: String) {
         parents(active: $active, limit: $limit, nextToken: $nextToken) {
           list {

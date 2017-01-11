@@ -6,13 +6,14 @@ import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class AdminEditFormContainer extends Component {
 
   componentWillMount() {
-    const adminId = this.props.params.adminId;
-    this.props.dispatch(fetchAdmin(adminId))
+    const adminId = this.props.params.adminId;    
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(fetchAdmin(graphQLClient, adminId))
   }
 
   componentWillUnmount() {
@@ -21,7 +22,8 @@ class AdminEditFormContainer extends Component {
 
   handleSubmit = (values) => {    
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveAdminUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveAdminUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
@@ -79,4 +81,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AdminEditFormContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(AdminEditFormContainer))

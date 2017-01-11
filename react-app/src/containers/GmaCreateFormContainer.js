@@ -7,12 +7,13 @@ import  { uploadImage }  from '../actions/UploadImage'
 import { City } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class GmaCreateFormContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchAuthCookie())
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(fetchAuthCookie(graphQLClient));
   }
 
   componentWillUnmount() {
@@ -21,7 +22,8 @@ class GmaCreateFormContainer extends Component {
 
   handleSubmit = (values) => {    
     delete values.profilePhoto
-    this.props.dispatch(saveGmaUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveGmaUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
@@ -82,4 +84,4 @@ GmaCreateFormContainer.defaultProps = {
   loading: false
 };
 
-export default connect(mapStateToProps)(GmaCreateFormContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(GmaCreateFormContainer));

@@ -6,6 +6,7 @@ import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class ParentCreateFormContainer extends Component {
 
@@ -19,7 +20,8 @@ class ParentCreateFormContainer extends Component {
 
   handleSubmit = (values) => {    
     delete values.profilePhoto
-    this.props.dispatch(saveParentUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveParentUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
@@ -76,4 +78,4 @@ ParentCreateFormContainer.defaultProps = {
   loading: false
 };
 
-export default connect(mapStateToProps)(ParentCreateFormContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(ParentCreateFormContainer));

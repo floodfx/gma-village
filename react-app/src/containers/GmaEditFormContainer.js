@@ -6,13 +6,14 @@ import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class GmaEditFormContainer extends Component {
 
   componentWillMount() {
     const gmaId = this.props.params.gmaId;
-    this.props.dispatch(fetchGma(gmaId))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(fetchGma(graphQLClient, gmaId));
   }
 
   componentWillUnmount() {
@@ -21,7 +22,8 @@ class GmaEditFormContainer extends Component {
 
   handleSubmit = (values) => {    
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveGmaUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveGmaUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
@@ -81,4 +83,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(GmaEditFormContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(GmaEditFormContainer));

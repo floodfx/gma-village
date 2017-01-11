@@ -7,7 +7,7 @@ import  { uploadImage }  from '../actions/UploadImage';
 import { Role } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class AdminCreateFormContainer extends Component {
 
@@ -21,7 +21,8 @@ class AdminCreateFormContainer extends Component {
 
   handleSubmit = (values) => {    
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveAdminUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveAdminUser(graphQLClient, values))
   }
 
   handleFile = (e) => {
@@ -80,4 +81,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AdminCreateFormContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(AdminCreateFormContainer))

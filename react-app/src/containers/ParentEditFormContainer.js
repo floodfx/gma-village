@@ -6,13 +6,14 @@ import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
 import  { uploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class ParentEditFormContainer extends Component {
 
   componentWillMount() {
     const parentId = this.props.params.parentId;
-    this.props.dispatch(fetchParent(parentId))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(fetchParent(graphQLClient, parentId));
   }
 
   componentWillUnmount() {
@@ -21,7 +22,8 @@ class ParentEditFormContainer extends Component {
 
   handleSubmit = (values) => {    
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.dispatch(saveParentUser(values))
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(saveParentUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
@@ -78,4 +80,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ParentEditFormContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(ParentEditFormContainer));

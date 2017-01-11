@@ -4,13 +4,15 @@ import GmasFilter from '../components/GmasFilter'
 import { connect } from 'react-redux'
 import  { fetchGmas, filterGmasList }  from '../actions/GmasListContainer'
 import  { Availability, CareAge, CareLocation, Neighborhood }  from 'gma-village-data-model'
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 export const WILLING_TO_TRAVEL = "willingToTravel"
 
 class GmasListContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchGmas())
+    const { dispatch, graphQLClient } = this.props;
+    dispatch(fetchGmas(graphQLClient));
   }
 
   onFilterClick = (vals) => {
@@ -83,4 +85,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(GmasListContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(GmasListContainer));

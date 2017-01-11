@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const INIT_ADMIN_LIST_REQUEST = "INIT_ADMIN_LIST_REQUEST"
 export const INIT_ADMIN_LIST_REQUEST_SUCCESS = "INIT_ADMIN_LIST_REQUEST_SUCCESS"
 export const INIT_ADMIN_LIST_REQUEST_FAILURE = "INIT_ADMIN_LIST_REQUEST_FAILURE"
@@ -18,10 +16,10 @@ export const initAdminListRequestFailure = (error) => ({
   error
 })
 
-export const fetchAdmins = (active=undefined, limit=undefined, nextToken=undefined) => {
+export const fetchAdmins = (graphQLClient, active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initAdminListRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       query fetchAdmin($active: Boolean, $limit: Int, $nextToken: String) {
         admins(active: $active, limit: $limit, nextToken: $nextToken) {
           list {

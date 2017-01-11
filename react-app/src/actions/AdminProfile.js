@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const FETCH_ADMIN_REQUEST = "FETCH_ADMIN_REQUEST"
 export const FETCH_ADMIN_REQUEST_SUCCESS = "FETCH_ADMIN_REQUEST_SUCCESS"
 export const FETCH_ADMIN_REQUEST_FAILURE = "FETCH_ADMIN_REQUEST_FAILURE"
@@ -39,10 +37,10 @@ const fetchAdminQuery = `
   }
 `;
 
-export const fetchAdmin = (adminId) => {
+export const fetchAdmin = (graphQLClient, adminId) => {
   return (dispatch) => {
     dispatch(fetchAdminRequest());
-    return graphql.client.query(fetchAdminQuery, {adminId}).then(data => {
+    return graphQLClient.query(fetchAdminQuery, {adminId}).then(data => {
         dispatch(fetchAdminRequestSuccess(data.admin))
     }).catch(err => {
       dispatch(fetchAdminRequestFailure(err))

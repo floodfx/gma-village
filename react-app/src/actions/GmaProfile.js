@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const FETCH_GMA_REQUEST = "FETCH_GMA_REQUEST"
 export const FETCH_GMA_REQUEST_SUCCESS = "FETCH_GMA_REQUEST_SUCCESS"
 export const FETCH_GMA_REQUEST_FAILURE = "FETCH_GMA_REQUEST_FAILURE"
@@ -48,10 +46,10 @@ const fetchGmaQuery = `
   }
 `;
 
-export const fetchGma = (gmaId) => {
+export const fetchGma = (graphQLClient, gmaId) => {
   return (dispatch) => {
     dispatch(fetchGmaRequest());
-    return graphql.client.query(fetchGmaQuery, {gmaId}).then(data => {
+    return graphQLClient.query(fetchGmaQuery, {gmaId}).then(data => {
         dispatch(fetchGmaRequestSuccess(data.gma))
     }).catch(err => {
       dispatch(fetchGmaRequestFailure(err))

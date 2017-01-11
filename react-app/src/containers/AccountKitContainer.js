@@ -1,17 +1,22 @@
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
-import  { initAccountKit }  from '../actions/AccountKitContainer'
+import  { initAccountKit }  from '../actions/AccountKitContainer';
+import injectGraphQLClient from '../graphql/injectGraphQLClient';
 
 class AccountKitContainer extends Component {
 
   constructor(props) {
-    super();
+    super(props);            
+  }
+
+  componentWillMount() {
     window.AccountKit_OnInteractive = () => {
-      this.props.dispatch(initAccountKit())
+      const {dispatch, graphQLClient} = this.props;
+      dispatch(initAccountKit(graphQLClient))
     }
   }
 
-  componentDidMount() {    
+  componentDidMount() {            
     const script = document.createElement("script");
     script.src = "https://sdk.accountkit.com/en_US/sdk.js";
     document.body.appendChild(script);    
@@ -52,4 +57,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AccountKitContainer)
+export default injectGraphQLClient(connect(mapStateToProps)(AccountKitContainer))

@@ -1,5 +1,3 @@
-import graphql from '../graphql/client'
-
 export const SAVE_PARENT_USER_REQUEST = "SAVE_PARENT_USER_REQUEST"
 export const SAVE_PARENT_USER_REQUEST_SUCCESS = "SAVE_PARENT_USER_REQUEST_SUCCESS"
 export const SAVE_PARENT_USER_REQUEST_FAILURE = "SAVE_PARENT_USER_REQUEST_FAILURE"
@@ -29,10 +27,10 @@ export const resetParentUser = () => {
   }
 }
 
-export const saveParentUser = (parent) => {
+export const saveParentUser = (graphQLClient, parent) => {
   return (dispatch) => {
     dispatch(saveParentUserRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       mutation saveParentMutation($input: ParentInput!) {
         saveParent(input:$input) {
           id,

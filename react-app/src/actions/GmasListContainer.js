@@ -25,10 +25,10 @@ export const filterGmasList = (filter) => ({
 })
 
 
-export const fetchGmas = (active=true, limit=undefined, nextToken=undefined) => {
+export const fetchGmas = (graphQLClient, active=true, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
-    return graphql.client.query(`
+    return graphQLClient.query(`
       query fetchGmas($active: Boolean, $limit: Int, $nextToken: String) {
         gmas(active: $active, limit: $limit, nextToken: $nextToken) {
           list {

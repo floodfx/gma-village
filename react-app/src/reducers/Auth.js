@@ -8,6 +8,7 @@ import {
   CHECK_AUTH_COOKIE,
   CHECK_AUTH_COOKIE_SUCCESS,
   CHECK_AUTH_COOKIE_FAILURE,
+  SAVE_AUTH_COOKIE,
   CURRENT_USER_REQUEST,
   CURRENT_USER_REQUEST_SUCCESS,
   CURRENT_USER_REQUEST_FAILURE,
@@ -46,6 +47,11 @@ const auth = (state = {
     case CHECK_AUTH_COOKIE_FAILURE: {
       return Object.assign({}, state, {
         cookie: false
+      })
+    }
+    case SAVE_AUTH_COOKIE: {
+      return Object.assign({}, state, {
+        cookie: action.cookie
       })
     }
     case CURRENT_USER_REQUEST: {
