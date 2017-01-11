@@ -50,7 +50,7 @@ class LoginContainer extends Component {
         .catch((error) => {
           // console.log("error", error)
           this.setState({error: error.status})
-          })
+        })
     } else {
       this.setState({error: "Attempted login while AccountKit not initialized."})
     }
