@@ -17,7 +17,7 @@ nconf
     GOOGLE_PROJECT_ID: 'gma-village',
     GOOGLE_CLOUD_BUCKET: 'gma-village-public-assets',
     DATASTORE_EMULATOR_URL: '',
-    CORS_DOMAIN_WHITELIST_CSV: 'app.gmavillage.com',
+    CORS_DOMAIN_WHITELIST_CSV: 'app.gmavillage.com,d11duxgajl8mtp.cloudfront.net',
     AK_APP_ID: '1864284563828976',
     AK_APP_SECRET: '',
     AK_APP_VERSION: 'v1.1',

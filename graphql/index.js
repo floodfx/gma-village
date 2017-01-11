@@ -19,23 +19,24 @@ var app = express();
 
 var isProd = process.env.NODE_ENV === 'production'
 
+console.log("Starting server in mode", (isProd ? "prod" : "dev"))
+
 var whitelistedDomains = config.get('CORS_DOMAIN_WHITELIST_CSV').split(',');
-console.log(whitelistedDomains)
-if(whitelistedDomains.length > 0 && isProd) {
+if(whitelistedDomains.length > 0) {
   if(!isProd) {
-    whitelistedDomains.push("localhost:8080")
+    whitelistedDomains.push("localhost:3000")
   }
   var whitelist = whitelistedDomains.reduce((acc, domain) => {
     acc.push(`http://${domain}`)
     acc.push(`https://${domain}`)
     return acc
   },[])
-  console.log(whitelist)
+  console.log("whitelisted domains", whitelist)
   var corsOptions = {
     origin: function(origin, callback){
       console.log("origin", origin)
       var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-      callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted);
+      callback(originIsWhitelisted ? null : `Bad Origin: ${origin}`, originIsWhitelisted);
     }
   };
 
@@ -93,6 +94,13 @@ app.post('/profilePhoto',
       res.send(JSON.stringify({image_url:file.cloudStoragePublicUrl}));
     }
   })
+
+function logErrors (err, req, res, next) {
+  console.error("request", req, "error.stack", err.stack);
+  next(err);
+}
+
+app.use(logErrors)
 
 app.listen(8080);
 console.log('Running a GraphQL API server at localhost:8080/graphql');

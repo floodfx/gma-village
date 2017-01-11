@@ -174,7 +174,6 @@ const root = {
       if(isAdmin(appUser)) {
         setTimestamps(input)
         saveUser(input, "Admin").then((u) => {
-          console.log("savedAdmin", u)
           resolve(u);
         }).catch((err) => {
           reject(err);
