@@ -90,7 +90,7 @@ class GmaForm extends Component {
           </div>
           <div className="mt4">
             <Field
-              heading="The area I live is called:"
+              heading="I live in:"
               name="neighborhood"
               options={Neighborhood.enumValues.map((val) => { return { id: val.name, label: val.text } })}
               component={MultiRadio}
