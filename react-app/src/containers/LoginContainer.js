@@ -40,7 +40,6 @@ class LoginContainer extends Component {
   }
 
   onLoginClick = (e) => {
-    console.log(e)
     if(this.props.accountKitInited) {
       this.phoneLogin("+1", e)
         .then((data) => {
@@ -49,7 +48,7 @@ class LoginContainer extends Component {
           this.auth(csrfNonce, authCode);
         })
         .catch((error) => {
-          console.log("error", error)
+          // console.log("error", error)
           this.setState({error: error.status})
           })
     } else {

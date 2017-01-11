@@ -4,22 +4,26 @@ import  { initAccountKit }  from '../actions/AccountKitContainer'
 
 class AccountKitContainer extends Component {
 
-  componentWillMount() {
-    const script = document.createElement("script");
-    script.src = "https://sdk.accountkit.com/en_US/sdk.js";
-    document.body.appendChild(script);
+  constructor(props) {
+    super();
     window.AccountKit_OnInteractive = () => {
       this.props.dispatch(initAccountKit())
     }
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidMount() {    
+    const script = document.createElement("script");
+    script.src = "https://sdk.accountkit.com/en_US/sdk.js";
+    document.body.appendChild(script);    
+  }
+
+  componentWillReceiveProps(nextProps) {
     if(!this.props.inited && nextProps.inited) {
-        window.AccountKit.init({
-          appId: nextProps.appId,
-          state: nextProps.csrf,
-          version: nextProps.version,
-          debug: process.env.NODE_ENV !== 'production' || this.props.debug
+      window.AccountKit.init({
+        appId: nextProps.appId,
+        state: nextProps.csrf,
+        version: nextProps.version,
+        debug: process.env.NODE_ENV !== 'production' || this.props.debug
       })
     }
   }

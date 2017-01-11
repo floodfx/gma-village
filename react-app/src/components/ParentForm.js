@@ -61,20 +61,6 @@ class ParentForm extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    const validKid = (nextState.kidFirstName.length > 1 && 
-                      nextState.kidBirthDay !== "0" && 
-                      nextState.kidBirthMonth !== "0" && 
-                      nextState.kidBirthYear !== "0")
-    if(validKid !== this.state.validKid) {
-      this.setState({validKid})
-    }
-    if(this.state.kids !== nextState.kids) {
-      this.props.change("kids", nextState.kids);
-      this.resetKidInput()
-    }
-  }
-
   removeKid = (index) => {
     this.setState((prevState, props) => ({
       kids: [...prevState.kids.slice(0, index), ...prevState.kids.slice(index+1)]
@@ -88,15 +74,44 @@ class ParentForm extends Component {
       first_name: this.state.kidFirstName,
       birthday: moment(`${m}-${d}-${this.state.kidBirthYear}`, 'MM-DD-YYYY').unix()
     }
-    this.setState((prevState, props) => ({
-      kids: prevState.kids.concat([newKid])
-    }));    
+    this.setState((prevState, props) => {
+      const newKids = prevState.kids.concat([newKid]);
+      this.props.change("kids", newKids);
+      return {
+        kids: newKids
+      }
+    }); 
+    this.resetKidInput()
   }
 
-  kidFirstNameChange = (kidFirstName) => {
-    this.setState({
-      kidFirstName 
-    })    
+  kidValueChange = (kidPart, value) => {
+    switch(kidPart) {
+      case "kidFirstName":
+      this.setState({kidFirstName: value});
+      break;
+      case "kidBirthDay":
+      this.setState({kidBirthDay: value});
+      break;
+      case "kidBirthMonth":
+      this.setState({kidBirthMonth: value});
+      break;
+      case "kidBirthYear":
+      this.setState({kidBirthYear: value});
+      break;
+    }      
+    this.checkValidKid();
+  }
+
+  checkValidKid = () => {
+    this.setState((prevState, props) => {
+      const validKid = (prevState.kidFirstName.length > 1 && 
+                        prevState.kidBirthDay !== "0" && 
+                        prevState.kidBirthMonth !== "0" && 
+                        prevState.kidBirthYear !== "0")      
+      return {
+        validKid
+      }
+    });
   }
 
   onOtherValueChange = (name, value) => {
@@ -183,7 +198,7 @@ class ParentForm extends Component {
                   <label className="normal mh2">Child First Name:</label>
                 </div>
                 <div className="dtc">
-                  <input type="text" value={this.state.kidFirstName} name="kid_first_name" onChange={(e) => this.kidFirstNameChange(e.target.value)} />
+                  <input type="text" value={this.state.kidFirstName} name="kid_first_name" onChange={(e) => this.kidValueChange("kidFirstName", e.target.value)} />
                 </div>
               </div>
               <div className="dt">
@@ -191,19 +206,19 @@ class ParentForm extends Component {
                   <label className="normal mh2">Child Birth Date:</label>
                 </div>
                 <div className="dtc">
-                  <select value={this.state.kidBirthMonth} onChange={(e) => this.setState({kidBirthMonth:e.target.value})}>
+                  <select value={this.state.kidBirthMonth} onChange={(e) => this.kidValueChange("kidBirthMonth", e.target.value)}>
                     <option value={0}>Month</option>
                     {months.map((month, index) => {
                       return <option key={index} value={month}>{leftPad(month, 2, 0)}</option>
                     })}                  
                   </select>
-                  <select value={this.state.kidBirthDay} onChange={(e) => this.setState({kidBirthDay:e.target.value})}>
+                  <select value={this.state.kidBirthDay} onChange={(e) => this.kidValueChange("kidBirthDay", e.target.value)}>
                     <option value={0}>Day</option>
                     {days.map((day, index) => {
                       return <option key={index} value={day}>{leftPad(day, 2, 0)}</option>
                     })}                    
                   </select>
-                  <select value={this.state.kidBirthYear} onChange={(e) => this.setState({kidBirthYear:e.target.value})}>
+                  <select value={this.state.kidBirthYear} onChange={(e) => this.kidValueChange("kidBirthYear", e.target.value)}>
                     <option value={0}>Year</option>
                     {years.map((yr, index) => {
                       return <option key={index} value={year-index}>{year-index}</option>
