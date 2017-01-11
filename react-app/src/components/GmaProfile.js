@@ -59,7 +59,7 @@ class GmaProfile extends Component {
     return (
       <div>
         <h4>{label}           
-          <span className="normal">
+          <span className="ml2 normal">
             {parsedVals.join(", ")}
           </span>
         </h4>
@@ -76,97 +76,102 @@ class GmaProfile extends Component {
             <li><Link to={'/gma/list'}>&larr; Back</Link></li>
           </ol>
         </div>
-        <div className="row">
-          <div className="media col-md-12 col-sm-6">
-            <div className="media-left">
+        <div className="mw-100 center">
+          <div className="cf" style={{height: 400}}>
+            <div className="fl w-100 w-30-ns h-100-ns h-80 pa2-ns pb3 tc">
               <img 
-                className="media-object img-rounded gma-orange-border" 
+                className="h-100-ns h-80 gma-orange-border" 
                 src={imgUrl(gma)} 
                 alt={"Gma " + gma.first_name} 
                 style={{
-                  objectFit: 'cover', 
-                  maxWidth: '235px', 
-                  maxHeight: '235px', 
-                  minWidth: '235px', 
-                  minHeight: '235px'
+                  objectFit: 'cover'
                 }}/>
             </div>
+            <div className="fl w-100 w-70-ns h-100-ns h-80 pa2-ns pb3">
+              <div className="h-100-ns h-80 gma-orange-border pa4-ns pa4">
+                <div className="pull-right">                  
+                  <a 
+                    className="btn gma-orange-bg" 
+                    href={"tel:"+gma.phone}>
+                    {formatPhone(gma.phone)}
+                  </a>                  
+                </div>
+                <h1 className="media-heading gma-orange">
+                  Gma {gma.first_name}
+                  {currentUser.kind === "Admin" &&
+                    <Link 
+                      className="btn gma-orange-bg ml2" 
+                      to={`/gma/edit/${gma.id}`}>
+                      Edit
+                    </Link>
+                  }
+                </h1>
 
-            <div className="media-body gma-orange-border" style={{padding: '20px'}}>
-              <div className="pull-right">                  
-                <a 
-                  className="btn gma-orange-bg" 
-                  href={"tel:"+gma.phone}>
-                  {formatPhone(gma.phone)}
-                </a>                  
-              </div>
-              <h1 className="media-heading gma-orange">
-                Gma {gma.first_name}
-                {currentUser.kind === "Admin" &&
-                  <Link 
-                    className="btn gma-orange-bg ml2" 
-                    to={`/gma/edit/${gma.id}`}>
-                    Edit
-                  </Link>
+                <h4>
+                  I live in:
+                  <span className="ml2 normal">
+                    {gma.neighborhood === Neighborhood.OTHER.name &&
+                      <span>{gma.otherNeighborhood}</span>
+                    }
+                    {gma.neighborhood !== Neighborhood.OTHER.name &&
+                      <span>{gma.neighborhood.text}</span>
+                    }
+                  </span>
+                </h4>
+                {gma.isAvailableOutsideNeighborhood &&
+                  <h4 className="normal">I'm willing to travel to provide care</h4>
                 }
-              </h1>
-
-              <h4>
-                I live in:
-                <span className="ml2 normal">
-                  {gma.neighborhood === Neighborhood.OTHER.name &&
-                    <span>{gma.otherNeighborhood}</span>
-                  }
-                  {gma.neighborhood !== Neighborhood.OTHER.name &&
-                    <span>{gma.neighborhood.text}</span>
-                  }
-                </span>
-              </h4>
-              {gma.isAvailableOutsideNeighborhood &&
-                <h4 className="normal">I'm willing to travel to provide care</h4>
-              }
-              {this.renderEnumCSV("Care for kids ages:", CareAge, gma.careAges)}
-              {this.renderEnumCSV("Provide care at:", CareLocation, gma.careLocations)}
-              {this.renderEnumCSV("General Availability:", Availability, gma.availabilities, gma.otherAvailability)}
+                {this.renderEnumCSV("Care for kids ages:", CareAge, gma.careAges)}
+                {this.renderEnumCSV("Provide care at:", CareLocation, gma.careLocations)}
+                {this.renderEnumCSV("General Availability:", Availability, gma.availabilities, gma.otherAvailability)}
+              </div>
             </div>
           </div>
         </div>
-        <div className="row" style={{marginTop: '10px'}}>
-          <div className="media col-md-12 col-sm-6">
-            <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-              {this.renderEnumCSV("I would describe myself as:", Demeanor, gma.demeanors, gma.otherDemeanor)}
-              <h4>
-                I enjoy caring for kids because: 
-                <span className="normal">
-                  {gma.whyCareForKidsText}
-                </span>
-              </h4>
+        <div className="mw-100 center">
+          <div className="cf">
+            <div className="fl w-100 pa2-ns pb3">
+              <div className="media-body gma-orange-border ph4">
+                {this.renderEnumCSV("I would describe myself as:", Demeanor, gma.demeanors, gma.otherDemeanor)}
+                <h4>
+                  I enjoy caring for kids because: 
+                  <span className="ml2 normal">
+                    {gma.whyCareForKidsText}
+                  </span>
+                </h4>
+              </div>
             </div>
           </div>
         </div>
-        <div className="row" style={{marginTop: '10px'}}>
-          <div className="media col-md-12 col-sm-6">
-            <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-              {this.renderEnumList("Experience:", CareExperience, gma.careExperiences, gma.otherCareExperience)}
+        <div className="mw-100 center">
+          <div className="cf">
+            <div className="fl w-100 pa2-ns pb3">
+              <div className="media-body gma-orange-border ph4">
+                {this.renderEnumList("Experience:", CareExperience, gma.careExperiences, gma.otherCareExperience)}
+              </div>
             </div>
           </div>
         </div>
-        <div className="row" style={{marginTop: '10px'}}>
-          <div className="media col-md-12 col-sm-6">
-            <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-              {this.renderEnumList("Training:", CareTraining, gma.careTrainings, gma.otherCareTraining)}
+        <div className="mw-100 center">
+          <div className="cf">
+            <div className="fl w-100 pa2-ns pb3">
+              <div className="media-body gma-orange-border ph4">
+                {this.renderEnumList("Training:", CareTraining, gma.careTrainings, gma.otherCareTraining)}
+              </div>
             </div>
           </div>
         </div>
-        <div className="row" style={{marginTop: '10px'}}>
-          <div className="media col-md-12 col-sm-6">
-            <div className="media-body gma-orange-border" style={{padding: '0px 20px'}}>
-              <h4>
-                Something else I'd like to share: 
-                <span className="normal">
-                  {gma.additionalInformationText}
-                </span>
-              </h4>
+        <div className="mw-100 center">
+          <div className="cf">
+            <div className="fl w-100 pa2-ns pb3">
+              <div className="media-body gma-orange-border ph4">
+                <h4>
+                  Something else I'd like to share: 
+                  <span className="ml2 normal">
+                    {gma.additionalInformationText}
+                  </span>
+                </h4>
+              </div>
             </div>
           </div>
         </div>
