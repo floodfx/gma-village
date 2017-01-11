@@ -134,7 +134,10 @@ class GmaForm extends Component {
             <Field
               heading="I can provide child care at:"
               name="careLocations"
-              options={CareLocation.enumValues.map((val) => { return { id: val.name, label: val.text } })}
+              options={CareLocation.enumValues.map((val) => { 
+                var text = val.name === "PROVIDERS_HOME" ? "My Home" : val.text
+                return { id: val.name, label: text 
+              }})}
               component={MultiCheckbox} 
               validate={[required]}/>
           </div>

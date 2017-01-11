@@ -45,7 +45,12 @@ class GmaProfile extends Component {
   renderEnumCSV = (label, enumClass, vals, other) => {
     const parsedVals = vals.map((val) => {
       if(val !== "OTHER") {
-       return enumClass.parse(val).text
+        var parsedVal = enumClass.parse(val);
+        if(enumClass === CareLocation && parsedVal === CareLocation.PROVIDERS_HOME) {
+          return "My Home";
+        } else {
+          return parsedVal.text
+        }
       }
     });
     if(other) {
