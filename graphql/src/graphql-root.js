@@ -58,6 +58,7 @@ const root = {
   currentUser: (root, input, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
+      console.log("AppUser", appUser);
       if(appUser) {
         // ensure user is active before logging them in
         if(appUser.active) {

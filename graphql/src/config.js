@@ -21,5 +21,5 @@ nconf
     AK_APP_ID: '1864284563828976',
     AK_APP_SECRET: '',
     AK_APP_VERSION: 'v1.1',
-    CSRF: guid.raw() // generate csrf by defaut
+    CSRF: ''
   })
