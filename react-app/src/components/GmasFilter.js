@@ -43,7 +43,7 @@ const GmasFilter = ({filters, onFilterClick}) => (
   <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
     <h3 className="gma-orange">Find Gmas that:</h3>
       <div className="col-md-2">
-        {filterBy('Live in:', Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods), filters, onFilterClick)}
+        {filterBy('Live in:', Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).filter((val) => val !== Neighborhood.OTHER), filters, onFilterClick)}
         <label key={"willingToTravel"} style={{whiteSpace: 'nowrap'}}>
           <input checked={filters.includes(WILLING_TO_TRAVEL)} onChange={(event) => onFilterClick([WILLING_TO_TRAVEL], event)} type="checkbox" value={WILLING_TO_TRAVEL}/>
             &nbsp;Willing to Travel
@@ -56,7 +56,7 @@ const GmasFilter = ({filters, onFilterClick}) => (
         {filterBy('Can provide care at:', CareLocation.enumValues.slice(0).reverse(), filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Are generally available:', Availability.enumValues, filters, onFilterClick)}
+        {filterBy('Are generally available:', Availability.enumValues.filter((val) => val !== Availability.OTHER), filters, onFilterClick)}
       </div>
   </div>
 )
