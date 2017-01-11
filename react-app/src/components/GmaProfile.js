@@ -114,7 +114,7 @@ class GmaProfile extends Component {
                       <span>{gma.otherNeighborhood}</span>
                     }
                     {gma.neighborhood !== Neighborhood.OTHER.name &&
-                      <span>{gma.neighborhood.text}</span>
+                      <span>{Neighborhood.parse(gma.neighborhood).text}</span>
                     }
                   </span>
                 </h4>
