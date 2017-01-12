@@ -1,5 +1,8 @@
 runtime: nodejs
 vm: true
-service: gma-village-graphql-dev
+service: gma-village-graphql-STAGE
+health_check:
+  enable_health_check: False
 env_variables:
   AK_APP_SECRET: YOUR_AK_APP_SECRET
+  CSRF: UUID
