@@ -1,3 +1,0 @@
-runtime: nodejs
-vm: true
-service: gma-village-graphql-prod
