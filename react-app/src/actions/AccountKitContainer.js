@@ -21,8 +21,10 @@ export const initAccountKitRequestFailure = (error) => ({
   error
 })
 
-export const accountKitAuthRequest = () => ({
-  type: ACCOUNT_KIT_AUTH_REQUEST
+export const accountKitAuthRequest = (csrfNonce, authCode) => ({
+  type: ACCOUNT_KIT_AUTH_REQUEST,
+  csrfNonce,
+  authCode
 })
 
 export const accountKitAuthRequestSuccess = (user) => ({
@@ -57,75 +59,89 @@ export const initAccountKit = (graphQLClient) => {
 
 export const accountKitAuth = (graphQLClient, csrfNonce, authCode) => {
   return (dispatch) => {
-    dispatch(accountKitAuthRequest());
+    dispatch(accountKitAuthRequest(csrfNonce, authCode));
     return graphQLClient.query(`
       mutation auth($csrfNonce: String!, $authCode: String!){
-        accountKitAuth(csrfNonce:$csrfNonce, authCode:$authCode) {
-          ... on Admin {
+        accountKitAuth(csrfNonce:$csrfNonce, authCode:$authCode) {          
+          user {         
+            ... on Admin {
+              id,
+              first_name,
+              last_name,
+              phone,
+              kind,
+              active,
+              ak_access_token,
+              ak_user_id,
+              ak_token_refresh_interval_sec,
+              last_login_timestamp,
+              created_on_timestamp,
+              member_since_timestamp,
+              roles
+            }
+            ... on Gma {
+              id,
+              first_name,
+              last_name,
+              phone,
+              kind,
+              active,
+              ak_access_token,
+              ak_user_id,
+              ak_token_refresh_interval_sec,
+              last_login_timestamp,
+              created_on_timestamp,
+              member_since_timestamp,
+              availabilities,
+              otherAvailability,
+              careAges,
+              careExperiences,
+              otherCareExperience,
+              careLocations,
+              careTrainings,
+              otherCareTraining,
+              city,
+              demeanors,
+              otherDemeanor,
+              neighborhood,
+              otherNeighborhood,
+              isAvailableOutsideNeighborhood,
+              whyCareForKidsText,
+              additionalInformationText,
+            }
+            ... on Parent {
+              id,
+              first_name,
+              last_name,
+              phone,
+              kind,
+              active,
+              ak_access_token,
+              ak_user_id,
+              ak_token_refresh_interval_sec,
+              last_login_timestamp,
+              created_on_timestamp,
+              member_since_timestamp
+            }
+          },
+          errors {
             id,
-            first_name,
-            last_name,
-            phone,
-            kind,
-            active,
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp,
-            roles
-          }
-          ... on Gma {
-            id,
-            first_name,
-            last_name,
-            phone,
-            kind,
-            active,
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp,
-            availabilities,
-            otherAvailability,
-            careAges,
-            careExperiences,
-            otherCareExperience,
-            careLocations,
-            careTrainings,
-            otherCareTraining,
-            city,
-            demeanors,
-            otherDemeanor,
-            neighborhood,
-            otherNeighborhood,
-            isAvailableOutsideNeighborhood,
-            whyCareForKidsText,
-            additionalInformationText,
-          }
-          ... on Parent {
-            id,
-            first_name,
-            last_name,
-            phone,
-            kind,
-            active,
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp
+            message
           }
         }
       }
     `, {csrfNonce, authCode}).then(data => {
-        dispatch(accountKitAuthRequestSuccess(data.accountKitAuth))
+        if(data.accountKitAuth.user) {
+          dispatch(accountKitAuthRequestSuccess(data.accountKitAuth.user))
+        } else if(data.accountKitAuth.errors) {
+          dispatch(accountKitAuthRequestFailure({
+            responseErrors: data.accountKitAuth.errors
+          }))
+        }
     }).catch(err => {
-      dispatch(accountKitAuthRequestFailure(err))
+      dispatch(accountKitAuthRequestFailure({
+        otherErrors: err
+      }))
     });
   }
 }

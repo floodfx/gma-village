@@ -78,5 +78,6 @@
 }
 
 .gma-nav-font {
-  font-family: proxima-nova;  
+  font-family: "proxima-nova", "Open Sans", sans-serif;  
+  text-transform: uppercase;
 }
