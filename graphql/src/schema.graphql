@@ -267,11 +267,21 @@ input KidInput {
   birthday: Int!  
 }
 
+type Error {
+  id: Int!
+  message: String!
+}
+
+type UserResponse {
+  user: User,
+  errors: [Error]
+}
+
 type Mutation {
   saveAdmin(input: AdminInput!): Admin
   saveGma(input: GmaInput!): Gma
   saveParent(input: ParentInput!): Parent
-  accountKitAuth(csrfNonce: String!, authCode: String!): User
+  accountKitAuth(csrfNonce: String!, authCode: String!): UserResponse
 }
 
 schema {

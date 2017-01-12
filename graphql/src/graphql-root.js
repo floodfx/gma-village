@@ -11,7 +11,7 @@ var {
   isParent
 } = require('./user/user')
 var config = require('./config')
-var { UserError } = require('graphql-errors');
+// var { UserError } = require('graphql-errors');
 
 const setTimestamps = (input) => {
   const nowTimestamp = Math.floor(new Date().getTime()/1000)
@@ -124,7 +124,15 @@ const root = {
   accountKitAuth: (root, {csrfNonce, authCode}, context, info) => {
     return new Promise((resolve, reject) => {
       if(config.get('CSRF') !== csrfNonce) {
-        reject("CSRF Validation Failed");
+        resolve({
+          user: null,
+          errors: [
+            {
+              id: "10",
+              message: "CSRF Validation Failed"
+            }
+          ]
+        });
       } else {
         // use ak client to get accessToken
         ak.accessToken(authCode)
@@ -134,37 +142,76 @@ const root = {
               .then((adJson) => {
                 // verify is a user and is active
                 findByPhone(adJson.phone.national_number).then((user) => {
-                  user.ak_user_id = json.id
-                  user.ak_access_token = json.access_token
-                  user.ak_token_refresh_interval_sec = json.token_refresh_interval_sec
-                   // ensure user is active before logging them in
-                  if(user.active) {
+                  if(user) {
+                    user.ak_user_id = json.id
+                    user.ak_access_token = json.access_token
+                    user.ak_token_refresh_interval_sec = json.token_refresh_interval_sec                    
                     if(isNewSession(user)) {
                       saveUser(user).then((u) => {
-                        resolve(u);
+                        resolve({
+                          user: u,
+                          errors: []
+                        });
+                        // resolve(u);
                       }).catch((err) => {
-                        reject(err);
+                        resolve({
+                          user: null,
+                          errors: [
+                            {
+                              id: "20",
+                              message: err
+                            }
+                          ]
+                        });
                       })
                     } else {
                       resolve(user);
                     }
                   } else {
-                    reject("User not active.")
+                    resolve({
+                      user: null,
+                      errors: [
+                        {
+                          id: "30",
+                          message: "User not Active"
+                        }
+                      ]
+                    });
                   }
                 }).catch((err) => {
-                  reject(new UserError(err))
+                  resolve({
+                    user: null,
+                    errors: [
+                      {
+                        id: "20",
+                        message: err
+                      }
+                    ]
+                  });
                 })
               })
               .catch((error) => {
-                console.log(error, "\n\n\n")
-                //TODO this can't be right
-                reject(error.error.error.message)
+                resolve({
+                  user: null,
+                  errors: [
+                    {
+                      id: "20",
+                      message: error
+                    }
+                  ]
+                });
               })
           })
           .catch((error) => {
-            console.log(error, "\n\n\n")
-            //TODO this can't be right
-            reject(error.error.error.message)
+            resolve({
+              user: null,
+              errors: [
+                {
+                  id: "20",
+                  message: error
+                }
+              ]
+            });
           });
       }
     });

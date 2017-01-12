@@ -30,9 +30,9 @@ var userById = (id) => {
   });
 }
 
-var findByPhone = (phone) => {
+var findByPhone = (phone, active=true) => {
   return new Promise((resolve, reject) => {
-    userDao.findByPhone(phone)
+    userDao.findByPhone(phone, active)
       .then((user) => {
         resolve(user);
       })

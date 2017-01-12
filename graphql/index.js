@@ -13,7 +13,6 @@ var { loadAppUserMiddleware } = require('./src/user/user')
 var images = require('./src/images/upload-images');
 var bodyParser = require('body-parser');
 var { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
-var { maskErrors } = require('graphql-errors')
 
 var app = express();
 
@@ -44,8 +43,6 @@ if(whitelistedDomains.length > 0) {
 } else {
   app.use(cors());
 }
-
-maskErrors(schema)
 
 // USE "Authorization: Bearer <token>" Header for Authorization
 app.use(bearerToken());
