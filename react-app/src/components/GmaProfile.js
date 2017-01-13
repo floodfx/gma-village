@@ -47,7 +47,7 @@ class GmaProfile extends Component {
       if(val !== "OTHER") {
         var parsedVal = enumClass.parse(val);
         if(enumClass === CareLocation && parsedVal === CareLocation.PROVIDERS_HOME) {
-          return "My Home";
+          return "Elsewhere";
         } else {
           return parsedVal.text
         }

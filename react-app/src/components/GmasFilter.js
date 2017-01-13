@@ -15,10 +15,14 @@ const customSortNeighborhoods = (n1, n2) => {
 
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
   var checkboxes = enumValues.map((val) => {
+        var text = val.text;
+        if(val === CareLocation.PROVIDERS_HOME) {
+          text = "Elsewhere"
+        }
         return (
           <label key={val.name} style={{whiteSpace: 'nowrap'}}>
             <input checked={filters.includes(val)} onChange={(event) => onFilterClick([val], event)} type="checkbox" value={val.ordinal}/>&nbsp;
-              {val.text}
+              {text}
               &nbsp;
               &nbsp;
           </label>
@@ -53,7 +57,7 @@ const GmasFilter = ({filters, onFilterClick}) => (
         {filterBy('Care for kids ages:', CareAge.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Can provide care at:', CareLocation.enumValues.slice(0).reverse(), filters, onFilterClick)}
+        {filterBy('Can provide care at:', CareLocation.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Are generally available:', Availability.enumValues.filter((val) => val !== Availability.OTHER), filters, onFilterClick)}
