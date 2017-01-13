@@ -46,7 +46,7 @@ class GmaProfile extends Component {
     const parsedVals = vals.map((val) => {
       if(val !== "OTHER") {
         var parsedVal = enumClass.parse(val);
-        if(enumClass === CareLocation && parsedVal === CareLocation.PROVIDERS_HOME) {
+        if(enumClass === CareLocation && parsedVal === CareLocation.CHILDS_HOME) {
           return "Elsewhere";
         } else {
           return parsedVal.text

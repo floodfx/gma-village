@@ -16,7 +16,7 @@ const customSortNeighborhoods = (n1, n2) => {
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
   var checkboxes = enumValues.map((val) => {
         var text = val.text;
-        if(val === CareLocation.PROVIDERS_HOME) {
+        if(val === CareLocation.CHILDS_HOME) {
           text = "Elsewhere"
         }
         return (
