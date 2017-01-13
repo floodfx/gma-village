@@ -152,7 +152,6 @@ const root = {
                           user: u,
                           errors: []
                         });
-                        // resolve(u);
                       }).catch((err) => {
                         resolve({
                           user: null,
@@ -165,7 +164,10 @@ const root = {
                         });
                       })
                     } else {
-                      resolve(user);
+                      resolve({
+                        user,
+                        errors: []
+                      });
                     }
                   } else {
                     resolve({
