@@ -131,7 +131,7 @@ class ParentForm extends Component {
     const { kids, otherNeighborhood } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
-    const years = [...Array(10)].map((v, i) => i + 1);
+    const years = [...Array(13)].map((v, i) => i + 1);
     const year = moment().year()
     return (
       <div>
@@ -164,13 +164,6 @@ class ParentForm extends Component {
               placeholder="Phone Number"
               normalize={normalizePhone}
               validate={[required, phone]} />
-          </div>
-          <div className="mt4">
-            <Field
-              label="Active:"
-              name="active"
-              component={Checkbox}
-              type="checkbox" />
           </div>
           <div className="mt4">          
             <Field
@@ -247,7 +240,6 @@ class ParentForm extends Component {
               onOtherValueChange={this.onOtherValueChange}
               />          
           </div>
-
           <div className="mt4">
             <label>Profile Photo:</label>
             <div>
@@ -257,7 +249,14 @@ class ParentForm extends Component {
                 type="file" 
                 onChange={(e) => handleFile(e)} />
             </div>          
-          </div>        
+          </div>  
+          <div className="mt4">
+            <Field
+              label="Active:"
+              name="active"
+              component={Checkbox}
+              type="checkbox" />
+          </div>      
           <Field name="otherNeighborhood" component="input" type="hidden" />
           <Field name="kind" component="input" type="hidden" />
           <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />

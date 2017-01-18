@@ -57,7 +57,7 @@ const GmasFilter = ({filters, onFilterClick}) => (
         {filterBy('Care for kids ages:', CareAge.enumValues, filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
-        {filterBy('Can provide care at:', CareLocation.enumValues, filters, onFilterClick)}
+        {filterBy('Can provide care at:', CareLocation.enumValues.slice(0).reverse(), filters, onFilterClick)}
       </div>
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Are generally available:', Availability.enumValues.filter((val) => val !== Availability.OTHER), filters, onFilterClick)}

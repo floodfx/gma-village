@@ -15,6 +15,8 @@ import ParentListContainer from './containers/ParentListContainer';
 import ParentCreateFormContainer from './containers/ParentCreateFormContainer';
 import ParentEditFormContainer from './containers/ParentEditFormContainer';
 
+import CareNeedFormContainer from './containers/CareNeedFormContainer';
+
 import LoginContainer from './containers/LoginContainer';
 import HomeContainer from './containers/HomeContainer';
 import ProfileContainer from './containers/ProfileContainer';
@@ -77,6 +79,9 @@ const App = ({ store, authListener }) => {
             <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>
             <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>
             <Route path="/parent/edit/:parentId" component={ParentEditFormContainer} onEnter={authListener.requireAdmin}/>
+
+            <Route path="/careNeed/create" component={CareNeedFormContainer} onEnter={authListener.requireParent}/>
+            <Route path="/careNeed/create/:parentId" component={CareNeedFormContainer} onEnter={authListener.requireParent}/>
             
             <Route path="/login" component={LoginContainer}/>
             <Route path="/home" component={HomeContainer} onEnter={authListener.requireUser}/>

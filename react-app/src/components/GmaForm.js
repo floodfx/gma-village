@@ -104,15 +104,7 @@ class GmaForm extends Component {
               name="isAvailableOutsideNeighborhood"
               component={Checkbox}
               type="checkbox" />
-          </div>
-          <div className="mt4">
-            <Field
-              label="Active:"
-              name="active"
-              defaultValue={true}
-              component={Checkbox}
-              type="checkbox" />
-          </div>
+          </div> 
           <div className="mt4">
             <Field
               heading="I am comfortable caring for kids ages:"
@@ -192,6 +184,14 @@ class GmaForm extends Component {
                 type="file" 
                 onChange={(e) => handleFile(e)} />
             </div>          
+          </div>
+          <div className="mt4">
+            <Field
+              label="Active:"
+              name="active"
+              defaultValue={true}
+              component={Checkbox}
+              type="checkbox" />
           </div>
           <Field name="otherNeighborhood" component="input" type="hidden" />          
           <Field name="otherAvailability" component="input" type="hidden" />

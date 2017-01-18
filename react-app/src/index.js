@@ -17,6 +17,8 @@ import saveParent  from './reducers/SaveParent'
 import parentProfile  from './reducers/ParentProfile'
 import parentList  from './reducers/ParentList'
 
+import saveCareNeed  from './reducers/SaveCareNeed'
+
 import accountKitInit  from './reducers/AccountKitInit'
 import auth  from './reducers/Auth'
 import uploadImage  from './reducers/UploadImage'
@@ -48,6 +50,7 @@ const store = createStore(
     saveParent,
     parentProfile,
     parentList,
+    saveCareNeed,
     accountKitInit,
     auth,
     uploadImage,
