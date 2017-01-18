@@ -11,7 +11,10 @@ nconf
     'AK_APP_ID',
     'AK_APP_SECRET',
     'AK_APP_VERSION',
-    'CSRF'
+    'CSRF',
+    'SNS_AWS_ACCESS_KEY',
+    'SNS_AWS_SECRET_ACCESS_KEY',
+    'SNS_REGION'
   ])
   .defaults({
     GOOGLE_PROJECT_ID: 'gma-village',
@@ -21,5 +24,8 @@ nconf
     AK_APP_ID: '1864284563828976',
     AK_APP_SECRET: '',
     AK_APP_VERSION: 'v1.1',
-    CSRF: ''
+    CSRF: '',
+    SNS_AWS_ACCESS_KEY: '',
+    SNS_AWS_SECRET_ACCESS_KEY: '',
+    SNS_REGION: 'us-west-2'
   })

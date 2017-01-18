@@ -262,6 +262,16 @@ input ParentInput {
   member_since_timestamp: Int
 }
 
+input CareNeedInput {
+  parentId: ID!
+  careLocations: [CareLocation!]
+  startDateTimeOfNeed: Int!
+  endDateTimeOfNeed: Int!
+  neighborhood: Neighborhood!
+  otherNeighborhood: String
+  kids: [KidInput!]!  
+}
+
 input KidInput {
   first_name: String!
   birthday: Int!  
@@ -281,6 +291,7 @@ type Mutation {
   saveAdmin(input: AdminInput!): Admin
   saveGma(input: GmaInput!): Gma
   saveParent(input: ParentInput!): Parent
+  saveCareNeed(input: CareNeedInput!): ID
   accountKitAuth(csrfNonce: String!, authCode: String!): UserResponse
 }
 

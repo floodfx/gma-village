@@ -15,6 +15,7 @@ const resolvers = {
     saveAdmin: root.saveAdmin,
     saveGma: root.saveGma,
     saveParent: root.saveParent,
+    saveCareNeed: root.saveCareNeed,
     accountKitAuth: root.accountKitAuth
   },
 

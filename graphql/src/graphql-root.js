@@ -1,6 +1,6 @@
 var { UserDAO } = require('gma-village-data-access');
-var ak = require('./account-kit')
-var { checkAuth } = require('./auth/auth')
+var ak = require('./account-kit');
+var { checkAuth } = require('./auth/auth');
 var {
   saveUser,
   userById,
@@ -9,9 +9,10 @@ var {
   isAdmin,
   isGma,
   isParent
-} = require('./user/user')
-var config = require('./config')
-// var { UserError } = require('graphql-errors');
+} = require('./user/user');
+var config = require('./config');
+var { buildMessage } = require('./careNeed/message');
+var { sendSMS } = require('./send/sms'); 
 
 const setTimestamps = (input) => {
   const nowTimestamp = Math.floor(new Date().getTime()/1000)
@@ -258,6 +259,31 @@ const root = {
         }).catch((err) => {
           reject(err);
         })
+      } else {
+        reject("Not Authorized")
+      }
+    })
+  },
+  saveCareNeed: (root, {input}, context, info) => {
+    return new Promise((resolve, reject) => {
+      const { appUser } = context;
+      if(isAdmin(appUser) || isParent(appUser)) {
+        userById(input.parentId).then((parent) => {
+          var msg = buildMessage(
+            parent,
+            input.kids,
+            input.neighborhood,
+            input.otherNeighborhood,
+            input.startDateTimeOfNeed,
+            input.endDateTimeOfNeed
+          );
+          console.log("sms message", msg)
+          sendSMS(msg, "14157027236").then((data) => {
+            resolve(data.MessageId);
+          }).catch((err) => {
+            reject(err);
+          })
+        })        
       } else {
         reject("Not Authorized")
       }
