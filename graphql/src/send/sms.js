@@ -2,8 +2,8 @@ var AWS = require('aws-sdk');
 var config = require('../config');
 
 AWS.config.update({
-  accessKeyId: 'AKIAIAW4JF3FNAYEDYXQ',
-  secretAccessKey: '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',
+  accessKeyId: config.get("SNS_AWS_ACCESS_KEY"),
+  secretAccessKey: config.get("SNS_AWS_SECRET_KEY"),
   region: config.get("SNS_REGION")
 });
 
