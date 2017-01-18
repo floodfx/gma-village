@@ -21,20 +21,18 @@ export const resetCareNeedUserRequest = () => ({
   type: RESET_SAVE_CARE_NEED_REQUEST
 })
 
-export const resetCareNeedUser = () => {
+export const resetCareNeed = () => {
   return (dispatch) => {
     dispatch(resetCareNeedUserRequest());
   }
 }
 
-export const saveCareNeedUser = (graphQLClient, careNeed) => {
+export const saveCareNeed = (graphQLClient, careNeed) => {
   return (dispatch) => {
     dispatch(saveCareNeedUserRequest());
     return graphQLClient.query(`
       mutation saveCareNeedMutation($input: CareNeedInput!) {
-        saveCareNeed(input:$input) {
-          id
-        }
+        saveCareNeed(input:$input)
       }
     `, {input: careNeed}).then(data => {
         dispatch(saveCareNeedUserRequestSuccess(data.saveCareNeed))

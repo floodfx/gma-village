@@ -45,7 +45,8 @@ class CareNeedFormContainer extends Component {
       const initialValues = {
         kids: parent.kids,
         neighborhood: parent.neighborhood,
-        otherNeighborhood: parent.otherNeighborhood
+        otherNeighborhood: parent.otherNeighborhood,
+        parentId: parent.id
       }
       return (
         <div>
