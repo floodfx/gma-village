@@ -13,7 +13,7 @@ nconf
     'AK_APP_VERSION',
     'CSRF',
     'SNS_AWS_ACCESS_KEY',
-    'SNS_AWS_SECRET_ACCESS_KEY',
+    'SNS_AWS_SECRET_KEY',
     'SNS_REGION'
   ])
   .defaults({
@@ -26,6 +26,6 @@ nconf
     AK_APP_VERSION: 'v1.1',
     CSRF: '',
     SNS_AWS_ACCESS_KEY: '',
-    SNS_AWS_SECRET_ACCESS_KEY: '',
+    SNS_AWS_SECRET_KEY: '',
     SNS_REGION: 'us-west-2'
   })

@@ -26,6 +26,7 @@ const ageFromBirthday = (birthday) => {
   } else if(months > 1) {
     formattedComponents.push(`${months} mos`)
   }
+  
   var text = formattedComponents.join(" & ")+" old";
   return {
     years,
@@ -54,14 +55,16 @@ const buildMessage = (
     return age.text;
   }).join(", ")
   var msg = 
-    `[GmaVillage] Parent ${parent.first_name} (${parent.phone}) `+
+    `[GmaVillage] Parent ${parent.first_name} `+
     `needs child care for ${kidsCount(kids)} (${kidsAges}) in `+
     `${formatNeighborhood(neighborhood, otherNeighborhood)} `+
     `on ${moment.unix(startDateTimeOfNeed).format("MMM Do, h:mma")}` +
-    `-${moment.unix(endDateTimeOfNeed).format("h:mma")}. `
+    `-${moment.unix(endDateTimeOfNeed).format("h:mma")}. `+
+    `Text [${parent.phone}] to setup interview.`
   return msg;
 }
 
 module.exports = {
-  buildMessage
+  buildMessage,
+  ageFromBirthday
 }
