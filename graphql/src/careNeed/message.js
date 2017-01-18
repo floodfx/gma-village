@@ -17,16 +17,16 @@ const ageFromBirthday = (birthday) => {
   var months = Math.abs(monthsDiff % 12);
   var formattedComponents = [];
   if(years === 1) {
-    formattedComponents.push("1 year")
+    formattedComponents.push("1 yr")
   } else if(years > 1) {
-    formattedComponents.push(`${years} years`)
+    formattedComponents.push(`${years} yrs`)
   }
   if(months === 1) {
-    formattedComponents.push("1 month")
+    formattedComponents.push("1 mo")
   } else if(months > 1) {
-    formattedComponents.push(`${months} months`)
+    formattedComponents.push(`${months} mos`)
   }
-  var text = formattedComponents.join(", ")+" old";
+  var text = formattedComponents.join(" & ")+" old";
   return {
     years,
     months,

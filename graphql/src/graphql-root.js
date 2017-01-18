@@ -278,11 +278,21 @@ const root = {
             input.endDateTimeOfNeed
           );
           console.log("sms message", msg)
-          sendSMS(msg, "14157027236").then((data) => {
-            resolve(data.MessageId);
+          var promises = ["14157027236", "15105459057"].map((phone) => {
+            return new Promise((rs, re) => {
+              sendSMS(msg, phone).then((data) => {
+                rs(data.MessageId);
+              }).catch((err) => {
+                re(err);
+              })
+            })            
+          }) 
+          Promise.all(promises).then((data) => {
+            console.log("data in all promises", data)
+            resolve(data.join("_"))
           }).catch((err) => {
-            reject(err);
-          })
+            reject(err)
+          })      
         })        
       } else {
         reject("Not Authorized")
