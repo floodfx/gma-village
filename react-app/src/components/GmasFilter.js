@@ -1,16 +1,7 @@
 import React from 'react';
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 import {WILLING_TO_TRAVEL} from '../containers/GmasListContainer'
-
-const customSortNeighborhoods = (n1, n2) => {
-  if(n2 === Neighborhood.NORTH_OAKLAND) {
-    return 1;
-  } else if(n1 === Neighborhood.NORTH_OAKLAND) {
-    return -1;
-  } else {
-    return n1.ordinal - n2.ordinal
-  }
-}
+import { customSortNeighborhoods } from './SortHelp';
 
 
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {

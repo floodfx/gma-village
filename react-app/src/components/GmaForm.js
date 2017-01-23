@@ -22,6 +22,9 @@ import MultiRadio from './forms/MultiRadio';
 import TextField from './forms/TextField';
 import TextArea from './forms/TextArea';
 import Checkbox from './forms/Checkbox';
+import {
+  customSortNeighborhoods
+} from './SortHelp';
 
 const otherFieldMap = {
   neighborhood: "otherNeighborhood",
@@ -92,7 +95,7 @@ class GmaForm extends Component {
             <Field
               heading="I live in:"
               name="neighborhood"
-              options={Neighborhood.enumValues.map((val) => { return { id: val.name, label: val.text } })}
+              options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
               component={MultiRadio}
               otherTextValue={initialValues.otherNeighborhood}
               onOtherValueChange={this.onOtherValueChange}

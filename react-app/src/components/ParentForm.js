@@ -18,6 +18,9 @@ import MultiRadio from './forms/MultiRadio';
 import TextField from './forms/TextField';
 import Checkbox from './forms/Checkbox';
 import Hidden from './forms/Hidden';
+import {
+  customSortNeighborhoods
+} from './SortHelp';
 
 const otherFieldMap = {
   neighborhood: "otherNeighborhood"  
@@ -234,7 +237,7 @@ class ParentForm extends Component {
             <Field
               heading="I live in:"
               name="neighborhood"
-              options={Neighborhood.enumValues.map((val) => { return { id: val.name, label: val.text } })}
+              options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
               component={MultiRadio}
               otherTextValue={otherNeighborhood}
               onOtherValueChange={this.onOtherValueChange}
