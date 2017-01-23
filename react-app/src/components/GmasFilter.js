@@ -35,7 +35,7 @@ const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=f
 }
 
 const GmasFilter = ({filters, onFilterClick}) => (
-  <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
+  <div>
     <h3 className="gma-orange">Find Gmas that:</h3>
       <div className="col-md-2">
         {filterBy('Live in:', Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).filter((val) => val !== Neighborhood.OTHER), filters, onFilterClick)}

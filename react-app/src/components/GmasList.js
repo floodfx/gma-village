@@ -12,8 +12,7 @@ class GmasList extends Component {
     else {
       const atLeastOneGma = this.props.gmas.length > 0
       return (
-        <div>
-          <div className="col-md-12 col-sm-8 gma-orange-border">
+        <div>          
           <h1 className="gma-orange">Gmas <span className="badge">{this.props.gmas.length}</span></h1>
           {!atLeastOneGma &&
             <div className="alert alert-warning" role="alert">
@@ -23,7 +22,6 @@ class GmasList extends Component {
           {atLeastOneGma &&
             this.props.gmas.map(this.renderProfileThumbnail)
           }
-          </div>
         </div>
       );
     }
@@ -31,7 +29,7 @@ class GmasList extends Component {
 
   renderProfileThumbnail = (gma) => {
     return (
-      <div key={gma.id} className="col-sm-6 col-md-3" style={{minHeight: "575px"}}>
+      <div key={gma.id} className="col-xs-6 col-sm-4 col-md-3" style={{minHeight: "575px"}}>
         <div className="thumbnail">
           <Link to={`/gma/${gma.id}`}>
             <img className="img-rounded img-responsive gma-orange-border" style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} src={imgUrl(gma)} alt="gmas placeholder"/>

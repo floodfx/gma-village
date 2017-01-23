@@ -11,8 +11,13 @@ export const WILLING_TO_TRAVEL = "willingToTravel"
 class GmasListContainer extends Component {
 
   componentWillMount() {
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(fetchGmas(graphQLClient));
+    const { dispatch, graphQLClient, user } = this.props;
+    if(user && user.type === 'Admin') {
+      dispatch(fetchGmas(graphQLClient));
+    } else {
+      dispatch(fetchGmas(graphQLClient));
+    }
+    
   }
 
   onFilterClick = (vals) => {
@@ -21,9 +26,9 @@ class GmasListContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div className='mh3'>
         <div className="row">
-          <div className="col-md-12 col-sm-8 gma-orange-border" style={{marginBottom: '10px'}}>
+          <div className="mb3 col-xs-12 col-sm-12 col-md-12 gma-orange-border">
             <h3 className="gma-orange">Welcome!</h3>
             <p>
               We look forward to connecting you to our community of Gma's.
@@ -32,12 +37,16 @@ class GmasListContainer extends Component {
           </div>
         </div>
         <div className="row">
-          <GmasFilter filters={this.props.filters} onFilterClick={this.onFilterClick} />
+          <div className="mb3 col-xs-12 col-sm-12 col-md-12 gma-orange-border">
+            <GmasFilter filters={this.props.filters} onFilterClick={this.onFilterClick} />
+          </div>
         </div>
         <div className="row">
-          <GmasList gmas={this.props.gmas}
-            loading={this.props.loading}
-            error={this.props.error} />
+          <div className="col-xs-12 col-sm-12 col-md-12 gma-orange-border">
+            <GmasList gmas={this.props.gmas}
+              loading={this.props.loading}
+              error={this.props.error} />
+          </div>
         </div>
       </div>
     );
@@ -81,7 +90,8 @@ const mapStateToProps = (state) => {
     gmas: gmas,
     error: gmasList.error,
     filters: gmasList.filters,
-    auth: auth.cookie
+    auth: auth.cookie,
+    user: auth.user
   }
 }
 
