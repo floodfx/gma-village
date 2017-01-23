@@ -9,7 +9,11 @@ AWS.config.update({
 
 var sns = new AWS.SNS();
 
+var isProd = process.env.NODE_ENV === 'production';
+
 const sendSMS = (body, phone, subj="Gma Village") => {
+  var msgBody = isProd ? body : `TEST ${body}`;
+  var msgPhone = isProd ? phone : '4157027236';
   return new Promise((resolve, reject) => {  
     var params = {
       Message: body, 

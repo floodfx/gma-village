@@ -25,7 +25,7 @@ class CareNeedFormContainer extends Component {
   }
 
   componentWillUnmount() {
-    // this.props.dispatch(resetParentUser())
+    this.props.dispatch(resetCareNeed())
   }
 
   handleSubmit = (values) => {    

@@ -1,6 +1,7 @@
 var assert = require('assert');
 var { 
   ageFromBirthday, 
+  formatDate,
   formatPhone,
   formatNeighborhood,
   buildMessage,
@@ -110,8 +111,8 @@ describe('CareNeed', function() {
       var targetMessage = `Gma Village Parent ${parent.first_name} `+
         `needs care for ${kidsCount(kids)} (${kidsAges(kids)}) in `+
         `${formatNeighborhood(neighborhood, otherNeighborhood)} `+
-        `on ${moment.unix(startDateTimeOfNeed).format("MMM Do, h:mma")}` +
-        `-${moment.unix(endDateTimeOfNeed).format("h:mma")}. `+
+        `on ${formatDate(startDateTimeOfNeed, "MMM Do, h:mma")}` +
+        `-${formatDate(endDateTimeOfNeed, "h:mma")}. `+
         `Text ${formatPhone(parent.phone)} to setup interview.`
       var builtMessage = buildMessage(parent, kids, neighborhood, "", startDateTimeOfNeed, endDateTimeOfNeed);
       assert.equal(targetMessage, builtMessage)

@@ -32,12 +32,12 @@ class DateTimeStartEnd extends Component {
       this.setState({
         startTime: timeValueInMinutes
       })
-      this.props.onStartDateTimeValueChange(timeMoment.unix());
+      this.props.onStartDateTimeValueChange(timeMoment);
     } else if(timeId === "endTime") {
       this.setState({
         endTime: timeValueInMinutes
       })
-      this.props.onEndDateTimeValueChange(timeMoment.unix());
+      this.props.onEndDateTimeValueChange(timeMoment);
     } 
   }
 

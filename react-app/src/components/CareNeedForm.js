@@ -25,6 +25,8 @@ const otherFieldMap = {
   neighborhood: "otherNeighborhood"  
 }
 
+const DATE_FORMAT_RFC3339 = 'YYYY-MM-DDTHH:mm:ssZ'
+
 class CareNeedForm extends Component {
   constructor(props) {
     super(props);
@@ -43,12 +45,16 @@ class CareNeedForm extends Component {
 
   careStartTimeValueChange = (value) => {
     console.log("careStartTimeValueChange", value)
-    this.props.change("startDateTimeOfNeed", value);
+    var rfc3339Start = value.format(DATE_FORMAT_RFC3339);
+    console.log("formatted", rfc3339Start);
+    this.props.change("startDateTimeOfNeed", rfc3339Start);
   }
 
   careEndTimeValueChange = (value) => {
     console.log("careEndTimeValueChange", value)
-    this.props.change("endDateTimeOfNeed", value);
+    var rfc3339End = value.format(DATE_FORMAT_RFC3339);
+    console.log("formatted", rfc3339End);
+    this.props.change("endDateTimeOfNeed", rfc3339End);
   }
 
   render() {

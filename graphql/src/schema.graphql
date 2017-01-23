@@ -265,8 +265,8 @@ input ParentInput {
 input CareNeedInput {
   parentId: ID!
   careLocations: [CareLocation!]
-  startDateTimeOfNeed: Int!
-  endDateTimeOfNeed: Int!
+  startDateTimeOfNeed: String!
+  endDateTimeOfNeed: String!
   neighborhood: Neighborhood!
   otherNeighborhood: String
   kids: [KidInput!]!  

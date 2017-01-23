@@ -1,6 +1,9 @@
 var { Neighborhood } = require('gma-village-data-model');
 var moment = require('moment');
 
+
+const DATE_FORMAT_RFC3339 = 'YYYY-MM-DDTHH:mm:ssZ'
+
 const formatNeighborhood = (neighborhood, otherNeighborhood) => {
   if(neighborhood === Neighborhood.OTHER.name)
     return otherNeighborhood;
@@ -69,6 +72,10 @@ const kidsAges = (kids) => {
   }).join(", ")
 }
 
+const formatDate = (dateString, format, incomingFormat=DATE_FORMAT_RFC3339) => {
+  return moment(dateString, incomingFormat).format(format)
+}
+
 const buildMessage = (
   parent, 
   kids, 
@@ -80,8 +87,8 @@ const buildMessage = (
     `Gma Village Parent ${parent.first_name} `+
     `needs care for ${kidsCount(kids)} (${kidsAges(kids)}) in `+
     `${formatNeighborhood(neighborhood, otherNeighborhood)} `+
-    `on ${moment.unix(startDateTimeOfNeed).format("MMM Do, h:mma")}` +
-    `-${moment.unix(endDateTimeOfNeed).format("h:mma")}. `+
+    `on ${formatDate(startDateTimeOfNeed, "MMM Do, h:mma")}` +
+    `-${formatDate(endDateTimeOfNeed,"h:mma")}. `+
     `Text ${formatPhone(parent.phone)} to setup interview.`
   return msg;
 }
@@ -89,6 +96,7 @@ const buildMessage = (
 module.exports = {
   buildMessage,
   ageFromBirthday,
+  formatDate,
   formatPhone,
   formatNeighborhood,
   kidsCount,
