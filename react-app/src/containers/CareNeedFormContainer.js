@@ -48,10 +48,11 @@ class CareNeedFormContainer extends Component {
         otherNeighborhood: parent.otherNeighborhood,
         parentId: parent.id
       }
+      const successText = "Thank you for posting! Gmas that meet you child care need criteria will receive you post and will text you if available."
       return (
         <div>
           {saved && 
-            <Alert type="success" heading="Success" text="Saved Care Request. We will send your request to the Gmas."/>
+            <Alert type="success" heading="Success" text={successText}/>
           }
           {error && 
             <Alert type="danger" heading="Error" text={error} />
@@ -64,7 +65,7 @@ class CareNeedFormContainer extends Component {
             initialValues={initialValues}
             />
           {saved && 
-            <Alert type="success" heading="Success" text="Saved Care Request. We will send your request to the Gmas."/>
+            <Alert type="success" heading="Success" text={successText}/>
           }
         </div>
       )
