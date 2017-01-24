@@ -12,10 +12,10 @@ class GmasListContainer extends Component {
 
   componentWillMount() {
     const { dispatch, graphQLClient, user } = this.props;
-    if(user && user.type === 'Admin') {
+    if(user && user.kind === 'Admin') {
       dispatch(fetchGmas(graphQLClient));
     } else {
-      dispatch(fetchGmas(graphQLClient));
+      dispatch(fetchGmas(graphQLClient, true));
     }
     
   }
@@ -38,14 +38,18 @@ class GmasListContainer extends Component {
         </div>
         <div className="row">
           <div className="mb3 col-xs-12 col-sm-12 col-md-12 gma-orange-border">
-            <GmasFilter filters={this.props.filters} onFilterClick={this.onFilterClick} />
+            <GmasFilter 
+              filters={this.props.filters} 
+              onFilterClick={this.onFilterClick}
+              user={this.props.user} />
           </div>
         </div>
         <div className="row">
           <div className="col-xs-12 col-sm-12 col-md-12 gma-orange-border">
             <GmasList gmas={this.props.gmas}
               loading={this.props.loading}
-              error={this.props.error} />
+              error={this.props.error}
+              user={this.props.user} />
           </div>
         </div>
       </div>
@@ -64,6 +68,8 @@ const filterGmas = (gmas, filters) => {
   let locFilters = filters.filter((filter) => filter.constructor === CareLocation)
   let ageFilters = filters.filter((filter) => filter.constructor === CareAge)
   let neighFilters = filters.filter((filter) => filter.constructor === Neighborhood)
+  let activeStatusFilters = filters.filter((filter) => filter.constructor === Object)
+  console.log("activeStatusFilters", activeStatusFilters)
   return gmas.filter((gma) => {
     let availRes = availFilters.reduce((prev, curr) => {
         return prev |= gma.availabilities.includes(curr.name)
@@ -78,7 +84,10 @@ const filterGmas = (gmas, filters) => {
     let neighRes = neighFilters.reduce((prev, curr) => {
       return prev |= (gma.neighborhood === curr.name)
     }, false)
-    return availRes && locRes && ageRes && (neighRes || willingToTravelFilterAndGmaAvail);
+    let activeRes = activeStatusFilters.reduce((prev, curr) => {
+      return prev &= gma.active
+    }, true)
+    return availRes && locRes && ageRes && (neighRes || willingToTravelFilterAndGmaAvail) && activeRes;
   })
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 import {WILLING_TO_TRAVEL} from '../containers/GmasListContainer'
 import { customSortNeighborhoods } from './SortHelp';
+import ActiveStatus from './ActiveStatus';
 
 
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
@@ -34,7 +35,7 @@ const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=f
   )
 }
 
-const GmasFilter = ({filters, onFilterClick}) => (
+const GmasFilter = ({filters, onFilterClick, user}) => (
   <div>
     <h3 className="gma-orange">Find Gmas that:</h3>
       <div className="col-md-2">
@@ -53,6 +54,11 @@ const GmasFilter = ({filters, onFilterClick}) => (
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Are generally available:', Availability.enumValues.filter((val) => val !== Availability.OTHER), filters, onFilterClick)}
       </div>
+      {user.kind === 'Admin' &&
+        <div className="col-md-2 col-md-offset-1">
+          {filterBy('Active', ActiveStatus.enumValues, filters, onFilterClick)}
+        </div>
+      }
   </div>
 )
 

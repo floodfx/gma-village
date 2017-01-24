@@ -23,7 +23,7 @@ export const filterGmasList = (filter) => ({
 })
 
 
-export const fetchGmas = (graphQLClient, active=true, limit=undefined, nextToken=undefined) => {
+export const fetchGmas = (graphQLClient, active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
     return graphQLClient.query(`

@@ -5,12 +5,14 @@ import {
   FILTER_GMAS_LIST
 } from '../actions/GmasListContainer'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
+import ActiveStatus from '../components/ActiveStatus';
 
 const defaultFilters = []
   .concat(Availability.enumValues)
   .concat(CareAge.enumValues)
   .concat(CareLocation.enumValues)
   .concat(Neighborhood.enumValues)
+  .concat(ActiveStatus.enumValues)
 
 const gmasList = (state = {
   loading: true,

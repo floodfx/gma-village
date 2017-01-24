@@ -35,7 +35,12 @@ class GmasList extends Component {
             <img className="img-rounded img-responsive gma-orange-border" style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} src={imgUrl(gma)} alt="gmas placeholder"/>
           </Link>
           <div className="caption">
-            <h3 className="gma-orange text-center gma-font">Gma {gma.first_name}</h3>
+            <h3 className="gma-orange text-center gma-font">
+              Gma {gma.first_name}             
+            </h3>                        
+             {!gma.active &&
+                <div className="tc mb3"><span className="f3 label label-warning">Inactive</span></div>
+              }
             <div className="text-center">
               <a className="btn gma-orange-bg" href={"tel:"+gma.phone}>{formatPhone(gma.phone)}</a>
             </div>

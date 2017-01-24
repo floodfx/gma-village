@@ -95,9 +95,13 @@ class GmaProfile extends Component {
                     href={"tel:"+gma.phone}>
                     {formatPhone(gma.phone)}
                   </a>                  
-                </div>
+                </div>                
+                  {!gma.active &&
+                    <div className="fl pt2-ns pt2"><span className="f3 label label-warning mr3">Inactive</span></div>
+                  }                
                 <h1 className="media-heading gma-orange">
-                  Gma {gma.first_name}
+                  
+                  <span>Gma {gma.first_name}</span>
                   {currentUser.kind === "Admin" &&
                     <Link 
                       className="btn gma-orange-bg ml2" 

@@ -229,7 +229,7 @@ class ParentForm extends Component {
                 type="button" 
                 disabled={!this.state.validKid}
                 onClick={() => this.addKid()}>
-                <FontAwesome name="plus" className="ml1" /> Add Child
+                Add Child
               </button>
             </div>
           </div>
