@@ -3,6 +3,7 @@ import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-dat
 import {WILLING_TO_TRAVEL} from '../containers/GmasListContainer'
 import { customSortNeighborhoods } from './SortHelp';
 import ActiveStatus from './ActiveStatus';
+import ElsewhereLearnMore from './ElsewhereLearnMore';
 
 
 const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=false) => {
@@ -50,6 +51,7 @@ const GmasFilter = ({filters, onFilterClick, user}) => (
       </div>
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Can provide care at:', CareLocation.enumValues.slice(0).reverse(), filters, onFilterClick)}
+        <ElsewhereLearnMore />
       </div>
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Are generally available:', Availability.enumValues.filter((val) => val !== Availability.OTHER), filters, onFilterClick)}

@@ -20,6 +20,7 @@ import KidsCheckbox from './forms/KidsCheckbox';
 import MultiRadio from './forms/MultiRadio';
 import Hidden from './forms/Hidden';
 import DateTimeStartEnd from './forms/DateTimeStartEnd';
+import ElsewhereLearnMore from './ElsewhereLearnMore';
 
 const otherFieldMap = {
   neighborhood: "otherNeighborhood"  
@@ -114,7 +115,8 @@ class CareNeedForm extends Component {
                 return { id: val.name, label: text 
               }})}
               component={MultiCheckbox} 
-              validate={[required]}/>        
+              validate={[required]}/>
+              <ElsewhereLearnMore />      
           </div>
                 
           <Field name="otherNeighborhood" component="input" type="hidden" />

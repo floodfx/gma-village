@@ -25,6 +25,7 @@ import Checkbox from './forms/Checkbox';
 import {
   customSortNeighborhoods
 } from './SortHelp';
+import ElsewhereLearnMore from './ElsewhereLearnMore';
 
 const otherFieldMap = {
   neighborhood: "otherNeighborhood",
@@ -136,6 +137,7 @@ class GmaForm extends Component {
               }})}
               component={MultiCheckbox} 
               validate={[required]}/>
+              <ElsewhereLearnMore />
           </div>
           <div className="mt4">
             <Field
