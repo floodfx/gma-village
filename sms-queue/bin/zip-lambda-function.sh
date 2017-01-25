@@ -2,7 +2,7 @@
 
 STAGE=$1
 
-if [ -z "$STAGE"]; then
+if [ -z "$STAGE" ]; then
   STAGE='dev'
 fi
 
