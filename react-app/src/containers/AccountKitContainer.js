@@ -10,17 +10,21 @@ class AccountKitContainer extends Component {
   }
 
   componentWillMount() {
-    window.AccountKit_OnInteractive = () => {
-      const {dispatch, graphQLClient} = this.props;
+    const {dispatch, graphQLClient} = this.props;
+    if(window.AccountKit) {
       dispatch(initAccountKit(graphQLClient))
+    } else {
+      window.AccountKit_OnInteractive = () => {      
+        dispatch(initAccountKit(graphQLClient))
+      }
     }
   }
 
-  componentDidMount() {            
-    const script = document.createElement("script");
-    script.src = "https://sdk.accountkit.com/en_US/sdk.js";
-    document.body.appendChild(script);    
-  }
+  // componentDidMount() {            
+  //   const script = document.createElement("script");
+  //   script.src = "https://sdk.accountkit.com/en_US/sdk.js";
+  //   document.body.appendChild(script);    
+  // }
 
   componentWillReceiveProps(nextProps) {
     if(!this.props.inited && nextProps.inited) {
