@@ -13,6 +13,7 @@ var {
 var config = require('./config');
 var { buildMessage } = require('./careNeed/message');
 var { sendSMS } = require('./send/sms'); 
+var { sendSQSBatch } = require('./send/sqs'); 
 
 const setTimestamps = (input) => {
   const nowTimestamp = Math.floor(new Date().getTime()/1000)
@@ -277,22 +278,13 @@ const root = {
             input.startDateTimeOfNeed,
             input.endDateTimeOfNeed
           );
-          console.log("sms message", msg)
-          var promises = ["14157027236", "15105459057"].map((phone) => {
-            return new Promise((rs, re) => {
-              sendSMS(msg, phone).then((data) => {
-                rs(data.MessageId);
-              }).catch((err) => {
-                re(err);
-              })
-            })            
-          }) 
-          Promise.all(promises).then((data) => {
-            console.log("data in all promises", data)
-            resolve(data.join("_"))
+          console.log("Enqueue messages", msg)
+          var phones = ["14157027236"]
+          sendSQSBatch(msg, phones).then((data) => {
+            resolve(data);
           }).catch((err) => {
-            reject(err)
-          })      
+            reject(err);
+          })            
         })        
       } else {
         reject("Not Authorized")

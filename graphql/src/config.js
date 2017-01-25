@@ -14,7 +14,11 @@ nconf
     'CSRF',
     'SNS_AWS_ACCESS_KEY',
     'SNS_AWS_SECRET_KEY',
-    'SNS_REGION'
+    'SNS_REGION',
+    'SQS_AWS_ACCESS_KEY',
+    'SQS_AWS_SECRET_KEY',
+    'SQS_QUEUE_URL',
+    'SQS_REGION'
   ])
   .defaults({
     GOOGLE_PROJECT_ID: 'gma-village',
@@ -27,5 +31,9 @@ nconf
     CSRF: '',
     SNS_AWS_ACCESS_KEY: '',
     SNS_AWS_SECRET_KEY: '',
-    SNS_REGION: 'us-west-2'
+    SNS_REGION: 'us-west-2',
+    SQS_AWS_ACCESS_KEY: '',
+    SQS_AWS_SECRET_KEY: '',
+    SQS_QUEUE_URL: '',
+    SQS_REGION: 'us-west-2'
   })
