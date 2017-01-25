@@ -58,6 +58,7 @@ class ParentForm extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log("componentWillReceiveProps", newProps)
     const {change, profilePhotoUrl} = this.props;
     if(profilePhotoUrl !== newProps.profilePhotoUrl) {
       change("profilePhotoUrl", newProps.profilePhotoUrl);

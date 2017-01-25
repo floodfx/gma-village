@@ -107,7 +107,8 @@ export const currentUser = (graphQLClient, auth_cookie) => {
             last_login_timestamp,
             created_on_timestamp,
             member_since_timestamp,
-            roles
+            roles,
+            profilePhotoUrl
           }
           ... on Gma {
             id,
@@ -116,12 +117,6 @@ export const currentUser = (graphQLClient, auth_cookie) => {
             phone,
             kind,
             active,
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp,
             availabilities,
             otherAvailability,
             careAges,
@@ -138,6 +133,13 @@ export const currentUser = (graphQLClient, auth_cookie) => {
             isAvailableOutsideNeighborhood,
             whyCareForKidsText,
             additionalInformationText,
+            profilePhotoUrl
+            ak_access_token,
+            ak_user_id,
+            ak_token_refresh_interval_sec,            
+            last_login_timestamp,
+            created_on_timestamp,
+            member_since_timestamp
           }
           ... on Parent {
             id,
@@ -146,12 +148,19 @@ export const currentUser = (graphQLClient, auth_cookie) => {
             phone,
             kind,
             active,
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,
             last_login_timestamp,
             created_on_timestamp,
-            member_since_timestamp
+            member_since_timestamp,
+            profilePhotoUrl,
+            neighborhood,
+            otherNeighborhood,
+            kids {
+              first_name,
+              birthday
+            },
+            ak_access_token,
+            ak_user_id,
+            ak_token_refresh_interval_sec
           }
         }
       }

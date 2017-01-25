@@ -34,28 +34,25 @@ class ProfileContainer extends Component {
   }
 
   onAdminProfileSubmit = (values) => {
-    console.log("onAdminProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
     const { dispatch, graphQLClient } = this.props;
     dispatch(saveAdminUser(graphQLClient, values));
   }
 
   onGmaProfileSubmit = (values) => {
-    console.log("onGmaProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
     const { dispatch, graphQLClient } = this.props;
     dispatch(saveGmaUser(graphQLClient, values));
   }
 
   onParentProfileSubmit = (values) => {
-    console.log("onParentProfileSubmit", values)
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
     const { dispatch, graphQLClient } = this.props;
     dispatch(saveParentUser(graphQLClient, values));
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
   }
 
   render() {
@@ -115,14 +112,15 @@ class ProfileContainer extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { auth, saveAdmin, saveGma, saveParent } = state
+  const { auth, saveAdmin, saveGma, saveParent, uploadImage } = state
   return {
     user: auth.user,
     authCookie: auth.cookie,
     loading: auth.loading,
     saving: saveAdmin.saving || saveGma.saving || saveParent.saving,
     error: saveAdmin.error || saveGma.error || saveParent.error,
-    saved: saveAdmin.saved || saveGma.saved || saveParent.saved
+    saved: saveAdmin.saved || saveGma.saved || saveParent.saved,
+    profilePhotoUrl: uploadImage.image_url
   }
 }
 

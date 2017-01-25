@@ -27,7 +27,7 @@ class ParentEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
   }
 
   render() {
@@ -69,8 +69,9 @@ ParentEditFormContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { parentProfile, saveParent, uploadImage } = state
+  const { auth, parentProfile, saveParent, uploadImage } = state
   return {
+    authCookie: auth.cookie,
     saving: saveParent.saving,
     error: saveParent.error,
     parent: parentProfile.parent,

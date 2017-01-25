@@ -27,7 +27,7 @@ class GmaEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
   }
 
   render() {
@@ -73,6 +73,7 @@ GmaEditFormContainer.defaultProps = {
 const mapStateToProps = (state) => {
   const { auth, gmaProfile, saveGma, uploadImage } = state
   return {
+    authCookie: auth.cookie,
     currentUser: auth.user,
     saving: saveGma.saving,
     error: saveGma.error,

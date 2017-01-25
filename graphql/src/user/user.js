@@ -54,6 +54,14 @@ var listUserByType = (userType, active) => {
   })
 }
 
+var isSelf = (user, id) => {
+  console.log("user", user, "id", id)
+  if(user && id) {
+    return (`${user.id}` === `${id}`)
+  }
+  return false
+}
+
 var isAdmin = (user) => {
   return user && user.kind === "Admin"
 }
@@ -88,5 +96,6 @@ module.exports = {
   isAdmin,
   isGma,
   isParent,
+  isSelf,
   loadAppUserMiddleware
 }

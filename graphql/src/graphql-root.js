@@ -8,7 +8,8 @@ var {
   listUserByType,
   isAdmin,
   isGma,
-  isParent
+  isParent,
+  isSelf
 } = require('./user/user');
 var {
   saveCareNeed
@@ -45,7 +46,8 @@ const root = {
   },
   admins: (root, {active, limit, nextToken}, context, info) => {
     return new Promise((resolve, reject) => {
-      if(isAdmin(context.appUser)) {
+      const { appUser } = context;
+      if(isAdmin(appUser)) {
         resolve(listUserByType("Admin", active));
       } else {
         reject("Not Authorized")
@@ -54,7 +56,8 @@ const root = {
   },
   admin: (root, {id}, context, info) => {
     return new Promise((resolve, reject) => {
-      if(isAdmin(context.appUser)) {
+      const { appUser } = context;
+      if(isAdmin(appUser)) {
         resolve(userById(id));
       } else {
         reject("Not Authorized")
@@ -64,7 +67,6 @@ const root = {
   currentUser: (root, input, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
-      console.log("AppUser", appUser);
       if(appUser) {
         // ensure user is active before logging them in
         if(appUser.active) {
@@ -89,7 +91,7 @@ const root = {
   gma: (root, {id}, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
-      if(appUser && !isGma(appUser)) {
+      if(appUser) {
         resolve(userById(id));
       } else {
         reject("Not Authorized")
@@ -99,7 +101,7 @@ const root = {
   gmas: (root, {active, limit, nextToken}, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
-      if(appUser && !isGma(appUser)) {
+      if(appUser) {
         resolve(listUserByType("Gma", active));
       } else {
         reject("Not Authorized")
@@ -118,7 +120,8 @@ const root = {
   },
   parent: (root, {id}, context, info) => {
     return new Promise((resolve, reject) => {
-      if(isAdmin(context.appUser)) {
+      const { appUser } = context;
+      if(isSelf(appUser, id) || isAdmin(appUser)) {
         resolve(userById(id));
       } else {
         reject("Not Authorized")
@@ -242,7 +245,7 @@ const root = {
   saveGma: (root, {input}, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
-      if(isAdmin(appUser)) {
+      if(isSelf(appUser, input.id) || isAdmin(appUser)) {
         setTimestamps(input)
         saveUser(input, "Gma").then((u) => {
           resolve(u);
@@ -257,7 +260,7 @@ const root = {
   saveParent: (root, {input}, context, info) => {
     return new Promise((resolve, reject) => {
       const { appUser } = context;
-      if(isAdmin(appUser)) {
+      if(isSelf(appUser, input.id) || isAdmin(appUser)) {
         setTimestamps(input)
         saveUser(input, "Parent").then((u) => {
           resolve(u);

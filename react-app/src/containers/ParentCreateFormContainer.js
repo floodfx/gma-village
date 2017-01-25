@@ -25,7 +25,7 @@ class ParentCreateFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
   }
 
   render() {
@@ -66,7 +66,7 @@ class ParentCreateFormContainer extends Component {
 const mapStateToProps = (state) => {
   const { saveParent, uploadImage, auth } = state
   return {
-    auth: auth.cookie,
+    authCookie: auth.cookie,
     saving: saveParent.saving,
     error: saveParent.error,
     saved: saveParent.saved,

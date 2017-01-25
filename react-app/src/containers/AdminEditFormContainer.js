@@ -27,7 +27,7 @@ class AdminEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
   }
 
   render() {
@@ -70,8 +70,9 @@ AdminEditFormContainer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { adminProfile, saveAdmin, uploadImage } = state
+  const { auth, adminProfile, saveAdmin, uploadImage } = state
   return {
+    authCookie: auth.cookie,
     saving: saveAdmin.saving,
     error: saveAdmin.error,
     admin: adminProfile.admin,
