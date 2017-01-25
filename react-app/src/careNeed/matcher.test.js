@@ -99,7 +99,7 @@ describe('CareNeed', function() {
 
       assert.deepEqual(
         filterGmas(gmasIn, WOAK, null, [CLP], [CA2, CA3]), 
-        [gma7]
+        []
       )
 
       assert.deepEqual(
@@ -122,10 +122,9 @@ describe('CareNeed', function() {
         []
       )
 
-      assert.deepEqual(
-        filterGmas(gmasIn, OTH, "Denver", [CLP], [CA3]), 
-        [gma4, gma7, gma8]
-      )
+      expect(
+      filterGmas(gmasIn, OTH, "Denver", [CLP], [CA3]))
+      .toEqual([gma4, gma8])
 
       assert.deepEqual(
         filterGmas(gmasIn, OTH, "SF", [CLC, CLP], [CA0, CA3]), 

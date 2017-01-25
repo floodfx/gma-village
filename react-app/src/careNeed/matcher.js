@@ -1,4 +1,4 @@
-var { CareAge, Neighborhood } = require('gma-village-data-model');
+var { CareAge, Neighborhood, CareLocation } = require('gma-village-data-model');
 var moment = require('moment');
 
 const kidsAgesToCareAges = (kids) => {
@@ -41,7 +41,7 @@ const matchGmasToCareNeed = (gmas, careNeed) => {
 const filterGmas = (gmas, neighborhood, otherNeighborhood, careLocations, careAges) => {
   return gmas.filter((gma) => {
     var sameNeighborhood = 
-      gma.isAvailableOutsideNeighborhood ||
+      (careLocations.includes(CareLocation.CHILDS_HOME.name) && gma.isAvailableOutsideNeighborhood) ||
       ((gma.neighborhood === neighborhood) && (gma.neighborhood !== Neighborhood.OTHER.name)) ||
       ((gma.otherNeighborhood === otherNeighborhood) && (gma.neighborhood === Neighborhood.OTHER.name));
     var sameCareLocation = careLocations.reduce((truth, loc) => truth || gma.careLocations.includes(loc), false);
