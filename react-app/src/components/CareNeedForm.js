@@ -44,16 +44,12 @@ class CareNeedForm extends Component {
   }
 
   careStartTimeValueChange = (value) => {
-    console.log("careStartTimeValueChange", value)
     var rfc3339Start = value.format(DATE_FORMAT_RFC3339);
-    console.log("formatted", rfc3339Start);
     this.props.change("startDateTimeOfNeed", rfc3339Start);
   }
 
   careEndTimeValueChange = (value) => {
-    console.log("careEndTimeValueChange", value)
     var rfc3339End = value.format(DATE_FORMAT_RFC3339);
-    console.log("formatted", rfc3339End);
     this.props.change("endDateTimeOfNeed", rfc3339End);
   }
 

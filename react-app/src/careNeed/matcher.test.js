@@ -1,8 +1,9 @@
 var assert = require('assert');
 var { 
+  matchGmasToCareNeed,
   filterGmas,
   kidsAgesToCareAges
-} = require('../src/careNeed/matcher');
+} = require('./matcher');
 var moment = require('moment');
 
 var { Neighborhood, CareLocation, CareAge } = require('gma-village-data-model');
@@ -140,13 +141,13 @@ const BERK = Neighborhood.BERKELEY.name;
 const WOAK = Neighborhood.WEST_OAKLAND.name;
 const OTH = Neighborhood.OTHER.name;
 
-const CLC = CareLocation.CHILDS_HOME;
-const CLP = CareLocation.PROVIDERS_HOME;
+const CLC = CareLocation.CHILDS_HOME.name;
+const CLP = CareLocation.PROVIDERS_HOME.name;
 
-const CA0 = CareAge.ZERO_TO_SIX_MONTHS;
-const CA1 = CareAge.SIX_MONTHS_TO_TWO_YEARS;
-const CA2 = CareAge.TWO_YEARS_TO_FIVE_YEARS;
-const CA3 = CareAge.FIVE_YEARS_PLUS;
+const CA0 = CareAge.ZERO_TO_SIX_MONTHS.name;
+const CA1 = CareAge.SIX_MONTHS_TO_TWO_YEARS.name;
+const CA2 = CareAge.TWO_YEARS_TO_FIVE_YEARS.name;
+const CA3 = CareAge.FIVE_YEARS_PLUS.name;
 
 const newGma = (id, neighborhood, otherNeighborhood, careLocations, careAges, isAvailableOutsideNeighborhood) => {
   return {

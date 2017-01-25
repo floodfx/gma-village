@@ -10,10 +10,14 @@ var {
   isGma,
   isParent
 } = require('./user/user');
+var {
+  saveCareNeed
+} = require('./careNeed/data');
 var config = require('./config');
 var { buildMessage } = require('./careNeed/message');
 var { sendSMS } = require('./send/sms'); 
 var { sendSQSBatch } = require('./send/sqs'); 
+var moment = require('moment');
 
 const setTimestamps = (input) => {
   const nowTimestamp = Math.floor(new Date().getTime()/1000)
@@ -279,9 +283,17 @@ const root = {
             input.endDateTimeOfNeed
           );
           var gmaPhones = input.gmas.map((gma) => gma.phone)
+          var careNeed = input;
           sendSQSBatch(msg, gmaPhones).then((data) => {
-            resolve(data);
-          }).catch((err) => {
+            careNeed.status = "queued";
+            careNeed.createdAt = moment().unix();
+            saveCareNeed(careNeed).then((savedCareNeed) => {
+              resolve(data);
+            })
+            .catch((err) => {
+              reject(err)
+            })        
+          }).catch((err) => {            
             reject(err);
           })            
         })        
