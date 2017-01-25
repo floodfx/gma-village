@@ -57,6 +57,11 @@ class CareNeedForm extends Component {
     this.props.change("endDateTimeOfNeed", rfc3339End);
   }
 
+  onOtherValueChange = (name, value) => {
+    const otherField = otherFieldMap[name];
+    this.props.change(otherField, value);
+  }
+
   render() {
     const { 
       handleSubmit, 

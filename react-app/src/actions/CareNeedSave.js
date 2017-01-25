@@ -27,14 +27,25 @@ export const resetCareNeed = () => {
   }
 }
 
-export const saveCareNeed = (graphQLClient, careNeed) => {
+export const saveCareNeed = (graphQLClient, careNeed, matchedGmas) => {
   return (dispatch) => {
     dispatch(saveCareNeedUserRequest());
+    var gmas = matchedGmas.map(gma => {
+      return {
+        id: gma.id, 
+        phone: gma.phone
+      }
+    });
+    var input = {
+      ...careNeed,
+      gmas
+    }
+    console.log("input", input)
     return graphQLClient.query(`
       mutation saveCareNeedMutation($input: CareNeedInput!) {
         saveCareNeed(input:$input)
       }
-    `, {input: careNeed}).then(data => {
+    `, {input}).then(data => {
         dispatch(saveCareNeedUserRequestSuccess(data.saveCareNeed))
     }).catch(err => {
       dispatch(saveCareNeedUserRequestFailure(err))

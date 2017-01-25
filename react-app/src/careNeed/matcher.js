@@ -1,15 +1,5 @@
-var {
-  saveUser,
-  userById,
-  findByPhone,
-  listUserByType,
-  isAdmin,
-  isGma,
-  isParent
-} = require('../user/user');
 var { CareAge, Neighborhood } = require('gma-village-data-model');
 var moment = require('moment');
-
 
 const kidsAgesToCareAges = (kids) => {
   var sixMonthsAgo = moment().subtract(6, 'months');
@@ -36,10 +26,16 @@ const kidsAgesToCareAges = (kids) => {
   }, {}));
 }
 
-const matchGmas = (neighborhood, otherNeighborhood, careLocations, careAges) => {
-  var gmas = listUserByType("Gma", true).then((allGmas) => {
-     return filterGmas(allGmas, neighborhood, otherNeighborhood, careLocations, careAges);
-  })
+const matchGmasToCareNeed = (gmas, careNeed) => {
+  console.log("gmas", gmas, "careNeed", careNeed);
+  var matchedGmas = filterGmas(gmas, 
+    careNeed.neighborhood, 
+    careNeed.otherNeighborhood, 
+    careNeed.careLocations, 
+    kidsAgesToCareAges(careNeed.kids)
+  )
+  console.log("matchGmas", matchedGmas)
+  return matchedGmas;
 }
 
 const filterGmas = (gmas, neighborhood, otherNeighborhood, careLocations, careAges) => {
@@ -55,7 +51,7 @@ const filterGmas = (gmas, neighborhood, otherNeighborhood, careLocations, careAg
 }
 
 module.exports = {
-  filterGmas,
-  matchGmas,
+  matchGmasToCareNeed,
+  filterGmas,  
   kidsAgesToCareAges
 }

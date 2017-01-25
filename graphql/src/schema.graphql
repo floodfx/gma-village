@@ -269,7 +269,13 @@ input CareNeedInput {
   endDateTimeOfNeed: String!
   neighborhood: Neighborhood!
   otherNeighborhood: String
-  kids: [KidInput!]!  
+  kids: [KidInput!]!
+  gmas: [GmaIdPlusPhone!]! 
+}
+
+input GmaIdPlusPhone {
+  id: ID!
+  phone: String!  
 }
 
 input KidInput {

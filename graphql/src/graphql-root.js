@@ -278,9 +278,8 @@ const root = {
             input.startDateTimeOfNeed,
             input.endDateTimeOfNeed
           );
-          console.log("Enqueue messages", msg)
-          var phones = ["14157027236"]
-          sendSQSBatch(msg, phones).then((data) => {
+          var gmaPhones = input.gmas.map((gma) => gma.phone)
+          sendSQSBatch(msg, gmaPhones).then((data) => {
             resolve(data);
           }).catch((err) => {
             reject(err);
