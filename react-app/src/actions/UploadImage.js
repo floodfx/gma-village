@@ -38,7 +38,7 @@ const checkForErrors = (response) => {
 }
 
 const prod = process.env.NODE_ENV === 'production'
-var urlPrefix = prod ? 'https://gma-village-graphql-dev-dot-gma-village.appspot.com' : 'http://localhost:8080'
+var urlPrefix = prod ? 'https://gma-village-graphql-prod-dot-gma-village.appspot.com' : 'http://localhost:8080'
 
 export const uploadImage = (auth, image) => {
   return (dispatch) => {

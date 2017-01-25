@@ -11,8 +11,9 @@ const ParentHome = ({user}) => (
       </p>
       <h3 className="f3 serif gma-orange">Actions</h3>
       <ul className="lh-copy f3">      
-        <li>To search for Gmas click <Link to="/gma/list">here</Link>.</li>
-        <li>To edit your profile click <Link to="/profile">here</Link>.</li>
+        <li><Link to="/gma/list">Search for Gmas</Link></li>
+        <li><Link to="/profile">Edit your profile</Link></li>
+        <li><Link to="/careNeed/create">Post a Care Need</Link></li>
       </ul>
     </div>      
   </div>

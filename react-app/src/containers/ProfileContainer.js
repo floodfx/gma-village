@@ -61,7 +61,7 @@ class ProfileContainer extends Component {
         <LoadingIndicator text="Loading..." />
       )
     } else {
-      const {user, saving, saved, error} = this.props
+      const {user, saving, saved, error, profilePhotoUrl} = this.props
       return (
         <div>
           {saved && 
@@ -76,7 +76,7 @@ class ProfileContainer extends Component {
               onSubmit={this.onAdminProfileSubmit} 
               handleFile={this.handleFile} 
               saving={this.props.saving} 
-              profilePhotoUrl={this.props.profilePhotoUrl}
+              profilePhotoUrl={profilePhotoUrl || user.profilePhotoUrl}
               initialValues={user} 
             />
           }
@@ -86,7 +86,8 @@ class ProfileContainer extends Component {
               onSubmit={this.onGmaProfileSubmit} 
               handleFile={this.handleFile} 
               saving={saving} 
-              profilePhotoUrl={this.props.profilePhotoUrl}
+              currentUser={user}
+              profilePhotoUrl={profilePhotoUrl || user.profilePhotoUrl}
               initialValues={user}
             />
           }
@@ -96,7 +97,7 @@ class ProfileContainer extends Component {
               onSubmit={this.onParentProfileSubmit} 
               handleFile={this.handleFile} 
               saving={saving} 
-              profilePhotoUrl={this.props.profilePhotoUrl}
+              profilePhotoUrl={profilePhotoUrl || user.profilePhotoUrl}
               initialValues={user}
               currentUser={user}
             />

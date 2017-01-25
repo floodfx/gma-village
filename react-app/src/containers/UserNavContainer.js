@@ -33,17 +33,20 @@ class UserNavContainer extends Component {
               <li role="presentation" className={this.matchRoute("admin")}>
                 <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/admin/list">Admins</Link>
               </li>              
-            }
-            { (user.kind === "Admin" || user.kind === "Parent") &&
-              <li role="presentation" className={this.matchRoute("gma")}>
-                <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/gma/list">Gmas</Link>
-              </li>
-            }
+            }          
+            <li role="presentation" className={this.matchRoute("gma")}>
+              <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/gma/list">Gmas</Link>
+            </li>
             { user.kind === "Admin" &&
               <li role="presentation" className={this.matchRoute("parent")}>
                 <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/parent/list">Parents</Link>
               </li>
             }     
+            { user.kind === "Parent" &&
+              <li role="presentation" className={this.matchRoute("careNeed")}>
+                <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/careNeed/create">Post</Link>
+              </li>
+            }
             <button className="pull-right mt1 btn gma-orange-bg" onClick={() => this.onLogoutClick()}>Log out</button>
           </ul>
           
