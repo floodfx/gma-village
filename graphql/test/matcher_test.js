@@ -1,10 +1,75 @@
 var assert = require('assert');
 var { 
-  filterGmas
+  filterGmas,
+  kidsAgesToCareAges
 } = require('../src/careNeed/matcher');
 var moment = require('moment');
 
 var { Neighborhood, CareLocation, CareAge } = require('gma-village-data-model');
+
+describe('CareNeed', function() {
+  describe('kidsAgeToCareAge', function() {
+    it('should work', function() {
+      
+      var threeMonths = moment().subtract(3, 'months');
+      var almostSixMonths = moment().subtract(6, 'months').add(2, 'days');
+      var justSixMonths = moment().subtract(6, 'months').subtract(2, 'days');
+      var oneYear = moment().subtract(1, 'year');
+      var oneYear10Mos = moment().subtract(1, 'year').subtract(10, 'months');
+      var justTwo = moment().subtract(2, 'year').subtract(2, 'days');
+      var almostFive = moment().subtract(5, 'years').add(2, 'days');
+      var justFive = moment().subtract(5, 'years').subtract(2, 'days');
+      var six = moment().subtract(6, 'years');
+      var ten = moment().subtract(10, 'years');
+    
+      assert.deepEqual(
+        kidsAgesToCareAges([threeMonths])
+        [CA0]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([threeMonths, almostSixMonths])
+        [CA0]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([justSixMonths])
+        [CA1]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([justSixMonths, oneYear])
+        [CA1]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([oneYear, justTwo])
+        [CA1, CA2]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([justTwo, almostFive])
+        [ CA2]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([justTwo, justFive])
+        [CA2, CA3]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([justTwo, justFive, six])
+        [CA2, CA3]
+      )
+
+      assert.deepEqual(
+        kidsAgesToCareAges([almostSixMonths, six])
+        [CA0, CA3]
+      )
+      
+    })
+  })
+})
 
 describe('CareNeed', function() {
   describe('matcher', function() {
