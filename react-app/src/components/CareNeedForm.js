@@ -73,10 +73,15 @@ class CareNeedForm extends Component {
     
     return (
       <div>
-        <h2 className="lh-title fw2 f2">{heading}</h2>
+        <h2 className="lh-title fw2 f1">{heading}</h2>
         {description &&
           <p className="lh-copy fw3 f3">{description}</p>  
-        }
+        }     
+        <h3 className="lh-title fw2 f2">Delivery Schedule</h3>
+        <p className="lh-copy fw3 f3">
+          Text messages are sent between 9am-7pm PT. 
+          Messages outside that window are delivered in the next window.
+        </p>        
         <form onSubmit={handleSubmit} encType="multipart/form-data">              
           <div className="mt4">          
             <Field
@@ -116,7 +121,7 @@ class CareNeedForm extends Component {
               }})}
               component={MultiCheckbox} 
               validate={[required]}/>
-              <ElsewhereLearnMore />      
+              <ElsewhereLearnMore />   
           </div>
                 
           <Field name="otherNeighborhood" component="input" type="hidden" />
@@ -125,7 +130,7 @@ class CareNeedForm extends Component {
               {this.props.saving &&
                 <FontAwesome name='spinner' spin={true} className="mr1"/>
               }
-              Submit
+              Send
             </button>
           </div>
         </form>
