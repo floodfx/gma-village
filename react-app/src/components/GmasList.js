@@ -32,7 +32,18 @@ class GmasList extends Component {
       <div key={gma.id} className="col-xs-6 col-sm-4 col-md-3" style={{minHeight: "575px"}}>
         <div className="thumbnail">
           <Link to={`/gma/${gma.id}`}>
-            <img className="img-rounded img-responsive gma-orange-border" style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} src={imgUrl(gma)} alt="gmas placeholder"/>
+            {gma.profilePhotoUrl &&
+              <img className="img-rounded img-responsive gma-orange-border" 
+                style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} 
+                src={gma.profilePhotoUrl} 
+                alt={`Gma ${gma.first_name}`}/>
+            }
+            {!gma.profilePhotoUrl &&
+              <img className="img-rounded img-responsive gma-orange-border" 
+                style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} 
+                src={imgUrl(gma)} 
+                alt="gmas placeholder"/>
+            }
           </Link>
           <div className="caption">
             <h3 className="gma-orange text-center gma-font">

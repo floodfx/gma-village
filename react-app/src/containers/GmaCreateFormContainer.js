@@ -3,7 +3,7 @@ import GmaForm from '../components/GmaForm'
 import { connect } from 'react-redux'
 import  { fetchAuthCookie }  from '../actions/Auth'
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave'
-import  { uploadImage }  from '../actions/UploadImage'
+import  { uploadImage, resetUploadImage }  from '../actions/UploadImage'
 import { City } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
@@ -18,6 +18,7 @@ class GmaCreateFormContainer extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetGmaUser())
+    this.props.dispatch(resetUploadImage())
   }
 
   handleSubmit = (values) => {    

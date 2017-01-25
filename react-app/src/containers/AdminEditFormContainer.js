@@ -3,7 +3,7 @@ import AdminForm from '../components/AdminForm';
 import { connect } from 'react-redux';
 import  { fetchAdmin }  from '../actions/AdminProfile';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
-import  { uploadImage }  from '../actions/UploadImage';
+import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 import injectGraphQLClient from '../graphql/injectGraphQLClient';
@@ -18,6 +18,7 @@ class AdminEditFormContainer extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetAdminUser())
+    this.props.dispatch(resetUploadImage())
   }
 
   handleSubmit = (values) => {    
@@ -31,7 +32,7 @@ class AdminEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, admin, error, loading} = this.props;
+    const {saving, saved, admin, error, loading, profilePhotoUrl} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -50,7 +51,7 @@ class AdminEditFormContainer extends Component {
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
             saving={saving} 
-            profilePhotoUrl={this.props.profilePhotoUrl}
+            profilePhotoUrl={profilePhotoUrl || admin.profilePhotoUrl}
             initialValues={admin}
             />
           {saved && 

@@ -79,13 +79,22 @@ class GmaProfile extends Component {
         <div className="mw-100 center">
           <div className="cf" style={{height: 400}}>
             <div className="fl w-100 w-30-ns h-100-ns h-80 pa2-ns pb3 tc">
-              <img 
-                className="h-100-ns h-80 gma-orange-border" 
-                src={imgUrl(gma)} 
-                alt={"Gma " + gma.first_name} 
-                style={{
-                  objectFit: 'cover'
-                }}/>
+              {gma.profilePhotoUrl &&
+                <img className="h-100-ns h-80 gma-orange-border" 
+                  style={{
+                    objectFit: 'cover'
+                  }}
+                  src={gma.profilePhotoUrl} 
+                  alt={`Gma ${gma.first_name}`}/>
+              }
+              {!gma.profilePhotoUrl &&
+                <img className="h-100-ns h-80 gma-orange-border" 
+                  style={{
+                    objectFit: 'cover'
+                  }}
+                  src={imgUrl(gma)} 
+                  alt="gmas placeholder"/>
+              }              
             </div>
             <div className="fl w-100 w-70-ns h-100-ns h-80 pa2-ns pb3">
               <div className="h-100-ns h-80 gma-orange-border pa4-ns pa4">

@@ -1,11 +1,12 @@
 import {
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_REQUEST_SUCCESS,
-  UPLOAD_IMAGE_REQUEST_FAILURE
+  UPLOAD_IMAGE_REQUEST_FAILURE,
+  RESET_UPLOAD_IMAGE_REQUEST
 } from '../actions/UploadImage'
 
 const uploadImage = (state = {
-  loading: true
+  loading: false
 }, action) => {
   switch(action.type) {
     case UPLOAD_IMAGE_REQUEST: {
@@ -23,6 +24,12 @@ const uploadImage = (state = {
       return Object.assign({}, state, {
         loading: false,
         error: action.error
+      })
+    }
+    case RESET_UPLOAD_IMAGE_REQUEST: {
+      return Object.assign({}, state, {
+        loading: false,
+        image_url: undefined
       })
     }
     default:

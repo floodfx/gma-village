@@ -3,7 +3,7 @@ import AdminForm from '../components/AdminForm';
 import { connect } from 'react-redux';
 import  { fetchAuthCookie }  from '../actions/Auth';
 import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
-import  { uploadImage }  from '../actions/UploadImage';
+import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
 import { Role } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
@@ -17,6 +17,7 @@ class AdminCreateFormContainer extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetAdminUser())
+    this.props.dispatch(resetUploadImage())
   }
 
   handleSubmit = (values) => {    
@@ -26,7 +27,7 @@ class AdminCreateFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.auth, e.target.files[0]))
+    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
   }
 
   render() {
@@ -73,7 +74,7 @@ AdminCreateFormContainer.defaultProps = {
 const mapStateToProps = (state) => {
   const { saveAdmin, uploadImage, auth } = state
   return {
-    auth: auth.cookie,
+    authCookie: auth.cookie,
     saving: saveAdmin.saving,
     error: saveAdmin.error,
     saved: saveAdmin.saved,

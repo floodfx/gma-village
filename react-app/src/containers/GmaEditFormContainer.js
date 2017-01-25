@@ -3,7 +3,7 @@ import GmaForm from '../components/GmaForm';
 import { connect } from 'react-redux';
 import  { fetchGma }  from '../actions/GmaProfile';
 import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
-import  { uploadImage }  from '../actions/UploadImage';
+import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 import injectGraphQLClient from '../graphql/injectGraphQLClient';
@@ -18,6 +18,7 @@ class GmaEditFormContainer extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetGmaUser())
+    this.props.dispatch(resetUploadImage())
   }
 
   handleSubmit = (values) => {    
@@ -31,7 +32,7 @@ class GmaEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, gma, error, loading, currentUser} = this.props;
+    const {saving, saved, gma, error, loading, currentUser, profilePhotoUrl} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -50,7 +51,7 @@ class GmaEditFormContainer extends Component {
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
             saving={saving} 
-            profilePhotoUrl={this.props.profilePhotoUrl}
+            profilePhotoUrl={profilePhotoUrl || gma.profilePhotoUrl}
             initialValues={gma}
             currentUser={currentUser}
             />

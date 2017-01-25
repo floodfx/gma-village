@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch';
 export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST"
 export const UPLOAD_IMAGE_REQUEST_SUCCESS = "UPLOAD_IMAGE_REQUEST_SUCCESS"
 export const UPLOAD_IMAGE_REQUEST_FAILURE = "UPLOAD_IMAGE_REQUEST_FAILURE"
+export const RESET_UPLOAD_IMAGE_REQUEST = "RESET_UPLOAD_IMAGE_REQUEST"
 
 export const uploadImageRequest = () => ({
   type: UPLOAD_IMAGE_REQUEST
@@ -17,6 +18,16 @@ export const uploadImageRequestFailure = (error) => ({
   type: UPLOAD_IMAGE_REQUEST_FAILURE,
   error
 })
+
+export const resetUploadImageRequest = () => ({
+  type: RESET_UPLOAD_IMAGE_REQUEST
+})
+
+export const resetUploadImage = () => {
+  return (dispatch) => {
+    dispatch(resetUploadImageRequest());
+  }
+}
 
 const checkForErrors = (response) => {
   console.log(response.body)

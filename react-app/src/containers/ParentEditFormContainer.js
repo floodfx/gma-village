@@ -3,7 +3,7 @@ import ParentForm from '../components/ParentForm';
 import { connect } from 'react-redux';
 import  { fetchParent }  from '../actions/ParentProfile';
 import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
-import  { uploadImage }  from '../actions/UploadImage';
+import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 import injectGraphQLClient from '../graphql/injectGraphQLClient';
@@ -18,6 +18,7 @@ class ParentEditFormContainer extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetParentUser())
+    this.props.dispatch(resetUploadImage())
   }
 
   handleSubmit = (values) => {    
@@ -31,7 +32,7 @@ class ParentEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, parent, error, loading} = this.props;
+    const {saving, saved, parent, error, loading, profilePhotoUrl} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -50,7 +51,7 @@ class ParentEditFormContainer extends Component {
             onSubmit={this.handleSubmit} 
             handleFile={this.handleFile} 
             saving={saving} 
-            profilePhotoUrl={this.props.profilePhotoUrl}
+            profilePhotoUrl={profilePhotoUrl || parent.profilePhotoUrl}
             initialValues={parent}
             />
           {saved && 

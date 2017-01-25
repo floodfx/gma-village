@@ -58,7 +58,8 @@ class GmaForm extends Component {
       heading,
       initialValues,
       saving,
-      currentUser
+      currentUser,
+      profilePhotoUrl
      } = this.props
     return (
       <div>
@@ -180,6 +181,16 @@ class GmaForm extends Component {
           </div>
           <div className="mt4">
             <label>Profile Photo:</label>
+            {profilePhotoUrl &&
+              <div>
+                <img 
+                className="w-100 w-20-ns gma-orange-border" 
+                src={profilePhotoUrl} 
+                style={{
+                  objectFit: 'cover'
+                }}/>
+              </div>
+            }    
             <div>
               <Field 
                 name="profilePhoto" 

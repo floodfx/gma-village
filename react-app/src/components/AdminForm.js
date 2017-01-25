@@ -28,7 +28,8 @@ class AdminForm extends Component {
       pristine, 
       invalid, 
       submitting,
-      heading
+      heading,
+      profilePhotoUrl
     } = this.props
     return (
       <div>
@@ -71,6 +72,16 @@ class AdminForm extends Component {
           </div>   
           <div className="mt4">
             <label>Profile Photo:</label>
+            {profilePhotoUrl &&
+              <div>
+                <img 
+                className="w-100 w-20-ns gma-orange-border" 
+                src={profilePhotoUrl} 
+                style={{
+                  objectFit: 'cover'
+                }}/>
+              </div>
+            }    
             <div>
               <Field 
                 name="profilePhoto" 
@@ -79,7 +90,7 @@ class AdminForm extends Component {
                 onChange={(e) => handleFile(e)} />
             </div>          
           </div>        
-          <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
+          <Field name="profilePhotoUrl" component="input" type="hidden" value={profilePhotoUrl} />
           <Field name="kind" component="input" type="hidden" />
           <Field name="roles" component="input" type="hidden" />
           

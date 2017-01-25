@@ -130,7 +130,8 @@ class ParentForm extends Component {
       pristine, 
       invalid, 
       submitting,
-      heading
+      heading,
+      profilePhotoUrl
     } = this.props
     const { kids, otherNeighborhood } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
@@ -245,7 +246,17 @@ class ParentForm extends Component {
               />          
           </div>
           <div className="mt4">
-            <label>Profile Photo:</label>
+            <label>Profile Photo:</label>            
+            {profilePhotoUrl &&
+              <div>
+                <img 
+                className="w-100 w-20-ns gma-orange-border" 
+                src={profilePhotoUrl} 
+                style={{
+                  objectFit: 'cover'
+                }}/>
+              </div>
+            }            
             <div>
               <Field 
                 name="profilePhoto" 
@@ -263,13 +274,13 @@ class ParentForm extends Component {
           </div>      
           <Field name="otherNeighborhood" component="input" type="hidden" />
           <Field name="kind" component="input" type="hidden" />
-          <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
+          <Field name="profilePhotoUrl" component="input" type="hidden" value={profilePhotoUrl} />
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
                 <FontAwesome name='spinner' spin={true} className="mr1"/>
               }
-              Submit
+              Save
             </button>
           </div>
         </form>

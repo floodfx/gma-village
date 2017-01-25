@@ -71,10 +71,10 @@ const App = ({ store, authListener }) => {
             <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>
             <Route path="/admin/edit/:adminId" component={AdminEditFormContainer} onEnter={authListener.requireAdmin}/>
             
-            <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireParent}/>
+            <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireUser}/>
             <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>          
             <Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
-            <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireParent}/>
+            <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireUser}/>
 
             <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>
             <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>

@@ -3,7 +3,7 @@ import ParentForm from '../components/ParentForm';
 import  { fetchAuthCookie }  from '../actions/Auth';
 import { connect } from 'react-redux';
 import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
-import  { uploadImage }  from '../actions/UploadImage';
+import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 import injectGraphQLClient from '../graphql/injectGraphQLClient';
@@ -16,6 +16,7 @@ class ParentCreateFormContainer extends Component {
 
   componentWillUnmount() {
     this.props.dispatch(resetParentUser())
+    this.props.dispatch(resetUploadImage())
   }
 
   handleSubmit = (values) => {    
