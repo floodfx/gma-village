@@ -2,7 +2,9 @@
 
 ZIP_FILE=$1
 SQS_QUEUE_URL=$2
-STAGE=$3
+TWILIO_ACCOUNT_SID=$3
+TWILIO_AUTH_TOKEN=$4
+STAGE=$5
 
 if [ -z "$ZIP_FILE" ]; then
   echo "Zip file expected. None found."
@@ -14,6 +16,16 @@ if [ -z "$SQS_QUEUE_URL" ]; then
   exit 1
 fi
 
+if [ -z "$TWILIO_ACCOUNT_SID" ]; then
+  echo "Twilio Account SID expected. None found."
+  exit 1
+fi
+
+if [ -z "$TWILIO_AUTH_TOKEN" ]; then
+  echo "Twilio Auth Token expected. None found."
+  exit 1
+fi
+
 if [ -z "$STAGE" ]; then
   STAGE='dev'
 fi
@@ -22,7 +34,7 @@ FUNC_NAME=gma-village-sms-queue-$STAGE
 
 aws lambda update-function-configuration \
   --function $FUNC_NAME \
-  --environment "Variables={SQS_QUEUE_URL=$SQS_QUEUE_URL}" \
+  --environment "Variables={SQS_QUEUE_URL=$SQS_QUEUE_URL,TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN=$TWILIO_AUTH_TOKEN}" \
   --profile gmavillage
 
 aws lambda update-function-code \

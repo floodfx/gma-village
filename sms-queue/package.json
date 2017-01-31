@@ -14,7 +14,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "aws-sdk": "2.7.27",
-    "bluebird": "3.4.7"
+    "bluebird": "3.4.7",
+    "twilio": "2.11.1"
   },
   "devDependencies": {
     "mocha": "^3.1.2"
