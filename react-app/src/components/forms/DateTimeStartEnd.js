@@ -26,7 +26,7 @@ class DateTimeStartEnd extends Component {
   handleTimeChange = (timeId, timeValueInMinutes) => {
     var timeMoment;
     if(this.state.date && timeValueInMinutes > 0) {      
-      timeMoment = moment(this.state.date).startOf('day').add(timeValueInMinutes, 'minutes')      
+      timeMoment = moment(this.state.date).local().startOf('day').add(timeValueInMinutes, 'minutes')      
     }
     if(timeId === "startTime") {
       this.setState({
