@@ -39,13 +39,13 @@ const ageFromBirthday = (birthday) => {
     }
     var yrOrYrs = years > 1 ? 'yrs' : 'yr'
     if(months >= 0 && months < 4) {
-      return `~${years} ${yrOrYrs} old`
+      return `${years} ${yrOrYrs} old`
     }
     else if(months >= 4 && months < 9) {
-      return `~${years} 1/2 ${yrOrYrs} old`
+      return `${years} 1/2 ${yrOrYrs} old`
     }
     else if(months >=9) {
-      return `~${years+1} ${(yrOrYrs === 'yr') ? 'yrs' : 'yrs'} old`
+      return `${years+1} ${(yrOrYrs === 'yr') ? 'yrs' : 'yrs'} old`
     }
   }
    

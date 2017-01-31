@@ -20,31 +20,31 @@ describe('CareNeed', function() {
 
       var yearPlus = moment().subtract(1, 'year').subtract(3, 'months').unix()
       ageInfo = ageFromBirthday(yearPlus)
-      assert.equal(ageInfo.text, "~1 yr old")
+      assert.equal(ageInfo.text, "1 yr old")
 
       var almost2 = moment().subtract(1, 'year').subtract(10, 'months').unix()
       ageInfo = ageFromBirthday(almost2)
-      assert.equal(ageInfo.text, "~2 yrs old")
+      assert.equal(ageInfo.text, "2 yrs old")
 
       var twoPoint25 = moment().subtract(2, 'year').subtract(3, 'months').unix()
       ageInfo = ageFromBirthday(twoPoint25)
-      assert.equal(ageInfo.text, "~2 yrs old")
+      assert.equal(ageInfo.text, "2 yrs old")
 
       var twoPoint5ish = moment().subtract(2, 'year').subtract(4, 'months').unix()
       ageInfo = ageFromBirthday(twoPoint5ish)
-      assert.equal(ageInfo.text, "~2 1/2 yrs old")
+      assert.equal(ageInfo.text, "2 1/2 yrs old")
 
       var twoPoint5ish2 = moment().subtract(2, 'year').subtract(8, 'months').unix()
       ageInfo = ageFromBirthday(twoPoint5ish2)
-      assert.equal(ageInfo.text, "~2 1/2 yrs old")
+      assert.equal(ageInfo.text, "2 1/2 yrs old")
 
       var almost3 = moment().subtract(2, 'year').subtract(10, 'months').unix()
       ageInfo = ageFromBirthday(almost3)
-      assert.equal(ageInfo.text, "~3 yrs old")
+      assert.equal(ageInfo.text, "3 yrs old")
 
       var almost3 = moment().subtract(3, 'year').subtract(1, 'months').unix()
       ageInfo = ageFromBirthday(almost3)
-      assert.equal(ageInfo.text, "~3 yrs old")
+      assert.equal(ageInfo.text, "3 yrs old")
 
       var five = moment().subtract(5, 'years').unix()
       ageInfo = ageFromBirthday(five)
