@@ -18,8 +18,8 @@ var {
   Neighborhood,
   Gma
 } = require('gma-village-data-model')
-var { GmaDAO } = require('gma-village-data-access')
-var gmaDao = new GmaDAO()
+var { UserDAO } = require('gma-village-data-access')
+var userDao = new UserDAO("prod")
 
 var bulkimport = (spreadsheet_id, auth) => {
 
@@ -76,25 +76,34 @@ var bulkimport = (spreadsheet_id, auth) => {
           first_name,
           last_name,
           phone,
+          true, // active
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          Math.floor(new Date().getTime()/1000),
+          Math.floor(new Date().getTime()/1000),
+          undefined,
           availabilities.values,
-          availabilities.others,
+          availabilities.others.join(", "),
           careAges,
           careExperiences.values,
-          careExperiences.others,
+          careExperiences.others.join(", "),
           careLocations,
           careTrainings.values,
-          careTrainings.others,
+          careTrainings.others.join(", "),
           City.OAKLAND.name,
           demeanors.values,
-          demeanors.others,
+          demeanors.others.join(", "),
           neighborhood.values.length > 0 ? neighborhood.values[0] : "",
           neighborhood.others.length > 0 ? neighborhood.others[0] : "",
           isAvailableOutsideNeighborhood,
           whyCareForKidsText,
-          additionalInformationText
-        )
+          additionalInformationText        
+        )       
 
-        // console.log("\n\n\n\n", gma.toString())
+        console.log("\n\n\n\n", gma)
 
         saveGma(gma)
       }
@@ -104,14 +113,17 @@ var bulkimport = (spreadsheet_id, auth) => {
 }
 
 const saveGma = (gma) => {
-  gmaDao.gmaByPhone(gma.phone)
+  userDao.findByPhone(gma.phone)
     .then(foundGma => {
       if(foundGma) {
         console.log(`gma with phone ${gma.phone}, alread exists. ${foundGma.id}`)
+        exit(1)
         //TODO update?
       } else {
-        // console.log("saving gma", gma)
-        gmaDao.saveGma(gma)
+        console.log("saving gma", gma.first_name)
+        userDao.save(gma).then((savedGma) => {
+          console.log("\n\n\n\nsaved Gma", savedGma.id, savedGma.first_name)
+        })
       }
     })
     .catch(err => {
