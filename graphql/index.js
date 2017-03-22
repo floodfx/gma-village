@@ -20,29 +20,29 @@ var isProd = process.env.NODE_ENV === 'production'
 
 console.log("Starting server in mode", (isProd ? "prod" : "dev"))
 
-var whitelistedDomains = config.get('CORS_DOMAIN_WHITELIST_CSV').split(',');
-if(whitelistedDomains.length > 0) {
-  if(!isProd) {
-    whitelistedDomains.push("localhost:3000")
-  }
-  var whitelist = whitelistedDomains.reduce((acc, domain) => {
-    acc.push(`http://${domain}`)
-    acc.push(`https://${domain}`)
-    return acc
-  },[])
-  console.log("whitelisted domains", whitelist)
-  var corsOptions = {
-    origin: function(origin, callback){
-      console.log("origin", origin)
-      var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-      callback(originIsWhitelisted ? null : `Bad Origin: ${origin}`, originIsWhitelisted);
-    }
-  };
-
-  app.use(cors(corsOptions));
-} else {
-  app.use(cors());
-}
+// var whitelistedDomains = config.get('CORS_DOMAIN_WHITELIST_CSV').split(',');
+// if(whitelistedDomains.length > 0) {
+//   if(!isProd) {
+//     whitelistedDomains.push("localhost:3000")
+//   }
+//   var whitelist = whitelistedDomains.reduce((acc, domain) => {
+//     acc.push(`http://${domain}`)
+//     acc.push(`https://${domain}`)
+//     return acc
+//   },[])
+//   console.log("whitelisted domains", whitelist)
+//   var corsOptions = {
+//     origin: function(origin, callback){
+//       console.log("origin", origin)
+//       var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+//       callback(originIsWhitelisted ? null : `Bad Origin: ${origin}`, originIsWhitelisted);
+//     }
+//   };
+//
+//   app.use(cors(corsOptions));
+// } else {
+app.use(cors());
+// }
 
 // USE "Authorization: Bearer <token>" Header for Authorization
 app.use(bearerToken());
@@ -53,7 +53,7 @@ app.use(
   bodyParser.json(),
   loadAccountKitUserMiddleware,
   loadAppUserMiddleware,
-  graphqlExpress(request => ({    
+  graphqlExpress(request => ({
     schema: schema,
     context: {
       accountKitUser: request.accountKitUser,
