@@ -6,7 +6,7 @@ import injectGraphQLClient from '../graphql/injectGraphQLClient';
 class AccountKitContainer extends Component {
 
   constructor(props) {
-    super(props);            
+    super(props);
   }
 
   componentWillMount() {
@@ -14,16 +14,16 @@ class AccountKitContainer extends Component {
     if(window.AccountKit) {
       dispatch(initAccountKit(graphQLClient))
     } else {
-      window.AccountKit_OnInteractive = () => {      
+      window.AccountKit_OnInteractive = () => {
         dispatch(initAccountKit(graphQLClient))
       }
     }
   }
 
-  // componentDidMount() {            
+  // componentDidMount() {
   //   const script = document.createElement("script");
   //   script.src = "https://sdk.accountkit.com/en_US/sdk.js";
-  //   document.body.appendChild(script);    
+  //   document.body.appendChild(script);
   // }
 
   componentWillReceiveProps(nextProps) {
