@@ -7,4 +7,4 @@ if [ -z "$STAGE" ]; then
 fi
 
 rm sms-queue-lambda-$STAGE.zip
-zip -q -r sms-queue-lambda-$STAGE.zip package.json index.js node_modules/*
+zip -q -r sms-queue-lambda-$STAGE.zip package.json index.js timemath.js node_modules/*

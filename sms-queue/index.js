@@ -1,6 +1,7 @@
 var AWS = require('aws-sdk');
 var Promise = require("bluebird");
 var twilio = require('twilio');
+var timemath = require('./timemath')
 
 var sqs = new AWS.SQS();
 var sns = new AWS.SNS();
@@ -42,7 +43,9 @@ function processMessages(event, context, callback) {
         console.log("Processing", data.Messages.length, "messages");
         for (var i = 0; i < data.Messages.length; i++) {
           var message = data.Messages[i];
-          var body = message.Body;
+          var oldBody = message.Body;          
+          var body = timemath.correctUtcOffset(oldBody);
+          console.log("original body", oldBody, "time corrected body", body)
           var phone = message.MessageAttributes['phone'].StringValue;
           var receipt = message.ReceiptHandle;
           console.log("received", message, body, phone);
