@@ -1,0 +1,36 @@
+{
+    "resource": "/oauth/{proxy+}",
+    "path": "/oauth/google/token",
+    "httpMethod": "GET",
+    "headers": null,
+    "queryStringParameters": null,
+    "pathParameters": {
+        "proxy": "google/token"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "accountId": "322809531922",
+        "resourceId": "afgy53",
+        "stage": "test-invoke-stage",
+        "requestId": "test-invoke-request",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": "322809531922",
+            "cognitoIdentityId": null,
+            "caller": "322809531922",
+            "apiKey": "test-invoke-api-key",
+            "sourceIp": "test-invoke-source-ip",
+            "accessKey": "ASIAIWYT3JWNGXITMHYQ",
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": "arn:aws:iam::322809531922:root",
+            "userAgent": "Apache-HttpClient/4.5.x (Java/1.8.0_102)",
+            "user": "322809531922"
+        },
+        "resourcePath": "/oauth/{proxy+}",
+        "httpMethod": "GET",
+        "apiId": "6nx32kfpd7"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}
