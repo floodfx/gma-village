@@ -1,33 +1,33 @@
 {
-    "resource": "/oauth/{proxy+}",
-    "path": "/oauth/google/token",
+    "resource": "/accountkit/{proxy+}",
+    "path": "/accountkit/something",
     "httpMethod": "GET",
     "headers": null,
     "queryStringParameters": null,
     "pathParameters": {
-        "proxy": "google/token"
+        "proxy": "something"
     },
     "stageVariables": null,
     "requestContext": {
-        "accountId": "322809531922",
+        "accountId": "XXXXXXXXX",
         "resourceId": "afgy53",
         "stage": "test-invoke-stage",
         "requestId": "test-invoke-request",
         "identity": {
             "cognitoIdentityPoolId": null,
-            "accountId": "322809531922",
+            "accountId": "XXXXXXXXX",
             "cognitoIdentityId": null,
-            "caller": "322809531922",
+            "caller": "XXXXXXXXX",
             "apiKey": "test-invoke-api-key",
             "sourceIp": "test-invoke-source-ip",
-            "accessKey": "ASIAIWYT3JWNGXITMHYQ",
+            "accessKey": "XXXXXXXXX",
             "cognitoAuthenticationType": null,
             "cognitoAuthenticationProvider": null,
-            "userArn": "arn:aws:iam::322809531922:root",
+            "userArn": "arn:aws:iam::XXXXXXXXX:root",
             "userAgent": "Apache-HttpClient/4.5.x (Java/1.8.0_102)",
-            "user": "322809531922"
+            "user": "XXXXXXXXX"
         },
-        "resourcePath": "/oauth/{proxy+}",
+        "resourcePath": "/accountkit/{proxy+}",
         "httpMethod": "GET",
         "apiId": "6nx32kfpd7"
     },

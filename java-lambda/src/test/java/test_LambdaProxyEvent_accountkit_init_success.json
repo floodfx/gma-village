@@ -1,0 +1,36 @@
+{
+    "resource": "/accountkit/{proxy+}",
+    "path": "/accountkit/init",
+    "httpMethod": "GET",
+    "headers": null,
+    "queryStringParameters": null,
+    "pathParameters": {
+        "proxy": "init"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "accountId": "XXXXXXXXX",
+        "resourceId": "afgy53",
+        "stage": "test-invoke-stage",
+        "requestId": "test-invoke-request",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": "XXXXXXXXX",
+            "cognitoIdentityId": null,
+            "caller": "XXXXXXXXX",
+            "apiKey": "test-invoke-api-key",
+            "sourceIp": "test-invoke-source-ip",
+            "accessKey": "XXXXXXXXX",
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": "arn:aws:iam::XXXXXXXXX:root",
+            "userAgent": "Apache-HttpClient/4.5.x (Java/1.8.0_102)",
+            "user": "XXXXXXXXX"
+        },
+        "resourcePath": "/accountkit/{proxy+}",
+        "httpMethod": "GET",
+        "apiId": "6nx32kfpd7"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}
