@@ -12,6 +12,7 @@ import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.gmavillage.lambda.util.CORS;
 import com.gmavillage.lambda.util.DebugHelper;
+import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 
@@ -38,9 +39,25 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
     switch (proxyPath) {
       case "init":
         return success(initAccountKit(event, context));
+      case "authorize":
+        return success(authorize(event, context));
       default:
         return error404();
     }
+  }
+
+  private String authorize(final LambdaProxyEvent event, final Context context) {
+    if (Optional.of(event.getQueryStringParameters()).isPresent()) {
+      final String csrfNonce = event.getQueryStringParameters().get("csrfNonce");
+      final String authCode = event.getQueryStringParameters().get("authCode");
+
+      if (CSRF.equals(csrfNonce)) {
+
+      } else {
+
+      }
+    }
+    return new Gson().toJson("");
   }
 
   private String initAccountKit(final LambdaProxyEvent event, final Context context) {
