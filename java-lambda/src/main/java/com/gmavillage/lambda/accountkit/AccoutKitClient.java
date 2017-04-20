@@ -1,8 +1,8 @@
 package com.gmavillage.lambda.accountkit;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
@@ -10,9 +10,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListeningExecutorService;
-import com.google.common.util.concurrent.MoreExecutors;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -32,31 +29,24 @@ public class AccoutKitClient {
     this.appVersion = appVersion;
   }
 
-  public ListenableFuture<Response> me(final String accessToken) {
-    final ListeningExecutorService service =
-        MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
-    return service.submit(() -> {
-      final Map<String, String> qs = Maps.newHashMap();
-      qs.put("access_token", accessToken);
-      qs.put("appsecret_proof", appSecretProof(accessToken));
-      final Request request = new Request.Builder().url(urlFor("me", qs)).build();
-      return new OkHttpClient().newCall(request).execute();
-    });
+  public Response me(final String accessToken) throws IOException {
+    final Map<String, String> qs = Maps.newHashMap();
+    qs.put("access_token", accessToken);
+    qs.put("appsecret_proof", appSecretProof(accessToken));
+    final Request request = new Request.Builder().url(urlFor("me", qs)).build();
+    return new OkHttpClient().newCall(request).execute();
   }
 
-  public ListenableFuture<Response> accessToken(final String code) {
-    final ListeningExecutorService service =
-        MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
-    return service.submit(() -> {
-      final String accessToken = Joiner.on("|").join("AA", this.appId, this.appSecret);
-      final Map<String, String> qs = Maps.newHashMap();
-      qs.put("grant_type", "authorization_code");
-      qs.put("code", code);
-      qs.put("access_token", accessToken);
-      final Request request = new Request.Builder().url(urlFor("me", qs)).build();
-      return new OkHttpClient().newCall(request).execute();
-    });
+  public Response accessToken(final String code) throws IOException {
+    final String accessToken = Joiner.on("|").join("AA", this.appId, this.appSecret);
+    final Map<String, String> qs = Maps.newHashMap();
+    qs.put("grant_type", "authorization_code");
+    qs.put("code", code);
+    qs.put("access_token", accessToken);
+    final Request request = new Request.Builder().url(urlFor("me", qs)).build();
+    return new OkHttpClient().newCall(request).execute();
   }
+
 
   String appSecretProof(final String accessToken) {
     final HashFunction hash = Hashing.hmacSha256(this.appSecret.getBytes());
