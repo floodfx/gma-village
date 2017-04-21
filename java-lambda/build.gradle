@@ -13,6 +13,7 @@ apply plugin: 'eclipse'
 // Apply the application plugin to add support for building an application
 apply plugin: 'application'
 
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use jcenter for resolving your dependencies.
@@ -29,6 +30,12 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'    
 	compile 'org.apache.commons:commons-lang3:3.1'
 	compile 'com.squareup.okhttp3:okhttp:3.7.0'
+	compile 'org.springframework:spring-jdbc:4.3.7.RELEASE'
+	compile 'org.postgresql:postgresql:42.0.0'
+	compile 'org.flywaydb:flyway-core:4.1.2'
+	
+	
+	
     
 
     // Use JUnit test framework
