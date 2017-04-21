@@ -32,14 +32,11 @@ dependencies {
 	compile 'com.squareup.okhttp3:okhttp:3.7.0'
 	compile 'org.springframework:spring-jdbc:4.3.7.RELEASE'
 	compile 'org.postgresql:postgresql:42.0.0'
-	compile 'org.flywaydb:flyway-core:4.1.2'
-	
-	
-	
-    
+	compile 'org.flywaydb:flyway-core:4.1.2'    
 
-    // Use JUnit test framework
+    // test dependencies
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-inline:2.+'
 }
 
 // Define the main class for the application

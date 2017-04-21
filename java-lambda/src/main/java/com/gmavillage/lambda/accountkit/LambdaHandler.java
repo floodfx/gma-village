@@ -16,19 +16,20 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 
-import okhttp3.Response;
-
 public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaProxyOutput>, CORS {
 
   private static final String APP_ID = firstNonNull(getenv("AK_APP_ID"), "AK_APP_ID");
   private static final String CSRF = firstNonNull(getenv("CSRF"), "CSRF");
   private static final String VERSION = firstNonNull(getenv("AK_APP_VERSION"), "AK_APP_VERSION");
   private static final String APP_SECRET = firstNonNull(getenv("AK_APP_SECRET"), "AK_APP_SECRET");
+  private final AccountKitClient accountKit;
 
-  private void log(final LambdaLogger logger, final String text) {
-    if (logger != null) {
-      logger.log(text);
-    }
+  public LambdaHandler() {
+    this(new AccountKitClient(APP_ID, APP_SECRET, VERSION));
+  }
+
+  public LambdaHandler(final AccountKitClient accountKit) {
+    this.accountKit = accountKit;
   }
 
   @Override
@@ -60,20 +61,19 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
       final String csrfNonce = event.getQueryStringParameters().get("csrfNonce");
       final String authCode = event.getQueryStringParameters().get("authCode");
       if (CSRF.equals(csrfNonce)) {
-        final AccoutKitClient ak = new AccoutKitClient(APP_ID, APP_SECRET, VERSION);
-        final Response response = ak.accessToken(authCode);
-        if (response.code() == 200) {
-          return success(response.body().string(), event);
-        } else {
-          return error(response.body().string());
+        try {
+          return success(accountKit.accessToken(authCode), event);
+        } catch (final Exception e) {
+          System.err.println("Error:" + e);
+          return error("{\"error\": \"Error Authorizing\"}");
         }
       } else {
         // CSRF mismatch
-        return error("{\"error\": \"CSRF Mismatch\"");
+        return error("{\"error\": \"CSRF Mismatch\"}");
       }
     }
     // empty params
-    return error("{\"error\": \"Missing parameters\"");
+    return error("{\"error\": \"Missing parameters\"}");
   }
 
   private LambdaProxyOutput initAccountKit(final LambdaProxyEvent event, final Context context) {
@@ -102,5 +102,10 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
     return event.getHeaders().get("origin");
   }
 
+  private void log(final LambdaLogger logger, final String text) {
+    if (logger != null) {
+      logger.log(text);
+    }
+  }
 
 }

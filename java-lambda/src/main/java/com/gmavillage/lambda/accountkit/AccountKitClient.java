@@ -13,9 +13,8 @@ import com.google.common.hash.Hashing;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
-public class AccoutKitClient {
+public class AccountKitClient {
 
   private static final String BASE_URL = "https://graph.accountkit.com";
 
@@ -23,28 +22,28 @@ public class AccoutKitClient {
   private final String appSecret;
   private final String appVersion;
 
-  public AccoutKitClient(final String appId, final String appSecret, final String appVersion) {
+  public AccountKitClient(final String appId, final String appSecret, final String appVersion) {
     this.appId = appId;
     this.appSecret = appSecret;
     this.appVersion = appVersion;
   }
 
-  public Response me(final String accessToken) throws IOException {
+  public String me(final String accessToken) throws IOException {
     final Map<String, String> qs = Maps.newHashMap();
     qs.put("access_token", accessToken);
     qs.put("appsecret_proof", appSecretProof(accessToken));
     final Request request = new Request.Builder().url(urlFor("me", qs)).build();
-    return new OkHttpClient().newCall(request).execute();
+    return new OkHttpClient().newCall(request).execute().body().toString();
   }
 
-  public Response accessToken(final String code) throws IOException {
+  public String accessToken(final String code) throws IOException {
     final String accessToken = Joiner.on("|").join("AA", this.appId, this.appSecret);
     final Map<String, String> qs = Maps.newHashMap();
     qs.put("grant_type", "authorization_code");
     qs.put("code", code);
     qs.put("access_token", accessToken);
-    final Request request = new Request.Builder().url(urlFor("me", qs)).build();
-    return new OkHttpClient().newCall(request).execute();
+    final Request request = new Request.Builder().url(urlFor("access_token", qs)).build();
+    return new OkHttpClient().newCall(request).execute().body().toString();
   }
 
 
