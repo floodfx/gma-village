@@ -1,6 +1,7 @@
 package com.gmavillage.lambda.db;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import com.gmavillage.model.Admin;
 import com.gmavillage.model.Gma;
+import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
 import com.google.common.collect.Lists;
 
@@ -92,6 +94,17 @@ public class UserDBTest {
   }
 
   @Test
+  public void testGetAllUsers() throws Exception {
+    final UserDB db = new UserDB();
+    final User created = db.createUser(generateUser());
+    final User created2 = db.createUser(generateUser());
+    final List<User> users = db.getAllUsers();
+    Assert.assertEquals(users.size(), 2);
+    Assert.assertEquals(created, users.get(0));
+    Assert.assertEquals(created2, users.get(1));
+  }
+
+  @Test
   public void testCreateGmaAndGetGma() throws Exception {
 
     final UserDB db = new UserDB();
@@ -109,15 +122,46 @@ public class UserDBTest {
 
   }
 
+
   @Test
-  public void testGetAllUsers() throws Exception {
+  public void testGetAllGmas() throws Exception {
     final UserDB db = new UserDB();
-    final User created = db.createUser(generateUser());
-    final User created2 = db.createUser(generateUser());
-    final List<User> users = db.getAllUsers();
-    Assert.assertEquals(users.size(), 2);
-    Assert.assertEquals(created, users.get(0));
-    Assert.assertEquals(created2, users.get(1));
+    final Gma created = db.createGma(generateGma());
+    final Gma created2 = db.createGma(generateGma());
+    final List<Gma> gmas = db.getAllGmas();
+    Assert.assertEquals(gmas.size(), 2);
+    Assert.assertEquals(created, gmas.get(0));
+    Assert.assertEquals(created2, gmas.get(1));
+  }
+
+  @Test
+  public void testCreateAndGetParent() throws Exception {
+
+    final UserDB db = new UserDB();
+
+    final Parent p = generateParent();
+
+    final Parent savedParent = db.createParent(p);
+    System.out.println(ToStringBuilder.reflectionToString(savedParent));
+    Assert.assertNotNull(savedParent.getId());
+    Assert.assertEquals(p.getNeedRecurrence(), savedParent.getNeedRecurrence());
+
+    final Parent gotParent = db.getParent(savedParent.getId(), false);
+    Assert.assertEquals(gotParent.getId(), savedParent.getId());
+    Assert.assertEquals(gotParent.getNeedRecurrence(), savedParent.getNeedRecurrence());
+
+  }
+
+
+  @Test
+  public void testGetAllParents() throws Exception {
+    final UserDB db = new UserDB();
+    final Parent created = db.createParent(generateParent());
+    final Parent created2 = db.createParent(generateParent());
+    final List<Parent> parents = db.getAllParents();
+    Assert.assertEquals(parents.size(), 2);
+    Assert.assertEquals(created, parents.get(0));
+    Assert.assertEquals(created2, parents.get(1));
   }
 
   int phone = 0;
@@ -159,20 +203,17 @@ public class UserDBTest {
     return g;
   }
 
-  // private Parent generateParent() {
-  // final Parent p = new Parent(generateUser());
-  // p.setAdditionalInfo("Additional Info");
-  // p.setNeedLocations();
-  // g.setAvailabilities(Lists.newArrayList("early_morning", "daytime"));
-  // g.setOtherAvailability("other");
-  // g.setCareAges(Lists.newArrayList("zero_to_six_months", "six_months_to_two_years"));
-  // g.setCareExperiences(Lists.newArrayList("raised_kids", "worked_baby_sitting"));
-  // g.setOtherCareExperience("other");
-  // g.setCareLocations(Lists.newArrayList("providers_home"));
-  // g.setDemeanors(Lists.newArrayList("outgoing"));
-  // g.setOtherDemeanor("Fun!");
-  // g.setCareTrainings(Lists.newArrayList("Gma Village Training"));
-  // return g;
-  // }
+  private Parent generateParent() {
+    final Parent p = new Parent(generateUser());
+    p.setNeedRecurrence(Arrays.asList("full_time", "part_time"));
+    p.setNeedTimeOfDay(Arrays.asList("early_morning", "daytime"));
+    p.setNeedLocations(Arrays.asList("providers_home"));
+    p.setOtherTimeOfDay("noon");
+    p.setNeighborhoodId(null);
+    p.setOtherNeighborhood("Rosebud");
+    p.setWhyJoin("Because");
+    p.setAdditionalInfo("More reasons");
+    return p;
+  }
 
 }

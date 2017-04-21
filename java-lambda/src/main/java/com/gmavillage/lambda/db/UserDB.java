@@ -74,8 +74,16 @@ public class UserDB extends Database {
   }
 
   public Parent createParent(final Parent p) throws Exception {
-    return this.namedTemplate.query(loadSqlFile("createParent"), userSource(p), new ParentMapper())
-        .get(0);
+    final MapSqlParameterSource source = userMapSource(p);
+    source.addValue("needRecurrence", createSqlArray(p.getNeedRecurrence()), Types.ARRAY);
+    source.addValue("needTimeOfDay", createSqlArray(p.getNeedTimeOfDay()), Types.ARRAY);
+    source.addValue("needLocations", createSqlArray(p.getNeedLocations()), Types.ARRAY);
+    source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
+    source.addValue("neighborhoodId", p.getNeighborhoodId());
+    source.addValue("otherNeighborhood", p.getOtherNeighborhood());
+    source.addValue("additionalInfo", p.getAdditionalInfo());
+    source.addValue("whyJoin", p.getWhyJoin());
+    return this.namedTemplate.query(loadSqlFile("createParent"), source, new ParentMapper()).get(0);
   }
 
   public Parent getParent(final int id, final boolean includeDeleted) throws Exception {
@@ -95,7 +103,6 @@ public class UserDB extends Database {
   }
 
   public Gma createGma(final Gma g) throws Exception {
-    // final BeanPropertySqlParameterSource source = userSource(g);
     final MapSqlParameterSource source = userMapSource(g);
     source.addValue("availabilities", createSqlArray(g.getAvailabilities()), Types.ARRAY);
     source.addValue("otherAvailability", g.getOtherAvailability());

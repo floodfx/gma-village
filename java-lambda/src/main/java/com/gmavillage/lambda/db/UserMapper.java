@@ -1,7 +1,10 @@
 package com.gmavillage.lambda.db;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
 
@@ -28,6 +31,10 @@ public class UserMapper implements RowMapper<User> {
     u.setCreatedOn(r.getTimestamp("created_on"));
     u.setUpdatedAt(r.getTimestamp("updated_at"));
     return u;
+  }
+
+  public List<String> asList(final Array vals) throws SQLException {
+    return Arrays.asList((String[]) vals.getArray());
   }
 
 

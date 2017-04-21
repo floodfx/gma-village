@@ -32,8 +32,8 @@ select insertu.id, insertu.first_name, insertu.last_name, insertu.phone, insertu
        insertu.active, insertu.profile_image_url, insertu.account_kit_access_token,
        insertu.account_kit_user_id, insertu.account_kit_access_token_expires_at,
        insertu.accepted_terms, insertu.created_by_user, insertu.created_on, insertu.updated_at,
-       to_json(inparents.need_recurrence) as need_recurrence, to_json(inparents.need_time_of_day) as need_time_of_day,
-       inparents.other_need_time_of_day, to_json(need_locations) as need_locations,
+       inparents.need_recurrence, inparents.need_time_of_day,
+       inparents.other_need_time_of_day, need_locations,
        inparents.neighborhood_id, inparents.other_neighborhood,
        inparents.why_join, inparents.additional_info
 from insertu, inparents
