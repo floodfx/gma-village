@@ -1,5 +1,8 @@
 package com.gmavillage.lambda.db;
 
+import java.sql.Array;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -17,13 +20,15 @@ import com.gmavillage.model.User;
 public class UserDB extends Database {
 
   private final NamedParameterJdbcTemplate namedTemplate;
+  private final DataSource dataSource;
 
   public UserDB() {
     this(postgresDataSource());
   }
 
-  public UserDB(final DataSource ds) {
-    namedTemplate = new NamedParameterJdbcTemplate(ds);
+  public UserDB(final DataSource dataSource) {
+    this.dataSource = dataSource;
+    this.namedTemplate = new NamedParameterJdbcTemplate(dataSource);
   }
 
   public User createUser(final User u) throws Exception {
@@ -90,8 +95,23 @@ public class UserDB extends Database {
   }
 
   public Gma createGma(final Gma g) throws Exception {
-    return this.namedTemplate.query(loadSqlFile("createGma"), userSource(g), new GmaMapper())
-        .get(0);
+    // final BeanPropertySqlParameterSource source = userSource(g);
+    final MapSqlParameterSource source = userMapSource(g);
+    source.addValue("availabilities", createSqlArray(g.getAvailabilities()), Types.ARRAY);
+    source.addValue("otherAvailability", g.getOtherAvailability());
+    source.addValue("careAges", createSqlArray(g.getCareAges()), Types.ARRAY);
+    source.addValue("careExperiences", createSqlArray(g.getCareExperiences()), Types.ARRAY);
+    source.addValue("otherCareExperience", g.getOtherCareExperience());
+    source.addValue("careLocations", createSqlArray(g.getCareLocations()), Types.ARRAY);
+    source.addValue("demeanors", createSqlArray(g.getDemeanors()), Types.ARRAY);
+    source.addValue("otherDemeanor", g.getOtherDemeanor());
+    source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
+    source.addValue("neighborhoodId", g.getNeighborhoodId());
+    source.addValue("otherNeighborhood", g.getOtherNeighborhood());
+    source.addValue("availableOutsideNeighborhood", g.isAvailableOutsideNeighborhood());
+    source.addValue("whyCareForKids", g.getWhyCareForKids());
+    source.addValue("additionalInfo", g.getAdditionalInfo());
+    return this.namedTemplate.query(loadSqlFile("createGma"), source, new GmaMapper()).get(0);
   }
 
   public Gma getGma(final int id, final boolean includeDeleted) throws Exception {
@@ -112,6 +132,37 @@ public class UserDB extends Database {
 
   private BeanPropertySqlParameterSource userSource(final Object user) {
     return new BeanPropertySqlParameterSource(user);
+  }
+
+  private MapSqlParameterSource userMapSource(final User user) {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("firstName", user.getFirstName());
+    source.addValue("lastName", user.getLastName());
+    source.addValue("phone", user.getPhone());
+    source.addValue("userType", user.getUserType());
+    source.addValue("acceptedTerms", user.isAcceptedTerms());
+    source.addValue("accountKitAccessToken", user.getAccountKitAccessToken());
+    source.addValue("accountKitAccessTokenExpiresAt", user.getAccountKitAccessTokenExpiresAt());
+    source.addValue("accountKitUserId", user.getAccountKitUserId());
+    source.addValue("active", user.isActive());
+    source.addValue("createdByUser", user.getCreatedByUser());
+    source.addValue("deleted", user.isDeleted());
+    source.addValue("profileImageUrl", user.getProfileImageUrl());
+    return source;
+  }
+
+  private Array createSqlArray(final List<String> list) {
+    return createSqlArray(list, "varchar");
+  }
+
+
+  private Array createSqlArray(final List<String> list, final String type) {
+    Array stringArray = null;
+    try {
+      stringArray = dataSource.getConnection().createArrayOf(type, list.toArray());
+    } catch (final SQLException ignore) {
+    }
+    return stringArray;
   }
 
 }

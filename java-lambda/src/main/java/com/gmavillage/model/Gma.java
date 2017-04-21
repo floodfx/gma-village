@@ -14,7 +14,7 @@ public class Gma extends User {
   private String otherCareExperience;
   private List<String> careLocations;
   private List<String> demeanors;
-  private String otherDemeaner;
+  private String otherDemeanor;
   private List<String> careTrainings;
   private Integer neighborhoodId;
   private String otherNeighborhood;
@@ -24,10 +24,12 @@ public class Gma extends User {
 
   public Gma() {
     super();
+    setUserType("gma");
   }
 
   public Gma(final User u) {
     super(u);
+    setUserType("gma");
   }
 
   public List<String> getAvailabilities() {
@@ -86,12 +88,12 @@ public class Gma extends User {
     this.demeanors = demeanors;
   }
 
-  public String getOtherDemeaner() {
-    return this.otherDemeaner;
+  public String getOtherDemeanor() {
+    return this.otherDemeanor;
   }
 
-  public void setOtherDemeaner(final String otherDemeaner) {
-    this.otherDemeaner = otherDemeaner;
+  public void setOtherDemeanor(final String otherDemeanor) {
+    this.otherDemeanor = otherDemeanor;
   }
 
   public List<String> getCareTrainings() {
@@ -166,7 +168,7 @@ public class Gma extends User {
         && Objects.equals(otherCareExperience, u.otherCareExperience) //
         && Iterables.elementsEqual(careLocations, u.careLocations) //
         && Iterables.elementsEqual(demeanors, u.demeanors) //
-        && Objects.equals(otherDemeaner, u.otherDemeaner) //
+        && Objects.equals(otherDemeanor, u.otherDemeanor) //
         && Iterables.elementsEqual(careTrainings, u.careTrainings) //
         && Objects.equals(neighborhoodId, u.neighborhoodId) //
         && Objects.equals(otherNeighborhood, u.otherNeighborhood) //

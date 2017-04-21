@@ -7,8 +7,8 @@ with insertu as
     )
       values
     (
-      default, :firstName, :lastName, :phone, :userType, :active, :profileImageUrl,
-      :accountKit_accessToken, :accountKitUserId, :accountKitAccessTokenExpiresAt,
+      default, :firstName, :lastName, :phone, :userType::user_type, :active, :profileImageUrl,
+      :accountKitAccessToken, :accountKitUserId, :accountKitAccessTokenExpiresAt,
       :acceptedTerms, :createdByUser
     )
     returning *
@@ -27,7 +27,7 @@ ingmas as
       :otherAvailability, :careAges::care_age_types[],
       :careExperiences::care_experience_types[], :otherCareExperience,
       :careLocations::care_location_types[], :demeanors::demeanor_types[],
-      :otherDemeanor, :care_trainings::VARCHAR[], :neighborhoodId,
+      :otherDemeanor, :careTrainings::VARCHAR[], :neighborhoodId,
       :otherNeighborhood, :availableOutsideNeighborhood,
       :whyCareForKids, :additionalInfo
     )
@@ -37,11 +37,11 @@ select insertu.id, insertu.first_name, insertu.last_name, insertu.phone, insertu
        insertu.active, insertu.profile_image_url, insertu.account_kit_access_token,
        insertu.account_kit_user_id, insertu.account_kit_access_token_expires_at,
        insertu.accepted_terms, insertu.created_by_user, insertu.created_on, insertu.updated_at,
-       to_json(ingmas.availabilities) as availabilities, ingmas.other_availability,
-       to_json(ingmas.care_ages) as care_ages, to_json(ingmas.care_experiences) as care_experiences,
-       ingmas.other_care_experience, to_json(ingmas.care_locations) as care_locations,
-       to_json(ingmas.demeanors) as demeanors, ingmas.other_demeanor,
-       to_json(ingmas.care_trainings) as care_trainings, ingmas.neighborhood_id,
+       ingmas.availabilities, ingmas.other_availability,
+       ingmas.care_ages, ingmas.care_experiences,
+       ingmas.other_care_experience, ingmas.care_locations,
+       ingmas.demeanors, ingmas.other_demeanor,
+       ingmas.care_trainings, ingmas.neighborhood_id,
        ingmas.other_neighborhood, ingmas.available_outside_neighborhood,
        ingmas.why_care_for_kids, ingmas.additional_info
 from insertu, ingmas

@@ -18,10 +18,12 @@ public class Parent extends User {
 
   public Parent() {
     super();
+    setUserType("parent");
   }
 
   public Parent(final User u) {
     super(u);
+    setUserType("parent");
   }
 
   public List<String> getNeedRecurrence() {

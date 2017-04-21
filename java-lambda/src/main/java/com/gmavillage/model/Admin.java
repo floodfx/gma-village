@@ -4,10 +4,12 @@ public class Admin extends User {
 
   public Admin() {
     super();
+    setUserType("admin");
   }
 
   public Admin(final User u) {
     super(u);
+    setUserType("admin");
   }
 
   @Override
