@@ -43,7 +43,7 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'com.gma'
+mainClassName = ''
 
 task buildZip(type: Zip) {
     from compileJava
