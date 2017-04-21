@@ -1,3 +1,8 @@
+import rp from 'request-promise';
+import {
+  STAGE
+} from '../util';
+
 export const INIT_ACCOUNT_KIT_REQUEST = "INIT_ACCOUNT_KIT_REQUEST"
 export const INIT_ACCOUNT_KIT_REQUEST_SUCCESS = "INIT_ACCOUNT_KIT_REQUEST_SUCCESS"
 export const INIT_ACCOUNT_KIT_REQUEST_FAILURE = "INIT_ACCOUNT_KIT_REQUEST_FAILURE"
@@ -37,33 +42,51 @@ export const accountKitAuthRequestFailure = (error) => ({
   error
 })
 
-
 export const initAccountKit = (graphQLClient) => {
   return (dispatch) => {
     dispatch(initAccountKitRequest());
-    return graphQLClient.query(`
-        {
-          accountKitInit {
-            appId,
-            version,
-            csrf
-          }
-        }
-    `).then(data => {
-        dispatch(initAccountKitRequestSuccess(data.accountKitInit))
+
+    var options = {
+      method: 'GET',
+      uri: `https://auth.gmavillage.com/${STAGE}/accountkit/init`,
+      json: true
+    };
+    rp(options)
+    .then(data => {
+        dispatch(initAccountKitRequestSuccess(data))
     }).catch(err => {
       dispatch(initAccountKitRequestFailure(err))
     });
   }
 }
 
+// export const initAccountKit = (graphQLClient) => {
+//   return (dispatch) => {
+//     dispatch(initAccountKitRequest());
+//
+//     return graphQLClient.query(`
+//         {
+//           accountKitInit {
+//             appId,
+//             version,
+//             csrf
+//           }
+//         }
+//     `).then(data => {
+//         dispatch(initAccountKitRequestSuccess(data.accountKitInit))
+//     }).catch(err => {
+//       dispatch(initAccountKitRequestFailure(err))
+//     });
+//   }
+// }
+
 export const accountKitAuth = (graphQLClient, csrfNonce, authCode) => {
   return (dispatch) => {
     dispatch(accountKitAuthRequest(csrfNonce, authCode));
     return graphQLClient.query(`
       mutation auth($csrfNonce: String!, $authCode: String!){
-        accountKitAuth(csrfNonce:$csrfNonce, authCode:$authCode) {          
-          user {         
+        accountKitAuth(csrfNonce:$csrfNonce, authCode:$authCode) {
+          user {
             ... on Admin {
               id,
               first_name,
