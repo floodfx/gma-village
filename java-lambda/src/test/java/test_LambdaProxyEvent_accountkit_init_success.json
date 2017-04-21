@@ -2,7 +2,9 @@
     "resource": "/accountkit/{proxy+}",
     "path": "/accountkit/init",
     "httpMethod": "GET",
-    "headers": null,
+    "headers": {
+      "origin": "http://localhost:3000"
+    },
     "queryStringParameters": null,
     "pathParameters": {
         "proxy": "init"

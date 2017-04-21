@@ -63,7 +63,7 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
         final AccoutKitClient ak = new AccoutKitClient(APP_ID, APP_SECRET, VERSION);
         final Response response = ak.accessToken(authCode);
         if (response.code() == 200) {
-          return success(response.body().string());
+          return success(response.body().string(), event);
         } else {
           return error(response.body().string());
         }
@@ -81,11 +81,13 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
     initValues.put("appId", APP_ID);
     initValues.put("csrf", CSRF);
     initValues.put("version", VERSION);
-    return success(new Gson().toJson(initValues));
+    return success(new Gson().toJson(initValues), event);
   }
 
-  private LambdaProxyOutput success(final String body) {
-    return new LambdaProxyOutput(200, CORS.HEADERS, body);
+  private LambdaProxyOutput success(final String body, final LambdaProxyEvent event) {
+    final Map<String, String> headers = Maps.newHashMap(CORS.HEADERS);
+    headers.put("Access-Control-Allow-Origin", requestOrigin(event));
+    return new LambdaProxyOutput(200, headers, body);
   }
 
   private LambdaProxyOutput error(final String error) {
@@ -94,6 +96,10 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
 
   private LambdaProxyOutput error404() {
     return new LambdaProxyOutput(404);
+  }
+
+  private String requestOrigin(final LambdaProxyEvent event) {
+    return event.getHeaders().get("origin");
   }
 
 
