@@ -5,6 +5,8 @@ import static java.lang.System.getenv;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
@@ -40,13 +42,17 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
     }
     log(logger, "Received event:" + DebugHelper.toStringLambdaProxyEvent(event));
     final String proxyPath = firstNonNull(event.getPathParameters().get("proxy"), "");
+    log(logger, "proxyPath:" + proxyPath);
     try {
       switch (proxyPath) {
         case "init":
+          log(logger, "Running init");
           return initAccountKit(event, context);
         case "authorize":
+          log(logger, "Running authorize");
           return authorize(event, context);
         default:
+          log(logger, "Running default");
           return error404();
       }
     } catch (final Exception e) {
@@ -57,9 +63,12 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
 
   private LambdaProxyOutput authorize(final LambdaProxyEvent event, final Context context)
       throws Exception {
+    System.out.println("authorize:" + ToStringBuilder.reflectionToString(event));
     if (Optional.of(event.getQueryStringParameters()).isPresent()) {
       final String csrfNonce = event.getQueryStringParameters().get("csrfNonce");
       final String authCode = event.getQueryStringParameters().get("authCode");
+      System.out.println("csrfNonce:" + csrfNonce);
+      System.out.println("authCode:" + authCode);
       if (CSRF.equals(csrfNonce)) {
         try {
           return success(accountKit.accessToken(authCode), event);
@@ -105,6 +114,8 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
   private void log(final LambdaLogger logger, final String text) {
     if (logger != null) {
       logger.log(text);
+    } else {
+      System.out.println(text);
     }
   }
 
