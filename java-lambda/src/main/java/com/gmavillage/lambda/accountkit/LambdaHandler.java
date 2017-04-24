@@ -5,20 +5,15 @@ import static java.lang.System.getenv;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.gmavillage.lambda.util.CORS;
-import com.gmavillage.lambda.util.DebugHelper;
+import com.gmavillage.lambda.AbstractLambdaProxyHandler;
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 
-public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaProxyOutput>, CORS {
+public class LambdaHandler extends AbstractLambdaProxyHandler {
 
   private static final String APP_ID = firstNonNull(getenv("AK_APP_ID"), "AK_APP_ID");
   private static final String CSRF = firstNonNull(getenv("CSRF"), "CSRF");
@@ -35,43 +30,28 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
   }
 
   @Override
-  public LambdaProxyOutput handleRequest(final LambdaProxyEvent event, final Context context) {
-    LambdaLogger logger = null;
-    if (context != null) {
-      logger = context.getLogger();
-    }
-    log(logger, "Received event:" + DebugHelper.toStringLambdaProxyEvent(event));
+  protected LambdaProxyOutput processEvent(final LambdaProxyEvent event, final Context context)
+      throws Exception {
     final String proxyPath = firstNonNull(event.getPathParameters().get("proxy"), "");
-    log(logger, "proxyPath:" + proxyPath);
-    try {
-      switch (proxyPath) {
-        case "init":
-          log(logger, "Running init");
-          return initAccountKit(event, context);
-        case "authorize":
-          log(logger, "Running authorize");
-          return authorize(event, context);
-        default:
-          log(logger, "Running default");
-          return error404();
-      }
-    } catch (final Exception e) {
-      System.err.println(e);
-      return error("Unknown Error");
+    logInfo("proxyPath:" + proxyPath);
+    switch (proxyPath) {
+      case "init":
+        return initAccountKit(event, context);
+      case "authorize":
+        return authorize(event, context);
+      default:
+        return error404();
     }
   }
 
   private LambdaProxyOutput authorize(final LambdaProxyEvent event, final Context context)
       throws Exception {
-    System.out.println("authorize:" + ToStringBuilder.reflectionToString(event));
     if (Optional.of(event.getQueryStringParameters()).isPresent()) {
       final String csrfNonce = event.getQueryStringParameters().get("csrfNonce");
       final String authCode = event.getQueryStringParameters().get("authCode");
-      System.out.println("csrfNonce:" + csrfNonce);
-      System.out.println("authCode:" + authCode);
       if (CSRF.equals(csrfNonce)) {
         try {
-          return success(accountKit.accessToken(authCode), event);
+          return success(accountKit.accessTokenAsString(authCode), event);
         } catch (final Exception e) {
           System.err.println("Error:" + e);
           return error("{\"error\": \"Error Authorizing\"}");
@@ -93,30 +73,5 @@ public class LambdaHandler implements RequestHandler<LambdaProxyEvent, LambdaPro
     return success(new Gson().toJson(initValues), event);
   }
 
-  private LambdaProxyOutput success(final String body, final LambdaProxyEvent event) {
-    final Map<String, String> headers = Maps.newHashMap(CORS.HEADERS);
-    headers.put("Access-Control-Allow-Origin", requestOrigin(event));
-    return new LambdaProxyOutput(200, headers, body);
-  }
-
-  private LambdaProxyOutput error(final String error) {
-    return new LambdaProxyOutput(200, CORS.HEADERS, error);
-  }
-
-  private LambdaProxyOutput error404() {
-    return new LambdaProxyOutput(404);
-  }
-
-  private String requestOrigin(final LambdaProxyEvent event) {
-    return event.getHeaders().get("origin");
-  }
-
-  private void log(final LambdaLogger logger, final String text) {
-    if (logger != null) {
-      logger.log(text);
-    } else {
-      System.out.println(text);
-    }
-  }
 
 }

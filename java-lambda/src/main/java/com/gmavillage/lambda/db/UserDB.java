@@ -43,6 +43,25 @@ public class UserDB extends Database {
     return this.namedTemplate.query(loadSqlFile("getUser"), source, new UserMapper()).get(0);
   }
 
+  public User getUserByAccountKitUserId(final String akId) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("account_kit_user_id", akId);
+    source.addValue("deleted", false);
+    return this.namedTemplate
+        .query(loadSqlFile("getUserByAccountKitUserId"), source, new UserMapper()).get(0);
+  }
+
+  public User updateUser(final User updatedUser) throws Exception {
+    return this.namedTemplate
+        .query(loadSqlFile("updateUser"), userSource(updatedUser), new UserMapper()).get(0);
+  }
+
+  public void deleteUser(final int userId) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("user_id", userId);
+    this.namedTemplate.update(loadSqlFile("deleteUser"), source);
+  }
+
   public List<User> getAllUsers() throws Exception {
     return getAllUsers(false);
   }

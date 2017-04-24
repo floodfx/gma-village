@@ -1,0 +1,1 @@
+update users set deleted=true where id = :user_id

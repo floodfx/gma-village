@@ -60,7 +60,7 @@ public class LambdaHandlerTest {
     final Gson gson = new Gson();
     final String json = gson.toJson(expectedObj);
     final AccountKitClient accountKit = mock(AccountKitClient.class);
-    when(accountKit.accessToken("AUTH_CODE")).thenReturn(json);
+    when(accountKit.accessTokenAsString("AUTH_CODE")).thenReturn(json);
 
     final LambdaHandler handler = new LambdaHandler(accountKit);
     final LambdaProxyOutput out = handler.handleRequest(accountKitAuthSuccess, null);

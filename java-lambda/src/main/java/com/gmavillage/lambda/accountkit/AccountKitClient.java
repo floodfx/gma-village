@@ -1,6 +1,7 @@
 package com.gmavillage.lambda.accountkit;
 
 import static com.google.common.base.MoreObjects.firstNonNull;
+import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static java.lang.Integer.parseInt;
 import static java.lang.System.getenv;
 
@@ -9,11 +10,15 @@ import java.net.URLEncoder;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.gmavillage.lambda.model.accountkit.AccountKitUser;
+import com.gmavillage.lambda.model.accountkit.AccountKitUserAccessToken;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,6 +36,7 @@ public class AccountKitClient {
   private final String appSecret;
   private final String appVersion;
   private final OkHttpClient httpClient;
+  private final Gson gson;
 
   public AccountKitClient(final String appId, final String appSecret, final String appVersion) {
     this.appId = appId;
@@ -39,9 +45,10 @@ public class AccountKitClient {
     this.httpClient = new OkHttpClient().newBuilder() //
         .connectTimeout(TIMEOUT_SECS, TimeUnit.SECONDS) //
         .readTimeout(TIMEOUT_SECS, TimeUnit.SECONDS).build();
+    this.gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
   }
 
-  public String me(final String accessToken) throws IOException {
+  public String meAsString(final String accessToken) throws IOException {
     final Map<String, String> qs = Maps.newHashMap();
     qs.put("access_token", accessToken);
     qs.put("appsecret_proof", appSecretProof(accessToken));
@@ -49,9 +56,7 @@ public class AccountKitClient {
     return fetch("me", qs);
   }
 
-
-
-  public String accessToken(final String code) throws IOException {
+  public String accessTokenAsString(final String code) throws IOException {
     final String accessToken = Joiner.on("|").join("AA", this.appId, this.appSecret);
     final Map<String, String> qs = Maps.newHashMap();
     qs.put("grant_type", "authorization_code");
@@ -59,6 +64,24 @@ public class AccountKitClient {
     qs.put("access_token", URLEncoder.encode(accessToken, Charsets.UTF_8.name()));
 
     return fetch("access_token", qs);
+  }
+
+  public AccountKitUser me(final String accessToken) throws IOException {
+    final Map<String, String> qs = Maps.newHashMap();
+    qs.put("access_token", accessToken);
+    qs.put("appsecret_proof", appSecretProof(accessToken));
+
+    return gson.fromJson(fetch("me", qs), AccountKitUser.class);
+  }
+
+  public AccountKitUserAccessToken accessToken(final String code) throws IOException {
+    final String accessToken = Joiner.on("|").join("AA", this.appId, this.appSecret);
+    final Map<String, String> qs = Maps.newHashMap();
+    qs.put("grant_type", "authorization_code");
+    qs.put("code", code);
+    qs.put("access_token", URLEncoder.encode(accessToken, Charsets.UTF_8.name()));
+
+    return gson.fromJson(fetch("access_token", qs), AccountKitUser.class);
   }
 
   String fetch(final String endpoint, final Map<String, String> qs) throws IOException {

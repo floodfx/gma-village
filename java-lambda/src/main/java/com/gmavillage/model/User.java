@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class User {
 
-  private int id;
+  private Integer id;
   private String firstName;
   private String lastName;
   private String phone;
@@ -43,11 +43,11 @@ public class User {
     this.createdByUser = u.createdByUser;
   }
 
-  public int getId() {
+  public Integer getId() {
     return this.id;
   }
 
-  public void setId(final int id) {
+  public void setId(final Integer id) {
     this.id = id;
   }
 
