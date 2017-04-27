@@ -1,0 +1,38 @@
+{
+    "resource": "/api/{proxy+}",
+    "path": "/dev/api/users/1",
+    "httpMethod": "DELETE",
+    "headers": {
+      "origin": "http://localhost:3000"
+    },
+    "queryStringParameters": null,
+    "pathParameters": {
+        "proxy": "users/1"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "accountId": "XXXXXXXXX",
+        "resourceId": "afgy53",
+        "stage": "test-invoke-stage",
+        "requestId": "test-invoke-request",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": "XXXXXXXXX",
+            "cognitoIdentityId": null,
+            "caller": "XXXXXXXXX",
+            "apiKey": "test-invoke-api-key",
+            "sourceIp": "test-invoke-source-ip",
+            "accessKey": "XXXXXXXXX",
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": "arn:aws:iam::XXXXXXXXX:root",
+            "userAgent": "Apache-HttpClient/4.5.x (Java/1.8.0_102)",
+            "user": "XXXXXXXXX"
+        },
+        "resourcePath": "/api/{proxy+}",
+        "httpMethod": "DELETE",
+        "apiId": "6nx32kfpd7"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

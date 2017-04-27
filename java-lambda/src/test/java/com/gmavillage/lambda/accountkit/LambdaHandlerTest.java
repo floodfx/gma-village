@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.InputStreamReader;
 import java.util.Map;
 
 import org.junit.Before;
@@ -14,11 +13,13 @@ import org.junit.Test;
 
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
+import com.gmavillage.test.TestUtils;
 import com.google.common.collect.Maps;
-import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 
 public class LambdaHandlerTest {
+
+  TestUtils utils = new TestUtils();
 
   LambdaProxyEvent accountKitInitSuccess;
   LambdaProxyEvent accountKit404;
@@ -26,9 +27,11 @@ public class LambdaHandlerTest {
 
   @Before
   public void loadEvent() throws Exception {
-    accountKitInitSuccess = loadJsonFile("test_LambdaProxyEvent_accountkit_init_success.json");
-    accountKit404 = loadJsonFile("test_LambdaProxyEvent_accountkit_404.json");
-    accountKitAuthSuccess = loadJsonFile("test_LambdaProxyEvent_accountkit_authorize_success.json");
+    accountKitInitSuccess =
+        utils.loadJsonFile("test_LambdaProxyEvent_accountkit_init_success.json");
+    accountKit404 = utils.loadJsonFile("test_LambdaProxyEvent_accountkit_404.json");
+    accountKitAuthSuccess =
+        utils.loadJsonFile("test_LambdaProxyEvent_accountkit_authorize_success.json");
   }
 
   @Test
@@ -80,10 +83,6 @@ public class LambdaHandlerTest {
 
   }
 
-  private LambdaProxyEvent loadJsonFile(final String name) throws Exception {
-    final String json = CharStreams.toString(
-        new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(name)));
-    return new Gson().fromJson(json, LambdaProxyEvent.class);
-  }
+
 
 }

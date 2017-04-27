@@ -56,10 +56,11 @@ public class UserDB extends Database {
         .query(loadSqlFile("updateUser"), userSource(updatedUser), new UserMapper()).get(0);
   }
 
-  public void deleteUser(final int userId) throws Exception {
+  public boolean deleteUser(final int userId) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_id", userId);
     this.namedTemplate.update(loadSqlFile("deleteUser"), source);
+    return true;
   }
 
   public List<User> getAllUsers() throws Exception {

@@ -179,7 +179,8 @@ public class User {
     }
     final User u = (User) o;
     // field comparison
-    return Objects.equals(firstName, u.firstName) //
+    return Objects.equals(id, u.id) //
+        && Objects.equals(firstName, u.firstName) //
         && Objects.equals(lastName, u.lastName) //
         && Objects.equals(phone, u.phone) //
         && Objects.equals(userType, u.userType) //

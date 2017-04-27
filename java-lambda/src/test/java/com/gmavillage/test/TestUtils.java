@@ -1,16 +1,20 @@
 package com.gmavillage.test;
 
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
 import org.flywaydb.core.Flyway;
 
+import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.gmavillage.lambda.db.Database;
 import com.gmavillage.model.Admin;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
 import com.google.common.collect.Lists;
+import com.google.common.io.CharStreams;
+import com.google.gson.Gson;
 
 public class TestUtils {
 
@@ -72,6 +76,12 @@ public class TestUtils {
     p.setWhyJoin("Because");
     p.setAdditionalInfo("More reasons");
     return p;
+  }
+
+  public LambdaProxyEvent loadJsonFile(final String name) throws Exception {
+    final String json = CharStreams.toString(
+        new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(name)));
+    return new Gson().fromJson(json, LambdaProxyEvent.class);
   }
 
 }
