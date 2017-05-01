@@ -40,10 +40,13 @@ public abstract class AbstractLambdaProxyHandler
   protected LambdaProxyOutput success(final String body, final LambdaProxyEvent event) {
     final Map<String, String> headers = Maps.newHashMap(CORS.HEADERS);
     headers.put("Access-Control-Allow-Origin", requestOrigin(event));
-    return new LambdaProxyOutput(200, headers, body);
+    final LambdaProxyOutput success = new LambdaProxyOutput(200, headers, body);
+    logInfo("Returning Success" + ToStringBuilder.reflectionToString(success));
+    return success;
   }
 
   protected LambdaProxyOutput error(final String error) {
+    logError("Returning Error with Body" + error);
     return new LambdaProxyOutput(200, CORS.HEADERS, error);
   }
 

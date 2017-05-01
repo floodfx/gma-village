@@ -1,5 +1,6 @@
 package com.gmavillage.lambda.accountkit;
 
+import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -13,9 +14,13 @@ import org.junit.Test;
 
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
+import com.gmavillage.lambda.db.UserDB;
+import com.gmavillage.lambda.model.accountkit.AccountKitUser;
+import com.gmavillage.lambda.model.accountkit.AccountKitUserAccessToken;
+import com.gmavillage.model.Admin;
 import com.gmavillage.test.TestUtils;
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class LambdaHandlerTest {
 
@@ -24,6 +29,8 @@ public class LambdaHandlerTest {
   LambdaProxyEvent accountKitInitSuccess;
   LambdaProxyEvent accountKit404;
   LambdaProxyEvent accountKitAuthSuccess;
+
+  final Gson gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
 
   @Before
   public void loadEvent() throws Exception {
@@ -56,21 +63,35 @@ public class LambdaHandlerTest {
 
   @Test
   public void testAccoutKitAuthSuccess() throws Exception {
-    final Map<String, String> expectedObj = Maps.newHashMap();
-    expectedObj.put("id", "userId");
-    expectedObj.put("access_token", "accessToken");
-    expectedObj.put("token_refresh_interval_sec", "2592000");
-    final Gson gson = new Gson();
-    final String json = gson.toJson(expectedObj);
-    final AccountKitClient accountKit = mock(AccountKitClient.class);
-    when(accountKit.accessTokenAsString("AUTH_CODE")).thenReturn(json);
+    final Admin admin = utils.generateAdmin();
+    admin.setId(1);
+    admin.setAccountKitUserId("akId");
+    // mock data for account kit
+    final AccountKitUserAccessToken token = new AccountKitUserAccessToken();
+    token.setAccessToken("accessToken");
+    token.setId("akId");
+    token.setTokenRefreshIntervalSec(2592000);
+    final AccountKitUser akUser = new AccountKitUser();
+    akUser.setId("akId");
+    akUser.setPhone(new AccountKitUser.Phone("+1" + admin.getPhone(), "1", admin.getPhone()));
 
-    final LambdaHandler handler = new LambdaHandler(accountKit);
+    final AccountKitClient accountKit = mock(AccountKitClient.class);
+    when(accountKit.accessToken("AUTH_CODE")).thenReturn(token);
+    when(accountKit.me("accessToken")).thenReturn(akUser);
+
+    // mock data for database
+    final UserDB userDB = mock(UserDB.class);
+    when(userDB.getUserByPhone(admin.getPhone())).thenReturn(admin);
+    when(userDB.updateUser(admin)).thenReturn(admin);
+    when(userDB.getAdmin(admin.getId(), false)).thenReturn(admin);
+
+    // execute test
+    final LambdaHandler handler = new LambdaHandler(accountKit, userDB);
     final LambdaProxyOutput out = handler.handleRequest(accountKitAuthSuccess, null);
     // System.out.println("Out" + DebugHelper.toStringLambdaProxyOutput(out));
     assertNotNull(out);
     assertTrue(out.getBody().length() > 0);
-    assertEquals(out.getBody(), json);
+    assertEquals(gson.toJson(admin), out.getBody());
   }
 
   @Test

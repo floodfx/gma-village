@@ -51,6 +51,13 @@ public class UserDB extends Database {
         .query(loadSqlFile("getUserByAccountKitUserId"), source, new UserMapper()).get(0);
   }
 
+  public User getUserByPhone(final String phone) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("phone", phone);
+    source.addValue("deleted", false);
+    return this.namedTemplate.query(loadSqlFile("getUserByPhone"), source, new UserMapper()).get(0);
+  }
+
   public User updateUser(final User updatedUser) throws Exception {
     return this.namedTemplate
         .query(loadSqlFile("updateUser"), userSource(updatedUser), new UserMapper()).get(0);

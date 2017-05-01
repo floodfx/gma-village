@@ -20,7 +20,6 @@ import com.google.common.base.Joiner;
 public class ApiAuthorizer implements RequestHandler<TokenAuthorizerContext, AuthPolicy> {
 
   private static final String APP_ID = firstNonNull(getenv("AK_APP_ID"), "AK_APP_ID");
-  private static final String CSRF = firstNonNull(getenv("CSRF"), "CSRF");
   private static final String VERSION = firstNonNull(getenv("AK_APP_VERSION"), "AK_APP_VERSION");
   private static final String APP_SECRET = firstNonNull(getenv("AK_APP_SECRET"), "AK_APP_SECRET");
   private final AccountKitClient accountKit;
