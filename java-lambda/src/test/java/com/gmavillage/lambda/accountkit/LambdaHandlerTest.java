@@ -54,7 +54,7 @@ public class LambdaHandlerTest {
     assertEquals(json.get("appId"), "AK_APP_ID");
     assertEquals(json.get("csrf"), "CSRF");
     assertEquals(json.get("version"), "AK_APP_VERSION");
-    assertEquals(out.getHeaders().size(), 3);
+    assertEquals(out.getHeaders().size(), 5);
     assertEquals(out.getHeaders().get("Access-Control-Allow-Credentials"), "true");
     assertEquals(out.getHeaders().get("Access-Control-Allow-Methods"),
         "OPTIONS, GET, POST, PUT, DELETE");

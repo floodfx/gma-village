@@ -2,7 +2,7 @@ package com.gmavillage.lambda.api;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
-import com.google.api.client.util.Strings;
+import com.google.common.base.Strings;
 
 public abstract class AbstractApi {
 

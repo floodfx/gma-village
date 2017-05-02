@@ -4,16 +4,16 @@ import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.gmavillage.model.User;
 
-public class UserMapper implements RowMapper<User> {
+public class UserMapper {
 
-  @Override
-  public User mapRow(final ResultSet r, final int rowNum) throws SQLException {
+  public static User mapQuery(final ResultSet r) throws SQLException, DataAccessException {
     final User u = new User();
     u.setId(r.getInt("id"));
     u.setFirstName(r.getString("first_name"));
@@ -33,9 +33,25 @@ public class UserMapper implements RowMapper<User> {
     return u;
   }
 
-  public List<String> asList(final Array vals) throws SQLException {
-    return Arrays.asList((String[]) vals.getArray());
+  public static class One implements ResultSetExtractor<User> {
+    @Override
+    public User extractData(final ResultSet r) throws SQLException, DataAccessException {
+      if (r.next()) {
+        return mapQuery(r);
+      }
+      return null;
+    }
   }
 
+  public static class List implements RowMapper<User> {
+    @Override
+    public User mapRow(final ResultSet r, final int rowNum) throws SQLException {
+      return mapQuery(r);
+    }
+  }
+
+  public java.util.List<String> asList(final Array vals) throws SQLException {
+    return Arrays.asList((String[]) vals.getArray());
+  }
 
 }

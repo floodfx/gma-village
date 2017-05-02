@@ -81,7 +81,7 @@ public class AccountKitClient {
     qs.put("code", code);
     qs.put("access_token", URLEncoder.encode(accessToken, Charsets.UTF_8.name()));
 
-    return gson.fromJson(fetch("access_token", qs), AccountKitUser.class);
+    return gson.fromJson(fetch("access_token", qs), AccountKitUserAccessToken.class);
   }
 
   String fetch(final String endpoint, final Map<String, String> qs) throws IOException {

@@ -17,13 +17,13 @@ import com.gmavillage.test.TestUtils;
 
 public class UserDBTest {
 
-  TestUtils testUtils;
+  TestUtils testUtils = new TestUtils();
 
   @Before
   public void resetDB() {
     final Flyway flyway = new Flyway();
     flyway.setDataSource(Database.postgresDataSource());
-    flyway.setLocations("filesystem:src/main/java/com/gmavillage/lambda/db/migrations");
+    flyway.setLocations("filesystem:src/main/resources/com/gmavillage/lambda/db/migrations");
     flyway.clean();
     System.out.println("migrated version:" + flyway.migrate());
   }

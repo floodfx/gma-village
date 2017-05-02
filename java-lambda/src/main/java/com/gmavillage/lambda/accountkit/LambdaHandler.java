@@ -8,6 +8,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
@@ -68,7 +70,9 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
         try {
           // lookup user details from account kit
           final AccountKitUserAccessToken akToken = accountKit.accessToken(authCode);
+          logInfo("AK Token:" + ToStringBuilder.reflectionToString(akToken));
           final AccountKitUser akUser = accountKit.me(akToken.getAccessToken());
+          logInfo("AK User:" + ToStringBuilder.reflectionToString(akUser));
           // find user in database
           User user = userDB.getUserByPhone(akUser.getPhone().getNationalNumber());
           // if user exists, update auth info and return full user type
@@ -77,7 +81,7 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
               if (!user.getAccountKitUserId().equals(akUser.getId())) {
                 logError("AK UserID in DB does not match AK UserID from Account Kit Auth for user:"
                     + user.getId());
-                return error("{\"error\": \"Authorization user id mismatch\"}");
+                return error("{\"error\": \"Authorization user id mismatch\"}", event);
               }
             } else {
               user.setAccountKitUserId(akUser.getId());
@@ -99,24 +103,25 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
                 return success(gson.toJson(userDB.getGma(user.getId(), false)), event);
               }
               default: {
-                return error("{\"error\": \"Unknown user type\"}");
+                return error("{\"error\": \"Unknown user type\"}", event);
               }
             }
           } else {
             // user with phone not in database
-            return error("{\"error\": \"Phone not registered\"}");
+            return error("{\"error\": \"Phone not registered\"}", event);
           }
         } catch (final Exception e) {
+          e.printStackTrace(System.err);
           logError("Error:" + e);
-          return error("{\"error\": \"Authorization Failure\"}");
+          return error("{\"error\": \"Authorization Failure\"}", event);
         }
       } else {
         // CSRF mismatch
-        return error("{\"error\": \"CSRF Mismatch\"}");
+        return error("{\"error\": \"CSRF Mismatch\"}", event);
       }
     }
     // empty params
-    return error("{\"error\": \"Missing parameters\"}");
+    return error("{\"error\": \"Missing parameters\"}", event);
   }
 
   private LambdaProxyOutput initAccountKit(final LambdaProxyEvent event, final Context context) {

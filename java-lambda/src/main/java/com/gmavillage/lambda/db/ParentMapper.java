@@ -3,16 +3,17 @@ package com.gmavillage.lambda.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.gmavillage.model.Parent;
 
-public class ParentMapper implements RowMapper<Parent> {
+public class ParentMapper {
 
-  @Override
-  public Parent mapRow(final ResultSet r, final int rowNum) throws SQLException {
+  public static Parent mapQuery(final ResultSet r) throws SQLException, DataAccessException {
     final UserMapper userMapper = new UserMapper();
-    final Parent p = new Parent(userMapper.mapRow(r, rowNum));
+    final Parent p = new Parent(userMapper.mapQuery(r));
     p.setNeedRecurrence(userMapper.asList(r.getArray("need_recurrence")));
     p.setNeedTimeOfDay(userMapper.asList(r.getArray("need_time_of_day")));
     p.setNeedLocations(userMapper.asList(r.getArray("need_locations")));
@@ -24,5 +25,24 @@ public class ParentMapper implements RowMapper<Parent> {
 
     return p;
   }
+
+  public static class One implements ResultSetExtractor<Parent> {
+    @Override
+    public Parent extractData(final ResultSet r) throws SQLException, DataAccessException {
+      if (r.next()) {
+        return mapQuery(r);
+      }
+      return null;
+    }
+  }
+
+  public static class List implements RowMapper<Parent> {
+    @Override
+    public Parent mapRow(final ResultSet r, final int rowNum) throws SQLException {
+      return mapQuery(r);
+    }
+  }
+
+
 
 }

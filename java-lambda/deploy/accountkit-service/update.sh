@@ -17,8 +17,22 @@ if [ -z "$DATABASE_URL" ]; then
   exit 1
 fi
 
+DATABASE_USER=$2
 
-AK_APP_SECRET=$2
+if [ -z "$DATABASE_USER" ]; then
+  echo "PostGres DB User expected. None found."
+  exit 1
+fi
+
+DATABASE_PASS=$3
+
+if [ -z "$DATABASE_PASS" ]; then
+  echo "PostGres DB Password expected. None found."
+  exit 1
+fi
+
+
+AK_APP_SECRET=$4
 
 if [ -z "$AK_APP_SECRET" ]; then
   echo "Account Kit App Secret expected. None found."
@@ -26,16 +40,19 @@ if [ -z "$AK_APP_SECRET" ]; then
 fi
 
 
-STAGE=$3
+STAGE=$5
 if [ -z "$STAGE" ]; then
   STAGE='dev'
 fi
 
 $SCRIPT_DIR/../gradlew build
-$SCRIPT_DIR/update-lambda.sh $LAMBDA_NAME $ZIP_PATH $STAGE
 
 aws lambda update-function-configuration \
   --function $LAMBDA_NAME-$STAGE \
   --handler $HANDLER \
-  --environment "Variables={STAGE=$STAGE,AK_APP_ID=$AK_APP_ID,AK_APP_VERSION=$AK_APP_VERSION,AK_APP_SECRET=$AK_APP_SECRET,CSRF=$CSRF,DATABASE_URL=$DATABASE_URL}" \
+  --environment "Variables={STAGE=$STAGE,AK_APP_ID=$AK_APP_ID,AK_APP_VERSION=$AK_APP_VERSION,AK_APP_SECRET=$AK_APP_SECRET,CSRF=$CSRF,DATABASE_URL=$DATABASE_URL,DATABASE_USER=$DATABASE_USER,DATABASE_PASS=$DATABASE_PASS}" \
   --profile $PROFILE
+
+$SCRIPT_DIR/update-lambda.sh $LAMBDA_NAME $ZIP_PATH $STAGE
+
+

@@ -3,16 +3,17 @@ package com.gmavillage.lambda.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.gmavillage.model.Gma;
 
-public class GmaMapper implements RowMapper<Gma> {
+public class GmaMapper {
 
-  @Override
-  public Gma mapRow(final ResultSet r, final int rowNum) throws SQLException {
+  public static Gma mapQuery(final ResultSet r) throws SQLException, DataAccessException {
     final UserMapper userMapper = new UserMapper();
-    final Gma g = new Gma(userMapper.mapRow(r, rowNum));
+    final Gma g = new Gma(userMapper.mapQuery(r));
     g.setAvailabilities(userMapper.asList(r.getArray("availabilities")));
     g.setCareAges(userMapper.asList(r.getArray("care_ages")));
     g.setCareExperiences(userMapper.asList(r.getArray("care_experiences")));
@@ -28,6 +29,23 @@ public class GmaMapper implements RowMapper<Gma> {
     g.setWhyCareForKids(r.getString("why_care_for_kids"));
     g.setAdditionalInfo(r.getString("additional_info"));
     return g;
+  }
+
+  public static class One implements ResultSetExtractor<Gma> {
+    @Override
+    public Gma extractData(final ResultSet r) throws SQLException, DataAccessException {
+      if (r.next()) {
+        return mapQuery(r);
+      }
+      return null;
+    }
+  }
+
+  public static class List implements RowMapper<Gma> {
+    @Override
+    public Gma mapRow(final ResultSet r, final int rowNum) throws SQLException {
+      return mapQuery(r);
+    }
   }
 
 }

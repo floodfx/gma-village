@@ -29,7 +29,7 @@ public abstract class AbstractLambdaProxyHandler
       return processEvent(event, context);
     } catch (final Exception e) {
       logError(e.toString());
-      return error("Error Processing Event");
+      return error("Error Processing Event", event);
     }
   }
 
@@ -45,9 +45,9 @@ public abstract class AbstractLambdaProxyHandler
     return success;
   }
 
-  protected LambdaProxyOutput error(final String error) {
+  protected LambdaProxyOutput error(final String error, final LambdaProxyEvent event) {
     logError("Returning Error with Body" + error);
-    return new LambdaProxyOutput(200, CORS.HEADERS, error);
+    return success(error, event);
   }
 
   protected LambdaProxyOutput error404() {

@@ -32,35 +32,34 @@ public class UserDB extends Database {
   }
 
   public User createUser(final User u) throws Exception {
-    return this.namedTemplate.query(loadSqlFile("createUser"), userSource(u), new UserMapper())
-        .get(0);
+    return this.namedTemplate.query(loadSqlFile("createUser"), userSource(u), new UserMapper.One());
   }
 
   public User getUser(final int id, final boolean includeDeleted) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_id", id);
     source.addValue("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getUser"), source, new UserMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("getUser"), source, new UserMapper.One());
   }
 
   public User getUserByAccountKitUserId(final String akId) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("account_kit_user_id", akId);
     source.addValue("deleted", false);
-    return this.namedTemplate
-        .query(loadSqlFile("getUserByAccountKitUserId"), source, new UserMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("getUserByAccountKitUserId"), source,
+        new UserMapper.One());
   }
 
   public User getUserByPhone(final String phone) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("phone", phone);
     source.addValue("deleted", false);
-    return this.namedTemplate.query(loadSqlFile("getUserByPhone"), source, new UserMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("getUserByPhone"), source, new UserMapper.One());
   }
 
   public User updateUser(final User updatedUser) throws Exception {
-    return this.namedTemplate
-        .query(loadSqlFile("updateUser"), userSource(updatedUser), new UserMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("updateUser"), userSource(updatedUser),
+        new UserMapper.One());
   }
 
   public boolean deleteUser(final int userId) throws Exception {
@@ -76,19 +75,19 @@ public class UserDB extends Database {
 
   public List<User> getAllUsers(final boolean includeDeleted) throws Exception {
     final SqlParameterSource source = new MapSqlParameterSource("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getAllUsers"), source, new UserMapper());
+    return this.namedTemplate.query(loadSqlFile("getAllUsers"), source, new UserMapper.List());
   }
 
   public Admin createAdmin(final Admin a) throws Exception {
-    return this.namedTemplate.query(loadSqlFile("createAdmin"), userSource(a), new AdminMapper())
-        .get(0);
+    return this.namedTemplate.query(loadSqlFile("createAdmin"), userSource(a),
+        new AdminMapper.One());
   }
 
   public Admin getAdmin(final int id, final boolean includeDeleted) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_id", id);
     source.addValue("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getAdmin"), source, new AdminMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("getAdmin"), source, new AdminMapper.One());
   }
 
   public List<Admin> getAllAdmins() throws Exception {
@@ -97,7 +96,7 @@ public class UserDB extends Database {
 
   public List<Admin> getAllAdmins(final boolean includeDeleted) throws Exception {
     final SqlParameterSource source = new MapSqlParameterSource("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getAllAdmins"), source, new AdminMapper());
+    return this.namedTemplate.query(loadSqlFile("getAllAdmins"), source, new AdminMapper.List());
   }
 
   public Parent createParent(final Parent p) throws Exception {
@@ -110,14 +109,14 @@ public class UserDB extends Database {
     source.addValue("otherNeighborhood", p.getOtherNeighborhood());
     source.addValue("additionalInfo", p.getAdditionalInfo());
     source.addValue("whyJoin", p.getWhyJoin());
-    return this.namedTemplate.query(loadSqlFile("createParent"), source, new ParentMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("createParent"), source, new ParentMapper.One());
   }
 
   public Parent getParent(final int id, final boolean includeDeleted) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_id", id);
     source.addValue("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getParent"), source, new ParentMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("getParent"), source, new ParentMapper.One());
   }
 
   public List<Parent> getAllParents() throws Exception {
@@ -126,7 +125,7 @@ public class UserDB extends Database {
 
   public List<Parent> getAllParents(final boolean includeDeleted) throws Exception {
     final SqlParameterSource source = new MapSqlParameterSource("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getAllParents"), source, new ParentMapper());
+    return this.namedTemplate.query(loadSqlFile("getAllParents"), source, new ParentMapper.List());
   }
 
   public Gma createGma(final Gma g) throws Exception {
@@ -145,14 +144,14 @@ public class UserDB extends Database {
     source.addValue("availableOutsideNeighborhood", g.isAvailableOutsideNeighborhood());
     source.addValue("whyCareForKids", g.getWhyCareForKids());
     source.addValue("additionalInfo", g.getAdditionalInfo());
-    return this.namedTemplate.query(loadSqlFile("createGma"), source, new GmaMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("createGma"), source, new GmaMapper.One());
   }
 
   public Gma getGma(final int id, final boolean includeDeleted) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_id", id);
     source.addValue("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getGma"), source, new GmaMapper()).get(0);
+    return this.namedTemplate.query(loadSqlFile("getGma"), source, new GmaMapper.One());
   }
 
   public List<Gma> getAllGmas() throws Exception {
@@ -161,7 +160,7 @@ public class UserDB extends Database {
 
   public List<Gma> getAllGmas(final boolean includeDeleted) throws Exception {
     final SqlParameterSource source = new MapSqlParameterSource("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getAllGmas"), source, new GmaMapper());
+    return this.namedTemplate.query(loadSqlFile("getAllGmas"), source, new GmaMapper.List());
   }
 
   private BeanPropertySqlParameterSource userSource(final Object user) {
