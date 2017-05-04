@@ -24,7 +24,7 @@ public class GmaMapper {
     g.setOtherCareExperience(r.getString("other_care_experience"));
     g.setOtherDemeanor(r.getString("other_demeanor"));
     g.setNeighborhoodId(Integer.getInteger(r.getString("neighborhood_id")));
-    g.setOtherAvailability(r.getString("other_neighborhood"));
+    g.setOtherNeighborhood(r.getString("other_neighborhood"));
     g.setAvailableOutsideNeighborhood(r.getBoolean("available_outside_neighborhood"));
     g.setWhyCareForKids(r.getString("why_care_for_kids"));
     g.setAdditionalInfo(r.getString("additional_info"));

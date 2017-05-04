@@ -2,11 +2,13 @@ package com.gmavillage.lambda.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.gmavillage.model.Child;
 import com.gmavillage.model.Parent;
 
 public class ParentMapper {
@@ -40,6 +42,17 @@ public class ParentMapper {
     @Override
     public Parent mapRow(final ResultSet r, final int rowNum) throws SQLException {
       return mapQuery(r);
+    }
+  }
+
+  public static class Children implements RowMapper<Child> {
+    @Override
+    public Child mapRow(final ResultSet r, final int rowNum) throws SQLException {
+      final Child c = new Child();
+      c.setFirstName(r.getString("first_name"));
+      c.setDob(new Timestamp(r.getDate("dob").getTime()).toLocalDateTime().toLocalDate());
+      c.setNote(r.getString("note"));
+      return c;
     }
   }
 

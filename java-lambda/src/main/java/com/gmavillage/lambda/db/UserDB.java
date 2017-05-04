@@ -4,6 +4,7 @@ import java.sql.Array;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -13,9 +14,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.gmavillage.model.Admin;
+import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
+import com.google.common.collect.Sets;
 
 public class UserDB extends Database {
 
@@ -99,6 +102,11 @@ public class UserDB extends Database {
     return this.namedTemplate.query(loadSqlFile("getAllAdmins"), source, new AdminMapper.List());
   }
 
+  public Admin updateAdmin(final Admin updatedAdmin) throws Exception {
+    return this.namedTemplate.query(loadSqlFile("updateAdmin"), userSource(updatedAdmin),
+        new AdminMapper.One());
+  }
+
   public Parent createParent(final Parent p) throws Exception {
     final MapSqlParameterSource source = userMapSource(p);
     source.addValue("needRecurrence", createSqlArray(p.getNeedRecurrence()), Types.ARRAY);
@@ -109,14 +117,79 @@ public class UserDB extends Database {
     source.addValue("otherNeighborhood", p.getOtherNeighborhood());
     source.addValue("additionalInfo", p.getAdditionalInfo());
     source.addValue("whyJoin", p.getWhyJoin());
-    return this.namedTemplate.query(loadSqlFile("createParent"), source, new ParentMapper.One());
+
+    final Parent newP =
+        this.namedTemplate.query(loadSqlFile("createParent"), source, new ParentMapper.One());
+    // insert children if exist
+    if (!p.getChildren().isEmpty()) {
+      final MapSqlParameterSource[] childrenSource =
+          new MapSqlParameterSource[p.getChildren().size()];
+      int i = 0;
+      for (final Child c : p.getChildren()) {
+        childrenSource[i] = new MapSqlParameterSource();
+        childrenSource[i].addValue("parent_id", newP.getId());
+        childrenSource[i].addValue("first_name", c.getFirstName());
+        childrenSource[i].addValue("dob", c.getDob());
+        childrenSource[i].addValue("note", c.getNote());
+        i++;
+      }
+      this.namedTemplate.batchUpdate(loadSqlFile("insertChildren"), childrenSource);
+      newP.setChildren(p.getChildren());
+    }
+    return newP;
   }
 
   public Parent getParent(final int id, final boolean includeDeleted) throws Exception {
     final MapSqlParameterSource source = new MapSqlParameterSource();
     source.addValue("user_id", id);
     source.addValue("deleted", includeDeleted);
-    return this.namedTemplate.query(loadSqlFile("getParent"), source, new ParentMapper.One());
+    final Parent p =
+        this.namedTemplate.query(loadSqlFile("getParent"), source, new ParentMapper.One());
+    p.setChildren(getChildren(p.getId()));
+    return p;
+  }
+
+  public Parent updateParent(final Parent p) throws Exception {
+    final MapSqlParameterSource source = userMapSource(p);
+    source.addValue("id", p.getId());
+    source.addValue("needRecurrence", createSqlArray(p.getNeedRecurrence()), Types.ARRAY);
+    source.addValue("needTimeOfDay", createSqlArray(p.getNeedTimeOfDay()), Types.ARRAY);
+    source.addValue("needLocations", createSqlArray(p.getNeedLocations()), Types.ARRAY);
+    source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
+    source.addValue("neighborhoodId", p.getNeighborhoodId());
+    source.addValue("otherNeighborhood", p.getOtherNeighborhood());
+    source.addValue("additionalInfo", p.getAdditionalInfo());
+    source.addValue("whyJoin", p.getWhyJoin());
+    // insert children if exist
+    if (!p.getChildren().isEmpty()) {
+      // delete existing children
+      final MapSqlParameterSource deleteSource = new MapSqlParameterSource("parent_id", p.getId());
+      final int deletes = this.namedTemplate.update(loadSqlFile("deleteChildren"), deleteSource);
+      System.out.println("Delete:" + deletes);
+
+      // now insert
+      final MapSqlParameterSource[] childrenSource =
+          new MapSqlParameterSource[p.getChildren().size()];
+      int i = 0;
+      for (final Child c : p.getChildren()) {
+        childrenSource[i] = new MapSqlParameterSource();
+        childrenSource[i].addValue("parent_id", p.getId());
+        childrenSource[i].addValue("first_name", c.getFirstName());
+        childrenSource[i].addValue("dob", c.getDob().atStartOfDay());
+        childrenSource[i].addValue("note", c.getNote());
+        i++;
+      }
+      this.namedTemplate.batchUpdate(loadSqlFile("insertChildren"), childrenSource);
+    }
+    this.namedTemplate.query(loadSqlFile("updateParent"), source, new ParentMapper.One());
+    return p;
+  }
+
+  public Set<Child> getChildren(final Integer id) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("parent_id", id);
+    return Sets.newHashSet(
+        this.namedTemplate.query(loadSqlFile("getChildren"), source, new ParentMapper.Children()));
   }
 
   public List<Parent> getAllParents() throws Exception {

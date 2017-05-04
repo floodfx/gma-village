@@ -3,19 +3,20 @@ package com.gmavillage.model;
 import java.util.List;
 import java.util.Objects;
 
+import com.google.api.client.util.Lists;
 import com.google.common.collect.Iterables;
 
 public class Gma extends User {
 
-  private List<String> availabilities;
+  private List<String> availabilities = Lists.newArrayList();
   private String otherAvailability;
-  private List<String> careAges;
-  private List<String> careExperiences;
+  private List<String> careAges = Lists.newArrayList();
+  private List<String> careExperiences = Lists.newArrayList();
   private String otherCareExperience;
-  private List<String> careLocations;
-  private List<String> demeanors;
+  private List<String> careLocations = Lists.newArrayList();
+  private List<String> demeanors = Lists.newArrayList();
   private String otherDemeanor;
-  private List<String> careTrainings;
+  private List<String> careTrainings = Lists.newArrayList();
   private Integer neighborhoodId;
   private String otherNeighborhood;
   private boolean availableOutsideNeighborhood;

@@ -2,19 +2,23 @@ package com.gmavillage.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import com.google.api.client.util.Lists;
+import com.google.api.client.util.Sets;
 import com.google.common.collect.Iterables;
 
 public class Parent extends User {
 
-  private List<String> needRecurrence;
-  private List<String> needTimeOfDay;
+  private List<String> needRecurrence = Lists.newArrayList();
+  private List<String> needTimeOfDay = Lists.newArrayList();
   private String otherTimeOfDay;
-  private List<String> needLocations;
+  private List<String> needLocations = Lists.newArrayList();
   private Integer neighborhoodId;
   private String otherNeighborhood;
   private String whyJoin;
   private String additionalInfo;
+  private Set<Child> children = Sets.newHashSet();
 
   public Parent() {
     super();
@@ -90,6 +94,14 @@ public class Parent extends User {
     this.additionalInfo = additionalInfo;
   }
 
+  public Set<Child> getChildren() {
+    return this.children;
+  }
+
+  public void setChildren(final Set<Child> children) {
+    this.children = children;
+  }
+
   @Override
   public boolean equals(final Object o) {
     // self check
@@ -114,7 +126,8 @@ public class Parent extends User {
         && Objects.equals(neighborhoodId, u.neighborhoodId) //
         && Objects.equals(otherNeighborhood, u.otherNeighborhood) //
         && Objects.equals(additionalInfo, u.additionalInfo) //
-        && Objects.equals(whyJoin, u.whyJoin);
+        && Objects.equals(whyJoin, u.whyJoin) //
+        && Iterables.elementsEqual(children, u.children);
   }
 
 }
