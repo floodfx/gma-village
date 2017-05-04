@@ -227,6 +227,26 @@ public class UserDB extends Database {
     return this.namedTemplate.query(loadSqlFile("getGma"), source, new GmaMapper.One());
   }
 
+  public Gma updateGma(final Gma g) throws Exception {
+    final MapSqlParameterSource source = userMapSource(g);
+    source.addValue("id", g.getId());
+    source.addValue("availabilities", createSqlArray(g.getAvailabilities()), Types.ARRAY);
+    source.addValue("otherAvailability", g.getOtherAvailability());
+    source.addValue("careAges", createSqlArray(g.getCareAges()), Types.ARRAY);
+    source.addValue("careExperiences", createSqlArray(g.getCareExperiences()), Types.ARRAY);
+    source.addValue("otherCareExperience", g.getOtherCareExperience());
+    source.addValue("careLocations", createSqlArray(g.getCareLocations()), Types.ARRAY);
+    source.addValue("demeanors", createSqlArray(g.getDemeanors()), Types.ARRAY);
+    source.addValue("otherDemeanor", g.getOtherDemeanor());
+    source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
+    source.addValue("neighborhoodId", g.getNeighborhoodId());
+    source.addValue("otherNeighborhood", g.getOtherNeighborhood());
+    source.addValue("availableOutsideNeighborhood", g.isAvailableOutsideNeighborhood());
+    source.addValue("whyCareForKids", g.getWhyCareForKids());
+    source.addValue("additionalInfo", g.getAdditionalInfo());
+    return this.namedTemplate.query(loadSqlFile("updateGma"), source, new GmaMapper.One());
+  }
+
   public List<Gma> getAllGmas() throws Exception {
     return getAllGmas(false);
   }

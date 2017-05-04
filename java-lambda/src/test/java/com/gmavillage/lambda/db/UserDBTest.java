@@ -1,8 +1,6 @@
 package com.gmavillage.lambda.db;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gmavillage.model.Admin;
 import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
@@ -34,37 +33,12 @@ public class UserDBTest {
 
 
   @Test
-  public void testCreateUserWithChildrenAndGetUser() throws Exception {
+  public void testCreateUserGetUserUpdateUser() throws Exception {
 
     final UserDB db = new UserDB();
 
-    final String firstName = "FirstName";
-    final String lastName = "LastName";
-    final String phone = "Phone";
-    final String userType = "admin";
-    final boolean acceptedTerms = true;
-    final String accessToken = "accessToken";
-    final Timestamp accessTokenExpires = new Timestamp(new Date().getTime());
-    final String akUserId = "akUserId";
-    final boolean active = true;
-    final Integer createdByUser = null;
-    final boolean deleted = false;
-    final String profileImageUrl = "profileImageUrl";
 
-
-    final User u = new User();
-    u.setFirstName(firstName);
-    u.setLastName(lastName);
-    u.setPhone(phone);
-    u.setUserType(userType);
-    u.setAcceptedTerms(acceptedTerms);
-    u.setAccountKitAccessToken(accessToken);
-    u.setAccountKitAccessTokenExpiresAt(accessTokenExpires);
-    u.setAccountKitUserId(akUserId);
-    u.setActive(active);
-    u.setCreatedByUser(createdByUser);
-    u.setDeleted(deleted);
-    u.setProfileImageUrl(profileImageUrl);
+    final User u = testUtils.generateUser();
 
     final User savedUser = db.createUser(u);
 
@@ -73,6 +47,36 @@ public class UserDBTest {
 
     final User gotUser = db.getUser(savedUser.getId(), false);
     assertUserValuesSet(gotUser, savedUser);
+
+    final User u2 = testUtils.generateUser();
+    u2.setId(gotUser.getId());
+    u2.setAccountKitUserId(gotUser.getAccountKitUserId());
+
+    final User updatedUser = db.updateUser(u2);
+    assertUserValuesSet(u2, updatedUser);
+  }
+
+  public void testCreateAdminGetAdminUpdateAdmin() throws Exception {
+
+    final UserDB db = new UserDB();
+
+
+    final Admin a = testUtils.generateAdmin();
+
+    final Admin savedAdmin = db.createAdmin(a);
+
+    Assert.assertNotNull(savedAdmin.getId());
+    assertUserValuesSet(a, savedAdmin);
+
+    final Admin gotAdmin = db.getAdmin(savedAdmin.getId(), false);
+    assertUserValuesSet(gotAdmin, savedAdmin);
+
+    final Admin a2 = testUtils.generateAdmin();
+    a2.setId(gotAdmin.getId());
+    a2.setAccountKitUserId(gotAdmin.getAccountKitUserId());
+
+    final Admin updatedAdmin = db.updateAdmin(a2);
+    assertUserValuesSet(a2, updatedAdmin);
   }
 
   @Test
@@ -105,6 +109,14 @@ public class UserDBTest {
     final Gma gotGma = db.getGma(savedGma.getId(), false);
     Assert.assertEquals(gotGma.getId(), savedGma.getId());
     assertGmaValuesSet(gotGma, savedGma);
+
+    final Gma dg = testUtils.generateGma();
+    dg.setId(gotGma.getId());
+    dg.setPhone(gotGma.getPhone());
+
+    final Gma updatedGma = db.updateGma(dg);
+    Assert.assertEquals(gotGma.getId(), updatedGma.getId());
+    assertGmaValuesSet(updatedGma, dg);
 
   }
 

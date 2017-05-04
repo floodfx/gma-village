@@ -25,7 +25,7 @@ updateg as
     care_locations=:careLocations::care_location_types[],
     demeanors=:demeanors::demeanor_types[],
     other_demeanor=:otherDemeanor,
-    care_trainings=::careTrainings::VARCHAR[],
+    care_trainings=:careTrainings::VARCHAR[],
     neighborhood_id=:neighborhoodId,
     other_neighborhood=:otherNeighborhood,
     available_outside_neighborhood=:availableOutsideNeighborhood,
