@@ -83,6 +83,21 @@ CREATE TABLE neighborhoods (
   UNIQUE (city_id, name, label)
 );
 
+
+insert into cities (name, label, state) values ('Oakland', 'OAKLAND', 'CA');
+insert into neighborhoods (city_id, name, label) values (1, 'West Oakland', 'WEST_OAKLAND');
+insert into neighborhoods (city_id, name, label) values (1, 'East Oakland', 'EAST_OAKLAND');
+insert into neighborhoods (city_id, name, label) values (1, 'Central Oakland', 'CENTRAL_OAKLAND');
+insert into neighborhoods (city_id, name, label) values (1, 'North Oakland', 'NORTH_OAKLAND');
+insert into neighborhoods (city_id, name, label) values (1, 'Berkeley', 'BERKELEY');
+insert into neighborhoods (city_id, name, label) values (1, 'Emeryville', 'EMERYVILLE');
+insert into neighborhoods (city_id, name, label) values (1, 'Piedmont', 'PIEDMONT');
+insert into neighborhoods (city_id, name, label) values (1, 'Albany', 'ALBANY');
+insert into neighborhoods (city_id, name, label) values (1, 'Alameda', 'ALAMEDA');
+insert into neighborhoods (city_id, name, label) values (1, 'Castro Valley', 'CASTRO_VALLEY');
+insert into neighborhoods (city_id, name, label) values (1, 'Other', 'OTHER');
+
+
 CREATE TABLE gmas (
   user_id INT NOT NULL REFERENCES users(id),
   availabilities time_of_day_types ARRAY,
