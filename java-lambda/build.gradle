@@ -37,7 +37,7 @@ dependencies {
     // test dependencies
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-inline:2.+'
-    testCompile 'com.google.cloud:google-cloud-datastore:0.11.0-beta'
+    testCompile 'com.google.cloud:google-cloud-datastore:1.0.0'
 }
 
 // Define the main class for the application

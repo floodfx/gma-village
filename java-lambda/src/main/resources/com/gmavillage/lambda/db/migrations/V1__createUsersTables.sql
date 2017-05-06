@@ -1,12 +1,12 @@
 CREATE TYPE user_type as ENUM (
-  'admin',
-  'gma',
-  'parent'
+  'ADMIN',
+  'GMA',
+  'PARENT'
 );
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   first_name VARCHAR NOT NULL,
-  last_name VARCHAR NOT NULL,
+  last_name VARCHAR,
   phone VARCHAR NOT NULL,
   user_type user_type NOT NULL,
   active BOOLEAN DEFAULT false,
@@ -28,43 +28,43 @@ CREATE TABLE admins (
 );
 
 CREATE TYPE time_of_day_types as ENUM (
-  'early_morning',
-  'daytime',
-  'evening',
-  'overnight',
-  'weekend',
-  'other'
+  'EARLY_MORNING',
+  'DAYTIME',
+  'EVENING',
+  'OVERNIGHT',
+  'WEEKEND',
+  'OTHER'
 );
 CREATE TYPE care_age_types as ENUM (
-  'zero_to_six_months',
-  'six_months_to_two_years',
-  'two_years_to_five_years',
-  'five_years_plus'
+  'ZERO_TO_SIX_MONTHS',
+  'SIX_MONTHS_TO_TWO_YEARS',
+  'TWO_YEARS_TO_FIVE_YEARS',
+  'FIVE_YEARS_PLUS'
 );
 CREATE TYPE care_experience_types as ENUM (
-  'raised_kids',
-  'cared_for_grandkids',
-  'worked_baby_sitting',
-  'worked_childcare_center',
-  'worked_school',
-  'other'
+  'RAISED_KIDS',
+  'CARED_FOR_GRANDKIDS',
+  'WORKED_BABY_SITTING',
+  'WORKED_CHILDCARE_CENTER',
+  'WORKED_SCHOOL',
+  'OTHER'
 );
 CREATE TYPE care_location_types as ENUM (
-  'providers_home',
-  'elsewhere'
+  'PROVIDERS_HOME',
+  'ELSEWHERE'
 );
 CREATE TYPE demeanor_types as ENUM (
-  'patient',
-  'outgoing',
-  'calm',
-  'funny',
-  'reliable',
-  'serious',
-  'energetic',
-  'quiet',
-  'playful',
-  'loud',
-  'other'
+  'PATIENT',
+  'OUTGOING',
+  'CALM',
+  'FUNNY',
+  'RELIABLE',
+  'SERIOUS',
+  'ENERGETIC',
+  'QUIET',
+  'PLAYFUL',
+  'LOUD',
+  'OTHER'
 );
 
 CREATE TABLE cities (
@@ -103,11 +103,11 @@ CREATE TABLE gmas (
 );
 
 CREATE TYPE recurrence_types as ENUM (
-  'full_time',
-  'part_time',
-  'sporadic',
-  'back_up',
-  'one_time'
+  'FULL_TIME',
+  'PART_TIME',
+  'SPORADIC',
+  'BACK_UP',
+  'ONE_TIME'
 );
 CREATE TABLE parents (
   user_id INT NOT NULL REFERENCES users(id),

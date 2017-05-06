@@ -93,13 +93,13 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
             user = userDB.updateUser(user);
             // find user by type
             switch (user.getUserType()) {
-              case "admin": {
+              case ADMIN: {
                 return success(gson.toJson(userDB.getAdmin(user.getId(), false)), event);
               }
-              case "parent": {
+              case PARENT: {
                 return success(gson.toJson(userDB.getParent(user.getId(), false)), event);
               }
-              case "gma": {
+              case GMA: {
                 return success(gson.toJson(userDB.getGma(user.getId(), false)), event);
               }
               default: {

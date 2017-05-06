@@ -3,6 +3,8 @@ package com.gmavillage.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class Child {
 
   String firstName;
@@ -31,6 +33,11 @@ public class Child {
 
   public void setNote(final String note) {
     this.note = note;
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 
   @Override

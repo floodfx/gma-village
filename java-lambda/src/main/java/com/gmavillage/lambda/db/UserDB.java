@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -109,9 +110,12 @@ public class UserDB extends Database {
 
   public Parent createParent(final Parent p) throws Exception {
     final MapSqlParameterSource source = userMapSource(p);
-    source.addValue("needRecurrence", createSqlArray(p.getNeedRecurrence()), Types.ARRAY);
-    source.addValue("needTimeOfDay", createSqlArray(p.getNeedTimeOfDay()), Types.ARRAY);
-    source.addValue("needLocations", createSqlArray(p.getNeedLocations()), Types.ARRAY);
+    source.addValue("needRecurrence", createSqlArray(enumListToNameList(p.getNeedRecurrence())),
+        Types.ARRAY);
+    source.addValue("needTimeOfDay", createSqlArray(enumListToNameList(p.getNeedTimeOfDay())),
+        Types.ARRAY);
+    source.addValue("needLocations", createSqlArray(enumListToNameList(p.getNeedLocations())),
+        Types.ARRAY);
     source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
     source.addValue("neighborhoodId", p.getNeighborhoodId());
     source.addValue("otherNeighborhood", p.getOtherNeighborhood());
@@ -152,9 +156,12 @@ public class UserDB extends Database {
   public Parent updateParent(final Parent p) throws Exception {
     final MapSqlParameterSource source = userMapSource(p);
     source.addValue("id", p.getId());
-    source.addValue("needRecurrence", createSqlArray(p.getNeedRecurrence()), Types.ARRAY);
-    source.addValue("needTimeOfDay", createSqlArray(p.getNeedTimeOfDay()), Types.ARRAY);
-    source.addValue("needLocations", createSqlArray(p.getNeedLocations()), Types.ARRAY);
+    source.addValue("needRecurrence", createSqlArray(enumListToNameList(p.getNeedRecurrence())),
+        Types.ARRAY);
+    source.addValue("needTimeOfDay", createSqlArray(enumListToNameList(p.getNeedTimeOfDay())),
+        Types.ARRAY);
+    source.addValue("needLocations", createSqlArray(enumListToNameList(p.getNeedLocations())),
+        Types.ARRAY);
     source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
     source.addValue("neighborhoodId", p.getNeighborhoodId());
     source.addValue("otherNeighborhood", p.getOtherNeighborhood());
@@ -203,13 +210,16 @@ public class UserDB extends Database {
 
   public Gma createGma(final Gma g) throws Exception {
     final MapSqlParameterSource source = userMapSource(g);
-    source.addValue("availabilities", createSqlArray(g.getAvailabilities()), Types.ARRAY);
+    source.addValue("availabilities", createSqlArray(enumListToNameList(g.getAvailabilities())),
+        Types.ARRAY);
     source.addValue("otherAvailability", g.getOtherAvailability());
-    source.addValue("careAges", createSqlArray(g.getCareAges()), Types.ARRAY);
-    source.addValue("careExperiences", createSqlArray(g.getCareExperiences()), Types.ARRAY);
+    source.addValue("careAges", createSqlArray(enumListToNameList(g.getCareAges())), Types.ARRAY);
+    source.addValue("careExperiences", createSqlArray(enumListToNameList(g.getCareExperiences())),
+        Types.ARRAY);
     source.addValue("otherCareExperience", g.getOtherCareExperience());
-    source.addValue("careLocations", createSqlArray(g.getCareLocations()), Types.ARRAY);
-    source.addValue("demeanors", createSqlArray(g.getDemeanors()), Types.ARRAY);
+    source.addValue("careLocations", createSqlArray(enumListToNameList(g.getCareLocations())),
+        Types.ARRAY);
+    source.addValue("demeanors", createSqlArray(enumListToNameList(g.getDemeanors())), Types.ARRAY);
     source.addValue("otherDemeanor", g.getOtherDemeanor());
     source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
     source.addValue("neighborhoodId", g.getNeighborhoodId());
@@ -230,13 +240,16 @@ public class UserDB extends Database {
   public Gma updateGma(final Gma g) throws Exception {
     final MapSqlParameterSource source = userMapSource(g);
     source.addValue("id", g.getId());
-    source.addValue("availabilities", createSqlArray(g.getAvailabilities()), Types.ARRAY);
+    source.addValue("availabilities", createSqlArray(enumListToNameList(g.getAvailabilities())),
+        Types.ARRAY);
     source.addValue("otherAvailability", g.getOtherAvailability());
-    source.addValue("careAges", createSqlArray(g.getCareAges()), Types.ARRAY);
-    source.addValue("careExperiences", createSqlArray(g.getCareExperiences()), Types.ARRAY);
+    source.addValue("careAges", createSqlArray(enumListToNameList(g.getCareAges())), Types.ARRAY);
+    source.addValue("careExperiences", createSqlArray(enumListToNameList(g.getCareExperiences())),
+        Types.ARRAY);
     source.addValue("otherCareExperience", g.getOtherCareExperience());
-    source.addValue("careLocations", createSqlArray(g.getCareLocations()), Types.ARRAY);
-    source.addValue("demeanors", createSqlArray(g.getDemeanors()), Types.ARRAY);
+    source.addValue("careLocations", createSqlArray(enumListToNameList(g.getCareLocations())),
+        Types.ARRAY);
+    source.addValue("demeanors", createSqlArray(enumListToNameList(g.getDemeanors())), Types.ARRAY);
     source.addValue("otherDemeanor", g.getOtherDemeanor());
     source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
     source.addValue("neighborhoodId", g.getNeighborhoodId());
@@ -245,6 +258,10 @@ public class UserDB extends Database {
     source.addValue("whyCareForKids", g.getWhyCareForKids());
     source.addValue("additionalInfo", g.getAdditionalInfo());
     return this.namedTemplate.query(loadSqlFile("updateGma"), source, new GmaMapper.One());
+  }
+
+  private List<String> enumListToNameList(final List<? extends Enum> enumList) {
+    return enumList.stream().map(it -> it.name()).collect(Collectors.toList());
   }
 
   public List<Gma> getAllGmas() throws Exception {
@@ -257,7 +274,9 @@ public class UserDB extends Database {
   }
 
   private BeanPropertySqlParameterSource userSource(final Object user) {
-    return new BeanPropertySqlParameterSource(user);
+    final BeanPropertySqlParameterSource source = new BeanPropertySqlParameterSource(user);
+    source.registerSqlType("userType", java.sql.Types.VARCHAR);
+    return source;
   }
 
   private MapSqlParameterSource userMapSource(final User user) {
@@ -265,7 +284,7 @@ public class UserDB extends Database {
     source.addValue("firstName", user.getFirstName());
     source.addValue("lastName", user.getLastName());
     source.addValue("phone", user.getPhone());
-    source.addValue("userType", user.getUserType());
+    source.addValue("userType", user.getUserType().toString());
     source.addValue("acceptedTerms", user.isAcceptedTerms());
     source.addValue("accountKitAccessToken", user.getAccountKitAccessToken());
     source.addValue("accountKitAccessTokenExpiresAt", user.getAccountKitAccessTokenExpiresAt());

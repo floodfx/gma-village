@@ -2,19 +2,20 @@ package com.gmavillage.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.google.api.client.util.Lists;
 import com.google.common.collect.Iterables;
 
 public class Gma extends User {
 
-  private List<String> availabilities = Lists.newArrayList();
+  private List<TimeOfDayType> availabilities = Lists.newArrayList();
   private String otherAvailability;
-  private List<String> careAges = Lists.newArrayList();
-  private List<String> careExperiences = Lists.newArrayList();
+  private List<CareAgeType> careAges = Lists.newArrayList();
+  private List<CareExperienceType> careExperiences = Lists.newArrayList();
   private String otherCareExperience;
-  private List<String> careLocations = Lists.newArrayList();
-  private List<String> demeanors = Lists.newArrayList();
+  private List<CareLocationType> careLocations = Lists.newArrayList();
+  private List<DemeanorType> demeanors = Lists.newArrayList();
   private String otherDemeanor;
   private List<String> careTrainings = Lists.newArrayList();
   private Integer neighborhoodId;
@@ -24,21 +25,25 @@ public class Gma extends User {
   private String additionalInfo;
 
   public Gma() {
-    super();
-    setUserType("gma");
+    this(null);
   }
 
   public Gma(final User u) {
     super(u);
-    setUserType("gma");
+    setUserType(UserType.GMA);
   }
 
-  public List<String> getAvailabilities() {
+  public List<TimeOfDayType> getAvailabilities() {
     return this.availabilities;
   }
 
-  public void setAvailabilities(final List<String> availabilities) {
+  public void setAvailabilities(final List<TimeOfDayType> availabilities) {
     this.availabilities = availabilities;
+  }
+
+  public void setAvailabilitiesStrings(final List<String> availabilities) {
+    this.availabilities =
+        availabilities.stream().map(it -> TimeOfDayType.valueOf(it)).collect(Collectors.toList());
   }
 
   public String getOtherAvailability() {
@@ -49,20 +54,30 @@ public class Gma extends User {
     this.otherAvailability = otherAvailability;
   }
 
-  public List<String> getCareAges() {
+  public List<CareAgeType> getCareAges() {
     return this.careAges;
   }
 
-  public void setCareAges(final List<String> careAges) {
+  public void setCareAges(final List<CareAgeType> careAges) {
     this.careAges = careAges;
   }
 
-  public List<String> getCareExperiences() {
+  public void setCareAgesStrings(final List<String> careAges) {
+    this.careAges =
+        careAges.stream().map(it -> CareAgeType.valueOf(it)).collect(Collectors.toList());
+  }
+
+  public List<CareExperienceType> getCareExperiences() {
     return this.careExperiences;
   }
 
-  public void setCareExperiences(final List<String> careExperiences) {
+  public void setCareExperiences(final List<CareExperienceType> careExperiences) {
     this.careExperiences = careExperiences;
+  }
+
+  public void setCareExperiencesStrings(final List<String> careExperiences) {
+    this.careExperiences = careExperiences.stream().map(it -> CareExperienceType.valueOf(it))
+        .collect(Collectors.toList());
   }
 
   public String getOtherCareExperience() {
@@ -73,20 +88,30 @@ public class Gma extends User {
     this.otherCareExperience = otherCareExperience;
   }
 
-  public List<String> getCareLocations() {
+  public List<CareLocationType> getCareLocations() {
     return this.careLocations;
   }
 
-  public void setCareLocations(final List<String> careLocations) {
+  public void setCareLocations(final List<CareLocationType> careLocations) {
     this.careLocations = careLocations;
   }
 
-  public List<String> getDemeanors() {
+  public void setCareLocationsStrings(final List<String> careLocations) {
+    this.careLocations =
+        careLocations.stream().map(it -> CareLocationType.valueOf(it)).collect(Collectors.toList());
+  }
+
+  public List<DemeanorType> getDemeanors() {
     return this.demeanors;
   }
 
-  public void setDemeanors(final List<String> demeanors) {
+  public void setDemeanors(final List<DemeanorType> demeanors) {
     this.demeanors = demeanors;
+  }
+
+  public void setDemeanorsStrings(final List<String> demeanors) {
+    this.demeanors =
+        demeanors.stream().map(it -> DemeanorType.valueOf(it)).collect(Collectors.toList());
   }
 
   public String getOtherDemeanor() {

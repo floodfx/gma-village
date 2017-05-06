@@ -16,9 +16,9 @@ public class ParentMapper {
   public static Parent mapQuery(final ResultSet r) throws SQLException, DataAccessException {
     final UserMapper userMapper = new UserMapper();
     final Parent p = new Parent(userMapper.mapQuery(r));
-    p.setNeedRecurrence(userMapper.asList(r.getArray("need_recurrence")));
-    p.setNeedTimeOfDay(userMapper.asList(r.getArray("need_time_of_day")));
-    p.setNeedLocations(userMapper.asList(r.getArray("need_locations")));
+    p.setNeedRecurrenceStrings(userMapper.asList(r.getArray("need_recurrence")));
+    p.setNeedTimeOfDayStrings(userMapper.asList(r.getArray("need_time_of_day")));
+    p.setNeedLocationsStrings(userMapper.asList(r.getArray("need_locations")));
     p.setOtherTimeOfDay(r.getString("other_need_time_of_day"));
     p.setNeighborhoodId(Integer.getInteger(r.getString("neighborhood_id")));
     p.setOtherNeighborhood(r.getString("other_neighborhood"));

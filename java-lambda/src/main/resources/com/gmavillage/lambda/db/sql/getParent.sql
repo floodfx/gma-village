@@ -9,7 +9,7 @@ FROM users as u, parents as p
 WHERE
   (u.deleted=false or u.deleted=:deleted)
   AND
-  u.user_type = 'parent'
+  u.user_type = 'PARENT'
   AND
   u.id = :user_id
   AND

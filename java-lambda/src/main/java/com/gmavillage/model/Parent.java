@@ -3,6 +3,7 @@ package com.gmavillage.model;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.google.api.client.util.Lists;
 import com.google.api.client.util.Sets;
@@ -10,10 +11,10 @@ import com.google.common.collect.Iterables;
 
 public class Parent extends User {
 
-  private List<String> needRecurrence = Lists.newArrayList();
-  private List<String> needTimeOfDay = Lists.newArrayList();
+  private List<RecurrenceType> needRecurrence = Lists.newArrayList();
+  private List<TimeOfDayType> needTimeOfDay = Lists.newArrayList();
   private String otherTimeOfDay;
-  private List<String> needLocations = Lists.newArrayList();
+  private List<CareLocationType> needLocations = Lists.newArrayList();
   private Integer neighborhoodId;
   private String otherNeighborhood;
   private String whyJoin;
@@ -21,29 +22,38 @@ public class Parent extends User {
   private Set<Child> children = Sets.newHashSet();
 
   public Parent() {
-    super();
-    setUserType("parent");
+    this(null);
   }
 
   public Parent(final User u) {
     super(u);
-    setUserType("parent");
+    setUserType(UserType.PARENT);
   }
 
-  public List<String> getNeedRecurrence() {
+  public List<RecurrenceType> getNeedRecurrence() {
     return this.needRecurrence;
   }
 
-  public void setNeedRecurrence(final List<String> needRecurrence) {
+  public void setNeedRecurrence(final List<RecurrenceType> needRecurrence) {
     this.needRecurrence = needRecurrence;
   }
 
-  public List<String> getNeedTimeOfDay() {
+  public void setNeedRecurrenceStrings(final List<String> needRecurrence) {
+    this.needRecurrence =
+        needRecurrence.stream().map(it -> RecurrenceType.valueOf(it)).collect(Collectors.toList());
+  }
+
+  public List<TimeOfDayType> getNeedTimeOfDay() {
     return this.needTimeOfDay;
   }
 
-  public void setNeedTimeOfDay(final List<String> needTimeOfDay) {
+  public void setNeedTimeOfDay(final List<TimeOfDayType> needTimeOfDay) {
     this.needTimeOfDay = needTimeOfDay;
+  }
+
+  public void setNeedTimeOfDayStrings(final List<String> needTimeOfDay) {
+    this.needTimeOfDay =
+        needTimeOfDay.stream().map(it -> TimeOfDayType.valueOf(it)).collect(Collectors.toList());
   }
 
   public String getOtherTimeOfDay() {
@@ -54,12 +64,17 @@ public class Parent extends User {
     this.otherTimeOfDay = otherTimeOfDay;
   }
 
-  public List<String> getNeedLocations() {
+  public List<CareLocationType> getNeedLocations() {
     return this.needLocations;
   }
 
-  public void setNeedLocations(final List<String> needLocations) {
+  public void setNeedLocations(final List<CareLocationType> needLocations) {
     this.needLocations = needLocations;
+  }
+
+  public void setNeedLocationsStrings(final List<String> needLocations) {
+    this.needLocations =
+        needLocations.stream().map(it -> CareLocationType.valueOf(it)).collect(Collectors.toList());
   }
 
   public Integer getNeighborhoodId() {

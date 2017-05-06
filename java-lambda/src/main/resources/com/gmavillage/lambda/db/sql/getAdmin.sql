@@ -6,6 +6,6 @@ FROM users as u, admins as a
 WHERE
   (u.deleted=false or u.deleted=:deleted)
   AND
-  u.user_type = 'admin'
+  u.user_type = 'ADMIN'
   AND
   u.id = :user_id

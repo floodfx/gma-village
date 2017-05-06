@@ -12,6 +12,6 @@ FROM users as u, gmas as g
 WHERE
   (u.deleted=false or u.deleted=:deleted)
   AND
-  u.user_type = 'gma'
+  u.user_type = 'GMA'
   AND
   u.id = g.user_id

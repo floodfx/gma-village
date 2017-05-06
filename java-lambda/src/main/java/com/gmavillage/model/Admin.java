@@ -3,18 +3,13 @@ package com.gmavillage.model;
 public class Admin extends User {
 
   public Admin() {
-    super();
-    setUserType("admin");
+    this(null);
   }
 
   public Admin(final User u) {
     super(u);
-    setUserType("admin");
+    setUserType(UserType.ADMIN);
   }
 
-  @Override
-  public boolean equals(final Object o) {
-    return super.equals(o);
-  }
 
 }

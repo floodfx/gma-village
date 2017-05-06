@@ -1,5 +1,17 @@
 package com.gmavillage.test;
 
+import static com.gmavillage.model.CareAgeType.TWO_YEARS_TO_FIVE_YEARS;
+import static com.gmavillage.model.CareAgeType.ZERO_TO_SIX_MONTHS;
+import static com.gmavillage.model.CareExperienceType.RAISED_KIDS;
+import static com.gmavillage.model.CareExperienceType.WORKED_BABY_SITTING;
+import static com.gmavillage.model.CareLocationType.PROVIDERS_HOME;
+import static com.gmavillage.model.DemeanorType.CALM;
+import static com.gmavillage.model.RecurrenceType.FULL_TIME;
+import static com.gmavillage.model.RecurrenceType.ONE_TIME;
+import static com.gmavillage.model.TimeOfDayType.DAYTIME;
+import static com.gmavillage.model.TimeOfDayType.EARLY_MORNING;
+import static com.gmavillage.model.TimeOfDayType.EVENING;
+
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -13,6 +25,7 @@ import com.gmavillage.model.Admin;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
+import com.gmavillage.model.UserType;
 import com.google.common.collect.Lists;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
@@ -35,7 +48,7 @@ public class TestUtils {
     u.setFirstName("first" + offset);
     u.setLastName("last" + offset);
     u.setPhone("phone" + offset);
-    u.setUserType("admin");
+    u.setUserType(UserType.ADMIN);
     u.setAcceptedTerms(false);
     u.setAccountKitAccessToken("accessToken" + offset);
     u.setAccountKitAccessTokenExpiresAt(
@@ -56,12 +69,12 @@ public class TestUtils {
   public Gma generateGma() {
     final Gma g = new Gma(generateUser());
     if (offset % 2 == 0) {
-      g.setAvailabilities(Lists.newArrayList("early_morning", "daytime"));
-      g.setCareAges(Lists.newArrayList("zero_to_six_months", "six_months_to_two_years"));
-      g.setCareExperiences(Lists.newArrayList("raised_kids", "worked_baby_sitting"));
-      g.setCareLocations(Lists.newArrayList("providers_home"));
+      g.setAvailabilities(Lists.newArrayList(EARLY_MORNING, DAYTIME));
+      g.setCareAges(Lists.newArrayList(ZERO_TO_SIX_MONTHS, TWO_YEARS_TO_FIVE_YEARS));
+      g.setCareExperiences(Lists.newArrayList(RAISED_KIDS, WORKED_BABY_SITTING));
+      g.setCareLocations(Lists.newArrayList(PROVIDERS_HOME));
       g.setCareTrainings(Lists.newArrayList("Gma Village Training"));
-      g.setDemeanors(Lists.newArrayList("outgoing"));
+      g.setDemeanors(Lists.newArrayList(CALM));
     }
     g.setOtherAvailability("other" + offset);
     g.setOtherCareExperience("other" + offset);
@@ -72,9 +85,9 @@ public class TestUtils {
   public Parent generateParent() {
     final Parent p = new Parent(generateUser());
     if (offset % 2 == 0) {
-      p.setNeedRecurrence(Arrays.asList("full_time", "part_time"));
-      p.setNeedTimeOfDay(Arrays.asList("early_morning", "daytime"));
-      p.setNeedLocations(Arrays.asList("providers_home"));
+      p.setNeedRecurrence(Arrays.asList(FULL_TIME, ONE_TIME));
+      p.setNeedTimeOfDay(Arrays.asList(EVENING, EARLY_MORNING));
+      p.setNeedLocations(Arrays.asList(PROVIDERS_HOME));
     }
     p.setOtherTimeOfDay("noon" + offset);
     p.setNeighborhoodId(null);

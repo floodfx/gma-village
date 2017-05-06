@@ -7,7 +7,7 @@ with insertu as
     )
       values
     (
-      default, :firstName, :lastName, :phone, :userType::user_type, :active, :profileImageUrl, 
+      default, :firstName, :lastName, :phone, :userType::user_type, :active, :profileImageUrl,
       :accountKitAccessToken, :accountKitUserId, :accountKitAccessTokenExpiresAt,
       :acceptedTerms, :createdByUser
     )

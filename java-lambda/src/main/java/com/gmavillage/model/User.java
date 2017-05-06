@@ -9,7 +9,7 @@ public class User {
   private String firstName;
   private String lastName;
   private String phone;
-  private String userType;
+  private UserType userType;
   private boolean active;
   private String profileImageUrl;
   private String accountKitAccessToken;
@@ -75,12 +75,16 @@ public class User {
     this.phone = phone;
   }
 
-  public String getUserType() {
+  public UserType getUserType() {
     return this.userType;
   }
 
-  public void setUserType(final String userType) {
+  public void setUserType(final UserType userType) {
     this.userType = userType;
+  }
+
+  public void setUserType(final String userType) {
+    this.userType = UserType.valueOf(userType);
   }
 
   public boolean isActive() {
