@@ -30,7 +30,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'    
     compile 'org.apache.commons:commons-lang3:3.1'
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
-    compile 'org.springframework:spring-jdbc:4.3.7.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.3.8.RELEASE'
     compile 'org.postgresql:postgresql:42.0.0'
     compile 'org.flywaydb:flyway-core:4.1.2'  
 

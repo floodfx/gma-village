@@ -8,8 +8,7 @@ import java.io.InputStreamReader;
 
 import javax.sql.DataSource;
 
-import org.postgresql.Driver;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.postgresql.ds.PGPoolingDataSource;
 
 import com.google.common.io.CharStreams;
 
@@ -21,18 +20,20 @@ public class Database {
   private static final String DB_PASS = getenv("DATABASE_PASS");
 
   public static DataSource postgresDataSource() {
-    final SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+    final PGPoolingDataSource dataSource = new PGPoolingDataSource();
     dataSource.setUrl(DB_URL);
     System.out.println("Set DB URL" + DB_URL);
     if (DB_USER != null) {
-      dataSource.setUsername(DB_USER);
+      dataSource.setUser(DB_USER);
       System.out.println("Set DB User");
     }
     if (DB_PASS != null) {
       dataSource.setPassword(DB_PASS);
       System.out.println("Set DB Pass");
     }
-    dataSource.setDriver(new Driver());
+    dataSource.setMaxConnections(99);
+    dataSource.setLogUnclosedConnections(true);
+    // dataSource.setDriver(new Driver());
     return dataSource;
   }
 

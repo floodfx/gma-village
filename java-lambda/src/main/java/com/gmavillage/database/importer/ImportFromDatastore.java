@@ -17,6 +17,8 @@ import com.gmavillage.lambda.db.UserDB;
 import com.gmavillage.model.Admin;
 import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
+import com.gmavillage.model.Neighborhood;
+import com.gmavillage.model.Neighborhoods;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
 import com.google.cloud.datastore.Datastore;
@@ -31,6 +33,8 @@ import com.google.common.collect.Sets;
 
 public class ImportFromDatastore {
 
+  private static final String CITY = "city";
+  private static final String NEIGHBORHOOD = "neighborhood";
   private static final String AVAILABILITIES = "availabilities";
   private static final String MEMBER_SINCE_TIMESTAMP = "member_since_timestamp";
   private static final String LAST_LOGIN_TIMESTAMP = "last_login_timestamp";
@@ -94,27 +98,31 @@ public class ImportFromDatastore {
     final UserDB userDB = new UserDB();
     while (retrieved.hasNext()) {
       final Entity e = retrieved.next();
-      switch (e.getString(KIND)) {
-        case "Gma":
-          final Gma g = gmaFromEntity(e);
-          System.out.println("Gma" + ToStringBuilder.reflectionToString(g));
-          userDB.createGma(g);
-          gmas++;
-          break;
-        case "Parent":
-          final Parent p = parentFromEntity(e);
-          System.out.println("Parent" + ToStringBuilder.reflectionToString(p));
-          parents++;
-          userDB.createParent(p);
-          break;
-        case "Admin":
-          final Admin a = adminFromEntity(e);
-          System.out.println("Admin" + ToStringBuilder.reflectionToString(a));
-          userDB.createAdmin(a);
-          admins++;
-          break;
-        default:
-          others++;
+      try {
+        switch (e.getString(KIND)) {
+          case "Gma":
+            final Gma g = gmaFromEntity(e);
+            System.out.println("Gma" + ToStringBuilder.reflectionToString(g));
+            gmas++;
+            userDB.createGma(g);
+            break;
+          case "Parent":
+            final Parent p = parentFromEntity(e);
+            System.out.println("Parent" + ToStringBuilder.reflectionToString(p));
+            parents++;
+            userDB.createParent(p);
+            break;
+          case "Admin":
+            final Admin a = adminFromEntity(e);
+            System.out.println("Admin" + ToStringBuilder.reflectionToString(a));
+            admins++;
+            userDB.createAdmin(a);
+            break;
+          default:
+            others++;
+        }
+      } catch (final Exception ex) {
+        ex.printStackTrace();
       }
     }
     System.out.println("Admins:" + admins);
@@ -176,6 +184,8 @@ public class ImportFromDatastore {
         case OTHER_NEIGHBORHOOD:
         case WHY_CARE_FOR_KIDS_TEXT:
         case CHILDREN:
+        case NEIGHBORHOOD:
+        case CITY: // ignoring
         case ROLES: // ignoring
         case ID: // ignoring
         case LAST_LOGIN_TIMESTAMP:// ignoring
@@ -212,6 +222,7 @@ public class ImportFromDatastore {
         case PROFILE_PHOTO_URL:
         case KIND:
         case CREATED_ON_TIMESTAMP:
+        case CITY: // ignoring
         case ROLES: // ignoring...
         case ID: // ignoring
         case LAST_LOGIN_TIMESTAMP:// ignoring
@@ -247,7 +258,21 @@ public class ImportFromDatastore {
           }
           p.setChildren(children);
           break;
-
+        case NEIGHBORHOOD:
+          Neighborhood n = Neighborhoods.byLabel(e.getString(NEIGHBORHOOD));
+          if (n.equals(Neighborhoods.UNKNOWN_OAKLAND)) {
+            if ("OTHER".equals(e.getString(NEIGHBORHOOD))) {
+              n = Neighborhoods.OTHER_OAKLAND;
+            } else {
+              System.out.println(
+                  "\n\n\n\n\n\n\nFound UNKNOWN:" + n + " for name:" + e.getString(NEIGHBORHOOD));
+            }
+          }
+          p.setNeighborhood(n);
+          break;
+        case OTHER_NEIGHBORHOOD:
+          p.setOtherNeighborhood(e.getString(OTHER_NEIGHBORHOOD));
+          break;
         case AK_ACCESS_TOKEN:
         case AK_TOKEN_REFRESH_INTERVAL_SEC:
         case AK_USER_ID:
@@ -258,6 +283,7 @@ public class ImportFromDatastore {
         case PROFILE_PHOTO_URL:
         case KIND:
         case CREATED_ON_TIMESTAMP:
+        case CITY: // ignoring
         case ID: // ignoring
         case LAST_LOGIN_TIMESTAMP:// ignoring
         case MEMBER_SINCE_TIMESTAMP:// ignoring
@@ -322,6 +348,18 @@ public class ImportFromDatastore {
         case WHY_CARE_FOR_KIDS_TEXT:
           g.setWhyCareForKids(e.getString(WHY_CARE_FOR_KIDS_TEXT));
           break;
+        case NEIGHBORHOOD:
+          Neighborhood n = Neighborhoods.byLabel(e.getString(NEIGHBORHOOD));
+          if (n.equals(Neighborhoods.UNKNOWN_OAKLAND)) {
+            if ("OTHER".equals(e.getString(NEIGHBORHOOD))) {
+              n = Neighborhoods.OTHER_OAKLAND;
+            } else {
+              System.out.println(
+                  "\n\n\n\n\n\n\nFound UNKNOWN:" + n + " for name:" + e.getString(NEIGHBORHOOD));
+            }
+          }
+          g.setNeighborhood(n);
+          break;
         case AK_ACCESS_TOKEN:
         case AK_TOKEN_REFRESH_INTERVAL_SEC:
         case AK_USER_ID:
@@ -332,6 +370,7 @@ public class ImportFromDatastore {
         case PROFILE_PHOTO_URL:
         case KIND:
         case CREATED_ON_TIMESTAMP:
+        case CITY: // ignoring
         case ID: // ignoring
         case LAST_LOGIN_TIMESTAMP:// ignoring
         case MEMBER_SINCE_TIMESTAMP:// ignoring

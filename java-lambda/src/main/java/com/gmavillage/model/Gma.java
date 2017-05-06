@@ -99,8 +99,9 @@ public class Gma extends User {
   }
 
   public void setCareLocationsStrings(final List<String> careLocations) {
-    this.careLocations =
-        careLocations.stream().map(it -> CareLocationType.valueOf(it)).collect(Collectors.toList());
+    this.careLocations = careLocations.stream().map(
+        it -> "CHILDS_HOME".equals(it) ? CareLocationType.ELSEWHERE : CareLocationType.valueOf(it))
+        .collect(Collectors.toList());
   }
 
   public List<DemeanorType> getDemeanors() {

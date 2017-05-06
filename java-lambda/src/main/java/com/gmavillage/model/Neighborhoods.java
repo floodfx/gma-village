@@ -1,5 +1,7 @@
 package com.gmavillage.model;
 
+import com.google.common.collect.Lists;
+
 public class Neighborhoods {
 
   public static final Neighborhood UNKNOWN_OAKLAND =
@@ -26,5 +28,11 @@ public class Neighborhoods {
   public static final Neighborhood OTHER_OAKLAND =
       new Neighborhood(12, Cities.OAKLAND, "Other", "OTHER_OAKLAND");
 
+  public static Neighborhood byLabel(final String label) {
+    return Lists
+        .newArrayList(WEST_OAKLAND, EAST_OAKLAND, CENTRAL_OAKLAND, NORTH_OAKLAND, BERKELEY,
+            EMERYVILLE, PIEDMONT, ALBANY, ALAMEDA, CASTRO_VALLEY, OTHER_OAKLAND)
+        .stream().filter(it -> it.label.equals(label)).findFirst().orElse(UNKNOWN_OAKLAND);
+  }
 
 }

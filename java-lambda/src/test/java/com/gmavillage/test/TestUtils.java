@@ -3,7 +3,7 @@ package com.gmavillage.test;
 import static com.gmavillage.model.CareAgeType.TWO_YEARS_TO_FIVE_YEARS;
 import static com.gmavillage.model.CareAgeType.ZERO_TO_SIX_MONTHS;
 import static com.gmavillage.model.CareExperienceType.RAISED_KIDS;
-import static com.gmavillage.model.CareExperienceType.WORKED_BABY_SITTING;
+import static com.gmavillage.model.CareExperienceType.WORKED_BABYSITTING;
 import static com.gmavillage.model.CareLocationType.PROVIDERS_HOME;
 import static com.gmavillage.model.DemeanorType.CALM;
 import static com.gmavillage.model.RecurrenceType.FULL_TIME;
@@ -72,7 +72,7 @@ public class TestUtils {
     if (offset % 2 == 0) {
       g.setAvailabilities(Lists.newArrayList(EARLY_MORNING, DAYTIME));
       g.setCareAges(Lists.newArrayList(ZERO_TO_SIX_MONTHS, TWO_YEARS_TO_FIVE_YEARS));
-      g.setCareExperiences(Lists.newArrayList(RAISED_KIDS, WORKED_BABY_SITTING));
+      g.setCareExperiences(Lists.newArrayList(RAISED_KIDS, WORKED_BABYSITTING));
       g.setCareLocations(Lists.newArrayList(PROVIDERS_HOME));
       g.setCareTrainings(Lists.newArrayList("Gma Village Training"));
       g.setDemeanors(Lists.newArrayList(CALM));

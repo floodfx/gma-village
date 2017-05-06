@@ -1,7 +1,7 @@
 package com.gmavillage.lambda.db;
 
 import java.sql.Array;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.sql.Types;
 import java.util.List;
 import java.util.Set;
@@ -110,12 +110,12 @@ public class UserDB extends Database {
 
   public Parent createParent(final Parent p) throws Exception {
     final MapSqlParameterSource source = userMapSource(p);
-    source.addValue("needRecurrence", createSqlArray(enumListToNameList(p.getNeedRecurrence())),
-        Types.ARRAY);
-    source.addValue("needTimeOfDay", createSqlArray(enumListToNameList(p.getNeedTimeOfDay())),
-        Types.ARRAY);
-    source.addValue("needLocations", createSqlArray(enumListToNameList(p.getNeedLocations())),
-        Types.ARRAY);
+    final Array needRecurrenceArray = createSqlArray(enumListToNameList(p.getNeedRecurrence()));
+    final Array needTimeOfDayArray = createSqlArray(enumListToNameList(p.getNeedTimeOfDay()));
+    final Array needLocationsArray = createSqlArray(enumListToNameList(p.getNeedLocations()));
+    source.addValue("needRecurrence", needRecurrenceArray, Types.ARRAY);
+    source.addValue("needTimeOfDay", needTimeOfDayArray, Types.ARRAY);
+    source.addValue("needLocations", needLocationsArray, Types.ARRAY);
     source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
     if (p.getNeighborhood() != null) {
       source.addValue("neighborhoodId", p.getNeighborhood().getId());
@@ -128,6 +128,11 @@ public class UserDB extends Database {
 
     final Parent newP =
         this.namedTemplate.query(loadSqlFile("createParent"), source, new ParentMapper.One());
+
+    needRecurrenceArray.free();
+    needTimeOfDayArray.free();
+    needLocationsArray.free();
+
     // insert children if exist
     if (!p.getChildren().isEmpty()) {
       final MapSqlParameterSource[] childrenSource =
@@ -159,13 +164,13 @@ public class UserDB extends Database {
 
   public Parent updateParent(final Parent p) throws Exception {
     final MapSqlParameterSource source = userMapSource(p);
+    final Array needRecurrenceArray = createSqlArray(enumListToNameList(p.getNeedRecurrence()));
+    final Array needTimeOfDayArray = createSqlArray(enumListToNameList(p.getNeedTimeOfDay()));
+    final Array needLocationsArray = createSqlArray(enumListToNameList(p.getNeedLocations()));
     source.addValue("id", p.getId());
-    source.addValue("needRecurrence", createSqlArray(enumListToNameList(p.getNeedRecurrence())),
-        Types.ARRAY);
-    source.addValue("needTimeOfDay", createSqlArray(enumListToNameList(p.getNeedTimeOfDay())),
-        Types.ARRAY);
-    source.addValue("needLocations", createSqlArray(enumListToNameList(p.getNeedLocations())),
-        Types.ARRAY);
+    source.addValue("needRecurrence", needRecurrenceArray, Types.ARRAY);
+    source.addValue("needTimeOfDay", needTimeOfDayArray, Types.ARRAY);
+    source.addValue("needLocations", needLocationsArray, Types.ARRAY);
     source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
     if (p.getNeighborhood() != null) {
       source.addValue("neighborhoodId", p.getNeighborhood().getId());
@@ -180,6 +185,8 @@ public class UserDB extends Database {
       // delete existing children
       final MapSqlParameterSource deleteSource = new MapSqlParameterSource("parent_id", p.getId());
       final int deletes = this.namedTemplate.update(loadSqlFile("deleteChildren"), deleteSource);
+
+
       // now insert
       final MapSqlParameterSource[] childrenSource =
           new MapSqlParameterSource[p.getChildren().size()];
@@ -195,6 +202,11 @@ public class UserDB extends Database {
       this.namedTemplate.batchUpdate(loadSqlFile("insertChildren"), childrenSource);
     }
     this.namedTemplate.query(loadSqlFile("updateParent"), source, new ParentMapper.One());
+
+    needRecurrenceArray.free();
+    needTimeOfDayArray.free();
+    needLocationsArray.free();
+
     return p;
   }
 
@@ -216,16 +228,20 @@ public class UserDB extends Database {
 
   public Gma createGma(final Gma g) throws Exception {
     final MapSqlParameterSource source = userMapSource(g);
-    source.addValue("availabilities", createSqlArray(enumListToNameList(g.getAvailabilities())),
-        Types.ARRAY);
+
+    final Array availabilitiesArray = createSqlArray(enumListToNameList(g.getAvailabilities()));
+    final Array careAgesArray = createSqlArray(enumListToNameList(g.getCareAges()));
+    final Array careExperiencesArray = createSqlArray(enumListToNameList(g.getCareExperiences()));
+    final Array careLocationsArray = createSqlArray(enumListToNameList(g.getCareLocations()));
+    final Array demeanorsArray = createSqlArray(enumListToNameList(g.getDemeanors()));
+
+    source.addValue("availabilities", availabilitiesArray, Types.ARRAY);
     source.addValue("otherAvailability", g.getOtherAvailability());
-    source.addValue("careAges", createSqlArray(enumListToNameList(g.getCareAges())), Types.ARRAY);
-    source.addValue("careExperiences", createSqlArray(enumListToNameList(g.getCareExperiences())),
-        Types.ARRAY);
+    source.addValue("careAges", careAgesArray, Types.ARRAY);
+    source.addValue("careExperiences", careExperiencesArray, Types.ARRAY);
     source.addValue("otherCareExperience", g.getOtherCareExperience());
-    source.addValue("careLocations", createSqlArray(enumListToNameList(g.getCareLocations())),
-        Types.ARRAY);
-    source.addValue("demeanors", createSqlArray(enumListToNameList(g.getDemeanors())), Types.ARRAY);
+    source.addValue("careLocations", careLocationsArray, Types.ARRAY);
+    source.addValue("demeanors", demeanorsArray, Types.ARRAY);
     source.addValue("otherDemeanor", g.getOtherDemeanor());
     source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
     if (g.getNeighborhood() != null) {
@@ -237,7 +253,16 @@ public class UserDB extends Database {
     source.addValue("availableOutsideNeighborhood", g.isAvailableOutsideNeighborhood());
     source.addValue("whyCareForKids", g.getWhyCareForKids());
     source.addValue("additionalInfo", g.getAdditionalInfo());
-    return this.namedTemplate.query(loadSqlFile("createGma"), source, new GmaMapper.One());
+    final Gma gma = this.namedTemplate.query(loadSqlFile("createGma"), source, new GmaMapper.One());
+
+    // free array resources
+    availabilitiesArray.free();
+    careAgesArray.free();
+    careExperiencesArray.free();
+    careLocationsArray.free();
+    demeanorsArray.free();
+
+    return gma;
   }
 
   public Gma getGma(final int id, final boolean includeDeleted) throws Exception {
@@ -310,16 +335,21 @@ public class UserDB extends Database {
     return source;
   }
 
-  private Array createSqlArray(final List<String> list) {
+  private Array createSqlArray(final List<String> list) throws Exception {
     return createSqlArray(list, "varchar");
   }
 
 
-  private Array createSqlArray(final List<String> list, final String type) {
+  private Array createSqlArray(final List<String> list, final String type) throws Exception {
     Array stringArray = null;
+    Connection c = null;
     try {
-      stringArray = dataSource.getConnection().createArrayOf(type, list.toArray());
-    } catch (final SQLException ignore) {
+      c = dataSource.getConnection();
+      stringArray = c.createArrayOf(type, list.toArray());
+    } finally {
+      if (c != null) {
+        c.close();
+      }
     }
     return stringArray;
   }
