@@ -117,7 +117,11 @@ public class UserDB extends Database {
     source.addValue("needLocations", createSqlArray(enumListToNameList(p.getNeedLocations())),
         Types.ARRAY);
     source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
-    source.addValue("neighborhoodId", p.getNeighborhoodId());
+    if (p.getNeighborhood() != null) {
+      source.addValue("neighborhoodId", p.getNeighborhood().getId());
+    } else {
+      source.addValue("neighborhoodId", null);
+    }
     source.addValue("otherNeighborhood", p.getOtherNeighborhood());
     source.addValue("additionalInfo", p.getAdditionalInfo());
     source.addValue("whyJoin", p.getWhyJoin());
@@ -163,7 +167,11 @@ public class UserDB extends Database {
     source.addValue("needLocations", createSqlArray(enumListToNameList(p.getNeedLocations())),
         Types.ARRAY);
     source.addValue("otherNeedTimeOfDay", p.getOtherTimeOfDay());
-    source.addValue("neighborhoodId", p.getNeighborhoodId());
+    if (p.getNeighborhood() != null) {
+      source.addValue("neighborhoodId", p.getNeighborhood().getId());
+    } else {
+      source.addValue("neighborhoodId", null);
+    }
     source.addValue("otherNeighborhood", p.getOtherNeighborhood());
     source.addValue("additionalInfo", p.getAdditionalInfo());
     source.addValue("whyJoin", p.getWhyJoin());
@@ -172,8 +180,6 @@ public class UserDB extends Database {
       // delete existing children
       final MapSqlParameterSource deleteSource = new MapSqlParameterSource("parent_id", p.getId());
       final int deletes = this.namedTemplate.update(loadSqlFile("deleteChildren"), deleteSource);
-      System.out.println("Delete:" + deletes);
-
       // now insert
       final MapSqlParameterSource[] childrenSource =
           new MapSqlParameterSource[p.getChildren().size()];
@@ -222,7 +228,11 @@ public class UserDB extends Database {
     source.addValue("demeanors", createSqlArray(enumListToNameList(g.getDemeanors())), Types.ARRAY);
     source.addValue("otherDemeanor", g.getOtherDemeanor());
     source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
-    source.addValue("neighborhoodId", g.getNeighborhoodId());
+    if (g.getNeighborhood() != null) {
+      source.addValue("neighborhoodId", g.getNeighborhood().getId());
+    } else {
+      source.addValue("neighborhoodId", null);
+    }
     source.addValue("otherNeighborhood", g.getOtherNeighborhood());
     source.addValue("availableOutsideNeighborhood", g.isAvailableOutsideNeighborhood());
     source.addValue("whyCareForKids", g.getWhyCareForKids());
@@ -252,7 +262,11 @@ public class UserDB extends Database {
     source.addValue("demeanors", createSqlArray(enumListToNameList(g.getDemeanors())), Types.ARRAY);
     source.addValue("otherDemeanor", g.getOtherDemeanor());
     source.addValue("careTrainings", createSqlArray(g.getCareTrainings()), Types.ARRAY);
-    source.addValue("neighborhoodId", g.getNeighborhoodId());
+    if (g.getNeighborhood() != null) {
+      source.addValue("neighborhoodId", g.getNeighborhood().getId());
+    } else {
+      source.addValue("neighborhoodId", null);
+    }
     source.addValue("otherNeighborhood", g.getOtherNeighborhood());
     source.addValue("availableOutsideNeighborhood", g.isAvailableOutsideNeighborhood());
     source.addValue("whyCareForKids", g.getWhyCareForKids());

@@ -43,7 +43,13 @@ select updateu.id, updateu.first_name, updateu.last_name, updateu.phone, updateu
        updateg.care_ages, updateg.care_experiences,
        updateg.other_care_experience, updateg.care_locations,
        updateg.demeanors, updateg.other_demeanor,
-       updateg.care_trainings, updateg.neighborhood_id,
+       updateg.care_trainings, (select coalesce(updateg.neighborhood_id, 1) as neighborhood_id),
        updateg.other_neighborhood, updateg.available_outside_neighborhood,
-       updateg.why_care_for_kids, updateg.additional_info
-from updateu, updateg
+       updateg.why_care_for_kids, updateg.additional_info,
+       n.name as neighborhood_name, n.label as neighborhood_label,
+       n.city_id, c.name as city_name, c.label as city_label, c.state as city_state
+FROM updateu, updateg, neighborhoods as n, cities as c
+WHERE
+  neighborhood_id = n.id
+  AND
+  n.city_id = c.id

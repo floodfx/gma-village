@@ -7,11 +7,17 @@ SELECT u.id, u.first_name, u.last_name, u.phone, u.user_type, u.active,
        g.other_care_experience, g.care_locations,
        g.demeanors, g.other_demeanor,
        g.care_trainings, g.neighborhood_id, g.other_neighborhood,
-       g.available_outside_neighborhood, g.why_care_for_kids, g.additional_info
-FROM users as u, gmas as g
+       g.available_outside_neighborhood, g.why_care_for_kids, g.additional_info,
+       n.name as neighborhood_name, n.label as neighborhood_label,
+       n.city_id, c.name as city_name, c.label as city_label, c.state as city_state
+FROM users as u, gmas as g, neighborhoods as n, cities as c
 WHERE
   (u.deleted=false or u.deleted=:deleted)
   AND
   u.user_type = 'GMA'
   AND
   u.id = g.user_id
+  AND
+  g.neighborhood_id = n.id
+  AND
+  n.city_id = c.id

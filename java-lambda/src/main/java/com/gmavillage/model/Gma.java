@@ -18,7 +18,9 @@ public class Gma extends User {
   private List<DemeanorType> demeanors = Lists.newArrayList();
   private String otherDemeanor;
   private List<String> careTrainings = Lists.newArrayList();
-  private Integer neighborhoodId;
+  private Neighborhood neighborhood;
+
+
   private String otherNeighborhood;
   private boolean availableOutsideNeighborhood;
   private String whyCareForKids;
@@ -130,12 +132,12 @@ public class Gma extends User {
     this.careTrainings = careTrainings;
   }
 
-  public Integer getNeighborhoodId() {
-    return this.neighborhoodId;
+  public Neighborhood getNeighborhood() {
+    return this.neighborhood;
   }
 
-  public void setNeighborhoodId(final Integer neighborhoodId) {
-    this.neighborhoodId = neighborhoodId;
+  public void setNeighborhood(final Neighborhood neighborhood) {
+    this.neighborhood = neighborhood;
   }
 
   public String getOtherNeighborhood() {
@@ -196,7 +198,7 @@ public class Gma extends User {
         && Iterables.elementsEqual(demeanors, u.demeanors) //
         && Objects.equals(otherDemeanor, u.otherDemeanor) //
         && Iterables.elementsEqual(careTrainings, u.careTrainings) //
-        && Objects.equals(neighborhoodId, u.neighborhoodId) //
+        && Objects.equals(neighborhood, u.neighborhood) //
         && Objects.equals(otherNeighborhood, u.otherNeighborhood) //
         && Objects.equals(availableOutsideNeighborhood, u.availableOutsideNeighborhood) //
         && Objects.equals(additionalInfo, u.additionalInfo) //

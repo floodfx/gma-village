@@ -15,7 +15,7 @@ public class Parent extends User {
   private List<TimeOfDayType> needTimeOfDay = Lists.newArrayList();
   private String otherTimeOfDay;
   private List<CareLocationType> needLocations = Lists.newArrayList();
-  private Integer neighborhoodId;
+  private Neighborhood neighborhood;
   private String otherNeighborhood;
   private String whyJoin;
   private String additionalInfo;
@@ -77,12 +77,12 @@ public class Parent extends User {
         needLocations.stream().map(it -> CareLocationType.valueOf(it)).collect(Collectors.toList());
   }
 
-  public Integer getNeighborhoodId() {
-    return this.neighborhoodId;
+  public Neighborhood getNeighborhood() {
+    return this.neighborhood;
   }
 
-  public void setNeighborhoodId(final Integer neighborhoodId) {
-    this.neighborhoodId = neighborhoodId;
+  public void setNeighborhood(final Neighborhood neighborhood) {
+    this.neighborhood = neighborhood;
   }
 
   public String getOtherNeighborhood() {
@@ -138,7 +138,7 @@ public class Parent extends User {
         && Iterables.elementsEqual(needTimeOfDay, u.needTimeOfDay) //
         && Objects.equals(otherTimeOfDay, u.otherTimeOfDay) //
         && Iterables.elementsEqual(needLocations, u.needLocations) //
-        && Objects.equals(neighborhoodId, u.neighborhoodId) //
+        && Objects.equals(neighborhood, u.neighborhood) //
         && Objects.equals(otherNeighborhood, u.otherNeighborhood) //
         && Objects.equals(additionalInfo, u.additionalInfo) //
         && Objects.equals(whyJoin, u.whyJoin) //

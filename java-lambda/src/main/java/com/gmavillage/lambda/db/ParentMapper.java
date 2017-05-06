@@ -20,7 +20,7 @@ public class ParentMapper {
     p.setNeedTimeOfDayStrings(userMapper.asList(r.getArray("need_time_of_day")));
     p.setNeedLocationsStrings(userMapper.asList(r.getArray("need_locations")));
     p.setOtherTimeOfDay(r.getString("other_need_time_of_day"));
-    p.setNeighborhoodId(Integer.getInteger(r.getString("neighborhood_id")));
+    p.setNeighborhood(NeighborhoodMapper.mapQuery(r));
     p.setOtherNeighborhood(r.getString("other_neighborhood"));
     p.setWhyJoin(r.getString("why_join"));
     p.setAdditionalInfo(r.getString("additional_info"));

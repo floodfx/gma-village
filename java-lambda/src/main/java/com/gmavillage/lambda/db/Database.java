@@ -39,7 +39,6 @@ public class Database {
   public String loadSqlFile(final String prefix, final String fileName, final String suffix)
       throws IOException {
     final String file = String.format("%s%s%s", prefix, fileName, suffix);
-    System.out.println("file" + file);
     return CharStreams.toString(
         new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(file)));
   }

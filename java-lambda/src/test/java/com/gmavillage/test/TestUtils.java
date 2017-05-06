@@ -23,6 +23,7 @@ import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.gmavillage.lambda.db.Database;
 import com.gmavillage.model.Admin;
 import com.gmavillage.model.Gma;
+import com.gmavillage.model.Neighborhoods;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
 import com.gmavillage.model.UserType;
@@ -76,6 +77,7 @@ public class TestUtils {
       g.setCareTrainings(Lists.newArrayList("Gma Village Training"));
       g.setDemeanors(Lists.newArrayList(CALM));
     }
+    g.setNeighborhood(Neighborhoods.OTHER_OAKLAND);
     g.setOtherAvailability("other" + offset);
     g.setOtherCareExperience("other" + offset);
     g.setOtherDemeanor("demeanor" + offset);
@@ -90,7 +92,7 @@ public class TestUtils {
       p.setNeedLocations(Arrays.asList(PROVIDERS_HOME));
     }
     p.setOtherTimeOfDay("noon" + offset);
-    p.setNeighborhoodId(null);
+    p.setNeighborhood(Neighborhoods.ALAMEDA);
     p.setOtherNeighborhood("Rosebud" + offset);
     p.setWhyJoin("Because" + offset);
     p.setAdditionalInfo("More reasons" + offset);

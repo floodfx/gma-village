@@ -79,12 +79,13 @@ CREATE TABLE neighborhoods (
   city_id INT NOT NULL REFERENCES cities(id),
   name VARCHAR,
   label VARCHAR,
-  sort_order INT default 0,
+  sort_order INT DEFAULT 0,
   UNIQUE (city_id, name, label)
 );
 
 
 insert into cities (name, label, state) values ('Oakland', 'OAKLAND', 'CA');
+insert into neighborhoods (city_id, name, label) values (1, 'Unknown', 'UNKNOWN_OAKLAND');
 insert into neighborhoods (city_id, name, label) values (1, 'West Oakland', 'WEST_OAKLAND');
 insert into neighborhoods (city_id, name, label) values (1, 'East Oakland', 'EAST_OAKLAND');
 insert into neighborhoods (city_id, name, label) values (1, 'Central Oakland', 'CENTRAL_OAKLAND');
@@ -95,8 +96,7 @@ insert into neighborhoods (city_id, name, label) values (1, 'Piedmont', 'PIEDMON
 insert into neighborhoods (city_id, name, label) values (1, 'Albany', 'ALBANY');
 insert into neighborhoods (city_id, name, label) values (1, 'Alameda', 'ALAMEDA');
 insert into neighborhoods (city_id, name, label) values (1, 'Castro Valley', 'CASTRO_VALLEY');
-insert into neighborhoods (city_id, name, label) values (1, 'Other', 'OTHER');
-
+insert into neighborhoods (city_id, name, label) values (1, 'Other', 'OTHER_OAKLAND');
 
 CREATE TABLE gmas (
   user_id INT NOT NULL REFERENCES users(id),
@@ -109,7 +109,7 @@ CREATE TABLE gmas (
   demeanors demeanor_types ARRAY,
   other_demeanor VARCHAR,
   care_trainings VARCHAR ARRAY,
-  neighborhood_id INT REFERENCES neighborhoods(id),
+  neighborhood_id INT NOT NULL DEFAULT 1 REFERENCES neighborhoods(id),
   other_neighborhood VARCHAR,
   available_outside_neighborhood BOOLEAN,
   why_care_for_kids TEXT,
@@ -130,7 +130,7 @@ CREATE TABLE parents (
   need_time_of_day time_of_day_types ARRAY,
   other_need_time_of_day VARCHAR,
   need_locations care_location_types ARRAY,
-  neighborhood_id INT REFERENCES neighborhoods(id),
+  neighborhood_id INT DEFAULT 1 REFERENCES neighborhoods(id) ,
   other_neighborhood VARCHAR,
   why_join TEXT,
   additional_info TEXT,

@@ -107,6 +107,7 @@ public class UserDBTest {
     assertGmaValuesSet(g, savedGma);
 
     final Gma gotGma = db.getGma(savedGma.getId(), false);
+    System.out.println("gotGma" + gotGma);
     Assert.assertEquals(gotGma.getId(), savedGma.getId());
     assertGmaValuesSet(gotGma, savedGma);
 
@@ -214,7 +215,7 @@ public class UserDBTest {
     Assert.assertEquals(a.getNeedRecurrence(), b.getNeedRecurrence());
     Assert.assertEquals(a.getNeedTimeOfDay(), b.getNeedTimeOfDay());
     Assert.assertEquals(a.getOtherNeighborhood(), b.getOtherNeighborhood());
-    Assert.assertEquals(a.getNeighborhoodId(), b.getNeighborhoodId());
+    Assert.assertEquals(a.getNeighborhood(), b.getNeighborhood());
     Assert.assertEquals(a.getChildren().size(), b.getChildren().size());
     final List<Child> ac = Lists.newArrayList(a.getChildren());
     final List<Child> bc = Lists.newArrayList(b.getChildren());
@@ -240,7 +241,9 @@ public class UserDBTest {
     Assert.assertEquals(a.getCareLocations(), b.getCareLocations());
     Assert.assertEquals(a.getCareTrainings(), b.getCareTrainings());
     Assert.assertEquals(a.getDemeanors(), b.getDemeanors());
-    Assert.assertEquals(a.getNeighborhoodId(), b.getNeighborhoodId());
+    System.out.println("a neigh" + ToStringBuilder.reflectionToString(a.getNeighborhood()));
+    System.out.println("b neigh" + ToStringBuilder.reflectionToString(b.getNeighborhood()));
+    Assert.assertEquals(a.getNeighborhood(), b.getNeighborhood());
   }
 
   public void assertUserValuesSet(final User savedUser, final User suppliedUser) {
