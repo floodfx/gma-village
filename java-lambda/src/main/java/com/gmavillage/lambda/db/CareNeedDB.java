@@ -1,15 +1,11 @@
 package com.gmavillage.lambda.db;
 
-import static java.sql.Types.ARRAY;
-import static java.sql.Types.VARCHAR;
-
 import java.sql.Array;
 import java.sql.Types;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -66,15 +62,21 @@ public class CareNeedDB extends Database {
   }
 
 
-  public CareNeed updateCareNeed(final CareNeed careNeed) throws Exception {
-    return this.namedTemplate.query(loadSqlFile("updateCareNeed"), careNeedSource(careNeed),
-        new CareNeedMapper.One());
+  public boolean updateCareNeedStatus(final CareNeed careNeed) throws Exception {
+    return this.namedTemplate.update(loadSqlFile("updateCareNeedStatus"),
+        careNeedStatusSqlParams(careNeed)) == 1;
   }
 
   public List<CareNeed> getAllCareNeeds() throws Exception {
     final SqlParameterSource source = new MapSqlParameterSource();
     return this.namedTemplate.query(loadSqlFile("getAllCareNeeds"), source,
         new CareNeedMapper.List());
+  }
+
+  private MapSqlParameterSource careNeedStatusSqlParams(final CareNeed c) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource("id", c.getId());
+    source.addValue("delivery_status", c.getDeliveryStatus().name());
+    return source;
   }
 
   private MapSqlParameterSource careNeedSqlParams(final CareNeed c) throws Exception {
@@ -92,11 +94,5 @@ public class CareNeedDB extends Database {
     return source;
   }
 
-  private BeanPropertySqlParameterSource careNeedSource(final Object careNeed) {
-    final BeanPropertySqlParameterSource source = new BeanPropertySqlParameterSource(careNeed);
-    source.registerSqlType("userType", VARCHAR);
-    source.registerSqlType("careLocations", ARRAY);
-    return source;
-  }
 
 }

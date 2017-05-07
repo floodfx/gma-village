@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gmavillage.model.CareNeed;
+import com.gmavillage.model.CareNeed.DeliveryStatusType;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.test.TestUtils;
@@ -45,6 +46,9 @@ public class CareNeedDBTest {
     final CareNeed saved = careNeedDB.createCareNeed(c);
 
     assertCareNeedValuesSet(c, saved);
+
+    saved.setDeliveryStatus(DeliveryStatusType.QUEUED);
+    Assert.assertTrue(careNeedDB.updateCareNeedStatus(saved));
   }
 
   public void assertCareNeedValuesSet(final CareNeed a, final CareNeed b) {
