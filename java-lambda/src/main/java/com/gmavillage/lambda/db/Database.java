@@ -5,6 +5,10 @@ import static java.lang.System.getenv;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Array;
+import java.sql.Connection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
@@ -46,6 +50,31 @@ public class Database {
 
   public String loadSqlFile(final String fileName) throws IOException {
     return loadSqlFile("com/gmavillage/lambda/db/sql/", fileName, ".sql");
+  }
+
+  public static List<String> enumListToNameList(final List<? extends Enum> enumList) {
+    return enumList.stream().map(it -> it.name()).collect(Collectors.toList());
+  }
+
+  public static Array createSqlArray(final List<String> list, final DataSource ds)
+      throws Exception {
+    return createSqlArray(list, "varchar", ds);
+  }
+
+
+  public static Array createSqlArray(final List<String> list, final String type,
+      final DataSource ds) throws Exception {
+    Array stringArray = null;
+    Connection c = null;
+    try {
+      c = ds.getConnection();
+      stringArray = c.createArrayOf(type, list.toArray());
+    } finally {
+      if (c != null) {
+        c.close();
+      }
+    }
+    return stringArray;
   }
 
 }

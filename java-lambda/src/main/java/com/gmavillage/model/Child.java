@@ -7,9 +7,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class Child {
 
+  Integer id;
   String firstName;
   LocalDate dob;
   String note;
+
+  public Integer getId() {
+    return this.id;
+  }
+
+  public void setId(final Integer id) {
+    this.id = id;
+  }
 
   public String getFirstName() {
     return this.firstName;

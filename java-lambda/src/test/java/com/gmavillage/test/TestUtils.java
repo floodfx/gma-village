@@ -4,6 +4,7 @@ import static com.gmavillage.model.CareAgeType.TWO_YEARS_TO_FIVE_YEARS;
 import static com.gmavillage.model.CareAgeType.ZERO_TO_SIX_MONTHS;
 import static com.gmavillage.model.CareExperienceType.RAISED_KIDS;
 import static com.gmavillage.model.CareExperienceType.WORKED_BABYSITTING;
+import static com.gmavillage.model.CareLocationType.ELSEWHERE;
 import static com.gmavillage.model.CareLocationType.PROVIDERS_HOME;
 import static com.gmavillage.model.DemeanorType.CALM;
 import static com.gmavillage.model.RecurrenceType.FULL_TIME;
@@ -13,15 +14,24 @@ import static com.gmavillage.model.TimeOfDayType.EARLY_MORNING;
 import static com.gmavillage.model.TimeOfDayType.EVENING;
 
 import java.io.InputStreamReader;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.TimeZone;
 
 import org.flywaydb.core.Flyway;
-import org.joda.time.LocalDateTime;
 
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.gmavillage.lambda.db.Database;
 import com.gmavillage.model.Admin;
+import com.gmavillage.model.CareNeed;
+import com.gmavillage.model.CareNeed.DeliveryStatusType;
+import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Neighborhoods;
 import com.gmavillage.model.Parent;
@@ -52,8 +62,7 @@ public class TestUtils {
     u.setUserType(UserType.ADMIN);
     u.setAcceptedTerms(false);
     u.setAccountKitAccessToken("accessToken" + offset);
-    u.setAccountKitAccessTokenExpiresAt(
-        new Timestamp(new LocalDateTime().toDateTime().getMillis()));
+    u.setAccountKitAccessTokenExpiresAt(OffsetDateTime.now().withOffsetSameLocal(ZoneOffset.UTC));
     u.setAccountKitUserId("akUserId" + offset);
     u.setActive(true);
     u.setCreatedByUser(null);
@@ -84,7 +93,7 @@ public class TestUtils {
     return g;
   }
 
-  public Parent generateParent() {
+  public Parent generateParent(final int numChildren) {
     final Parent p = new Parent(generateUser());
     if (offset % 2 == 0) {
       p.setNeedRecurrence(Arrays.asList(FULL_TIME, ONE_TIME));
@@ -96,7 +105,44 @@ public class TestUtils {
     p.setOtherNeighborhood("Rosebud" + offset);
     p.setWhyJoin("Because" + offset);
     p.setAdditionalInfo("More reasons" + offset);
+    for (int i = 0; i < numChildren; i++) {
+      p.getChildren().add(generateChild());
+    }
     return p;
+  }
+
+  public Parent generateParent() {
+    return generateParent(0);
+  }
+
+  public Child generateChild() {
+    offset += 1;
+    final Child c = new Child();
+    final Random r = new Random();
+    c.setDob(LocalDate.of(r.nextInt(6) + 2010, r.nextInt(10) + 1, r.nextInt(15) + 10));
+    c.setFirstName("firstName" + offset);
+    c.setNote("note" + offset);
+    return c;
+  }
+
+  public CareNeed generateCareNeed(final Parent p, final List<Gma> matchingGmas) {
+    final CareNeed c = new CareNeed();
+    if (offset % 2 == 0) {
+      c.setCareLocations(Arrays.asList(PROVIDERS_HOME));
+      c.setNeighborhood(Neighborhoods.ALBANY);
+    } else {
+      c.setCareLocations(Arrays.asList(ELSEWHERE));
+      c.setNeighborhood(Neighborhoods.OTHER_OAKLAND);
+      c.setOtherNeighborhood("Rockridge");
+    }
+    c.setChildren(p.getChildren());
+    c.setDeliveryStatus(DeliveryStatusType.NEW);
+    c.setStartTime(OffsetDateTime.now(ZoneId.of("UTC")).plus(1, ChronoUnit.HOURS));
+    c.setEndTime(OffsetDateTime.now(ZoneId.of("UTC")).plus(5, ChronoUnit.HOURS));
+    c.setParentId(p.getId());
+    c.setTimezone(TimeZone.getTimeZone("America/Los_Angeles"));
+    c.setMatchingGmas(matchingGmas);
+    return c;
   }
 
   public LambdaProxyEvent loadJsonFile(final String name) throws Exception {

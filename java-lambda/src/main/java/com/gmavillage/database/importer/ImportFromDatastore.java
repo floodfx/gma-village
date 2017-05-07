@@ -3,10 +3,10 @@ package com.gmavillage.database.importer;
 import static com.google.auth.oauth2.GoogleCredentials.fromStream;
 
 import java.io.FileInputStream;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -166,7 +166,8 @@ public class ImportFromDatastore {
           u.setUserType(e.getString(KIND).toUpperCase());
           break;
         case CREATED_ON_TIMESTAMP:
-          u.setCreatedOn(new Timestamp(e.getLong(CREATED_ON_TIMESTAMP)));
+          u.setCreatedOn(java.time.LocalDateTime.ofEpochSecond(e.getLong(CREATED_ON_TIMESTAMP), 0,
+              ZoneOffset.UTC));
           break;
         case ADDITIONAL_INFORMATION_TEXT:
         case AVAILBILITIES:

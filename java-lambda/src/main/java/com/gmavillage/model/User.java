@@ -1,6 +1,7 @@
 package com.gmavillage.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class User {
@@ -14,9 +15,9 @@ public class User {
   private String profileImageUrl;
   private String accountKitAccessToken;
   private String accountKitUserId;
-  private Timestamp accountKitAccessTokenExpiresAt;
-  private Timestamp createdOn;
-  private Timestamp updatedAt;
+  private OffsetDateTime accountKitAccessTokenExpiresAt;
+  private LocalDateTime createdOn;
+  private LocalDateTime updatedAt;
   private boolean deleted;
   private boolean acceptedTerms;
   private Integer createdByUser;
@@ -119,27 +120,28 @@ public class User {
     this.accountKitUserId = accountKitUserId;
   }
 
-  public Timestamp getAccountKitAccessTokenExpiresAt() {
+  public OffsetDateTime getAccountKitAccessTokenExpiresAt() {
     return this.accountKitAccessTokenExpiresAt;
   }
 
-  public void setAccountKitAccessTokenExpiresAt(final Timestamp accountKitAccessTokenExpiresAt) {
+  public void setAccountKitAccessTokenExpiresAt(
+      final OffsetDateTime accountKitAccessTokenExpiresAt) {
     this.accountKitAccessTokenExpiresAt = accountKitAccessTokenExpiresAt;
   }
 
-  public Timestamp getCreatedOn() {
+  public LocalDateTime getCreatedOn() {
     return this.createdOn;
   }
 
-  public void setCreatedOn(final Timestamp createdOn) {
+  public void setCreatedOn(final LocalDateTime createdOn) {
     this.createdOn = createdOn;
   }
 
-  public Timestamp getUpdatedAt() {
+  public LocalDateTime getUpdatedAt() {
     return this.updatedAt;
   }
 
-  public void setUpdatedAt(final Timestamp updatedAt) {
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 

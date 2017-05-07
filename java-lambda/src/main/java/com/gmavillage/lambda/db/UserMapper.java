@@ -3,6 +3,8 @@ package com.gmavillage.lambda.db;
 import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 
 import org.springframework.dao.DataAccessException;
@@ -25,11 +27,12 @@ public class UserMapper {
     u.setProfileImageUrl(r.getString("profile_image_url"));
     u.setAccountKitAccessToken(r.getString("account_kit_access_token"));
     u.setAccountKitUserId(r.getString("account_kit_user_id"));
-    u.setAccountKitAccessTokenExpiresAt(r.getTimestamp("account_kit_access_token_expires_at"));
+    u.setAccountKitAccessTokenExpiresAt(
+        r.getObject("account_kit_access_token_expires_at", OffsetDateTime.class));
     u.setAcceptedTerms(r.getBoolean("accepted_terms"));
     u.setCreatedByUser(Integer.getInteger(r.getString("created_by_user")));
-    u.setCreatedOn(r.getTimestamp("created_on"));
-    u.setUpdatedAt(r.getTimestamp("updated_at"));
+    u.setCreatedOn(r.getObject("created_on", LocalDateTime.class));
+    u.setUpdatedAt(r.getObject("updated_at", LocalDateTime.class));
     return u;
   }
 

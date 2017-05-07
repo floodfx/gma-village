@@ -3,6 +3,7 @@ package com.gmavillage.lambda.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -49,10 +50,26 @@ public class ParentMapper {
     @Override
     public Child mapRow(final ResultSet r, final int rowNum) throws SQLException {
       final Child c = new Child();
+      c.setId(r.getInt("id"));
       c.setFirstName(r.getString("first_name"));
       c.setDob(new Timestamp(r.getDate("dob").getTime()).toLocalDateTime().toLocalDate());
       c.setNote(r.getString("note"));
       return c;
+    }
+  }
+
+  public static class ChildMapper implements ResultSetExtractor<Child> {
+    @Override
+    public Child extractData(final ResultSet r) throws SQLException {
+      if (r.next()) {
+        final Child c = new Child();
+        c.setId(r.getInt("id"));
+        c.setFirstName(r.getString("first_name"));
+        c.setDob(r.getObject("dob", LocalDate.class));
+        c.setNote(r.getString("note"));
+        return c;
+      }
+      return null;
     }
   }
 

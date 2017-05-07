@@ -3,9 +3,9 @@ package com.gmavillage.lambda.accountkit;
 import static com.google.common.base.MoreObjects.firstNonNull;
 import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static java.lang.System.getenv;
+import static java.time.temporal.ChronoUnit.SECONDS;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -88,7 +88,7 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
             }
             user.setAccountKitAccessToken(akToken.getAccessToken());
             user.setAccountKitAccessTokenExpiresAt(
-                new Timestamp(new Date().getTime() + akToken.getTokenRefreshIntervalSec()));
+                OffsetDateTime.now().plus(akToken.getTokenRefreshIntervalSec(), SECONDS));
             // save changes
             user = userDB.updateUser(user);
             // find user by type

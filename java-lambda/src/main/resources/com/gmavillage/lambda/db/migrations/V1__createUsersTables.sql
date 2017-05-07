@@ -130,7 +130,7 @@ CREATE TABLE parents (
   need_time_of_day time_of_day_types ARRAY,
   other_need_time_of_day VARCHAR,
   need_locations care_location_types ARRAY,
-  neighborhood_id INT DEFAULT 1 REFERENCES neighborhoods(id) ,
+  neighborhood_id INT DEFAULT 1 REFERENCES neighborhoods(id),
   other_neighborhood VARCHAR,
   why_join TEXT,
   additional_info TEXT,
@@ -138,9 +138,34 @@ CREATE TABLE parents (
 );
 
 CREATE TABLE children (
+  id SERIAL PRIMARY KEY NOT NULL,
   parent_id INT NOT NULL REFERENCES parents(user_id),
   first_name VARCHAR,
   dob DATE,
   note TEXT,
   UNIQUE (parent_id, first_name, dob)
 );
+
+CREATE TABLE careneeds (
+  id SERIAL PRIMARY KEY NOT NULL,
+  parent_id INT NOT NULL REFERENCES parents(user_id),
+  care_locations care_location_types ARRAY,
+  timezone_name VARCHAR DEFAULT 'America/Los_Angeles',
+  neighborhood_id INT DEFAULT 1 REFERENCES neighborhoods(id),
+  other_neighborhood VARCHAR,
+  start_time TIMESTAMPTZ,
+  end_time TIMESTAMPTZ,
+  delivery_status VARCHAR
+);
+
+CREATE TABLE careneedschildren (
+  careneed_id INT NOT NULL REFERENCES careneeds(id),
+  child_id INT NOT NULL REFERENCES children(id),
+  UNIQUE (careneed_id, child_id)
+ );
+ 
+ CREATE TABLE careneedsgmas (
+  careneed_id INT NOT NULL REFERENCES careneeds(id),
+  gma_id INT NOT NULL REFERENCES users(id),
+  UNIQUE (careneed_id, gma_id)
+ );
