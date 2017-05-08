@@ -4,7 +4,7 @@ import com.amazonaws.services.kms.model.UnsupportedOperationException;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 
-public class DefaultApi extends AbstractApi {
+public abstract class DefaultApi extends AbstractApi {
   @Override
   protected String handleHttpGet(final LambdaProxyEvent getEvent, final Context context) {
     throw new UnsupportedOperationException("GET");

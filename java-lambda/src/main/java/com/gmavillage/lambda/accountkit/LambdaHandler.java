@@ -1,5 +1,8 @@
 package com.gmavillage.lambda.accountkit;
 
+import static com.gmavillage.lambda.LambdaProxyOutputHelper.error;
+import static com.gmavillage.lambda.LambdaProxyOutputHelper.error404;
+import static com.gmavillage.lambda.LambdaProxyOutputHelper.success;
 import static com.google.common.base.MoreObjects.firstNonNull;
 import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static java.lang.System.getenv;
@@ -81,7 +84,8 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
               if (!user.getAccountKitUserId().equals(akUser.getId())) {
                 logError("AK UserID in DB does not match AK UserID from Account Kit Auth for user:"
                     + user.getId());
-                return error("{\"error\": \"Authorization user id mismatch\"}", event);
+                return error("{\"error\": \"Authorization user id mismatch\"}",
+                    requestOrigin(event));
               }
             } else {
               user.setAccountKitUserId(akUser.getId());
@@ -94,34 +98,37 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
             // find user by type
             switch (user.getUserType()) {
               case ADMIN: {
-                return success(gson.toJson(userDB.getAdmin(user.getId(), false)), event);
+                return success(gson.toJson(userDB.getAdmin(user.getId(), false)),
+                    requestOrigin(event));
               }
               case PARENT: {
-                return success(gson.toJson(userDB.getParent(user.getId(), false)), event);
+                return success(gson.toJson(userDB.getParent(user.getId(), false)),
+                    requestOrigin(event));
               }
               case GMA: {
-                return success(gson.toJson(userDB.getGma(user.getId(), false)), event);
+                return success(gson.toJson(userDB.getGma(user.getId(), false)),
+                    requestOrigin(event));
               }
               default: {
-                return error("{\"error\": \"Unknown user type\"}", event);
+                return error("{\"error\": \"Unknown user type\"}", requestOrigin(event));
               }
             }
           } else {
             // user with phone not in database
-            return error("{\"error\": \"Phone not registered\"}", event);
+            return error("{\"error\": \"Phone not registered\"}", requestOrigin(event));
           }
         } catch (final Exception e) {
           e.printStackTrace(System.err);
           logError("Error:" + e);
-          return error("{\"error\": \"Authorization Failure\"}", event);
+          return error("{\"error\": \"Authorization Failure\"}", requestOrigin(event));
         }
       } else {
         // CSRF mismatch
-        return error("{\"error\": \"CSRF Mismatch\"}", event);
+        return error("{\"error\": \"CSRF Mismatch\"}", requestOrigin(event));
       }
     }
     // empty params
-    return error("{\"error\": \"Missing parameters\"}", event);
+    return error("{\"error\": \"Missing parameters\"}", requestOrigin(event));
   }
 
   private LambdaProxyOutput initAccountKit(final LambdaProxyEvent event, final Context context) {
@@ -129,7 +136,7 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
     initValues.put("appId", APP_ID);
     initValues.put("csrf", CSRF);
     initValues.put("version", VERSION);
-    return success(new Gson().toJson(initValues), event);
+    return success(new Gson().toJson(initValues), requestOrigin(event));
   }
 
 

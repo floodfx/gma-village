@@ -2,9 +2,10 @@ package com.gmavillage.lambda.api;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
+import com.gmavillage.lambda.api.authorizer.Authorizer;
 import com.google.common.base.Strings;
 
-public abstract class AbstractApi {
+public abstract class AbstractApi implements Authorizer {
 
   protected Context context;
 
@@ -17,9 +18,13 @@ public abstract class AbstractApi {
   abstract protected String handleHttpDelete(LambdaProxyEvent deleteEvent, Context context);
 
   public String handleApiEvent(final LambdaProxyEvent event, final Context context)
-      throws Exception {
+      throws UnauthorizedExeception, Exception {
     this.context = context;
     final String httpMethod = event.getHttpMethod();
+    final int status = authorizeRequest(event, context);
+    if (status != 200) {
+      throw new UnauthorizedExeception(status);
+    }
     logInfo("httpMethod:" + httpMethod);
     switch (httpMethod) {
       case "GET":
@@ -34,6 +39,10 @@ public abstract class AbstractApi {
         throw new Exception("Unsupported Http Method:" + httpMethod);
     }
   }
+
+  @Override
+  abstract public int authorizeRequest(LambdaProxyEvent putEvent, Context context)
+      throws UnauthorizedExeception;
 
   protected String getLastPathPart(final String path) {
     if (Strings.isNullOrEmpty(path)) {

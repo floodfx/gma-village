@@ -27,7 +27,7 @@ public class Gma extends User {
   private String additionalInfo;
 
   public Gma() {
-    this(null);
+    setUserType(UserType.GMA);
   }
 
   public Gma(final User u) {

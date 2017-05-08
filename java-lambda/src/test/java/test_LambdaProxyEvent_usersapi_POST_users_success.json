@@ -33,6 +33,6 @@
         "httpMethod": "POST",
         "apiId": "6nx32kfpd7"
     },
-    "body": "{\"id\":null,\"first_name\":\"first\",\"last_name\":\"last\",\"phone\":\"phone1\",\"user_type\":\"admin\",\"active\":true,\"profile_image_url\":\"profileImageUrl\",\"account_kit_access_token\":\"accessToken\",\"account_kit_user_id\":\"akUserId\",\"account_kit_access_token_expires_at\":\"Apr 27, 2017 11:26:46 AM\",\"deleted\":false,\"accepted_terms\":false}",
+    "body": null,
     "isBase64Encoded": false
 }

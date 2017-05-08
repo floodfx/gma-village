@@ -22,7 +22,7 @@ public class Parent extends User {
   private Set<Child> children = Sets.newHashSet();
 
   public Parent() {
-    this(null);
+    setUserType(UserType.PARENT);
   }
 
   public Parent(final User u) {

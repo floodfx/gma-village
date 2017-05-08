@@ -33,6 +33,7 @@ import com.google.common.collect.Sets;
 
 public class ImportFromDatastore {
 
+  private static final String CARE_NEED = "CareNeed";
   private static final String CITY = "city";
   private static final String NEIGHBORHOOD = "neighborhood";
   private static final String AVAILABILITIES = "availabilities";
@@ -71,7 +72,7 @@ public class ImportFromDatastore {
   private static final String CREDS_FILE =
       "/Users/donnie/.gcloud/credentials/GmaVillage-d4898565aa3f.json";
 
-  private static final String KIND_CARE_NEED = "CareNeed";
+  private static final String KIND_CARE_NEED = CARE_NEED;
   private static final String KIND_USER = "User";
 
   public static void main(final String... args) throws Exception {
@@ -83,9 +84,21 @@ public class ImportFromDatastore {
         .build();
 
     final Datastore datastore = options.getService();
-    new ImportFromDatastore().processUsers(datastore);
+    final ImportFromDatastore importer = new ImportFromDatastore();
+    importer.processUsers(datastore);
+    // importer.processCareNeeds(datastore);
 
 
+
+  }
+
+  void processCareNeeds(final Datastore datastore) throws Exception {
+    final Query<Entity> userQuery = Query.newEntityQueryBuilder().setKind(CARE_NEED).build();
+    final QueryResults<Entity> retrieved = datastore.run(userQuery);
+    while (retrieved.hasNext()) {
+      final Entity e = retrieved.next();
+      System.out.println("CareNeed:" + ToStringBuilder.reflectionToString(e));
+    }
   }
 
   void processUsers(final Datastore datastore) throws Exception {

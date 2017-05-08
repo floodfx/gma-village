@@ -1,6 +1,6 @@
 package com.gmavillage.lambda;
 
-import java.util.Map;
+import static com.gmavillage.lambda.LambdaProxyOutputHelper.error;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -9,7 +9,6 @@ import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.gmavillage.lambda.util.CORS;
-import com.google.common.collect.Maps;
 
 public abstract class AbstractLambdaProxyHandler
     implements RequestHandler<LambdaProxyEvent, LambdaProxyOutput>, CORS {
@@ -29,7 +28,7 @@ public abstract class AbstractLambdaProxyHandler
       return processEvent(event, context);
     } catch (final Exception e) {
       logError(e.toString());
-      return error("Error Processing Event", event);
+      return error("Error Processing Event", requestOrigin(event));
     }
   }
 
@@ -37,22 +36,6 @@ public abstract class AbstractLambdaProxyHandler
     this.context = context;
   }
 
-  protected LambdaProxyOutput success(final String body, final LambdaProxyEvent event) {
-    final Map<String, String> headers = Maps.newHashMap(CORS.HEADERS);
-    headers.put("Access-Control-Allow-Origin", requestOrigin(event));
-    final LambdaProxyOutput success = new LambdaProxyOutput(200, headers, body);
-    logInfo("Returning Success" + ToStringBuilder.reflectionToString(success));
-    return success;
-  }
-
-  protected LambdaProxyOutput error(final String error, final LambdaProxyEvent event) {
-    logError("Returning Error with Body" + error);
-    return success(error, event);
-  }
-
-  protected LambdaProxyOutput error404() {
-    return new LambdaProxyOutput(404);
-  }
 
   protected String requestOrigin(final LambdaProxyEvent event) {
     return event.getHeaders().get("origin");

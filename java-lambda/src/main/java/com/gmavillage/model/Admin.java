@@ -3,7 +3,7 @@ package com.gmavillage.model;
 public class Admin extends User {
 
   public Admin() {
-    this(null);
+    setUserType(UserType.ADMIN);
   }
 
   public Admin(final User u) {

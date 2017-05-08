@@ -1,6 +1,6 @@
 package com.gmavillage.model;
 
 public enum UserType {
-  ADMIN, GMA, PARENT;
+  ADMIN, GMA, PARENT, USER;
 
 }

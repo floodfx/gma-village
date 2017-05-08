@@ -13,6 +13,18 @@ apply plugin: 'eclipse'
 // Apply the application plugin to add support for building an application
 apply plugin: 'application'
 
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "net.ltgt.gradle:gradle-apt-plugin:0.10"
+  }
+}
+
+apply plugin: "net.ltgt.apt"
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -33,6 +45,9 @@ dependencies {
     compile 'org.springframework:spring-jdbc:4.3.8.RELEASE'
     compile 'org.postgresql:postgresql:42.0.0'
     compile 'org.flywaydb:flyway-core:4.1.2'  
+    
+    compileOnly "com.google.auto.value:auto-value:1.2"
+    apt         "com.google.auto.value:auto-value:1.2"
 
     // test dependencies
     testCompile 'junit:junit:4.12'
