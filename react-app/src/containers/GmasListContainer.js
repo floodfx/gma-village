@@ -12,7 +12,7 @@ class GmasListContainer extends Component {
 
   componentWillMount() {
     const { fetchGmas, user } = this.props;
-    if(user && user.userType === 'ADMIN') {
+    if(user && user.user_type === 'ADMIN') {
       fetchGmas();
     } else {
       fetchGmas(true);

@@ -19,21 +19,21 @@ class AuthListener {
 
   isAdmin = () => {
     if(this.loggedIn()) {
-      return this.currentUser.userType === "ADMIN"
+      return this.currentUser.user_type === "ADMIN"
     }
     return false;
   }
 
   isParent = () => {
     if(this.loggedIn()) {
-      return this.currentUser.userType === "PARENT"
+      return this.currentUser.user_type === "PARENT"
     }
     return false;
   }
 
   isGma = () => {
     if(this.loggedIn()) {
-      return this.currentUser.userType === "GMA"
+      return this.currentUser.user_type === "GMA"
     }
     return false;
   }

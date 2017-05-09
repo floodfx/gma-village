@@ -12,11 +12,11 @@ class ProfileContainer extends Component {
 
   componentWillUnmount() {
     const { user } = this.props;
-    if(user.userType === "ADMIN") {
+    if(user.user_type === "ADMIN") {
       this.props.resetAdminUser();
-    } else if(user.userType === "GMA") {
+    } else if(user.user_type === "GMA") {
       this.props.resetGmaUser();
-    } else if(user.userType === "PARENT") {
+    } else if(user.user_type === "PARENT") {
       this.props.resetParentUser();
     }
   }

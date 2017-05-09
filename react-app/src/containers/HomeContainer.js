@@ -10,7 +10,8 @@ import { ActionCreators } from '../actions';
 class HomeContainer extends Component {
 
   render() {
-    const {user} = this.props;
+    const { user } = this.props;
+    console.log("user", user)
     if(this.props.loading) {
       return (
         <LoadingIndicator text="Loading" />
@@ -18,13 +19,13 @@ class HomeContainer extends Component {
     } else {
       return (
         <div>
-          {user.kind === "Admin" &&
+          {user.user_type === "ADMIN" &&
             <AdminHome user={user}/>
           }
-          {user.kind === "Gma" &&
+          {user.user_type === "GMA" &&
             <GmaHome user={user} />
           }
-          {user.kind === "Parent" &&
+          {user.user_type === "PARENT" &&
             <ParentHome user={user} />
           }
         </div>
