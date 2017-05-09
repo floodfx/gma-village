@@ -38,7 +38,7 @@ public class LambdaProxyOutputHelper implements CORS {
   }
 
   public static LambdaProxyOutput error404() {
-    return new LambdaProxyOutput(404);
+    return error(404, "Not Found", "*");
   }
 
 }

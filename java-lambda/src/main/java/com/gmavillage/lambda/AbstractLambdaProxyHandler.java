@@ -9,6 +9,7 @@ import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.gmavillage.lambda.util.CORS;
+import com.google.common.base.MoreObjects;
 
 public abstract class AbstractLambdaProxyHandler
     implements RequestHandler<LambdaProxyEvent, LambdaProxyOutput>, CORS {
@@ -23,11 +24,12 @@ public abstract class AbstractLambdaProxyHandler
     if (context != null) {
       setContext(context);
     }
-    logInfo("Received event:" + ToStringBuilder.reflectionToString(event));
     try {
-      return processEvent(event, context);
+      logInfo("Received event:" + ToStringBuilder.reflectionToString(event));
+      final LambdaProxyOutput out = processEvent(event, context);
+      logInfo("Received output:" + ToStringBuilder.reflectionToString(out));
+      return out;
     } catch (final Exception e) {
-      logError(e.toString());
       return error("Error Processing Event", requestOrigin(event));
     }
   }
@@ -38,7 +40,10 @@ public abstract class AbstractLambdaProxyHandler
 
 
   protected String requestOrigin(final LambdaProxyEvent event) {
-    return event.getHeaders().get("origin");
+    if (event.getHeaders() != null) {
+      return MoreObjects.firstNonNull(event.getHeaders().get("origin"), "*");
+    }
+    return "*";
   }
 
   protected void logInfo(final String text) {

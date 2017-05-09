@@ -8,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.gmavillage.lambda.api.DefaultApi;
 import com.gmavillage.lambda.api.UnauthorizedExeception;
+import com.gmavillage.lambda.api.authorizer.ApiAuthorizer;
 import com.gmavillage.lambda.api.authorizer.Authorizer;
 import com.gmavillage.lambda.db.UserDB;
 import com.gmavillage.model.Admin;
@@ -28,6 +29,10 @@ public class UsersApi extends DefaultApi {
   private final Authorizer authorizer;
 
   final Gson gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
+
+  public UsersApi() {
+    this(new UserDB(), new ApiAuthorizer());
+  }
 
   public UsersApi(final UserDB userDB) {
     this(userDB, null);

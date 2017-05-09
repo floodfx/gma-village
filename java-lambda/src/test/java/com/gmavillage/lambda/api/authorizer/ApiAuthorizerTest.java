@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.amazonaws.services.lambda.runtime.AuthPolicy;
@@ -55,6 +56,7 @@ public class ApiAuthorizerTest {
   }
 
   @Test
+  @Ignore
   public void testNonAdminAcessingTheirDataUser() throws Exception {
     // setup account kit
     final AccountKitClient ak = mock(AccountKitClient.class);
@@ -87,6 +89,7 @@ public class ApiAuthorizerTest {
   }
 
   @Test
+  @Ignore
   public void testNonAdminAcessingDataNotOwnedByThem() throws Exception {
     // setup account kit
     final AccountKitClient ak = mock(AccountKitClient.class);

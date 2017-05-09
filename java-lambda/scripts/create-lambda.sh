@@ -39,4 +39,5 @@ aws lambda create-function \
   --timeout 10 \
   --query "Version" \
   --publish \
+  --memory-size 1536 \
   --profile $PROFILE

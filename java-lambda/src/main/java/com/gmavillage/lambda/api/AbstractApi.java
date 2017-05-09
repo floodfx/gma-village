@@ -1,5 +1,7 @@
 package com.gmavillage.lambda.api;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.gmavillage.lambda.api.authorizer.Authorizer;
@@ -19,9 +21,12 @@ public abstract class AbstractApi implements Authorizer {
 
   public String handleApiEvent(final LambdaProxyEvent event, final Context context)
       throws UnauthorizedExeception, Exception {
+
+    logInfo("handleApiEvent:" + ToStringBuilder.reflectionToString(event));
     this.context = context;
     final String httpMethod = event.getHttpMethod();
     final int status = authorizeRequest(event, context);
+    logInfo("status:" + status);
     if (status != 200) {
       throw new UnauthorizedExeception(status);
     }

@@ -88,7 +88,10 @@ public class AccountKitClient {
     final Request request = new Request.Builder().url(urlFor(endpoint, qs)).build();
     final Response response = httpClient.newCall(request).execute();
     if (!response.isSuccessful()) {
-      throw new IOException("Error" + response);
+      final String error =
+          "AccountKit Client error:" + response.code() + " " + response.body().string();
+      System.err.println(error);
+      throw new IOException(error);
     }
     return response.body().string();
   }

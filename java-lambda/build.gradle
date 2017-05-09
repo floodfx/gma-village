@@ -44,7 +44,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
     compile 'org.springframework:spring-jdbc:4.3.8.RELEASE'
     compile 'org.postgresql:postgresql:42.0.0'
-    compile 'org.flywaydb:flyway-core:4.1.2'  
+    compile 'org.flywaydb:flyway-core:4.1.2'
+    compile 'com.google.cloud:google-cloud-datastore:1.0.0'  
     
     compileOnly "com.google.auto.value:auto-value:1.2"
     apt         "com.google.auto.value:auto-value:1.2"
@@ -52,7 +53,7 @@ dependencies {
     // test dependencies
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-inline:2.+'
-    testCompile 'com.google.cloud:google-cloud-datastore:1.0.0'
+    
 }
 
 // Define the main class for the application

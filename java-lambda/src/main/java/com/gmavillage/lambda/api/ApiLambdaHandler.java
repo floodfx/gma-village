@@ -9,15 +9,8 @@ import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.gmavillage.lambda.AbstractLambdaProxyHandler;
 import com.gmavillage.lambda.LambdaProxyOutputHelper;
 import com.gmavillage.lambda.api.users.UsersApi;
-import com.gmavillage.lambda.db.UserDB;
 
 public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
-
-  private UserDB userDB;
-
-  public void setUserDB(final UserDB userDB) {
-    this.userDB = userDB;
-  }
 
   @Override
   protected LambdaProxyOutput processEvent(final LambdaProxyEvent event, final Context context)
@@ -32,9 +25,12 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
     logInfo("proxyPath:" + proxyPath);
     if (proxyPath.startsWith("users")) {
       try {
-        return success(new UsersApi(this.userDB).handleApiEvent(event, context),
-            requestOrigin(event));
+        logInfo("Processing User Request");
+        final UsersApi api = new UsersApi();
+        logInfo("Past API");
+        return success(api.handleApiEvent(event, context), requestOrigin(event));
       } catch (final UnauthorizedExeception e) {
+        e.printStackTrace();
         return LambdaProxyOutputHelper.error(e.getStatus(), null, requestOrigin(event));
       }
     } else {
