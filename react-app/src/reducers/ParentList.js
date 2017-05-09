@@ -1,8 +1,4 @@
-import {
-  INIT_PARENT_LIST_REQUEST,
-  INIT_PARENT_LIST_REQUEST_SUCCESS,
-  INIT_PARENT_LIST_REQUEST_FAILURE
-} from '../actions/Types'
+import * as Types from '../actions/Types';
 
 export const parentList = (state = {
   loading: true,
@@ -10,18 +6,18 @@ export const parentList = (state = {
   error: ''
 }, action) => {
   switch(action.type) {
-    case INIT_PARENT_LIST_REQUEST: {
+    case Types.INIT_PARENT_LIST_REQUEST: {
       return Object.assign({}, state, {
         loading: true
       })
     }
-    case INIT_PARENT_LIST_REQUEST_SUCCESS: {
+    case Types.INIT_PARENT_LIST_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         parents: action.parents
       })
     }
-    case INIT_PARENT_LIST_REQUEST_FAILURE: {
+    case Types.INIT_PARENT_LIST_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
         parents: [],

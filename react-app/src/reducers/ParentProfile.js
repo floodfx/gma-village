@@ -1,8 +1,4 @@
-import {
-  FETCH_PARENT_REQUEST,
-  FETCH_PARENT_REQUEST_SUCCESS,
-  FETCH_PARENT_REQUEST_FAILURE
-} from '../actions/Types';
+import * as Types from '../actions/Types';
 
 export const parentProfile = (state = {
   loading: true,
@@ -10,19 +6,19 @@ export const parentProfile = (state = {
   parent: undefined
 }, action) => {
   switch(action.type) {
-    case FETCH_PARENT_REQUEST: {
+    case Types.FETCH_PARENT_REQUEST: {
       return Object.assign({}, state, {
         loading: true
       })
     }
-    case FETCH_PARENT_REQUEST_SUCCESS: {
+    case Types.FETCH_PARENT_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         parent: action.parent,
         error: undefined
       })
     }
-    case FETCH_PARENT_REQUEST_FAILURE: {
+    case Types.FETCH_PARENT_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
         parent: undefined,

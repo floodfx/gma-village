@@ -6,11 +6,11 @@ class AuthListener {
   }
 
   listen = () => {
-    // let previousUser = this.currentUser;
+    let previousUser = this.currentUser;
     this.currentUser = this.store.getState().auth.user
-    // if(this.currentUser !== previousUser) {
-    //   console.log("user changed", this.currentUser)
-    // }
+    if(this.currentUser !== previousUser) {
+      console.log("user changed", this.currentUser)
+    }
   }
 
   loggedIn = () => {
@@ -19,21 +19,21 @@ class AuthListener {
 
   isAdmin = () => {
     if(this.loggedIn()) {
-      return this.currentUser.kind === "Admin"
+      return this.currentUser.userType === "ADMIN"
     }
     return false;
   }
 
   isParent = () => {
     if(this.loggedIn()) {
-      return this.currentUser.kind === "Parent"
+      return this.currentUser.userType === "PARENT"
     }
     return false;
   }
 
   isGma = () => {
     if(this.loggedIn()) {
-      return this.currentUser.kind === "Gma"
+      return this.currentUser.userType === "GMA"
     }
     return false;
   }

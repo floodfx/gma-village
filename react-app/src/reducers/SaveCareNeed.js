@@ -1,9 +1,4 @@
-import {
-  SAVE_CARE_NEED_REQUEST,
-  SAVE_CARE_NEED_REQUEST_SUCCESS,
-  SAVE_CARE_NEED_REQUEST_FAILURE,
-  RESET_SAVE_CARE_NEED_REQUEST
-} from '../actions/Types'
+import * as Types from '../actions/Types';
 
 export const saveCareNeed = (state = {
   saving: false,
@@ -11,26 +6,26 @@ export const saveCareNeed = (state = {
   careNeed: undefined
 }, action) => {
   switch(action.type) {
-    case SAVE_CARE_NEED_REQUEST: {
+    case Types.SAVE_CARE_NEED_REQUEST: {
       return Object.assign({}, state, {
         saving: true
       })
     }
-    case SAVE_CARE_NEED_REQUEST_SUCCESS: {
+    case Types.SAVE_CARE_NEED_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         saving: false,
         saved: true,
         careNeed: action.careNeed
       })
     }
-    case SAVE_CARE_NEED_REQUEST_FAILURE: {
+    case Types.SAVE_CARE_NEED_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         saving: false,
         saved: false,
         error: action.error
       })
     }
-    case RESET_SAVE_CARE_NEED_REQUEST: {
+    case Types.RESET_SAVE_CARE_NEED_REQUEST: {
       return Object.assign({}, state, {
         saving: false,
         saved: false,

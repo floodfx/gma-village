@@ -1,9 +1,4 @@
-import {
-  INIT_GMAS_LIST_REQUEST,
-  INIT_GMAS_LIST_REQUEST_SUCCESS,
-  INIT_GMAS_LIST_REQUEST_FAILURE,
-  FILTER_GMAS_LIST
-} from '../actions/Types'
+import * as Types from '../actions/Types';
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 import ActiveStatus from '../components/ActiveStatus';
 
@@ -21,25 +16,25 @@ export const gmasList = (state = {
   filters: defaultFilters
 }, action) => {
   switch(action.type) {
-    case INIT_GMAS_LIST_REQUEST: {
+    case Types.INIT_GMAS_LIST_REQUEST: {
       return Object.assign({}, state, {
         loading: true
       })
     }
-    case INIT_GMAS_LIST_REQUEST_SUCCESS: {
+    case Types.INIT_GMAS_LIST_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         gmas: action.gmas
       })
     }
-    case INIT_GMAS_LIST_REQUEST_FAILURE: {
+    case Types.INIT_GMAS_LIST_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
         gmas: [],
         error: action.error
       })
     }
-    case FILTER_GMAS_LIST: {
+    case Types.FILTER_GMAS_LIST: {
       let newFilters = []
       // remove filter
       if(state.filters.includes(action.filter)) {

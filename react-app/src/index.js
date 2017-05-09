@@ -3,28 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 import { reducer as formReducer } from 'redux-form'
-
-// reducers
-import adminList from './reducers/AdminList'
-import adminProfile  from './reducers/AdminProfile'
-import saveAdmin  from './reducers/SaveAdmin'
-
-import gmasList from './reducers/GmasList'
-import gmaProfile  from './reducers/GmaProfile'
-import saveGma  from './reducers/SaveGma'
-
-import saveParent  from './reducers/SaveParent'
-import parentProfile  from './reducers/ParentProfile'
-import parentList  from './reducers/ParentList'
-
-import saveCareNeed  from './reducers/SaveCareNeed'
-
-import accountKitInit  from './reducers/AccountKitInit'
-import auth  from './reducers/Auth'
-import uploadImage  from './reducers/UploadImage'
-
 import AuthListener  from './auth/AuthListener'
-
 import thunk from 'redux-thunk'
 import reducers from './reducers';
 
@@ -41,22 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const store = createStore(
-  // combineReducers({
-  //   adminList,
-  //   adminProfile,
-  //   saveAdmin,
-  //   gmasList,
-  //   gmaProfile,
-  //   saveGma,
-  //   saveParent,
-  //   parentProfile,
-  //   parentList,
-  //   saveCareNeed,
-  //   accountKitInit,
-  //   auth,
-  //   uploadImage,
-  //   form: formReducer
-  // }),
   reducers,
   applyMiddleware(...middleware)
 )
