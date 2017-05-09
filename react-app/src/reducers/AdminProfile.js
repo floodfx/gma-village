@@ -2,9 +2,9 @@ import {
   FETCH_ADMIN_REQUEST,
   FETCH_ADMIN_REQUEST_SUCCESS,
   FETCH_ADMIN_REQUEST_FAILURE
-} from '../actions/AdminProfile';
+} from '../actions/Types';
 
-const adminProfile = (state = {
+export const adminProfile = (state = {
   loading: true,
   admin: undefined,
   error: undefined
@@ -33,5 +33,3 @@ const adminProfile = (state = {
       return state;
   }
 }
-
-export default adminProfile

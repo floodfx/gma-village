@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import  { logout }  from '../actions/Auth';
+import { bindActionCreators } from 'redux';
 import { browserHistory, Link } from 'react-router';
 import FlagsBanner from '../components/FlagsBanner';
+import { ActionCreators } from '../actions';
 
 class UserNavContainer extends Component {
 
   onLogoutClick = () => {
-    this.props.dispatch(logout())
+    this.props.logout();
     browserHistory.push("/login/")
   }
 
@@ -32,8 +33,8 @@ class UserNavContainer extends Component {
             { user.kind === "Admin" &&
               <li role="presentation" className={this.matchRoute("admin")}>
                 <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/admin/list">Admins</Link>
-              </li>              
-            }          
+              </li>
+            }
             <li role="presentation" className={this.matchRoute("gma")}>
               <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/gma/list">Gmas</Link>
             </li>
@@ -41,7 +42,7 @@ class UserNavContainer extends Component {
               <li role="presentation" className={this.matchRoute("parent")}>
                 <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/parent/list">Parents</Link>
               </li>
-            }     
+            }
             { user.kind === "Parent" &&
               <li role="presentation" className={this.matchRoute("careNeed")}>
                 <Link className="gma-nav-font fw6 ttu gray tracked f4" to="/careNeed/create">Post</Link>
@@ -49,7 +50,7 @@ class UserNavContainer extends Component {
             }
             <button className="pull-right mt1 btn gma-orange-bg" onClick={() => this.onLogoutClick()}>Log out</button>
           </ul>
-          
+
         </nav>
         <FlagsBanner />
         </div>
@@ -68,4 +69,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(UserNavContainer)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserNavContainer)

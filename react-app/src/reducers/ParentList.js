@@ -2,9 +2,9 @@ import {
   INIT_PARENT_LIST_REQUEST,
   INIT_PARENT_LIST_REQUEST_SUCCESS,
   INIT_PARENT_LIST_REQUEST_FAILURE
-} from '../actions/ParentListContainer'
+} from '../actions/Types'
 
-const parentList = (state = {
+export const parentList = (state = {
   loading: true,
   parents: [],
   error: ''
@@ -27,10 +27,8 @@ const parentList = (state = {
         parents: [],
         error: action.error
       })
-    }    
+    }
     default:
       return state;
   }
 }
-
-export default parentList

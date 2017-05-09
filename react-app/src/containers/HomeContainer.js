@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import AdminHome from '../components/AdminHome';
 import GmaHome from '../components/GmaHome';
 import ParentHome from '../components/ParentHome';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { ActionCreators } from '../actions';
 
 class HomeContainer extends Component {
 
@@ -40,4 +42,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(HomeContainer)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)

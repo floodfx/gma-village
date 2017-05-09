@@ -1,26 +1,24 @@
 import fetch from 'isomorphic-fetch';
-
-export const UPLOAD_IMAGE_REQUEST = "UPLOAD_IMAGE_REQUEST"
-export const UPLOAD_IMAGE_REQUEST_SUCCESS = "UPLOAD_IMAGE_REQUEST_SUCCESS"
-export const UPLOAD_IMAGE_REQUEST_FAILURE = "UPLOAD_IMAGE_REQUEST_FAILURE"
-export const RESET_UPLOAD_IMAGE_REQUEST = "RESET_UPLOAD_IMAGE_REQUEST"
+import rp from 'request-promise';
+import * as Types from './Types';
+import { STAGE } from '../util';
 
 export const uploadImageRequest = () => ({
-  type: UPLOAD_IMAGE_REQUEST
+  type: Types.UPLOAD_IMAGE_REQUEST
 })
 
 export const uploadImageRequestSuccess = (image_url) => ({
-  type: UPLOAD_IMAGE_REQUEST_SUCCESS,
+  type: Types.UPLOAD_IMAGE_REQUEST_SUCCESS,
   image_url
 })
 
 export const uploadImageRequestFailure = (error) => ({
-  type: UPLOAD_IMAGE_REQUEST_FAILURE,
+  type: Types.UPLOAD_IMAGE_REQUEST_FAILURE,
   error
 })
 
 export const resetUploadImageRequest = () => ({
-  type: RESET_UPLOAD_IMAGE_REQUEST
+  type: Types.RESET_UPLOAD_IMAGE_REQUEST
 })
 
 export const resetUploadImage = () => {

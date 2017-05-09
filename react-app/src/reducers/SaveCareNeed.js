@@ -3,9 +3,9 @@ import {
   SAVE_CARE_NEED_REQUEST_SUCCESS,
   SAVE_CARE_NEED_REQUEST_FAILURE,
   RESET_SAVE_CARE_NEED_REQUEST
-} from '../actions/CareNeedSave'
+} from '../actions/Types'
 
-const saveCareNeed = (state = {
+export const saveCareNeed = (state = {
   saving: false,
   saved: false,
   careNeed: undefined
@@ -41,5 +41,3 @@ const saveCareNeed = (state = {
       return state;
   }
 }
-
-export default saveCareNeed

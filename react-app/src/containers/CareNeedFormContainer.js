@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import CareNeedForm from '../components/CareNeedForm';
 import { connect } from 'react-redux';
-import { fetchParent }  from '../actions/ParentProfile';
-import { saveCareNeed, resetCareNeed }  from '../actions/CareNeedSave';
-import { fetchGmas } from '../actions/GmasListContainer';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 import {
   matchGmasToCareNeed
 } from '../careNeed/matcher';
@@ -19,29 +17,29 @@ class CareNeedFormContainer extends Component {
   }
 
   componentWillMount() {
-    const { auth, dispatch, graphQLClient } = this.props;
+    const { auth } = this.props;
     var parentId = null;
     if(auth.user.kind === "Admin") {
-      parentId = this.props.params.parentId;      
+      parentId = this.props.params.parentId;
     } else if(auth.user.kind === "Parent") {
       parentId = auth.user.id;
     }
     if(parentId) {
-      dispatch(fetchParent(graphQLClient, parentId));   
+      this.props.fetchParent(parentId);
     }
-    dispatch(fetchGmas(graphQLClient, true))
+    this.props.fetchGmas(true);
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetCareNeed())
+    this.props.resetCareNeed();
   }
 
-  handleSubmit = (careNeed) => {    
+  handleSubmit = (careNeed) => {
     delete careNeed.careDateStartEnd; // remove profile photo from form (uploaded already)
-    const { dispatch, graphQLClient, gmas } = this.props;
+    const { gmas } = this.props;
     var matchingGmas = matchGmasToCareNeed(gmas, careNeed);
     if(matchingGmas.length > 0) {
-      dispatch(saveCareNeed(graphQLClient, careNeed, matchingGmas));
+      this.props.saveCareNeed(careNeed, matchingGmas);
     } else {
       const warning = "Unable to find Gmas who match your care requirements."
       this.setState({warning})
@@ -49,7 +47,7 @@ class CareNeedFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, parent, error, loading} = this.props;    
+    const {saving, saved, parent, error, loading} = this.props;
     const { warning } = this.state;
     if(loading) {
       return (
@@ -65,23 +63,23 @@ class CareNeedFormContainer extends Component {
       const successText = "Thank you for posting! Gmas that meet you child care need criteria will receive you post and will text you if available."
       return (
         <div>
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text={successText}/>
           }
-          {warning && 
+          {warning &&
             <Alert type="warning" heading="Uh oh..." text={warning} />
           }
-          {error && 
+          {error &&
             <Alert type="danger" heading="Error" text={error} />
           }
-          <CareNeedForm 
+          <CareNeedForm
             heading="Post a Care Request"
             description="Post the details of your child care need and available Gmas will text you back."
-            onSubmit={this.handleSubmit} 
-            saving={saving} 
+            onSubmit={this.handleSubmit}
+            saving={saving}
             initialValues={initialValues}
             />
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text={successText}/>
           }
         </div>
@@ -109,4 +107,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(CareNeedFormContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CareNeedFormContainer)

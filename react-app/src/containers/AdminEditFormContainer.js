@@ -1,34 +1,30 @@
 import React, { Component } from 'react';
 import AdminForm from '../components/AdminForm';
 import { connect } from 'react-redux';
-import  { fetchAdmin }  from '../actions/AdminProfile';
-import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
-import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class AdminEditFormContainer extends Component {
 
   componentWillMount() {
-    const adminId = this.props.params.adminId;    
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(fetchAdmin(graphQLClient, adminId))
+    const adminId = this.props.params.adminId;
+    this.props.fetchAdmin(adminId);
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetAdminUser())
-    this.props.dispatch(resetUploadImage())
+    this.props.resetAdminUser();
+    this.props.resetUploadImage();
   }
 
-  handleSubmit = (values) => {    
+  handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(saveAdminUser(graphQLClient, values));
+    this.props.saveAdminUser(values);
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
+    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
   }
 
   render() {
@@ -40,21 +36,21 @@ class AdminEditFormContainer extends Component {
     } else {
       return (
         <div>
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Admin." />
           }
-          {error && 
+          {error &&
             <Alert type="danger" heading="Error" text={error} />
           }
-          <AdminForm 
+          <AdminForm
             heading="Edit Admin"
-            onSubmit={this.handleSubmit} 
-            handleFile={this.handleFile} 
-            saving={saving} 
+            onSubmit={this.handleSubmit}
+            handleFile={this.handleFile}
+            saving={saving}
             profilePhotoUrl={profilePhotoUrl || admin.profilePhotoUrl}
             initialValues={admin}
             />
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Admin." />
           }
         </div>
@@ -83,4 +79,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(AdminEditFormContainer))
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminEditFormContainer)

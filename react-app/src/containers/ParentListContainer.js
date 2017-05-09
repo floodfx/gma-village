@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import ParentList from '../components/ParentList';
 import { connect } from 'react-redux';
-import  { fetchParents }  from '../actions/ParentListContainer';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
 
 class ParentListContainer extends Component {
 
   componentWillMount() {
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(fetchParents(graphQLClient));
+    this.props.fetchParents();
   }
 
   render() {
@@ -38,4 +37,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(ParentListContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ParentListContainer)

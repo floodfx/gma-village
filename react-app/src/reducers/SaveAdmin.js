@@ -3,9 +3,9 @@ import {
   SAVE_ADMIN_USER_REQUEST_SUCCESS,
   SAVE_ADMIN_USER_REQUEST_FAILURE,
   RESET_SAVE_ADMIN_USER_REQUEST
-} from '../actions/AdminSave'
+} from '../actions/Types'
 
-const saveAdmin = (state = {
+export const saveAdmin = (state = {
   saving: false,
   saved: false,
   admin: {}
@@ -41,5 +41,3 @@ const saveAdmin = (state = {
       return state;
   }
 }
-
-export default saveAdmin

@@ -1,27 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import GmasList from '../components/GmasList'
 import GmasFilter from '../components/GmasFilter'
-import { connect } from 'react-redux'
-import  { fetchGmas, filterGmasList }  from '../actions/GmasListContainer'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import  { Availability, CareAge, CareLocation, Neighborhood }  from 'gma-village-data-model'
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 export const WILLING_TO_TRAVEL = "willingToTravel"
 
 class GmasListContainer extends Component {
 
   componentWillMount() {
-    const { dispatch, graphQLClient, user } = this.props;
-    if(user && user.kind === 'Admin') {
-      dispatch(fetchGmas(graphQLClient));
+    const { fetchGmas, user } = this.props;
+    if(user && user.userType === 'ADMIN') {
+      fetchGmas();
     } else {
-      dispatch(fetchGmas(graphQLClient, true));
+      fetchGmas(true);
     }
-    
+
   }
 
   onFilterClick = (vals) => {
-    vals.forEach((val) => this.props.dispatch(filterGmasList(val)))
+    vals.forEach((val) => this.props.filterGmasList(val));
   }
 
   render() {
@@ -38,8 +38,8 @@ class GmasListContainer extends Component {
         </div>
         <div className="row">
           <div className="mb3 col-xs-12 col-sm-12 col-md-12 gma-orange-border">
-            <GmasFilter 
-              filters={this.props.filters} 
+            <GmasFilter
+              filters={this.props.filters}
               onFilterClick={this.onFilterClick}
               user={this.props.user} />
           </div>
@@ -104,4 +104,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(GmasListContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GmasListContainer)

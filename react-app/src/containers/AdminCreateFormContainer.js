@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
 import AdminForm from '../components/AdminForm';
 import { connect } from 'react-redux';
-import  { fetchAuthCookie }  from '../actions/Auth';
-import  { saveAdminUser, resetAdminUser }  from '../actions/AdminSave';
-import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
+import { bindActionCreators } from 'redux';
 import { Role } from 'gma-village-data-model';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class AdminCreateFormContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchAuthCookie())
+    this.props.fetchAuthCookie();
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetAdminUser())
-    this.props.dispatch(resetUploadImage())
+    this.props.resetAdminUser();
+    this.props.resetUploadImage();
   }
 
-  handleSubmit = (values) => {    
+  handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(saveAdminUser(graphQLClient, values))
+    this.props.saveAdminUser(values);
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
+    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
   }
 
   render() {
@@ -39,17 +36,17 @@ class AdminCreateFormContainer extends Component {
     } else {
       return (
         <div>
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Admin." />
           }
-          {error && 
+          {error &&
             <Alert type="danger" heading="Error" text={error} />
           }
-          <AdminForm 
+          <AdminForm
             heading="Create Admin"
-            onSubmit={this.handleSubmit} 
-            handleFile={this.handleFile} 
-            saving={saving} 
+            onSubmit={this.handleSubmit}
+            handleFile={this.handleFile}
+            saving={saving}
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={{
               active: false,
@@ -57,7 +54,7 @@ class AdminCreateFormContainer extends Component {
               kind: "Admin"
             }}
           />
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Admin." />
           }
         </div>
@@ -81,5 +78,8 @@ const mapStateToProps = (state) => {
     profilePhotoUrl: uploadImage.image_url
   }
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
 
-export default injectGraphQLClient(connect(mapStateToProps)(AdminCreateFormContainer))
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCreateFormContainer)

@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react';
-import { connect } from 'react-redux'
-import  { initAccountKit }  from '../actions/AccountKitContainer';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
 
 class AccountKitContainer extends Component {
 
@@ -10,12 +10,12 @@ class AccountKitContainer extends Component {
   }
 
   componentWillMount() {
-    const {dispatch, graphQLClient} = this.props;
+    const {initAccountKit} = this.props;
     if(window.AccountKit) {
-      dispatch(initAccountKit(graphQLClient))
+      initAccountKit();
     } else {
       window.AccountKit_OnInteractive = () => {
-        dispatch(initAccountKit(graphQLClient))
+        initAccountKit();
       }
     }
   }
@@ -61,4 +61,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(AccountKitContainer))
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountKitContainer)

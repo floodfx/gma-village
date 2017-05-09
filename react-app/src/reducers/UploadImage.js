@@ -3,9 +3,9 @@ import {
   UPLOAD_IMAGE_REQUEST_SUCCESS,
   UPLOAD_IMAGE_REQUEST_FAILURE,
   RESET_UPLOAD_IMAGE_REQUEST
-} from '../actions/UploadImage'
+} from '../actions/Types'
 
-const uploadImage = (state = {
+export const uploadImage = (state = {
   loading: false
 }, action) => {
   switch(action.type) {
@@ -36,5 +36,3 @@ const uploadImage = (state = {
       return state;
   }
 }
-
-export default uploadImage

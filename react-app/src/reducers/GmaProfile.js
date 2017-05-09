@@ -2,9 +2,9 @@ import {
   FETCH_GMA_REQUEST,
   FETCH_GMA_REQUEST_SUCCESS,
   FETCH_GMA_REQUEST_FAILURE
-} from '../actions/GmaProfile';
+} from '../actions/Types';
 
-const gmaProfile = (state = {
+export const gmaProfile = (state = {
   loading: true,
   error: undefined,
   gma: undefined
@@ -32,5 +32,3 @@ const gmaProfile = (state = {
       return state;
   }
 }
-
-export default gmaProfile

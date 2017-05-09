@@ -2,7 +2,7 @@ import {
   ACCOUNT_KIT_AUTH_REQUEST,
   ACCOUNT_KIT_AUTH_REQUEST_SUCCESS,
   ACCOUNT_KIT_AUTH_REQUEST_FAILURE
-} from '../actions/AccountKitContainer'
+} from '../actions/Types'
 
 import {
   CHECK_AUTH_COOKIE,
@@ -15,7 +15,7 @@ import {
   LOGOUT_REQUEST
 } from '../actions/Auth'
 
-const auth = (state = {
+export const auth = (state = {
   loading: false
 }, action) => {
   switch(action.type) {
@@ -56,7 +56,8 @@ const auth = (state = {
     }
     case CURRENT_USER_REQUEST: {
       return Object.assign({}, state, {
-        loading: true
+        loading: true,
+        access_token: action.access_token
       })
     }
     case CURRENT_USER_REQUEST_SUCCESS: {
@@ -81,5 +82,3 @@ const auth = (state = {
       return state;
   }
 }
-
-export default auth

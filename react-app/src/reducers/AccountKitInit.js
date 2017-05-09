@@ -1,10 +1,6 @@
-import {
-  INIT_ACCOUNT_KIT_REQUEST,
-  INIT_ACCOUNT_KIT_REQUEST_SUCCESS,
-  INIT_ACCOUNT_KIT_REQUEST_FAILURE
-} from '../actions/AccountKitContainer'
+import * as Types from '../actions/Types';
 
-const accountKitInit = (state = {
+export const accountKitInit = (state = {
   appId: '',
   version: '',
   csrf: '',
@@ -12,12 +8,12 @@ const accountKitInit = (state = {
   inited: false
 }, action) => {
   switch(action.type) {
-    case INIT_ACCOUNT_KIT_REQUEST: {
+    case Types.INIT_ACCOUNT_KIT_REQUEST: {
       return Object.assign({}, state, {
         loading: true
       })
     }
-    case INIT_ACCOUNT_KIT_REQUEST_SUCCESS: {
+    case Types.INIT_ACCOUNT_KIT_REQUEST_SUCCESS: {
       return Object.assign({}, state, {
         loading: false,
         appId: action.appId,
@@ -26,7 +22,7 @@ const accountKitInit = (state = {
         inited: true
       })
     }
-    case INIT_ACCOUNT_KIT_REQUEST_FAILURE: {
+    case Types.INIT_ACCOUNT_KIT_REQUEST_FAILURE: {
       return Object.assign({}, state, {
         loading: false,
         error: action.error
@@ -36,5 +32,3 @@ const accountKitInit = (state = {
       return state;
   }
 }
-
-export default accountKitInit

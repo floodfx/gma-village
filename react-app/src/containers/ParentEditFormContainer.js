@@ -1,34 +1,30 @@
 import React, { Component } from 'react';
 import ParentForm from '../components/ParentForm';
 import { connect } from 'react-redux';
-import  { fetchParent }  from '../actions/ParentProfile';
-import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
-import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class ParentEditFormContainer extends Component {
 
   componentWillMount() {
     const parentId = this.props.params.parentId;
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(fetchParent(graphQLClient, parentId));
+    this.props.fetchParent(parentId);
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetParentUser())
-    this.props.dispatch(resetUploadImage())
+    this.props.resetParentUser();
+    this.props.resetUploadImage();
   }
 
-  handleSubmit = (values) => {    
+  handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(saveParentUser(graphQLClient, values));
+    this.props.saveParentUser(values);
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
+    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
   }
 
   render() {
@@ -40,21 +36,21 @@ class ParentEditFormContainer extends Component {
     } else {
       return (
         <div>
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Parent." />
           }
-          {error && 
+          {error &&
             <Alert type="danger" heading="Error" text={error} />
           }
-          <ParentForm 
+          <ParentForm
             heading="Edit Parent"
-            onSubmit={this.handleSubmit} 
-            handleFile={this.handleFile} 
-            saving={saving} 
+            onSubmit={this.handleSubmit}
+            handleFile={this.handleFile}
+            saving={saving}
             profilePhotoUrl={profilePhotoUrl || parent.profilePhotoUrl}
             initialValues={parent}
             />
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Parent." />
           }
         </div>
@@ -82,4 +78,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(ParentEditFormContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ParentEditFormContainer)

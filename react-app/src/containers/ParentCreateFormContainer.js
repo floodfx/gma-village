@@ -1,32 +1,29 @@
 import React, { Component } from 'react';
 import ParentForm from '../components/ParentForm';
-import  { fetchAuthCookie }  from '../actions/Auth';
 import { connect } from 'react-redux';
-import  { saveParentUser, resetParentUser }  from '../actions/ParentSave';
-import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class ParentCreateFormContainer extends Component {
 
   componentWillMount() {
-    this.props.dispatch(fetchAuthCookie())
+    this.props.fetchAuthCookie();
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetParentUser())
-    this.props.dispatch(resetUploadImage())
+    this.props.resetParentUser();
+    this.props.resetUploadImage();
   }
 
-  handleSubmit = (values) => {    
+  handleSubmit = (values) => {
     delete values.profilePhoto
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(saveParentUser(graphQLClient, values));
+    this.props.saveParentUser(values);
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
+    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
   }
 
   render() {
@@ -38,24 +35,24 @@ class ParentCreateFormContainer extends Component {
     } else {
       return (
         <div>
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Parent." />
           }
-          {error && 
+          {error &&
             <Alert type="danger" heading="Error" text={error} />
           }
-          <ParentForm 
+          <ParentForm
             heading="Create Parent"
-            onSubmit={this.handleSubmit} 
-            handleFile={this.handleFile} 
-            saving={saving} 
+            onSubmit={this.handleSubmit}
+            handleFile={this.handleFile}
+            saving={saving}
             profilePhotoUrl={this.props.profilePhotoUrl}
             initialValues={{
               kind: "Parent",
               active: false
             }}
           />
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Parent." />
           }
         </div>
@@ -79,4 +76,7 @@ ParentCreateFormContainer.defaultProps = {
   loading: false
 };
 
-export default injectGraphQLClient(connect(mapStateToProps)(ParentCreateFormContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ParentCreateFormContainer)

@@ -3,9 +3,9 @@ import {
   SAVE_PARENT_USER_REQUEST_SUCCESS,
   SAVE_PARENT_USER_REQUEST_FAILURE,
   RESET_SAVE_PARENT_USER_REQUEST
-} from '../actions/ParentSave';
+} from '../actions/Types';
 
-const saveParent = (state = {
+export const saveParent = (state = {
   saving: false,
   saved: false
 }, action) => {
@@ -40,5 +40,3 @@ const saveParent = (state = {
       return state;
   }
 }
-
-export default saveParent;

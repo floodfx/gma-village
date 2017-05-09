@@ -26,6 +26,7 @@ import uploadImage  from './reducers/UploadImage'
 import AuthListener  from './auth/AuthListener'
 
 import thunk from 'redux-thunk'
+import reducers from './reducers';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -40,22 +41,23 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const store = createStore(
-  combineReducers({
-    adminList,
-    adminProfile,
-    saveAdmin,
-    gmasList,
-    gmaProfile,    
-    saveGma,
-    saveParent,
-    parentProfile,
-    parentList,
-    saveCareNeed,
-    accountKitInit,
-    auth,
-    uploadImage,
-    form: formReducer
-  }),
+  // combineReducers({
+  //   adminList,
+  //   adminProfile,
+  //   saveAdmin,
+  //   gmasList,
+  //   gmaProfile,
+  //   saveGma,
+  //   saveParent,
+  //   parentProfile,
+  //   parentList,
+  //   saveCareNeed,
+  //   accountKitInit,
+  //   auth,
+  //   uploadImage,
+  //   form: formReducer
+  // }),
+  reducers,
   applyMiddleware(...middleware)
 )
 

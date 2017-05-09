@@ -1,24 +1,22 @@
-export const SAVE_CARE_NEED_REQUEST = "SAVE_CARE_NEED_REQUEST"
-export const SAVE_CARE_NEED_REQUEST_SUCCESS = "SAVE_CARE_NEED_REQUEST_SUCCESS"
-export const SAVE_CARE_NEED_REQUEST_FAILURE = "SAVE_CARE_NEED_REQUEST_FAILURE"
-export const RESET_SAVE_CARE_NEED_REQUEST = "RESET_SAVE_CARE_NEED_REQUEST"
-
+import rp from 'request-promise';
+import * as Types from './Types';
+import { STAGE } from '../util';
 
 export const saveCareNeedUserRequest = () => ({
-  type: SAVE_CARE_NEED_REQUEST
+  type: Types.SAVE_CARE_NEED_REQUEST
 })
 
 export const saveCareNeedUserRequestSuccess = (careNeed) => ({
-  type: SAVE_CARE_NEED_REQUEST_SUCCESS,
+  type: Types.SAVE_CARE_NEED_REQUEST_SUCCESS,
   careNeed
 })
 
 export const saveCareNeedUserRequestFailure = () => ({
-  type: SAVE_CARE_NEED_REQUEST_FAILURE
+  type: Types.SAVE_CARE_NEED_REQUEST_FAILURE
 })
 
 export const resetCareNeedUserRequest = () => ({
-  type: RESET_SAVE_CARE_NEED_REQUEST
+  type: Types.RESET_SAVE_CARE_NEED_REQUEST
 })
 
 export const resetCareNeed = () => {
@@ -32,7 +30,7 @@ export const saveCareNeed = (graphQLClient, careNeed, matchedGmas) => {
     dispatch(saveCareNeedUserRequest());
     var gmas = matchedGmas.map(gma => {
       return {
-        id: gma.id, 
+        id: gma.id,
         phone: gma.phone
       }
     });

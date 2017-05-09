@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import GmaProfile from '../components/GmaProfile';
 import { connect } from 'react-redux';
-import  { fetchGma }  from '../actions/GmaProfile';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class GmaProfileContainer extends Component {
 
   componentWillMount() {
     const gmaId = this.props.params.gmaId;
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(fetchGma(graphQLClient, gmaId));
+    this.props.fetchGma(gmaId);
   }
 
   render() {
@@ -21,7 +20,7 @@ class GmaProfileContainer extends Component {
       );
     } else {
       return (
-        <GmaProfile 
+        <GmaProfile
           gma={gma}
           loading={loading}
           error={error}
@@ -41,4 +40,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(GmaProfileContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GmaProfileContainer)

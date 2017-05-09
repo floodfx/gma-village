@@ -3,18 +3,18 @@ import {
   INIT_GMAS_LIST_REQUEST_SUCCESS,
   INIT_GMAS_LIST_REQUEST_FAILURE,
   FILTER_GMAS_LIST
-} from '../actions/GmasListContainer'
+} from '../actions/Types'
 import {Availability, CareAge, CareLocation, Neighborhood} from 'gma-village-data-model'
 import ActiveStatus from '../components/ActiveStatus';
 
-const defaultFilters = []
+export const defaultFilters = []
   .concat(Availability.enumValues)
   .concat(CareAge.enumValues)
   .concat(CareLocation.enumValues)
   .concat(Neighborhood.enumValues)
   .concat(ActiveStatus.enumValues)
 
-const gmasList = (state = {
+export const gmasList = (state = {
   loading: true,
   gmas: [],
   error: '',
@@ -61,5 +61,3 @@ const gmasList = (state = {
       return state;
   }
 }
-
-export default gmasList

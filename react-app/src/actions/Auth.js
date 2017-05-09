@@ -1,56 +1,49 @@
+import rp from 'request-promise';
+import * as Types from './Types';
+import { AUTH_BASE } from '../util';
 import cookies from 'react-cookie';
-
-export const CHECK_AUTH_COOKIE = "CHECK_AUTH_COOKIE"
-export const CHECK_AUTH_COOKIE_SUCCESS = "CHECK_AUTH_COOKIE_SUCCESS"
-export const CHECK_AUTH_COOKIE_FAILURE = "CHECK_AUTH_COOKIE_FAILURE"
-export const SAVE_AUTH_COOKIE = "SAVE_AUTH_COOKIE"
-export const REMOVE_AUTH_COOKIE = "REMOVE_AUTH_COOKIE"
-export const CURRENT_USER_REQUEST = "CURRENT_USER_REQUEST"
-export const CURRENT_USER_REQUEST_SUCCESS = "CURRENT_USER_REQUEST_SUCCESS"
-export const CURRENT_USER_REQUEST_FAILURE = "CURRENT_USER_REQUEST_FAILURE"
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST"
 
 const COOKIE_NAME = "gv_auth"
 
 export const checkAuthCookie = () => ({
-  type: CHECK_AUTH_COOKIE
+  type: Types.CHECK_AUTH_COOKIE
 })
 
 export const checkAuthCookieSuccess = (cookie) => ({
-  type: CHECK_AUTH_COOKIE_SUCCESS,
+  type: Types.CHECK_AUTH_COOKIE_SUCCESS,
   cookie: cookie
 })
 
 export const checkAuthCookieFailure = () => ({
-  type: CHECK_AUTH_COOKIE_FAILURE
+  type: Types.CHECK_AUTH_COOKIE_FAILURE
 })
 
 export const saveAuthCookieAction = (cookie) => ({
-  type: SAVE_AUTH_COOKIE,
+  type: Types.SAVE_AUTH_COOKIE,
   cookie: cookie
 })
 
 export const removeAuthCookieAction = () => ({
-  type: REMOVE_AUTH_COOKIE
+  type: Types.REMOVE_AUTH_COOKIE
 })
 
-export const currentUserRequest = (auth_cookie) => ({
-  type: CURRENT_USER_REQUEST,
-  auth_cookie
+export const currentUserRequest = (access_token) => ({
+  type: Types.CURRENT_USER_REQUEST,
+  access_token
 })
 
 export const currentUserRequestSuccess = (user) => ({
-  type: CURRENT_USER_REQUEST_SUCCESS,
+  type: Types.CURRENT_USER_REQUEST_SUCCESS,
   user
 })
 
 export const currentUserRequestFailure = (error) => ({
-  type: CURRENT_USER_REQUEST_FAILURE,
+  type: Types.CURRENT_USER_REQUEST_FAILURE,
   error
 })
 
 export const logoutRequest = () => ({
-  type: LOGOUT_REQUEST
+  type: Types.LOGOUT_REQUEST
 })
 
 export const fetchAuthCookie = () => {
@@ -60,7 +53,7 @@ export const fetchAuthCookie = () => {
     if(cookie != null) {
       try {
         var c = JSON.parse(cookie);
-        if(c.id && c.phone && c.ak_access_token && c.ak_user_id) {
+        if(c.id && c.phone && c.account_kit_access_token && c.account_kit_user_id) {
           dispatch(checkAuthCookieSuccess(c));
         } else {
           dispatch(checkAuthCookieFailure());
@@ -88,84 +81,20 @@ export const removeAuthCookie = () => {
   }
 }
 
-export const currentUser = (graphQLClient, auth_cookie) => {
+export const currentUser = (access_token) => {
   return (dispatch) => {
-    dispatch(currentUserRequest(auth_cookie));
-    return graphQLClient.query(`
-      {
-       currentUser {
-          ... on Admin {
-            id,
-            first_name,
-            last_name,
-            phone,
-            kind,
-            active,
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp,
-            roles,
-            profilePhotoUrl
-          }
-          ... on Gma {
-            id,
-            first_name,
-            last_name,
-            phone,
-            kind,
-            active,
-            availabilities,
-            otherAvailability,
-            careAges,
-            careExperiences,
-            otherCareExperience,
-            careLocations,
-            careTrainings,
-            otherCareTraining,
-            city,
-            demeanors,
-            otherDemeanor,
-            neighborhood,
-            otherNeighborhood,
-            isAvailableOutsideNeighborhood,
-            whyCareForKidsText,
-            additionalInformationText,
-            profilePhotoUrl
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec,            
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp
-          }
-          ... on Parent {
-            id,
-            first_name,
-            last_name,
-            phone,
-            kind,
-            active,
-            last_login_timestamp,
-            created_on_timestamp,
-            member_since_timestamp,
-            profilePhotoUrl,
-            neighborhood,
-            otherNeighborhood,
-            kids {
-              first_name,
-              birthday
-            },
-            ak_access_token,
-            ak_user_id,
-            ak_token_refresh_interval_sec
-          }
-        }
-      }
-    `,).then(data => {
-        dispatch(currentUserRequestSuccess(data.currentUser))
+    dispatch(currentUserRequest(access_token));
+    var options = {
+      method: 'GET',
+      uri: `${AUTH_BASE}/accountkit/current`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      json: true
+    };
+    rp(options)
+    .then(data => {
+        dispatch(currentUserRequestSuccess(data))
     }).catch(err => {
       dispatch(currentUserRequestFailure(err))
     });

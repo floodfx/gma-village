@@ -25,7 +25,6 @@ import UserNavContainer from './containers/UserNavContainer';
 import moment from 'moment'
 import './App.css'
 import Navi from './Navi';
-import GraphQLClientProvider from './graphql/GraphQLClientProvider'
 
 const UserNavContainerWithRouter = withRouter(UserNavContainer, { withRef: true })
 
@@ -53,42 +52,33 @@ const Main = ({children}) => (
   </div>
 )
 
-const prod = process.env.NODE_ENV === 'production'
-const url = 
-  prod ? 
-    'https://gma-village-graphql-prod-dot-gma-village.appspot.com/graphql' 
-    : 
-    'http://localhost:8080/graphql'
-
 const App = ({ store, authListener }) => {
   return (
-    <Provider store={store}>    
-      <GraphQLClientProvider url={url}>  
-        <Router history={browserHistory}>
-          <Route path="/" component={Main}>
-            <IndexRedirect to="home" />
-            <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>
-            <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>
-            <Route path="/admin/edit/:adminId" component={AdminEditFormContainer} onEnter={authListener.requireAdmin}/>
-            
-            <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireUser}/>
-            <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>          
-            <Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
-            <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireUser}/>
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        <Route path="/" component={Main}>
+          <IndexRedirect to="home" />
+          <Route path="/admin/create" component={AdminCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/admin/list" component={AdminListContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/admin/edit/:adminId" component={AdminEditFormContainer} onEnter={authListener.requireAdmin}/>
 
-            <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>
-            <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>
-            <Route path="/parent/edit/:parentId" component={ParentEditFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/gma/list" component={GmasListContainer} onEnter={authListener.requireUser}/>
+          <Route path="/gma/create" component={GmaCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/gma/edit/:gmaId" component={GmaEditFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/gma/:gmaId" component={GmaProfileContainer} onEnter={authListener.requireUser}/>
 
-            <Route path="/careNeed/create" component={CareNeedFormContainer} onEnter={authListener.requireParent}/>
-            <Route path="/careNeed/create/:parentId" component={CareNeedFormContainer} onEnter={authListener.requireParent}/>
-            
-            <Route path="/login" component={LoginContainer}/>
-            <Route path="/home" component={HomeContainer} onEnter={authListener.requireUser}/>
-            <Route path="/profile" component={ProfileContainer} onEnter={authListener.requireUser}/>
-          </Route>
-        </Router>
-      </GraphQLClientProvider>
+          <Route path="/parent/list" component={ParentListContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/parent/create" component={ParentCreateFormContainer} onEnter={authListener.requireAdmin}/>
+          <Route path="/parent/edit/:parentId" component={ParentEditFormContainer} onEnter={authListener.requireAdmin}/>
+
+          <Route path="/careNeed/create" component={CareNeedFormContainer} onEnter={authListener.requireParent}/>
+          <Route path="/careNeed/create/:parentId" component={CareNeedFormContainer} onEnter={authListener.requireParent}/>
+
+          <Route path="/login" component={LoginContainer}/>
+          <Route path="/home" component={HomeContainer} onEnter={authListener.requireUser}/>
+          <Route path="/profile" component={ProfileContainer} onEnter={authListener.requireUser}/>
+        </Route>
+      </Router>
     </Provider>
   )
 }

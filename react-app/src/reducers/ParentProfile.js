@@ -2,9 +2,9 @@ import {
   FETCH_PARENT_REQUEST,
   FETCH_PARENT_REQUEST_SUCCESS,
   FETCH_PARENT_REQUEST_FAILURE
-} from '../actions/ParentProfile';
+} from '../actions/Types';
 
-const parentProfile = (state = {
+export const parentProfile = (state = {
   loading: true,
   error: undefined,
   parent: undefined
@@ -19,7 +19,7 @@ const parentProfile = (state = {
       return Object.assign({}, state, {
         loading: false,
         parent: action.parent,
-        error: undefined      
+        error: undefined
       })
     }
     case FETCH_PARENT_REQUEST_FAILURE: {
@@ -33,5 +33,3 @@ const parentProfile = (state = {
       return state;
   }
 }
-
-export default parentProfile

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Login from '../components/Login';
 import AccountKitContainer from './AccountKitContainer';
 import { connect } from 'react-redux';
-import  { accountKitAuth }  from '../actions/AccountKitContainer';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
 import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
 import { browserHistory } from 'react-router';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class LoginContainer extends Component {
 
@@ -18,18 +18,17 @@ class LoginContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(fetchAuthCookie())
+    this.props.fetchAuthCookie();
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("nextProps", nextProps)
     // call if fetchAuthCookie succeeds but only
     // when graphQLClient has the Auth header
-    if(nextProps.cookie && 
-      nextProps.graphQLClient && 
-      nextProps.graphQLClient._transport._httpOptions.headers.Authorization &&
+    if(nextProps.cookie &&
       !this.state.calledCurrentUser) {
-      const { dispatch, graphQLClient } = nextProps;
-      dispatch(currentUser(graphQLClient, nextProps.cookie));
+      console.log("calling currentUser with account_kit_access_token:"+nextProps.cookie.account_kit_access_token)
+      this.props.currentUser(nextProps.cookie.account_kit_access_token);
       this.setState({calledCurrentUser: true});
     } else if(this.props.cookie && !nextProps.cookie) {
       this.setState({calledCurrentUser: false});
@@ -41,19 +40,18 @@ class LoginContainer extends Component {
         const cookie = {
           id: user.id,
           phone: user.phone,
-          ak_access_token: user.ak_access_token,
-          ak_user_id: user.ak_user_id
+          account_kit_access_token: user.account_kit_access_token,
+          account_kit_user_id: user.account_kit_user_id
         }
-        this.props.dispatch(saveAuthCookie(cookie));
-      }      
+        this.props.saveAuthCookie(cookie);
+      }
       let redirect = this.props.location.query.redirect || "/home"
       browserHistory.push(redirect)
     }
   }
 
   auth = (csrfNonce, authCode) => {
-    const { dispatch, graphQLClient } = this.props;    
-    dispatch(accountKitAuth(graphQLClient, csrfNonce, authCode))
+    this.props.accountKitAuth(csrfNonce, authCode);
   }
 
   onLoginClick = (e) => {
@@ -97,25 +95,26 @@ class LoginContainer extends Component {
     const {loading, accountKitInited, errors} = this.props;
     return (
       <div>
-      <AccountKitContainer 
+      <AccountKitContainer
         debug={process.env.NODE_ENV !== 'production'}/>
       {(loading || !accountKitInited) &&
-        <LoadingIndicator text="Attempting to Login..." />  
+        <LoadingIndicator text="Attempting to Login..." />
       }
       {(!loading && accountKitInited) &&
-        <Login 
+        <Login
           onLoginClick={this.onLoginClick}
-          errors={errors}          
+          errors={errors}
           accountKitInited={accountKitInited}/>
       }
       </div>
-    )    
+    )
   }
 
 }
 
 const mapStateToProps = (state) => {
   const { accountKitInit, auth } = state;
+  console.log("mapStateToProps", auth);
   var errors = [];
   if(auth.error) {
     errors.push(auth.error);
@@ -132,4 +131,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(LoginContainer))
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)

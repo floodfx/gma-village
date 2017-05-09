@@ -3,9 +3,9 @@ import {
   SAVE_GMA_USER_REQUEST_SUCCESS,
   SAVE_GMA_USER_REQUEST_FAILURE,
   RESET_SAVE_GMA_USER_REQUEST
-} from '../actions/GmaSave'
+} from '../actions/Types'
 
-const saveGma = (state = {
+export const saveGma = (state = {
   saving: false,
 }, action) => {
   switch(action.type) {
@@ -39,5 +39,3 @@ const saveGma = (state = {
       return state;
   }
 }
-
-export default saveGma

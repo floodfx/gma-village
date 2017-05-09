@@ -30,9 +30,11 @@
     "redux": "3.6.0",
     "redux-form": "6.3.2",
     "redux-logger": "2.7.4",
+    "redux-saga": "0.15.3",
     "redux-thunk": "2.1.0",
     "request": "2.81.0",
     "request-promise": "4.2.0",
+    "reselect": "3.0.0",
     "tachyons": "4.5.6",
     "tachyons-cli": "1.0.10"
   },

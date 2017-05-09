@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
 import GmaForm from '../components/GmaForm';
 import { connect } from 'react-redux';
-import  { fetchGma }  from '../actions/GmaProfile';
-import  { saveGmaUser, resetGmaUser }  from '../actions/GmaSave';
-import  { uploadImage, resetUploadImage }  from '../actions/UploadImage';
+import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
-import injectGraphQLClient from '../graphql/injectGraphQLClient';
+import { ActionCreators } from '../actions';
 
 class GmaEditFormContainer extends Component {
 
   componentWillMount() {
     const gmaId = this.props.params.gmaId;
-    const { dispatch, graphQLClient } = this.props;
-    dispatch(fetchGma(graphQLClient, gmaId));
+    this.props.fetchGma(gmaId);
   }
 
   componentWillUnmount() {
-    this.props.dispatch(resetGmaUser())
-    this.props.dispatch(resetUploadImage())
+    this.props.resetGmaUser();
+    this.props.resetUploadImage();
   }
 
-  handleSubmit = (values) => {    
+  handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
     const { dispatch, graphQLClient } = this.props;
-    dispatch(saveGmaUser(graphQLClient, values));
+    this.props.saveGmaUser(values);
   }
 
   handleFile = (e) => {
-    this.props.dispatch(uploadImage(this.props.authCookie, e.target.files[0]))
+    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
   }
 
   render() {
@@ -40,22 +37,22 @@ class GmaEditFormContainer extends Component {
     } else {
       return (
         <div>
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Gma." />
           }
-          {error && 
+          {error &&
             <Alert type="danger" heading="Error" text={error} />
           }
-          <GmaForm 
+          <GmaForm
             heading="Edit Gma"
-            onSubmit={this.handleSubmit} 
-            handleFile={this.handleFile} 
-            saving={saving} 
+            onSubmit={this.handleSubmit}
+            handleFile={this.handleFile}
+            saving={saving}
             profilePhotoUrl={profilePhotoUrl || gma.profilePhotoUrl}
             initialValues={gma}
             currentUser={currentUser}
             />
-          {saved && 
+          {saved &&
             <Alert type="success" heading="Success" text="Saved Gma." />
           }
         </div>
@@ -85,4 +82,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default injectGraphQLClient(connect(mapStateToProps)(GmaEditFormContainer));
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GmaEditFormContainer)
