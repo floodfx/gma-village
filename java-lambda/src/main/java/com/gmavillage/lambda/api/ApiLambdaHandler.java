@@ -15,8 +15,8 @@ import com.gmavillage.lambda.api.users.UsersApi;
 
 public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
 
-  private static final Pattern PROXY_PATH_MATCHER =
-      Pattern.compile("(users)|(gmas)|(parents)|(admins)");
+  private static final Pattern PROXY_PATH_MATCHER = Pattern.compile(
+      "(users)(\\/\\d+){0,1}|(gmas)(\\/\\d+){0,1}|(parents)(\\/\\d+){0,1}|(admins)(\\/\\d+){0,1}");
 
   private final UsersApi usersApi;
 
