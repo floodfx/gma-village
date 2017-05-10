@@ -72,6 +72,7 @@ export const fetchGmas = (access_token, active=undefined) => {
     rp(options)
     .then(data => {
       dispatch(initGmasListRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(initGmasListRequestFailure(err))
     });

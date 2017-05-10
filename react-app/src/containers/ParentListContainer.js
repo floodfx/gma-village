@@ -7,7 +7,7 @@ import { ActionCreators } from '../actions';
 class ParentListContainer extends Component {
 
   componentWillMount() {
-    this.props.fetchParents();
+    this.props.fetchParents(this.props.auth.account_kit_access_token);
   }
 
   render() {
@@ -29,11 +29,12 @@ ParentListContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const { parentList } = state
+  const { parentList, auth } = state
   return {
     loading: parentList.loading,
     parents: parentList.parents,
     error: parentList.error,
+    auth: auth.cookie
   }
 }
 

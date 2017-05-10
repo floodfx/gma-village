@@ -117,28 +117,21 @@ export const fetchAdmin = (graphQLClient, adminId) => {
 }
 
 
-export const fetchAdmins = (graphQLClient, active=undefined, limit=undefined, nextToken=undefined) => {
+export const fetchAdmins = (access_token, active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initAdminListRequest());
-    return graphQLClient.query(`
-      query fetchAdmin($active: Boolean, $limit: Int, $nextToken: String) {
-        admins(active: $active, limit: $limit, nextToken: $nextToken) {
-          list {
-            ... on Admin {
-              id,
-              first_name,
-              last_name,
-              phone,
-              active,
-              profilePhotoUrl,
-              roles
-            }
-          },
-          nextToken
-        }
-      }
-    `,{active, limit, nextToken}).then(data => {
-        dispatch(initAdminListRequestSuccess(data.admins.list))
+    var options = {
+      method: 'GET',
+      uri: `${API_BASE}/usersapi/admins`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      json: true
+    };
+    rp(options)
+    .then(data => {
+      dispatch(initAdminListRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(initAdminListRequestFailure(err))
     });

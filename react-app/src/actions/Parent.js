@@ -1,6 +1,6 @@
 import rp from 'request-promise';
 import * as Types from './Types';
-import { STAGE } from '../util';
+import { API_BASE } from '../util';
 
 export const initParentListRequest = () => ({
   type: Types.INIT_PARENT_LIST_REQUEST
@@ -120,37 +120,21 @@ export const fetchParent = (graphQLClient, parentId) => {
 }
 
 
-export const fetchParents = (graphQLClient, active=undefined, limit=undefined, nextToken=undefined) => {
+export const fetchParents = (access_token, active=undefined, limit=undefined, nextToken=undefined) => {
   return (dispatch) => {
     dispatch(initParentListRequest());
-    return graphQLClient.query(`
-      query fetchParents($active: Boolean, $limit: Int, $nextToken: String) {
-        parents(active: $active, limit: $limit, nextToken: $nextToken) {
-          list {
-            ... on Parent {
-              id,
-              first_name,
-              last_name,
-              phone,
-              kind,
-              active,
-              last_login_timestamp,
-              created_on_timestamp,
-              member_since_timestamp,
-              profilePhotoUrl,
-              neighborhood,
-              otherNeighborhood,
-              kids {
-                first_name,
-                birthday
-              }
-            }
-          },
-          nextToken
-        }
-      }
-    `,{active, limit, nextToken}).then(data => {
-        dispatch(initParentListRequestSuccess(data.parents.list))
+    var options = {
+      method: 'GET',
+      uri: `${API_BASE}/usersapi/parents`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      json: true
+    };
+    rp(options)
+    .then(data => {
+      dispatch(initParentListRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(initParentListRequestFailure(err))
     });

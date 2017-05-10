@@ -7,7 +7,7 @@ import { ActionCreators } from '../actions';
 class AdminListContainer extends Component {
 
   componentWillMount() {
-    this.props.fetchAdmins();
+    this.props.fetchAdmins(this.props.auth.cookie.account_kit_access_token);
   }
 
   render() {
