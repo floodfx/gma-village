@@ -94,7 +94,8 @@ export const currentUser = (access_token) => {
     };
     rp(options)
     .then(data => {
-        dispatch(currentUserRequestSuccess(data))
+      dispatch(currentUserRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(currentUserRequestFailure(err))
     });

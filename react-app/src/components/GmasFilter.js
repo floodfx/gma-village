@@ -30,7 +30,7 @@ const filterBy = (header, enumValues, filters, onFilterClick, allOrNoneEnabled=f
              <a onClick={(event) => onFilterClick(filters.filter((filter) => enumValues.includes(filter)))}>none</a>)
           </span>
         }
-      </h4>      
+      </h4>
       {checkboxes}
     </div>
   )
@@ -56,7 +56,7 @@ const GmasFilter = ({filters, onFilterClick, user}) => (
       <div className="col-md-2 col-md-offset-1">
         {filterBy('Are generally available:', Availability.enumValues.filter((val) => val !== Availability.OTHER), filters, onFilterClick)}
       </div>
-      {user.kind === 'Admin' &&
+      {user.user_type === 'ADMIN' &&
         <div className="col-md-2 col-md-offset-1">
           {filterBy('Active', ActiveStatus.enumValues, filters, onFilterClick)}
         </div>

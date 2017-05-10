@@ -6,13 +6,14 @@ import imgUrl from './ImageUrl'
 class GmasList extends Component {
 
   render() {
+    console.log("props", this.props)
     if(this.props.loading) {
       return <div>Loading... </div>
     }
     else {
       const atLeastOneGma = this.props.gmas.length > 0
       return (
-        <div>          
+        <div>
           <h1 className="gma-orange">Gmas <span className="badge">{this.props.gmas.length}</span></h1>
           {!atLeastOneGma &&
             <div className="alert alert-warning" role="alert">
@@ -32,23 +33,23 @@ class GmasList extends Component {
       <div key={gma.id} className="col-xs-6 col-sm-4 col-md-3" style={{minHeight: "575px"}}>
         <div className="thumbnail">
           <Link to={`/gma/${gma.id}`}>
-            {gma.profilePhotoUrl &&
-              <img className="img-rounded img-responsive gma-orange-border" 
-                style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} 
-                src={gma.profilePhotoUrl} 
+            {gma.profile_image_url &&
+              <img className="img-rounded img-responsive gma-orange-border"
+                style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}}
+                src={gma.profile_image_url}
                 alt={`Gma ${gma.first_name}`}/>
             }
-            {!gma.profilePhotoUrl &&
-              <img className="img-rounded img-responsive gma-orange-border" 
-                style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}} 
-                src={imgUrl(gma)} 
+            {!gma.profile_image_url &&
+              <img className="img-rounded img-responsive gma-orange-border"
+                style={{objectFit: 'cover', maxWidth: '135px', maxHeight: '135px', minWidth: '135px', minHeight: '135px'}}
+                src={imgUrl(gma)}
                 alt="gmas placeholder"/>
             }
           </Link>
           <div className="caption">
             <h3 className="gma-orange text-center gma-font">
-              Gma {gma.first_name}             
-            </h3>                        
+              Gma {gma.first_name}
+            </h3>
              {!gma.active &&
                 <div className="tc mb3"><span className="f3 label label-warning">Inactive</span></div>
               }
@@ -66,8 +67,8 @@ class GmasList extends Component {
             <div className="text-center" style={{marginTop: '20px'}}>
               <p style={{fontWeight:"bold"}}>Neighborhood</p>
               <ul style={{display:"inline", padding: 0}}>
-                <li style={{listStyleType:"none"}}>{capitalizeWords(gma.neighborhood)}</li>
-                {gma.isAvailableOutsideNeighborhood &&
+                <li style={{listStyleType:"none"}}>{capitalizeWords(gma.neighborhood.name)}</li>
+                {gma.available_outside_neighborhood &&
                   <li style={{listStyleType:"none"}}>Willing to travel</li>
                 }
               </ul>

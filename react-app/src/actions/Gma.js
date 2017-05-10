@@ -1,6 +1,6 @@
 import rp from 'request-promise';
 import * as Types from './Types';
-import { STAGE } from '../util';
+import { API_BASE } from '../util';
 
 export const fetchGmaRequest = () => ({
   type: Types.FETCH_GMA_REQUEST
@@ -58,32 +58,20 @@ export const resetGmaUser = () => {
   }
 }
 
-export const fetchGmas = (graphQLClient, active=undefined, limit=undefined, nextToken=undefined) => {
+export const fetchGmas = (access_token, active=undefined) => {
   return (dispatch) => {
     dispatch(initGmasListRequest());
-    return graphQLClient.query(`
-      query fetchGmas($active: Boolean, $limit: Int, $nextToken: String) {
-        gmas(active: $active, limit: $limit, nextToken: $nextToken) {
-          list {
-            ... on Gma {
-              id,
-              first_name,
-              last_name,
-              phone,
-              active,
-              availabilities,
-              neighborhood,
-              careAges,
-              careLocations,
-              isAvailableOutsideNeighborhood,
-              profilePhotoUrl
-            }
-          },
-          nextToken
-        }
-      }
-    `,{active, limit, nextToken}).then(data => {
-        dispatch(initGmasListRequestSuccess(data.gmas.list))
+    var options = {
+      method: 'GET',
+      uri: `${API_BASE}/usersapi/gmas`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      json: true
+    };
+    rp(options)
+    .then(data => {
+      dispatch(initGmasListRequestSuccess(data))
     }).catch(err => {
       dispatch(initGmasListRequestFailure(err))
     });

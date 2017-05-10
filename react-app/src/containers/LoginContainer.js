@@ -114,7 +114,6 @@ class LoginContainer extends Component {
 
 const mapStateToProps = (state) => {
   const { accountKitInit, auth } = state;
-  console.log("mapStateToProps", auth);
   var errors = [];
   if(auth.error) {
     errors.push(auth.error);

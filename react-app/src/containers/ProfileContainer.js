@@ -53,7 +53,7 @@ class ProfileContainer extends Component {
         <LoadingIndicator text="Loading..." />
       )
     } else {
-      const {user, saving, saved, error, profilePhotoUrl} = this.props
+      const {user, saving, saved, error, profile_image_url} = this.props
       return (
         <div>
           {saved &&
@@ -62,34 +62,34 @@ class ProfileContainer extends Component {
           {error &&
             <Alert type="danger" heading="Error" text={"Error updating your profile: "+error} />
           }
-          {user.kind === "Admin" &&
+          {user.user_type === "ADMIN" &&
             <AdminForm
               heading="Edit My Profile"
               onSubmit={this.onAdminProfileSubmit}
               handleFile={this.handleFile}
               saving={this.props.saving}
-              profilePhotoUrl={profilePhotoUrl || user.profilePhotoUrl}
+              profilePhotoUrl={profile_image_url || user.profile_image_url}
               initialValues={user}
             />
           }
-          {user.kind === "Gma" &&
+          {user.user_type === "GMA" &&
             <GmaForm
               heading="Edit My Profile"
               onSubmit={this.onGmaProfileSubmit}
               handleFile={this.handleFile}
               saving={saving}
               currentUser={user}
-              profilePhotoUrl={profilePhotoUrl || user.profilePhotoUrl}
+              profilePhotoUrl={profile_image_url || user.profile_image_url}
               initialValues={user}
             />
           }
-          {user.kind === "Parent" &&
+          {user.user_type === "PARENT" &&
             <ParentForm
               heading="Edit My Profile"
               onSubmit={this.onParentProfileSubmit}
               handleFile={this.handleFile}
               saving={saving}
-              profilePhotoUrl={profilePhotoUrl || user.profilePhotoUrl}
+              profilePhotoUrl={profile_image_url || user.profile_image_url}
               initialValues={user}
               currentUser={user}
             />
@@ -113,7 +113,7 @@ const mapStateToProps = (state) => {
     saving: saveAdmin.saving || saveGma.saving || saveParent.saving,
     error: saveAdmin.error || saveGma.error || saveParent.error,
     saved: saveAdmin.saved || saveGma.saved || saveParent.saved,
-    profilePhotoUrl: uploadImage.image_url
+    profile_image_url: uploadImage.image_url
   }
 }
 

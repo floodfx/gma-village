@@ -19,9 +19,9 @@ class CareNeedFormContainer extends Component {
   componentWillMount() {
     const { auth } = this.props;
     var parentId = null;
-    if(auth.user.kind === "Admin") {
+    if(auth.user.user_type === "ADMIN") {
       parentId = this.props.params.parentId;
-    } else if(auth.user.kind === "Parent") {
+    } else if(auth.user.user_type === "PARENT") {
       parentId = auth.user.id;
     }
     if(parentId) {

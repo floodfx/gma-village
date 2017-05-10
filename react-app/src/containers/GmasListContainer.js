@@ -13,9 +13,9 @@ class GmasListContainer extends Component {
   componentWillMount() {
     const { fetchGmas, user } = this.props;
     if(user && user.user_type === 'ADMIN') {
-      fetchGmas();
+      fetchGmas(user.account_kit_access_token);
     } else {
-      fetchGmas(true);
+      fetchGmas(user.account_kit_access_token, true);
     }
 
   }
@@ -69,24 +69,25 @@ const filterGmas = (gmas, filters) => {
   let ageFilters = filters.filter((filter) => filter.constructor === CareAge)
   let neighFilters = filters.filter((filter) => filter.constructor === Neighborhood)
   let activeStatusFilters = filters.filter((filter) => filter.constructor === Object)
-  console.log("activeStatusFilters", activeStatusFilters)
   return gmas.filter((gma) => {
     let availRes = availFilters.reduce((prev, curr) => {
         return prev |= gma.availabilities.includes(curr.name)
       }, false);
     let locRes = locFilters.reduce((prev, curr) => {
-      return prev |= gma.careLocations.includes(curr.name)
+      var currName = curr.name === 'PROVIDERS_HOME' ? 'PROVIDERS_HOME' : 'ELSEWHERE';
+      return prev |= gma.care_locations.includes(currName)
     }, false)
     let ageRes = ageFilters.reduce((prev, curr) => {
-      return prev |= gma.careAges.includes(curr.name)
+      return prev |= gma.care_ages.includes(curr.name)
     }, false)
-    let willingToTravelFilterAndGmaAvail = (filters.includes(WILLING_TO_TRAVEL) && gma.isAvailableOutsideNeighborhood)
+    let willingToTravelFilterAndGmaAvail = (filters.includes(WILLING_TO_TRAVEL) && gma.available_outside_neighborhood)
     let neighRes = neighFilters.reduce((prev, curr) => {
-      return prev |= (gma.neighborhood === curr.name)
+      return prev |= (gma.neighborhood.label === curr.name)
     }, false)
     let activeRes = activeStatusFilters.reduce((prev, curr) => {
       return prev &= gma.active
     }, true)
+    // console.log(availRes, locRes, ageRes, neighRes, willingToTravelFilterAndGmaAvail, activeRes, (availRes && locRes && ageRes && (neighRes || willingToTravelFilterAndGmaAvail) && activeRes))
     return availRes && locRes && ageRes && (neighRes || willingToTravelFilterAndGmaAvail) && activeRes;
   })
 }
@@ -94,6 +95,7 @@ const filterGmas = (gmas, filters) => {
 const mapStateToProps = (state) => {
   const { gmasList, auth } = state
   const gmas = filterGmas(gmasList.gmas, gmasList.filters)
+  // console.log("gmas after filter", gmas)
   return {
     loading: gmasList.loading,
     gmas: gmas,
