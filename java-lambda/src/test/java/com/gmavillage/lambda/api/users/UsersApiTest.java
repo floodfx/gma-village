@@ -14,7 +14,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
+import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.gmavillage.lambda.accountkit.AccountKitClient;
+import com.gmavillage.lambda.api.ApiLambdaHandler;
 import com.gmavillage.lambda.api.UnauthorizedExeception;
 import com.gmavillage.lambda.api.authorizer.ApiAuthorizer;
 import com.gmavillage.lambda.db.UserDB;
@@ -35,6 +37,7 @@ public class UsersApiTest {
   TestUtils testUtils = new TestUtils();
 
   LambdaProxyEvent getUsersSuccess;
+  LambdaProxyEvent getGmasSuccess;
   LambdaProxyEvent getUsers1Success;
   LambdaProxyEvent postUserSuccess;
   LambdaProxyEvent putUserSuccess;
@@ -54,6 +57,7 @@ public class UsersApiTest {
   public void loadEvent() throws Exception {
     getUsersSuccess =
         testUtils.loadJsonFile("test_LambdaProxyEvent_usersapi_GET_users_success.json");
+    getGmasSuccess = testUtils.loadJsonFile("test_LambdaProxyEvent_usersapi_GET_gmas_success.json");
     getUsers1Success =
         testUtils.loadJsonFile("test_LambdaProxyEvent_usersapi_GET_users_1_success.json");
 
@@ -282,6 +286,71 @@ public class UsersApiTest {
     final String expectedJson = gson.toJson(gma);
     Assert.assertEquals(expectedJson, json);
     verify(userDB).updateGma(gma);
+  }
+
+  @Test
+  public void testGetAllGmas() throws Exception {
+
+    final List<Gma> gmas = Lists.newArrayList(gma);
+    when(userDB.getAllGmas()).thenReturn(gmas);
+
+    UsersApi api = new UsersApi(userDB);
+    String json = api.handleHttpGet(getGmasSuccess, null);
+    final String expectedJson = gson.toJson(gmas);
+    Assert.assertEquals(expectedJson, json);
+
+    // test through api
+    json = api.handleApiEvent(getGmasSuccess, null);
+    Assert.assertEquals(expectedJson, json);
+
+    // send through ApiLambdaHandler
+    LambdaProxyOutput out = new ApiLambdaHandler().handleRequest(getGmasSuccess, null);
+    // expect unauthenticated error
+    Assert.assertEquals(401, out.getStatusCode());
+
+    // mock authenticate
+    final AccountKitClient ak = mock(AccountKitClient.class);
+    final AccountKitUser akUser = new AccountKitUser();
+    akUser.setId("akUserId");
+    when(ak.me("ACCESS_TOKEN")).thenReturn(akUser);
+    when(userDB.getUserByAccountKitUserId("akUserId")).thenReturn(parent);
+
+    api = new UsersApi(userDB, new ApiAuthorizer(ak, userDB));
+    getGmasSuccess.getHeaders().put("Authorization", "Bearer ACCESS_TOKEN");
+
+    out = new ApiLambdaHandler(api).handleRequest(getGmasSuccess, null);
+
+    // expect unauthenticated error
+    Assert.assertEquals(200, out.getStatusCode());
+  }
+
+  @Test
+  public void testParentCanListGmas() throws Exception {
+    final List<Gma> gmas = Lists.newArrayList(gma);
+    when(userDB.getAllGmas()).thenReturn(gmas);
+
+    UsersApi api = new UsersApi(userDB, new ApiAuthorizer());
+
+    // change path id to 4 to test parent
+    getUsersSuccess.setPath("dev/api/gmas");
+    final Map<String, String> proxyPath = Maps.newHashMap();
+    proxyPath.put("proxy", "gmas");
+    getUsersSuccess.setPathParameters(proxyPath);
+
+    // add auth header and mock lookup to database
+    final AccountKitClient ak = mock(AccountKitClient.class);
+    final AccountKitUser akUser = new AccountKitUser();
+    akUser.setId("akUserId");
+    when(ak.me("ACCESS_TOKEN")).thenReturn(akUser);
+    when(userDB.getUserByAccountKitUserId("akUserId")).thenReturn(parent);
+
+    api = new UsersApi(userDB, new ApiAuthorizer(ak, userDB));
+    getUsersSuccess.getHeaders().put("Authorization", "Bearer ACCESS_TOKEN");
+
+    final String json = api.handleApiEvent(getUsersSuccess, null);
+    final String expectedJson = gson.toJson(gmas);
+    Assert.assertEquals(expectedJson, json);
+    verify(userDB).getAllGmas();
   }
 
 

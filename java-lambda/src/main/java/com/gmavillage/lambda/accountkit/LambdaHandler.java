@@ -17,6 +17,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.gmavillage.lambda.AbstractLambdaProxyHandler;
+import com.gmavillage.lambda.api.authorizer.AuthHelper;
 import com.gmavillage.lambda.db.UserDB;
 import com.gmavillage.lambda.model.accountkit.AccountKitUser;
 import com.gmavillage.lambda.model.accountkit.AccountKitUserAccessToken;
@@ -59,9 +60,21 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
         return initAccountKit(event, context);
       case "authorize":
         return authorize(event, context);
+      case "current":
+        return current(event, context);
       default:
         return error404();
     }
+  }
+
+  private LambdaProxyOutput current(final LambdaProxyEvent event, final Context context)
+      throws Exception {
+    final String accessToken = AuthHelper.accessTokenFromAuthHeader(event);
+    if (accessToken != null) {
+      final User user = AuthHelper.userByAccountKitAccessToken(accessToken, accountKit, userDB);
+      return lookupUserByType(event, user);
+    }
+    return error("{\"error\": \"User Not Found\"}", requestOrigin(event));
   }
 
   private LambdaProxyOutput authorize(final LambdaProxyEvent event, final Context context)
@@ -95,24 +108,7 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
                 OffsetDateTime.now().plus(akToken.getTokenRefreshIntervalSec(), SECONDS));
             // save changes
             user = userDB.updateUser(user);
-            // find user by type
-            switch (user.getUserType()) {
-              case ADMIN: {
-                return success(gson.toJson(userDB.getAdmin(user.getId(), false)),
-                    requestOrigin(event));
-              }
-              case PARENT: {
-                return success(gson.toJson(userDB.getParent(user.getId(), false)),
-                    requestOrigin(event));
-              }
-              case GMA: {
-                return success(gson.toJson(userDB.getGma(user.getId(), false)),
-                    requestOrigin(event));
-              }
-              default: {
-                return error("{\"error\": \"Unknown user type\"}", requestOrigin(event));
-              }
-            }
+            return lookupUserByType(event, user);
           } else {
             // user with phone not in database
             return error("{\"error\": \"Phone not registered\"}", requestOrigin(event));
@@ -129,6 +125,25 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
     }
     // empty params
     return error("{\"error\": \"Missing parameters\"}", requestOrigin(event));
+  }
+
+  private LambdaProxyOutput lookupUserByType(final LambdaProxyEvent event, final User user)
+      throws Exception {
+    // find user by type
+    switch (user.getUserType()) {
+      case ADMIN: {
+        return success(gson.toJson(userDB.getAdmin(user.getId(), false)), requestOrigin(event));
+      }
+      case PARENT: {
+        return success(gson.toJson(userDB.getParent(user.getId(), false)), requestOrigin(event));
+      }
+      case GMA: {
+        return success(gson.toJson(userDB.getGma(user.getId(), false)), requestOrigin(event));
+      }
+      default: {
+        return error("{\"error\": \"Unknown user type\"}", requestOrigin(event));
+      }
+    }
   }
 
   private LambdaProxyOutput initAccountKit(final LambdaProxyEvent event, final Context context) {

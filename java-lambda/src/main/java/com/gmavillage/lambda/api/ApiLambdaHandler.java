@@ -3,6 +3,9 @@ package com.gmavillage.lambda.api;
 import static com.gmavillage.lambda.LambdaProxyOutputHelper.success;
 import static com.google.common.base.MoreObjects.firstNonNull;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
@@ -11,6 +14,19 @@ import com.gmavillage.lambda.LambdaProxyOutputHelper;
 import com.gmavillage.lambda.api.users.UsersApi;
 
 public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
+
+  private static final Pattern PROXY_PATH_MATCHER =
+      Pattern.compile("(users)|(gmas)|(parents)|(admins)");
+
+  private final UsersApi usersApi;
+
+  public ApiLambdaHandler() {
+    this.usersApi = new UsersApi();
+  }
+
+  public ApiLambdaHandler(final UsersApi usersApi) {
+    this.usersApi = usersApi;
+  }
 
   @Override
   protected LambdaProxyOutput processEvent(final LambdaProxyEvent event, final Context context)
@@ -23,12 +39,10 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
     // otherwise see which API request is for
     final String proxyPath = firstNonNull(event.getPathParameters().get("proxy"), "");
     logInfo("proxyPath:" + proxyPath);
-    if (proxyPath.startsWith("users")) {
+    if (proxyPathSupported(proxyPath)) {
       try {
         logInfo("Processing User Request");
-        final UsersApi api = new UsersApi();
-        logInfo("Past API");
-        return success(api.handleApiEvent(event, context), requestOrigin(event));
+        return success(usersApi.handleApiEvent(event, context), requestOrigin(event));
       } catch (final UnauthorizedExeception e) {
         e.printStackTrace();
         return LambdaProxyOutputHelper.error(e.getStatus(), null, requestOrigin(event));
@@ -38,4 +52,11 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
     }
 
   }
+
+  public boolean proxyPathSupported(final String proxyPath) {
+    final Matcher matcher = PROXY_PATH_MATCHER.matcher(proxyPath);
+    return matcher.matches();
+  }
+
+
 }

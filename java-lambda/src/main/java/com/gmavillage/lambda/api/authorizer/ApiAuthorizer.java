@@ -15,7 +15,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.TokenAuthorizerContext;
 import com.gmavillage.lambda.accountkit.AccountKitClient;
 import com.gmavillage.lambda.db.UserDB;
-import com.gmavillage.lambda.model.accountkit.AccountKitUser;
 import com.gmavillage.model.User;
 import com.gmavillage.model.UserType;
 import com.google.common.base.Joiner;
@@ -26,8 +25,7 @@ public class ApiAuthorizer
   private static final int UNAUTHORIZED_401 = 401;
   private static final int FORBIDDEN_403 = 403;
   private static final int OK_200 = 200;
-  private static final String BEARERSPACE = "Bearer ";
-  private static final String AUTHORIZATION = "Authorization";
+
   private static final String APP_ID = firstNonNull(getenv("AK_APP_ID"), "AK_APP_ID");
   private static final String VERSION = firstNonNull(getenv("AK_APP_VERSION"), "AK_APP_VERSION");
   private static final String APP_SECRET = firstNonNull(getenv("AK_APP_SECRET"), "AK_APP_SECRET");
@@ -47,9 +45,9 @@ public class ApiAuthorizer
   public int authorizeRequest(final LambdaProxyEvent event, final Context context) {
 
     try {
-      final String accessToken = accessTokenFromAuthHeader(event);
+      final String accessToken = AuthHelper.accessTokenFromAuthHeader(event);
       if (accessToken != null) {
-        final User user = userByAccountKitAccessToken(accessToken);
+        final User user = AuthHelper.userByAccountKitAccessToken(accessToken, accountKit, userDB);
 
         if (user == null) {
           System.err.println("Access token did not return user.");
@@ -84,7 +82,7 @@ public class ApiAuthorizer
 
     try {
       // lookup user info from token
-      final User user = userByAccountKitAccessToken(accessToken);
+      final User user = AuthHelper.userByAccountKitAccessToken(accessToken, accountKit, userDB);
       final String principalId = user.getId().toString();
 
       // load variables for policy
@@ -129,33 +127,11 @@ public class ApiAuthorizer
 
   }
 
-  public String accessTokenFromAuthHeader(final LambdaProxyEvent event) {
-    if (event.getHeaders() != null) {
-      final String authHeader = event.getHeaders().get(AUTHORIZATION);
-      if (authHeader != null && authHeader.startsWith(BEARERSPACE)) {
-        return authHeader.substring(BEARERSPACE.length());
-      }
-    }
-    return null;
-  }
-
-  public User userByAccountKitAccessToken(final String accessToken) throws Exception {
-    final AccountKitUser akUser = accountKit.me(accessToken);
-    if (akUser != null) {
-      final User user = userDB.getUserByAccountKitUserId(akUser.getId());
-      if (user == null) {
-        throw new RuntimeException("Unauthorized");
-      }
-      return user;
-    }
-    return null;
-  }
 
   public boolean isResourceAllowed(final User user, final String httpMethod, final String path) {
     if (path == null || user == null || user.getId() == null || httpMethod == null) {
       return false;
     }
-
     switch (user.getUserType()) {
       case ADMIN:
         return true;

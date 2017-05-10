@@ -1,0 +1,56 @@
+{
+    "resource": "/api/{proxy+}",
+    "path": "/dev/usersapi/gmas",
+    "httpMethod": "GET",
+    "headers": {
+      "Accept": "application/json",
+      "Accept-Encoding": "gzip, deflate, sdch, br",
+      "Accept-Language": "en-US,en;q=0.8",
+      "CloudFront-Forwarded-Proto": "https",
+		  "CloudFront-Is-Desktop-Viewer": "true",
+			"CloudFront-Is-Mobile-Viewer": "false",
+			"CloudFront-Is-SmartTV-Viewer": "false",
+			"CloudFront-Is-Tablet-Viewer": "false",
+			"CloudFront-Viewer-Country": "US", 
+			"Host": "auth.gmavillage.com",
+			"origin": "http://localhost:3000", 
+			"Referer": "http://localhost:3000/login?redirect=%2Fhome", 
+			"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36", 
+			"Via": "2.0 9aa63176da96af27728ba1a5368ddfdd.cloudfront.net (CloudFront)", 
+			"X-Amz-Cf-Id": "vlRJ-JYP5tC246-fx6M59TmvjZxFPcIAuXBV6AY65mACc6Q27G_8hA==", 
+			"X-Amzn-Trace-Id": "Root=1-58fa5843-2497dd463659380f6b3e717e", 
+			"X-Forwarded-For": "75.166.90.252, 216.137.44.16", 
+			"X-Forwarded-Port": "443", 
+			"X-Forwarded-Proto": "https"			
+    },
+    "queryStringParameters": null,
+    "pathParameters": {
+        "proxy": "gmas"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "accountId": "XXXXXXXXX",
+        "resourceId": "afgy53",
+        "stage": "test-invoke-stage",
+        "requestId": "test-invoke-request",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": "XXXXXXXXX",
+            "cognitoIdentityId": null,
+            "caller": "XXXXXXXXX",
+            "apiKey": "test-invoke-api-key",
+            "sourceIp": "test-invoke-source-ip",
+            "accessKey": "XXXXXXXXX",
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": "arn:aws:iam::XXXXXXXXX:root",
+            "userAgent": "Apache-HttpClient/4.5.x (Java/1.8.0_102)",
+            "user": "XXXXXXXXX"
+        },
+        "resourcePath": "/api/{proxy+}",
+        "httpMethod": "GET",
+        "apiId": "6nx32kfpd7"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}
