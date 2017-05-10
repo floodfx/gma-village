@@ -8,8 +8,8 @@ import { ActionCreators } from '../actions';
 class GmaProfileContainer extends Component {
 
   componentWillMount() {
-    const gmaId = this.props.params.gmaId;
-    this.props.fetchGma(gmaId);
+    const {auth, params} = this.props;
+    this.props.fetchGma(auth.cookie.account_kit_access_token, params.gmaId);
   }
 
   render() {

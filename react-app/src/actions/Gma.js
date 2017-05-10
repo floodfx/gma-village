@@ -79,45 +79,22 @@ export const fetchGmas = (access_token, active=undefined) => {
   }
 }
 
-export const saveGmaUser = (graphQLClient, gma) => {
+export const saveGmaUser = (access_token, gma) => {
   return (dispatch) => {
     dispatch(saveGmaUserRequest());
-    return graphQLClient.query(`
-      mutation saveGmaMutation($input: GmaInput!) {
-        saveGma(input:$input) {
-          id,
-          first_name,
-          last_name,
-          phone,
-          kind,
-          active,
-          ak_access_token,
-          ak_user_id,
-          ak_token_refresh_interval_sec,
-          last_login_timestamp,
-          created_on_timestamp,
-          member_since_timestamp,
-          availabilities,
-          otherAvailability,
-          careAges,
-          careExperiences,
-          otherCareExperience,
-          careLocations,
-          careTrainings,
-          otherCareTraining,
-          city,
-          demeanors,
-          otherDemeanor,
-          neighborhood,
-          otherNeighborhood,
-          isAvailableOutsideNeighborhood,
-          whyCareForKidsText,
-          additionalInformationText,
-          profilePhotoUrl
-        }
-      }
-    `, {input: gma}).then(data => {
-        dispatch(saveGmaUserRequestSuccess(data.saveGma))
+    const method = gma.id ? 'PUT' : 'POST';
+    var options = {
+      method,
+      uri: `${API_BASE}/usersapi/gmas`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      body: gma,
+      json: true
+    };
+    rp(options)
+    .then(data => {
+        dispatch(saveGmaUserRequestSuccess(data))
     }).catch(err => {
       dispatch(saveGmaUserRequestFailure(err))
     });
@@ -125,41 +102,19 @@ export const saveGmaUser = (graphQLClient, gma) => {
 }
 
 
-const fetchGmaQuery = `
-  query fetchGma($gmaId: ID!) {
-    gma(id: $gmaId) {
-      id,
-      first_name,
-      last_name,
-      phone,
-      kind,
-      active,
-      availabilities,
-      otherAvailability,
-      careAges,
-      careExperiences,
-      otherCareExperience,
-      careLocations,
-      careTrainings,
-      otherCareTraining,
-      city,
-      demeanors,
-      otherDemeanor,
-      neighborhood,
-      otherNeighborhood,
-      isAvailableOutsideNeighborhood,
-      whyCareForKidsText,
-      additionalInformationText,
-      profilePhotoUrl
-    }
-  }
-`;
-
-export const fetchGma = (graphQLClient, gmaId) => {
+export const fetchGma = (access_token, gmaId) => {
   return (dispatch) => {
-    dispatch(fetchGmaRequest());
-    return graphQLClient.query(fetchGmaQuery, {gmaId}).then(data => {
-        dispatch(fetchGmaRequestSuccess(data.gma))
+    var options = {
+      method: 'GET',
+      uri: `${API_BASE}/usersapi/gmas/${gmaId}`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      json: true
+    };
+    rp(options)
+    .then(data => {
+        dispatch(fetchGmaRequestSuccess(data))
     }).catch(err => {
       dispatch(fetchGmaRequestFailure(err))
     });
