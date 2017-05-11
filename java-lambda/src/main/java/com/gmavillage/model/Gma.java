@@ -20,7 +20,6 @@ public class Gma extends User {
   private List<String> careTrainings = Lists.newArrayList();
   private Neighborhood neighborhood;
 
-
   private String otherNeighborhood;
   private boolean availableOutsideNeighborhood;
   private String whyCareForKids;

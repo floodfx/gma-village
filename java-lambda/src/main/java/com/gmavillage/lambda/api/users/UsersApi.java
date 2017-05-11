@@ -1,7 +1,5 @@
 package com.gmavillage.lambda.api.users;
 
-import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
-
 import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -16,19 +14,17 @@ import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
 import com.gmavillage.model.UserType;
+import com.gmavillage.model.json.GsonFactory;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 public class UsersApi extends DefaultApi {
 
-  private static final String USERS = "users";
-
   private final UserDB userDB;
   private final Authorizer authorizer;
 
-  final Gson gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
+  private final Gson gson = GsonFactory.getGson();
 
   public UsersApi() {
     this(new UserDB(), new ApiAuthorizer());

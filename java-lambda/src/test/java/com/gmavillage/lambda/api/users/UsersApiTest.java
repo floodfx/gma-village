@@ -1,6 +1,5 @@
 package com.gmavillage.lambda.api.users;
 
-import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,11 +24,11 @@ import com.gmavillage.model.Admin;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
+import com.gmavillage.model.json.GsonFactory;
 import com.gmavillage.test.TestUtils;
 import com.google.api.client.util.Maps;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 public class UsersApiTest {
@@ -51,7 +50,7 @@ public class UsersApiTest {
 
   UserDB userDB;
 
-  final Gson gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
+  private final Gson gson = GsonFactory.getGson();
 
   @Before
   public void loadEvent() throws Exception {

@@ -338,7 +338,22 @@ public class ImportFromDatastore {
           g.setCareLocationsStrings(toStringList(e, CARE_LOCATIONS));
           break;
         case CARE_TRAININGS:
-          g.setCareTrainings(toStringList(e, CARE_TRAININGS));
+          g.setCareTrainings(toStringList(e, CARE_TRAININGS).stream().map(it -> {
+            switch (it) {
+              case "HEALTH_AND_SAFETY":
+                return "Health and Safety";
+              case "CPR_AND_FIRST_AID":
+                return "CPR and First Aid";
+              case "PREVENTATIVE_HEALTH":
+                return "Preventative Health";
+              case "CHILDCENTERED_ART":
+                return "Child-centered Art";
+              case "OTHER":
+                return "Other";
+              default:
+                return "";
+            }
+          }).collect(Collectors.toList()));
           break;
         case OTHER_CARE_TRAINING:
           // add other care training to list since care trainings are now just strings
