@@ -1,5 +1,7 @@
 package com.gmavillage.model;
 
+import java.util.List;
+
 import com.google.common.collect.Lists;
 
 public class Neighborhoods {
@@ -27,6 +29,10 @@ public class Neighborhoods {
       new Neighborhood(11, Cities.OAKLAND, "Castro Valley", "CASTRO_VALLEY");
   public static final Neighborhood OTHER_OAKLAND =
       new Neighborhood(12, Cities.OAKLAND, "Other", "OTHER_OAKLAND");
+
+  public static final List<Neighborhood> NEIGHBORHOODS =
+      Lists.newArrayList(WEST_OAKLAND, EAST_OAKLAND, CENTRAL_OAKLAND, NORTH_OAKLAND, BERKELEY,
+          EMERYVILLE, PIEDMONT, ALBANY, ALAMEDA, CASTRO_VALLEY, OTHER_OAKLAND);
 
   public static Neighborhood byLabel(final String label) {
     return Lists
