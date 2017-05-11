@@ -24,11 +24,11 @@ class AdminCreateFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
+    this.props.preUploadImageRequest(e.target.files[0]);
   }
 
   render() {
-    const {saving, saved, error, loading} = this.props;
+    const {saving, saved, error, loading, profile_image_url} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -47,10 +47,10 @@ class AdminCreateFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profile_image_url={this.props.profile_image_url}
+            profile_image_url={profile_image_url}
+            profile_image_loading={this.props.profile_image_loading}
             initialValues={{
               active: false,
-              roles: [Role.ADMIN.name],
               user_type: "ADMIN"
             }}
           />
@@ -75,7 +75,9 @@ const mapStateToProps = (state) => {
     saving: saveAdmin.saving,
     error: saveAdmin.error,
     saved: saveAdmin.saved,
-    profile_image_url: uploadImage.image_url
+    signed_url: uploadImage.signed_url,
+    profile_image_url: uploadImage.image_url,
+    profile_image_loading: uploadImage.loading
   }
 }
 function mapDispatchToProps(dispatch) {

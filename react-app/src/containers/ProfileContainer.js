@@ -81,6 +81,7 @@ class ProfileContainer extends Component {
               saving={saving}
               currentUser={user}
               profile_image_url={profile_image_url || user.profile_image_url}
+              profile_image_loading={this.props.profile_image_loading}
               initialValues={user}
             />
           }
@@ -91,6 +92,7 @@ class ProfileContainer extends Component {
               handleFile={this.handleFile}
               saving={saving}
               profile_image_url={profile_image_url || user.profile_image_url}
+              profile_image_loading={this.props.profile_image_loading}
               initialValues={user}
               currentUser={user}
             />

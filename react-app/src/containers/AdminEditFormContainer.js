@@ -25,7 +25,7 @@ class AdminEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
+    this.props.preUploadImageRequest(e.target.files[0]);
   }
 
   render() {
@@ -49,6 +49,7 @@ class AdminEditFormContainer extends Component {
             handleFile={this.handleFile}
             saving={saving}
             profile_image_url={profile_image_url || admin.profile_image_url}
+            profile_image_loading={this.props.profile_image_loading}
             initialValues={admin}
             />
           {saved &&
@@ -71,12 +72,14 @@ const mapStateToProps = (state) => {
   const { auth, adminProfile, saveAdmin, uploadImage } = state
   return {
     authCookie: auth.cookie,
+    loading: adminProfile.loading,
     saving: saveAdmin.saving,
     error: saveAdmin.error,
     admin: adminProfile.admin,
     saved: saveAdmin.saved,
+    signed_url: uploadImage.signed_url,
     profile_image_url: uploadImage.image_url,
-    loading: adminProfile.loading,
+    profile_image_loading: uploadImage.loading
   }
 }
 
