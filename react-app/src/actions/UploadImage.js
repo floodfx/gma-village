@@ -1,7 +1,27 @@
 import fetch from 'isomorphic-fetch';
 import rp from 'request-promise';
 import * as Types from './Types';
-import { STAGE } from '../util';
+import { API_BASE } from '../util';
+
+export const signedUrlRequest = (image) => ({
+  type: Types.SIGNED_URL_REQUEST,
+  image
+})
+
+export const signedUrlRequestSuccess = (signed_url) => ({
+  type: Types.SIGNED_URL_REQUEST_SUCCESS,
+  signed_url
+})
+
+export const signedUrlRequestFailure = (error) => ({
+  type: Types.SIGNED_URL_REQUEST_FAILURE,
+  error
+})
+
+export const preUploadImageRequest = (image) => ({
+  type: Types.PRE_UPLOAD_IMAGE_REQUEST,
+  image
+})
 
 export const uploadImageRequest = () => ({
   type: Types.UPLOAD_IMAGE_REQUEST
@@ -27,6 +47,30 @@ export const resetUploadImage = () => {
   }
 }
 
+export const signedUrl = (access_token, image) => {
+  return (dispatch) => {
+    dispatch(signedUrlRequest(image));
+    var options = {
+      method: 'GET',
+      uri: `${API_BASE}/usersapi/signurl`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      qs: {
+        type: image.type
+      },
+      json: true
+    };
+    rp(options)
+    .then((data) => {
+      dispatch(signedUrlRequestSuccess(data))
+    })
+    .catch(err => {
+      dispatch(signedUrlRequestFailure(err))
+    })
+  }
+}
+
 const checkForErrors = (response) => {
   console.log(response.body)
   if (!response.ok) {
@@ -35,24 +79,17 @@ const checkForErrors = (response) => {
   return response;
 }
 
-const prod = process.env.NODE_ENV === 'production'
-var urlPrefix = prod ? 'https://gma-village-graphql-prod-dot-gma-village.appspot.com' : 'http://localhost:8080'
-
-export const uploadImage = (auth, image) => {
+export const uploadImage = (signed_url, access_token, image) => {
   return (dispatch) => {
     dispatch(uploadImageRequest());
-    var data = new FormData()
-    data.append('file', image)
-
-    fetch(`${urlPrefix}/profilePhoto`, {
-      method: 'POST',
-      body: data,
-      headers: auth ? {Authorization: `Bearer ${auth.ak_access_token}`} : {}
+    console.log("image", image)
+    fetch(signed_url.url, {
+      method: 'PUT',
+      body: image
     })
     .then(checkForErrors)
-    .then(response => response.json())
-    .then((json) => {
-      dispatch(uploadImageRequestSuccess(json.image_url))
+    .then((response) => {
+      dispatch(uploadImageRequestSuccess(signed_url))
     })
     .catch(err => {
       dispatch(uploadImageRequestFailure(err))

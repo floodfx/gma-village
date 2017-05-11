@@ -44,7 +44,7 @@ class ProfileContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
+    this.props.preUploadImageRequest(e.target.files[0]);
   }
 
   render() {
@@ -69,6 +69,7 @@ class ProfileContainer extends Component {
               handleFile={this.handleFile}
               saving={this.props.saving}
               profile_image_url={profile_image_url || user.profile_image_url}
+              profile_image_loading={this.props.profile_image_loading}
               initialValues={user}
             />
           }
@@ -113,7 +114,9 @@ const mapStateToProps = (state) => {
     saving: saveAdmin.saving || saveGma.saving || saveParent.saving,
     error: saveAdmin.error || saveGma.error || saveParent.error,
     saved: saveAdmin.saved || saveGma.saved || saveParent.saved,
-    profile_image_url: uploadImage.image_url
+    signed_url: uploadImage.signed_url,
+    profile_image_url: uploadImage.image_url,
+    profile_image_loading: uploadImage.loading
   }
 }
 

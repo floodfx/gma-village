@@ -6,6 +6,8 @@ import { reducer as formReducer } from 'redux-form'
 import AuthListener  from './auth/AuthListener'
 import thunk from 'redux-thunk'
 import reducers from './reducers';
+import createSagaMiddleware from 'redux-saga';
+import sagas from './sagas';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -14,7 +16,9 @@ import './index.css'
 import './tach.css'
 import App from './App';
 
-const middleware = [thunk]
+const sagaMiddleware = createSagaMiddleware()
+
+const middleware = [thunk, sagaMiddleware]
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger())
 }
@@ -23,6 +27,8 @@ const store = createStore(
   reducers,
   applyMiddleware(...middleware)
 )
+
+sagaMiddleware.run(sagas)
 
 let authListener = new AuthListener(store)
 

@@ -22,11 +22,11 @@ class AdminForm extends Component {
   }
 
   render() {
-    const { 
-      handleSubmit, 
-      handleFile, 
-      pristine, 
-      invalid, 
+    const {
+      handleSubmit,
+      handleFile,
+      pristine,
+      invalid,
       submitting,
       heading,
       profile_image_url
@@ -42,7 +42,7 @@ class AdminForm extends Component {
               component={TextField}
               type="text"
               placeholder="First Name"
-              validate={[required, minLength(2), maxLength(20)]} />            
+              validate={[required, minLength(2), maxLength(20)]} />
           </div>
           <div className="mt4">
             <Field
@@ -69,31 +69,34 @@ class AdminForm extends Component {
               name="active"
               component={Checkbox}
               type="checkbox" />
-          </div>   
+          </div>
           <div className="mt4">
             <label>Profile Photo:</label>
             {profile_image_url &&
               <div>
-                <img 
-                className="w-100 w-20-ns gma-orange-border" 
-                src={profile_image_url} 
+                <img
+                className="w-100 w-20-ns gma-orange-border"
+                src={profile_image_url}
                 style={{
                   objectFit: 'cover'
                 }}/>
               </div>
-            }    
+            }
             <div>
-              <Field 
-                name="profilePhoto" 
-                component="input" 
-                type="file" 
+              <Field
+                name="profilePhoto"
+                component="input"
+                type="file"
                 onChange={(e) => handleFile(e)} />
-            </div>          
-          </div>        
+              {this.props.profile_image_loading &&
+                <FontAwesome name='spinner' spin={true} className="mr1"/>
+              }
+            </div>
+          </div>
           <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
           <Field name="user_type" component="input" type="hidden" />
           <Field name="roles" component="input" type="hidden" />
-          
+
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
