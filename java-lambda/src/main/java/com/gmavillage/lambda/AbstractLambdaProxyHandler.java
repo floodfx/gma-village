@@ -19,6 +19,17 @@ public abstract class AbstractLambdaProxyHandler
   protected abstract LambdaProxyOutput processEvent(final LambdaProxyEvent event,
       final Context context) throws Exception;
 
+  // protected abstract void processEvent(final InputStream input, OutputStream output,
+  // final Context context) throws Exception;
+
+  // @Override
+  // public void handleRequest(final InputStream input, final OutputStream output,
+  // final Context context) throws IOException {
+  // System.out.println("Request Stream Handler Called");
+  // final String data = new String(ByteStreams.toByteArray(input));
+  // System.out.println("Data:" + data);
+  // }
+
   @Override
   public LambdaProxyOutput handleRequest(final LambdaProxyEvent event, final Context context) {
     if (context != null) {
