@@ -97,7 +97,16 @@ class GmaForm extends Component {
             <Field
               heading="I live in:"
               name="neighborhood"
-              options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
+              options={
+                Neighborhood.enumValues.slice(0)
+                .sort(customSortNeighborhoods).map((val) => {
+                  if(val.name === 'OTHER') {
+                    return {id: 'OTHER_OAKLAND', label:val.text}
+                  } else {
+                    return { id: val.name, label: val.text }
+                  }
+                })
+              }
               component={MultiRadio}
               otherTextValue={initialValues.other_neighborhood}
               onOtherValueChange={this.onOtherValueChange}
@@ -131,10 +140,10 @@ class GmaForm extends Component {
             <Field
               heading="I can provide child care at:"
               name="care_locations"
-              options={CareLocation.enumValues.slice(0).reverse().map((val) => {
-                var text = val.name === "PROVIDERS_HOME" ? "My Home" : "Elsewhere"
-                return { id: val.name, label: text
-              }})}
+              options={[
+                {id: "PROVIDERS_HOME", label: "My Home"},
+                {id: "ELSEWHERE", label: "Elsewhere"},
+              ]}
               component={MultiCheckbox}
               validate={[required]}/>
               <ElsewhereLearnMore />
@@ -201,6 +210,9 @@ class GmaForm extends Component {
                 component="input"
                 type="file"
                 onChange={(e) => handleFile(e)} />
+              {this.props.profile_image_loading &&
+                <FontAwesome name='spinner' spin={true} className="mr1"/>
+              }
             </div>
           </div>
           <div className="mt4">

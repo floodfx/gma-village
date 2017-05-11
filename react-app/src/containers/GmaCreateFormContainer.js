@@ -20,15 +20,15 @@ class GmaCreateFormContainer extends Component {
 
   handleSubmit = (values) => {
     delete values.profilePhoto
-    this.props.saveGmaUser(values);
+    this.props.saveGmaUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   handleFile = (e) => {
-    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
+    this.props.preUploadImageRequest(e.target.files[0]);
   }
 
   render() {
-    const {saving, saved, error, loading, currentUser} = this.props;
+    const {saving, saved, error, loading, currentUser, profile_image_url} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -48,6 +48,8 @@ class GmaCreateFormContainer extends Component {
             handleFile={this.handleFile}
             saving={saving}
             profile_image_url={this.props.profile_image_url}
+            profile_image_url={profile_image_url}
+            profile_image_loading={this.props.profile_image_loading}
             initialValues={{
               active: false,
               user_type: "GMA",
@@ -73,7 +75,9 @@ const mapStateToProps = (state) => {
     saving: saveGma.saving,
     error: saveGma.error,
     saved: saveGma.saved,
-    profile_image_url: uploadImage.image_url
+    signed_url: uploadImage.signed_url,
+    profile_image_url: uploadImage.image_url,
+    profile_image_loading: uploadImage.loading
   }
 }
 

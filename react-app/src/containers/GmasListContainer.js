@@ -82,7 +82,11 @@ const filterGmas = (gmas, filters) => {
     }, false)
     let willingToTravelFilterAndGmaAvail = (filters.includes(WILLING_TO_TRAVEL) && gma.available_outside_neighborhood)
     let neighRes = neighFilters.reduce((prev, curr) => {
-      return prev |= (Neighborhood.parse(gma.neighborhood).name === curr.name)
+      if(gma.neighborhood === 'OTHER_OAKLAND') {
+        return prev |= false
+      } else {
+        return prev |= (Neighborhood.parse(gma.neighborhood).name === curr.name)
+      }
     }, false)
     let activeRes = activeStatusFilters.reduce((prev, curr) => {
       return prev &= gma.active

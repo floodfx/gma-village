@@ -24,7 +24,7 @@ class GmaEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
+    this.props.preUploadImageRequest(e.target.files[0]);
   }
 
   render() {
@@ -48,6 +48,7 @@ class GmaEditFormContainer extends Component {
             handleFile={this.handleFile}
             saving={saving}
             profile_image_url={profile_image_url || gma.profile_image_url}
+            profile_image_loading={this.props.profile_image_loading}
             initialValues={gma}
             currentUser={currentUser}
             />
@@ -72,12 +73,14 @@ const mapStateToProps = (state) => {
   return {
     authCookie: auth.cookie,
     currentUser: auth.user,
+    loading: gmaProfile.loading,
     saving: saveGma.saving,
     error: saveGma.error,
     gma: gmaProfile.gma,
     saved: saveGma.saved,
+    signed_url: uploadImage.signed_url,
     profile_image_url: uploadImage.image_url,
-    loading: gmaProfile.loading,
+    profile_image_loading: uploadImage.loading    
   }
 }
 
