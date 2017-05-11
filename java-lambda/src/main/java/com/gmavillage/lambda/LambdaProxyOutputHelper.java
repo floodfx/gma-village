@@ -26,7 +26,7 @@ public class LambdaProxyOutputHelper implements CORS {
   }
 
   public static LambdaProxyOutput error(final String error, final String origin) {
-    return error(200, error, origin);
+    return error(500, error, origin);
   }
 
   public static LambdaProxyOutput error401Unauthorized() {

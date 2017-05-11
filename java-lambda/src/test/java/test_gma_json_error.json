@@ -1,0 +1,35 @@
+{
+    "active": false,
+    "user_type": "GMA",
+    "available_outside_neighborhood": false,
+    "city": "OAKLAND",
+    "first_name": "Gee",
+    "last_name": "Ma",
+    "phone": "4157027239",
+    "neighborhood": "OTHER",
+    "other_neighborhood": "Here",
+    "care_ages": [
+        "FIVE_YEARS_PLUS"
+    ],
+    "availabilities": [
+        "OTHER"
+    ],
+    "other_availability": "Whenevs",
+    "demeanors": [
+        "OTHER"
+    ],
+    "care_locations": [
+        "CHILDS_HOME"
+    ],
+    "other_demeanor": "Focused",
+    "why_care_for_kids": "kids",
+    "care_experiences": [
+        "OTHER"
+    ],
+    "other_care_experience": "None",
+    "care_trainings": [
+        "Lots"
+    ],
+    "additional_info": "asfa",
+    "profile_image_url": "https://gmavillage-image.s3.amazonaws.com/d15b1805-3890-4bf2-b21a-83acd8585d5a"
+}

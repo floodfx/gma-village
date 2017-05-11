@@ -12,8 +12,10 @@ import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.postgresql.ds.PGPoolingDataSource;
 
+import com.google.api.client.util.Lists;
 import com.google.common.io.CharStreams;
 
 public class Database {
@@ -53,7 +55,11 @@ public class Database {
   }
 
   public static List<String> enumListToNameList(final List<? extends Enum> enumList) {
-    return enumList.stream().map(it -> it.name()).collect(Collectors.toList());
+    if (enumList == null) {
+      return Lists.newArrayList();
+    }
+    System.out.println("Processing EnumList" + ToStringBuilder.reflectionToString(enumList));
+    return enumList.stream().map(it -> it != null ? it.name() : null).collect(Collectors.toList());
   }
 
   public static Array createSqlArray(final List<String> list, final DataSource ds)

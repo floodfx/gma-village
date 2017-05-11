@@ -151,4 +151,9 @@ public class TestUtils {
     return new Gson().fromJson(json, LambdaProxyEvent.class);
   }
 
+  public String loadJsonFileString(final String name) throws Exception {
+    return CharStreams.toString(
+        new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream(name)));
+  }
+
 }

@@ -2,33 +2,23 @@ package com.gmavillage.lambda;
 
 import static com.gmavillage.lambda.LambdaProxyOutputHelper.error;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.gmavillage.lambda.util.CORS;
+import com.gmavillage.model.json.GsonFactory;
 import com.google.common.base.MoreObjects;
+import com.google.gson.Gson;
 
 public abstract class AbstractLambdaProxyHandler
     implements RequestHandler<LambdaProxyEvent, LambdaProxyOutput>, CORS {
 
   protected Context context;
+  private final Gson gson = GsonFactory.getGson();
 
   protected abstract LambdaProxyOutput processEvent(final LambdaProxyEvent event,
       final Context context) throws Exception;
-
-  // protected abstract void processEvent(final InputStream input, OutputStream output,
-  // final Context context) throws Exception;
-
-  // @Override
-  // public void handleRequest(final InputStream input, final OutputStream output,
-  // final Context context) throws IOException {
-  // System.out.println("Request Stream Handler Called");
-  // final String data = new String(ByteStreams.toByteArray(input));
-  // System.out.println("Data:" + data);
-  // }
 
   @Override
   public LambdaProxyOutput handleRequest(final LambdaProxyEvent event, final Context context) {
@@ -36,11 +26,12 @@ public abstract class AbstractLambdaProxyHandler
       setContext(context);
     }
     try {
-      logInfo("Received event:" + ToStringBuilder.reflectionToString(event));
+      logInfo("Received event:" + gson.toJson(event));
       final LambdaProxyOutput out = processEvent(event, context);
-      logInfo("Received output:" + ToStringBuilder.reflectionToString(out));
+      logInfo("Writing output:" + gson.toJson(out));
       return out;
     } catch (final Exception e) {
+      e.printStackTrace();
       return error("Error Processing Event", requestOrigin(event));
     }
   }

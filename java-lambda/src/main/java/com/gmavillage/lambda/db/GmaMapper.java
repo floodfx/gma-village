@@ -14,9 +14,11 @@ public class GmaMapper {
   public static Gma mapQuery(final ResultSet r) throws SQLException, DataAccessException {
     final UserMapper userMapper = new UserMapper();
     final Gma g = new Gma(userMapper.mapQuery(r));
+    System.out.println("Mapping gma:" + g.getId());
     g.setAvailabilitiesStrings(userMapper.asList(r.getArray("availabilities")));
     g.setCareAgesStrings(userMapper.asList(r.getArray("care_ages")));
     g.setCareExperiencesStrings(userMapper.asList(r.getArray("care_experiences")));
+    System.out.println("CareLocations" + userMapper.asList(r.getArray("care_locations")));
     g.setCareLocationsStrings(userMapper.asList(r.getArray("care_locations")));
     g.setDemeanorsStrings(userMapper.asList(r.getArray("demeanors")));
     g.setCareTrainings(userMapper.asList(r.getArray("care_trainings")));

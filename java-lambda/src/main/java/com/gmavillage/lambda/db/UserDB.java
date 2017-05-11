@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -235,6 +236,7 @@ public class UserDB extends Database {
 
   public Gma createGma(final Gma g) throws Exception {
     final MapSqlParameterSource source = userMapSource(g);
+    System.out.println("Gma to create:" + ToStringBuilder.reflectionToString(g));
 
     final Array availabilitiesArray =
         createSqlArray(enumListToNameList(g.getAvailabilities()), this.dataSource);

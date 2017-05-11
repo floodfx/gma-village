@@ -32,20 +32,6 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
     this.usersApi = usersApi;
   }
 
-  // @Override
-  // protected void processEvent(final InputStream input, final OutputStream output,
-  // final Context context) throws Exception {
-  // System.out.println("Request Stream Handler Called");
-  // final String data = new String(ByteStreams.toByteArray(input));
-  // System.out.println("Data:" + data);
-  // if (data.contains("OPTIONS")) {
-  // final Gson gson = GsonFactory.getGson();
-  // final LambdaProxyEvent event = gson.fromJson(data, LambdaProxyEvent.class);
-  // final ByteSource source =
-  // ByteSource.wrap(gson.toJson(success("", requestOrigin(event))).getBytes());
-  // ByteStreams.copy(source.openStream(), output);
-  // }
-  // }
 
   @Override
   protected LambdaProxyOutput processEvent(final LambdaProxyEvent event, final Context context)
