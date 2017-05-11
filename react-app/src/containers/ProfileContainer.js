@@ -24,23 +24,23 @@ class ProfileContainer extends Component {
   componentWillReceiveProps(nextProps) {
     // refresh current user after profile save
     if(!this.props.saved && nextProps.saved) {
-      this.props.currentUser(this.props.authCookie);
+      this.props.currentUser(this.props.authCookie.account_kit_access_token);
     }
   }
 
   onAdminProfileSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.saveAdminUser(values);
+    this.props.saveAdminUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   onGmaProfileSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.saveGmaUser(values);
+    this.props.saveGmaUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   onParentProfileSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.saveParentUser(values);
+    this.props.saveParentUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   handleFile = (e) => {
@@ -68,7 +68,7 @@ class ProfileContainer extends Component {
               onSubmit={this.onAdminProfileSubmit}
               handleFile={this.handleFile}
               saving={this.props.saving}
-              profilePhotoUrl={profile_image_url || user.profile_image_url}
+              profile_image_url={profile_image_url || user.profile_image_url}
               initialValues={user}
             />
           }
@@ -79,7 +79,7 @@ class ProfileContainer extends Component {
               handleFile={this.handleFile}
               saving={saving}
               currentUser={user}
-              profilePhotoUrl={profile_image_url || user.profile_image_url}
+              profile_image_url={profile_image_url || user.profile_image_url}
               initialValues={user}
             />
           }
@@ -89,7 +89,7 @@ class ProfileContainer extends Component {
               onSubmit={this.onParentProfileSubmit}
               handleFile={this.handleFile}
               saving={saving}
-              profilePhotoUrl={profile_image_url || user.profile_image_url}
+              profile_image_url={profile_image_url || user.profile_image_url}
               initialValues={user}
               currentUser={user}
             />

@@ -46,9 +46,9 @@ class ParentCreateFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profilePhotoUrl={this.props.profilePhotoUrl}
+            profile_image_url={this.props.profile_image_url}
             initialValues={{
-              kind: "Parent",
+              user_type: "PARENT",
               active: false
             }}
           />
@@ -68,7 +68,7 @@ const mapStateToProps = (state) => {
     saving: saveParent.saving,
     error: saveParent.error,
     saved: saveParent.saved,
-    profilePhotoUrl: uploadImage.image_url
+    profile_image_url: uploadImage.image_url
   }
 }
 

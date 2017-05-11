@@ -14,10 +14,10 @@ import Checkbox from './forms/Checkbox';
 class AdminForm extends Component {
 
   componentWillReceiveProps(newProps) {
-    // change value of profilePhotoUrl when prop comes in
-    const {change, profilePhotoUrl} = this.props;
-    if(profilePhotoUrl !== newProps.profilePhotoUrl) {
-      change("profilePhotoUrl", newProps.profilePhotoUrl);
+    // change value of profile_image_url when prop comes in
+    const {change, profile_image_url} = this.props;
+    if(profile_image_url !== newProps.profile_image_url) {
+      change("profile_image_url", newProps.profile_image_url);
     }
   }
 
@@ -29,7 +29,7 @@ class AdminForm extends Component {
       invalid, 
       submitting,
       heading,
-      profilePhotoUrl
+      profile_image_url
     } = this.props
     return (
       <div>
@@ -72,11 +72,11 @@ class AdminForm extends Component {
           </div>   
           <div className="mt4">
             <label>Profile Photo:</label>
-            {profilePhotoUrl &&
+            {profile_image_url &&
               <div>
                 <img 
                 className="w-100 w-20-ns gma-orange-border" 
-                src={profilePhotoUrl} 
+                src={profile_image_url} 
                 style={{
                   objectFit: 'cover'
                 }}/>
@@ -90,8 +90,8 @@ class AdminForm extends Component {
                 onChange={(e) => handleFile(e)} />
             </div>          
           </div>        
-          <Field name="profilePhotoUrl" component="input" type="hidden" value={profilePhotoUrl} />
-          <Field name="kind" component="input" type="hidden" />
+          <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
+          <Field name="user_type" component="input" type="hidden" />
           <Field name="roles" component="input" type="hidden" />
           
           <div className="mt4">

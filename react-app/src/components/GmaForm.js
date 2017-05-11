@@ -38,9 +38,9 @@ const otherFieldMap = {
 class GmaForm extends Component {
 
   componentWillReceiveProps(newProps) {
-    const {change, profilePhotoUrl} = this.props;
-    if(profilePhotoUrl !== newProps.profilePhotoUrl) {
-      change("profilePhotoUrl", newProps.profilePhotoUrl);
+    const {change, profile_image_url} = this.props;
+    if(profile_image_url !== newProps.profile_image_url) {
+      change("profile_image_url", newProps.profile_image_url);
     }
   }
 
@@ -50,17 +50,17 @@ class GmaForm extends Component {
   }
 
   render() {
-    const { 
-      handleSubmit, 
-      handleFile, 
-      pristine, 
-      invalid, 
+    const {
+      handleSubmit,
+      handleFile,
+      pristine,
+      invalid,
       submitting,
       heading,
       initialValues,
       saving,
       currentUser,
-      profilePhotoUrl
+      profile_image_url
      } = this.props
     return (
       <div>
@@ -73,7 +73,7 @@ class GmaForm extends Component {
               component={TextField}
               type="text"
               placeholder="First Name"
-              validate={[required, minLength(2), maxLength(20)]} />            
+              validate={[required, minLength(2), maxLength(20)]} />
           </div>
           <div className="mt4">
             <Field
@@ -101,21 +101,21 @@ class GmaForm extends Component {
               component={MultiRadio}
               otherTextValue={initialValues.other_neighborhood}
               onOtherValueChange={this.onOtherValueChange}
-              />          
+              />
           </div>
           <div className="mt4">
             <Field
               label="I can care for kids outside my area:"
-              name="isAvailableOutsideNeighborhood"
+              name="available_outside_neighborhood"
               component={Checkbox}
               type="checkbox" />
-          </div> 
+          </div>
           <div className="mt4">
             <Field
               heading="I am comfortable caring for kids ages:"
               name="care_ages"
               options={CareAge.enumValues.map((val) => { return { id: val.name, label: val.text } })}
-              component={MultiCheckbox} 
+              component={MultiCheckbox}
               validate={[required]}/>
           </div>
           <div className="mt4">
@@ -125,17 +125,17 @@ class GmaForm extends Component {
               options={Availability.enumValues.map((val) => { return { id: val.name, label: val.text } })}
               component={MultiCheckbox}
               otherTextValue={initialValues.other_availability}
-              onOtherValueChange={this.onOtherValueChange} />          
+              onOtherValueChange={this.onOtherValueChange} />
           </div>
           <div className="mt4">
             <Field
               heading="I can provide child care at:"
               name="care_locations"
-              options={CareLocation.enumValues.slice(0).reverse().map((val) => { 
+              options={CareLocation.enumValues.slice(0).reverse().map((val) => {
                 var text = val.name === "PROVIDERS_HOME" ? "My Home" : "Elsewhere"
-                return { id: val.name, label: text 
+                return { id: val.name, label: text
               }})}
-              component={MultiCheckbox} 
+              component={MultiCheckbox}
               validate={[required]}/>
               <ElsewhereLearnMore />
           </div>
@@ -151,7 +151,7 @@ class GmaForm extends Component {
           <div className="mt4">
             <Field
               label="I enjoy caring for kids because:"
-              name="whyCareForKidsText"
+              name="why_care_for_kids"
               component={TextArea}
               validate={[required]} />
           </div>
@@ -165,41 +165,43 @@ class GmaForm extends Component {
               onOtherValueChange={this.onOtherValueChange} />
           </div>
           <div className="mt4">
-            <Field
-              disabled={currentUser.kind !== "Admin"}
-              heading="Trainings:"
-              name="care_trainings"
-              options={CareTraining.enumValues.map((val) => { return { id: val.name, label: val.text } })}
-              component={MultiCheckbox}
-              otherTextValue={initialValues.other_care_training}
-              onOtherValueChange={this.onOtherValueChange} />            
+            <div className="mt4">
+              <Field
+                disabled={currentUser.user_type !== "ADMIN"}
+                label="Training:"
+                name="care_trainings"
+                component={TextArea}
+                format={(val) => !!val ? val.join('\n') : ""}
+                normalize={(val) => val.split('\n')}
+                validate={[required]} />
+            </div>
           </div>
           <div className="mt4">
             <Field
               label="Something else I would like to share:"
-              name="additionalInformationText"
+              name="additional_info"
               component={TextArea}
               validate={[required]} />
           </div>
           <div className="mt4">
             <label>Profile Photo:</label>
-            {profilePhotoUrl &&
+            {profile_image_url &&
               <div>
-                <img 
-                className="w-100 w-20-ns gma-orange-border" 
-                src={profilePhotoUrl} 
+                <img
+                className="w-100 w-20-ns gma-orange-border"
+                src={profile_image_url}
                 style={{
                   objectFit: 'cover'
                 }}/>
               </div>
-            }    
+            }
             <div>
-              <Field 
-                name="profilePhoto" 
-                component="input" 
-                type="file" 
+              <Field
+                name="profilePhoto"
+                component="input"
+                type="file"
                 onChange={(e) => handleFile(e)} />
-            </div>          
+            </div>
           </div>
           <div className="mt4">
             <Field
@@ -209,14 +211,11 @@ class GmaForm extends Component {
               component={Checkbox}
               type="checkbox" />
           </div>
-          <Field name="other_neighborhood" component="input" type="hidden" />          
+          <Field name="other_neighborhood" component="input" type="hidden" />
           <Field name="other_availability" component="input" type="hidden" />
           <Field name="other_demeanor" component="input" type="hidden" />
           <Field name="other_care_experience" component="input" type="hidden" />
-          <Field name="other_care_training" component="input" type="hidden" />  
-          <Field name="kind" component="input" type="hidden"/>  
-          <Field name="city" component="input" type="hidden"/>  
-          <Field name="profilePhotoUrl" component="input" type="hidden" value={this.props.profilePhotoUrl} />
+          <Field name="profile_image_url" component="input" type="hidden" value={this.props.profile_image_url} />
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {saving &&
@@ -266,14 +265,6 @@ const validateOthers = values => {
     errors.care_experiences = "'Other' text be at least 2 characters"
   }
 
-  if (!values.care_trainings && !values.other_care_training) {
-    errors.care_trainings = 'Required'
-  } else if (values.care_trainings.includes(CareTraining.OTHER.name) && !values.other_care_training) {
-    errors.care_trainings = "Please provide 'Other' text"
-  } else if (values.care_trainings.includes(CareTraining.OTHER.name) && values.other_care_training && values.other_care_training.length < 2) {
-    errors.care_trainings = "'Other' text be at least 2 characters"
-  }
-
   return errors
 }
 
@@ -283,5 +274,3 @@ GmaForm = reduxForm({
 })(GmaForm)
 
 export default GmaForm;
-
-

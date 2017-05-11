@@ -9,8 +9,8 @@ import { ActionCreators } from '../actions';
 class GmaEditFormContainer extends Component {
 
   componentWillMount() {
-    const gmaId = this.props.params.gmaId;
-    this.props.fetchGma(gmaId);
+    const { authCookie, params } = this.props;
+    this.props.fetchGma(authCookie.account_kit_access_token, params.gmaId);
   }
 
   componentWillUnmount() {
@@ -20,8 +20,7 @@ class GmaEditFormContainer extends Component {
 
   handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    const { dispatch, graphQLClient } = this.props;
-    this.props.saveGmaUser(values);
+    this.props.saveGmaUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   handleFile = (e) => {
@@ -29,7 +28,7 @@ class GmaEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, gma, error, loading, currentUser, profilePhotoUrl} = this.props;
+    const {saving, saved, gma, error, loading, currentUser, profile_image_url} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -48,7 +47,7 @@ class GmaEditFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profilePhotoUrl={profilePhotoUrl || gma.profilePhotoUrl}
+            profile_image_url={profile_image_url || gma.profile_image_url}
             initialValues={gma}
             currentUser={currentUser}
             />
@@ -77,7 +76,7 @@ const mapStateToProps = (state) => {
     error: saveGma.error,
     gma: gmaProfile.gma,
     saved: saveGma.saved,
-    profilePhotoUrl: uploadImage.image_url,
+    profile_image_url: uploadImage.image_url,
     loading: gmaProfile.loading,
   }
 }

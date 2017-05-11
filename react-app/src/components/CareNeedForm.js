@@ -23,7 +23,7 @@ import DateTimeStartEnd from './forms/DateTimeStartEnd';
 import ElsewhereLearnMore from './ElsewhereLearnMore';
 
 const otherFieldMap = {
-  neighborhood: "otherNeighborhood"  
+  neighborhood: "other_neighborhood"  
 }
 
 const DATE_FORMAT_RFC3339 = 'YYYY-MM-DDTHH:mm:ssZ'
@@ -33,14 +33,14 @@ class CareNeedForm extends Component {
     super(props);
     const { initialValues } = props;
     var kids = [];
-    var otherNeighborhood = '';
+    var other_neighborhood = '';
     if(initialValues) {
       kids = initialValues.kids || [];
-      otherNeighborhood = initialValues.otherNeighborhood || '';
+      other_neighborhood = initialValues.other_neighborhood || '';
     }
     this.state = {
       kids,
-      otherNeighborhood
+      other_neighborhood
     }
   }
 
@@ -69,7 +69,7 @@ class CareNeedForm extends Component {
       heading,
       description
     } = this.props
-    const { kids, otherNeighborhood } = this.state;
+    const { kids, other_neighborhood } = this.state;
     
     return (
       <div>
@@ -107,14 +107,14 @@ class CareNeedForm extends Component {
               name="neighborhood"
               options={Neighborhood.enumValues.map((val) => { return { id: val.name, label: val.text } })}
               component={MultiRadio}
-              otherTextValue={otherNeighborhood}
+              otherTextValue={other_neighborhood}
               onOtherValueChange={this.onOtherValueChange}
               />          
           </div>
           <div className="mt4">
             <Field
               heading="I would like the care provided at:"
-              name="careLocations"
+              name="care_locations"
               options={CareLocation.enumValues.slice(0).reverse().map((val) => { 
                 var text = val.name === "CHILDS_HOME" ? "Elsewhere" : val.text
                 return { id: val.name, label: text 
@@ -124,7 +124,7 @@ class CareNeedForm extends Component {
               <ElsewhereLearnMore />   
           </div>
                 
-          <Field name="otherNeighborhood" component="input" type="hidden" />
+          <Field name="other_neighborhood" component="input" type="hidden" />
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
@@ -144,9 +144,9 @@ const validateOthers = values => {
 
   if (!values.neighborhood && !values[otherFieldMap]) {
     errors.neighborhood = 'Required'
-  } else if (values.neighborhood === Neighborhood.OTHER.name && !values.otherNeighborhood) {
+  } else if (values.neighborhood === Neighborhood.OTHER.name && !values.other_neighborhood) {
     errors.neighborhood = "Please provide 'Other' text"
-  } else if (values.neighborhood === Neighborhood.OTHER.name && values.otherNeighborhood && values.otherNeighborhood.length < 2) {
+  } else if (values.neighborhood === Neighborhood.OTHER.name && values.other_neighborhood && values.other_neighborhood.length < 2) {
     errors.neighborhood = "'Other' text be at least 2 characters"
   } 
 

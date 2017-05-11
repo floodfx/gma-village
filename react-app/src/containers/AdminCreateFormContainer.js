@@ -20,7 +20,7 @@ class AdminCreateFormContainer extends Component {
 
   handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.saveAdminUser(values);
+    this.props.saveAdminUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   handleFile = (e) => {
@@ -47,11 +47,11 @@ class AdminCreateFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profilePhotoUrl={this.props.profilePhotoUrl}
+            profile_image_url={this.props.profile_image_url}
             initialValues={{
               active: false,
               roles: [Role.ADMIN.name],
-              kind: "Admin"
+              user_type: "ADMIN"
             }}
           />
           {saved &&
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
     saving: saveAdmin.saving,
     error: saveAdmin.error,
     saved: saveAdmin.saved,
-    profilePhotoUrl: uploadImage.image_url
+    profile_image_url: uploadImage.image_url
   }
 }
 function mapDispatchToProps(dispatch) {

@@ -47,11 +47,11 @@ class GmaCreateFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profilePhotoUrl={this.props.profilePhotoUrl}
+            profile_image_url={this.props.profile_image_url}
             initialValues={{
               active: false,
-              kind: "Gma",
-              isAvailableOutsideNeighborhood: false,
+              user_type: "GMA",
+              available_outside_neighborhood: false,
               city: City.OAKLAND.name
             }}
             currentUser={currentUser}
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
     saving: saveGma.saving,
     error: saveGma.error,
     saved: saveGma.saved,
-    profilePhotoUrl: uploadImage.image_url
+    profile_image_url: uploadImage.image_url
   }
 }
 

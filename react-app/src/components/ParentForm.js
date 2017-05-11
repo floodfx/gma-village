@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import moment from 'moment';
 import leftPad from 'left-pad';
-import {  
+import {
   Neighborhood
 } from 'gma-village-data-model';
 import { normalizePhone } from './forms/Normalize';
@@ -23,97 +23,98 @@ import {
 } from './SortHelp';
 
 const otherFieldMap = {
-  neighborhood: "otherNeighborhood"  
+  neighborhood: "other_neighborhood"
 }
 
 class ParentForm extends Component {
   constructor(props) {
     super(props);
     const { initialValues } = props;
-    var kids = [];
-    var otherNeighborhood = '';
+    var children = [];
+    var other_neighborhood = '';
     if(initialValues) {
-      kids = initialValues.kids || [];
-      otherNeighborhood = initialValues.otherNeighborhood || '';
+      children = initialValues.children || [];
+      other_neighborhood = initialValues.other_neighborhood || '';
     }
     this.state = {
-      kids,
-      otherNeighborhood,
-      kidFirstName: '',
-      kidBirthDay: "0",
-      kidBirthMonth: "0",
-      kidBirthYear: "0",
-      validKid: false
+      children,
+      other_neighborhood,
+      childFirstName: '',
+      childBirthDay: "0",
+      childBirthMonth: "0",
+      childBirthYear: "0",
+      validChild: false
     }
   }
 
-  resetKidInput = () => {
+  resetChildInput = () => {
     this.setState({
-      kidFirstName: '',
-      kidBirthDay: "0",
-      kidBirthMonth: "0",
-      kidBirthYear: "0",
-      validKid: false
+      childFirstName: '',
+      childBirthDay: "0",
+      childBirthMonth: "0",
+      childBirthYear: "0",
+      validChild: false
     })
   }
 
   componentWillReceiveProps(newProps) {
     console.log("componentWillReceiveProps", newProps)
-    const {change, profilePhotoUrl} = this.props;
-    if(profilePhotoUrl !== newProps.profilePhotoUrl) {
-      change("profilePhotoUrl", newProps.profilePhotoUrl);
+    const {change, profile_image_url} = this.props;
+    if(profile_image_url !== newProps.profile_image_url) {
+      change("profile_image_url", newProps.profile_image_url);
     }
   }
 
-  removeKid = (index) => {
+  removeChild = (index) => {
     this.setState((prevState, props) => ({
-      kids: [...prevState.kids.slice(0, index), ...prevState.kids.slice(index+1)]
-    }));    
+      children: [...prevState.children.slice(0, index), ...prevState.children.slice(index+1)]
+    }));
   }
 
-  addKid = () => {
-    const m = leftPad(this.state.kidBirthMonth, 2, '0');
-    const d = leftPad(this.state.kidBirthDay, 2, '0');
-    const newKid = {
-      first_name: this.state.kidFirstName,
-      birthday: moment(`${m}-${d}-${this.state.kidBirthYear}`, 'MM-DD-YYYY').unix()
+  addChild = () => {
+    const year = parseInt(this.state.childBirthYear, 10);
+    const month = parseInt(this.state.childBirthMonth-1, 10);
+    const day = parseInt(this.state.childBirthDay, 10);
+    const newChild = {
+      first_name: this.state.childFirstName,
+      dob: {year, month, day}
     }
     this.setState((prevState, props) => {
-      const newKids = prevState.kids.concat([newKid]);
-      this.props.change("kids", newKids);
+      const newChildren = prevState.children.concat([newChild]);
+      this.props.change("children", newChildren);
       return {
-        kids: newKids
+        children: newChildren
       }
-    }); 
-    this.resetKidInput()
+    });
+    this.resetChildInput()
   }
 
-  kidValueChange = (kidPart, value) => {
-    switch(kidPart) {
-      case "kidFirstName":
-      this.setState({kidFirstName: value});
+  childValueChange = (childPart, value) => {
+    switch(childPart) {
+      case "childFirstName":
+      this.setState({childFirstName: value});
       break;
-      case "kidBirthDay":
-      this.setState({kidBirthDay: value});
+      case "childBirthDay":
+      this.setState({childBirthDay: value});
       break;
-      case "kidBirthMonth":
-      this.setState({kidBirthMonth: value});
+      case "childBirthMonth":
+      this.setState({childBirthMonth: value});
       break;
-      case "kidBirthYear":
-      this.setState({kidBirthYear: value});
+      case "childBirthYear":
+      this.setState({childBirthYear: value});
       break;
-    }      
-    this.checkValidKid();
+    }
+    this.checkValidChild();
   }
 
-  checkValidKid = () => {
+  checkValidChild = () => {
     this.setState((prevState, props) => {
-      const validKid = (prevState.kidFirstName.length > 1 && 
-                        prevState.kidBirthDay !== "0" && 
-                        prevState.kidBirthMonth !== "0" && 
-                        prevState.kidBirthYear !== "0")      
+      const validChild = (prevState.childFirstName.length > 1 &&
+                        prevState.childBirthDay !== "0" &&
+                        prevState.childBirthMonth !== "0" &&
+                        prevState.childBirthYear !== "0")
       return {
-        validKid
+        validChild
       }
     });
   }
@@ -124,16 +125,16 @@ class ParentForm extends Component {
   }
 
   render() {
-    const { 
-      handleSubmit, 
-      handleFile, 
-      pristine, 
-      invalid, 
+    const {
+      handleSubmit,
+      handleFile,
+      pristine,
+      invalid,
       submitting,
       heading,
-      profilePhotoUrl
+      profile_image_url
     } = this.props
-    const { kids, otherNeighborhood } = this.state;
+    const { children, other_neighborhood } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
     const years = [...Array(13)].map((v, i) => i + 1);
@@ -149,7 +150,7 @@ class ParentForm extends Component {
               component={TextField}
               type="text"
               placeholder="First Name"
-              validate={[required, minLength(2), maxLength(20)]} />            
+              validate={[required, minLength(2), maxLength(20)]} />
           </div>
           <div className="mt4">
             <Field
@@ -170,25 +171,25 @@ class ParentForm extends Component {
               normalize={normalizePhone}
               validate={[required, phone]} />
           </div>
-          <div className="mt4">          
+          <div className="mt4">
             <Field
               label="My Children:"
-              name="kids"
+              name="children"
               component={Hidden}
               validate={[requiredArray]} />
-            {kids.length > 0 &&
+            {children.length > 0 &&
               <ul>
-                {kids.map((kid, index) => {              
+                {children.map((child, index) => {
                   return (
                     <li key={index} className="ph3 pv2">
-                      {kid.first_name} (born: {moment.unix(kid.birthday).format("MM-DD-YYYY")}) 
-                      <button type="button" className="btn btn-sm gma-orange-bg ml2" onClick={() => this.removeKid(index)}>
+                      {child.first_name} (born: {moment([child.dob.year, child.dob.month, child.dob.day]).format("MM-DD-YYYY")})
+                      <button type="button" className="btn btn-sm gma-orange-bg ml2" onClick={() => this.removeChild(index)}>
                         <FontAwesome name="trash"/>
                       </button>
                     </li>
                   )
                 })}
-              </ul>  
+              </ul>
             }
             <div>
               <div className="dt">
@@ -196,7 +197,7 @@ class ParentForm extends Component {
                   <label className="normal mh2">Child First Name:</label>
                 </div>
                 <div className="dtc">
-                  <input type="text" value={this.state.kidFirstName} name="kid_first_name" onChange={(e) => this.kidValueChange("kidFirstName", e.target.value)} />
+                  <input type="text" value={this.state.childFirstName} name="child_first_name" onChange={(e) => this.childValueChange("childFirstName", e.target.value)} />
                 </div>
               </div>
               <div className="dt">
@@ -204,33 +205,33 @@ class ParentForm extends Component {
                   <label className="normal mh2">Child Birth Date:</label>
                 </div>
                 <div className="dtc">
-                  <select value={this.state.kidBirthMonth} onChange={(e) => this.kidValueChange("kidBirthMonth", e.target.value)}>
+                  <select value={this.state.childBirthMonth} onChange={(e) => this.childValueChange("childBirthMonth", e.target.value)}>
                     <option value={0}>Month</option>
                     {months.map((month, index) => {
                       return <option key={index} value={month}>{leftPad(month, 2, 0)}</option>
-                    })}                  
+                    })}
                   </select>
-                  <select value={this.state.kidBirthDay} onChange={(e) => this.kidValueChange("kidBirthDay", e.target.value)}>
+                  <select value={this.state.childBirthDay} onChange={(e) => this.childValueChange("childBirthDay", e.target.value)}>
                     <option value={0}>Day</option>
                     {days.map((day, index) => {
                       return <option key={index} value={day}>{leftPad(day, 2, 0)}</option>
-                    })}                    
+                    })}
                   </select>
-                  <select value={this.state.kidBirthYear} onChange={(e) => this.kidValueChange("kidBirthYear", e.target.value)}>
+                  <select value={this.state.childBirthYear} onChange={(e) => this.childValueChange("childBirthYear", e.target.value)}>
                     <option value={0}>Year</option>
                     {years.map((yr, index) => {
                       return <option key={index} value={year-index}>{year-index}</option>
-                    })}                   
+                    })}
                   </select>
                 </div>
               </div>
-            </div>             
+            </div>
             <div>
-              <button 
-                className="btn btn-sm gma-orange-bg" 
-                type="button" 
-                disabled={!this.state.validKid}
-                onClick={() => this.addKid()}>
+              <button
+                className="btn btn-sm gma-orange-bg"
+                type="button"
+                disabled={!this.state.validChild}
+                onClick={() => this.addChild()}>
                 Add Child
               </button>
             </div>
@@ -241,40 +242,39 @@ class ParentForm extends Component {
               name="neighborhood"
               options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
               component={MultiRadio}
-              otherTextValue={otherNeighborhood}
+              otherTextValue={other_neighborhood}
               onOtherValueChange={this.onOtherValueChange}
-              />          
+              />
           </div>
           <div className="mt4">
-            <label>Profile Photo:</label>            
-            {profilePhotoUrl &&
+            <label>Profile Photo:</label>
+            {profile_image_url &&
               <div>
-                <img 
-                className="w-100 w-20-ns gma-orange-border" 
-                src={profilePhotoUrl} 
+                <img
+                className="w-100 w-20-ns gma-orange-border"
+                src={profile_image_url}
                 style={{
                   objectFit: 'cover'
                 }}/>
               </div>
-            }            
+            }
             <div>
-              <Field 
-                name="profilePhoto" 
-                component="input" 
-                type="file" 
+              <Field
+                name="profilePhoto"
+                component="input"
+                type="file"
                 onChange={(e) => handleFile(e)} />
-            </div>          
-          </div>  
+            </div>
+          </div>
           <div className="mt4">
             <Field
               label="Active:"
               name="active"
               component={Checkbox}
               type="checkbox" />
-          </div>      
-          <Field name="otherNeighborhood" component="input" type="hidden" />
-          <Field name="kind" component="input" type="hidden" />
-          <Field name="profilePhotoUrl" component="input" type="hidden" value={profilePhotoUrl} />
+          </div>
+          <Field name="other_neighborhood" component="input" type="hidden" />
+          <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
@@ -294,11 +294,11 @@ const validateOthers = values => {
 
   if (!values.neighborhood && !values[otherFieldMap]) {
     errors.neighborhood = 'Required'
-  } else if (values.neighborhood === Neighborhood.OTHER.name && !values.otherNeighborhood) {
+  } else if (values.neighborhood === Neighborhood.OTHER.name && !values.other_neighborhood) {
     errors.neighborhood = "Please provide 'Other' text"
-  } else if (values.neighborhood === Neighborhood.OTHER.name && values.otherNeighborhood && values.otherNeighborhood.length < 2) {
+  } else if (values.neighborhood === Neighborhood.OTHER.name && values.other_neighborhood && values.other_neighborhood.length < 2) {
     errors.neighborhood = "'Other' text be at least 2 characters"
-  }  
+  }
 
   return errors
 }

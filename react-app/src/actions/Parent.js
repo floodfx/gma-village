@@ -53,66 +53,48 @@ export const resetParentUser = () => {
   }
 }
 
-export const saveParentUser = (graphQLClient, parent) => {
+export const saveParentUser = (access_token, parent) => {
   return (dispatch) => {
     dispatch(saveParentUserRequest());
-    return graphQLClient.query(`
-      mutation saveParentMutation($input: ParentInput!) {
-        saveParent(input:$input) {
-          id,
-          first_name,
-          last_name,
-          phone,
-          kind,
-          active,
-          last_login_timestamp,
-          created_on_timestamp,
-          member_since_timestamp,
-          profilePhotoUrl,
-          neighborhood,
-          otherNeighborhood,
-          kids {
-            first_name,
-            birthday
-          }
-        }
-      }
-    `, {input: parent}).then(data => {
-        dispatch(saveParentUserRequestSuccess(data.saveParent))
+    const method = parent.id ? 'PUT' : 'POST';
+    var uri = `${API_BASE}/usersapi/parents`;
+    if(method === 'PUT') {
+      uri += `/${parent.id}`;
+    }
+    var options = {
+      method,
+      uri,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      body: parent,
+      json: true
+    };
+    rp(options)
+    .then(data => {
+      dispatch(saveParentUserRequestSuccess(data));
+      return;
     }).catch(err => {
       dispatch(saveParentUserRequestFailure(err))
     });
   }
 }
 
-const fetchParentQuery = `
-  query fetchParent($parentId: ID!) {
-    parent(id: $parentId) {
-      id,
-      first_name,
-      last_name,
-      phone,
-      kind,
-      active,
-      last_login_timestamp,
-      created_on_timestamp,
-      member_since_timestamp,
-      profilePhotoUrl,
-      neighborhood,
-      otherNeighborhood,
-      kids {
-        first_name,
-        birthday
-      }
-    }
-  }
-`;
-
-export const fetchParent = (graphQLClient, parentId) => {
+export const fetchParent = (access_token, parentId) => {
   return (dispatch) => {
     dispatch(fetchParentRequest());
-    return graphQLClient.query(fetchParentQuery, {parentId}).then(data => {
-        dispatch(fetchParentRequestSuccess(data.parent))
+    var options = {
+      method: 'GET',
+      uri: `${API_BASE}/usersapi/parents/${parentId}`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      json: true
+    };
+    rp(options)
+    .then(data => {
+      dispatch(fetchParentRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(fetchParentRequestFailure(err))
     });

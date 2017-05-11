@@ -12,7 +12,7 @@ class TextField extends Component {
             type="text"
             placeholder={placeholder}
             {...input} />
-          {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+          {touched && ((error && <span className="dark-red">{error}</span>) || (warning && <span className="gold">{warning}</span>))}
         </div>
       </div>
     )

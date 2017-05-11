@@ -18,6 +18,7 @@ class CareNeedFormContainer extends Component {
 
   componentWillMount() {
     const { auth } = this.props;
+    const access_token = auth.cookie.account_kit_access_token;
     var parentId = null;
     if(auth.user.user_type === "ADMIN") {
       parentId = this.props.params.parentId;
@@ -25,9 +26,9 @@ class CareNeedFormContainer extends Component {
       parentId = auth.user.id;
     }
     if(parentId) {
-      this.props.fetchParent(parentId);
+      this.props.fetchParent(access_token, parentId);
     }
-    this.props.fetchGmas(true);
+    this.props.fetchGmas(access_token, true);
   }
 
   componentWillUnmount() {
@@ -57,7 +58,7 @@ class CareNeedFormContainer extends Component {
       const initialValues = {
         kids: parent.kids,
         neighborhood: parent.neighborhood,
-        otherNeighborhood: parent.otherNeighborhood,
+        other_neighborhood: parent.other_neighborhood,
         parentId: parent.id
       }
       const successText = "Thank you for posting! Gmas that meet you child care need criteria will receive you post and will text you if available."

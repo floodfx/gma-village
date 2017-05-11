@@ -83,9 +83,13 @@ export const saveGmaUser = (access_token, gma) => {
   return (dispatch) => {
     dispatch(saveGmaUserRequest());
     const method = gma.id ? 'PUT' : 'POST';
+    var uri = `${API_BASE}/usersapi/gmas`;
+    if(method === 'PUT') {
+      uri += `/${gma.id}`;
+    }
     var options = {
       method,
-      uri: `${API_BASE}/usersapi/gmas`,
+      uri,
       headers: {
         Authorization: `Bearer ${access_token}`
       },
@@ -94,7 +98,8 @@ export const saveGmaUser = (access_token, gma) => {
     };
     rp(options)
     .then(data => {
-        dispatch(saveGmaUserRequestSuccess(data))
+      dispatch(saveGmaUserRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(saveGmaUserRequestFailure(err))
     });
@@ -114,7 +119,8 @@ export const fetchGma = (access_token, gmaId) => {
     };
     rp(options)
     .then(data => {
-        dispatch(fetchGmaRequestSuccess(data))
+      dispatch(fetchGmaRequestSuccess(data))
+      return data;
     }).catch(err => {
       dispatch(fetchGmaRequestFailure(err))
     });

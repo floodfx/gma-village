@@ -8,7 +8,7 @@ class Hidden extends Component {
       <div>
         <label className="fw7 f3">{label}</label>
         <div>
-          {touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+          {touched && ((error && <span className="dark-red">{error}</span>) || (warning && <span className="gold">{warning}</span>))}
         </div>
         <input 
           type="hidden" 

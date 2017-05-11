@@ -9,8 +9,8 @@ import { ActionCreators } from '../actions';
 class AdminEditFormContainer extends Component {
 
   componentWillMount() {
-    const adminId = this.props.params.adminId;
-    this.props.fetchAdmin(adminId);
+    const { authCookie, params } = this.props;
+    this.props.fetchAdmin(authCookie.account_kit_access_token, params.adminId);
   }
 
   componentWillUnmount() {
@@ -20,7 +20,8 @@ class AdminEditFormContainer extends Component {
 
   handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.saveAdminUser(values);
+    const { authCookie } = this.props;
+    this.props.saveAdminUser(authCookie.account_kit_access_token, values);
   }
 
   handleFile = (e) => {
@@ -28,7 +29,7 @@ class AdminEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, admin, error, loading, profilePhotoUrl} = this.props;
+    const {saving, saved, admin, error, loading, profile_image_url} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -47,7 +48,7 @@ class AdminEditFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profilePhotoUrl={profilePhotoUrl || admin.profilePhotoUrl}
+            profile_image_url={profile_image_url || admin.profile_image_url}
             initialValues={admin}
             />
           {saved &&
@@ -74,7 +75,7 @@ const mapStateToProps = (state) => {
     error: saveAdmin.error,
     admin: adminProfile.admin,
     saved: saveAdmin.saved,
-    profilePhotoUrl: uploadImage.image_url,
+    profile_image_url: uploadImage.image_url,
     loading: adminProfile.loading,
   }
 }

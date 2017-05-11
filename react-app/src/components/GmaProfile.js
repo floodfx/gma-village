@@ -138,7 +138,7 @@ class GmaProfile extends Component {
                 <h1 className="media-heading gma-orange">
 
                   <span>Gma {gma.first_name}</span>
-                  {currentUser.kind === "Admin" &&
+                  {currentUser.user_type === "ADMIN" &&
                     <Link
                       className="btn gma-orange-bg ml2"
                       to={`/gma/edit/${gma.id}`}>

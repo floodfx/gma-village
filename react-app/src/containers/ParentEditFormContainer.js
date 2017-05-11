@@ -9,8 +9,8 @@ import { ActionCreators } from '../actions';
 class ParentEditFormContainer extends Component {
 
   componentWillMount() {
-    const parentId = this.props.params.parentId;
-    this.props.fetchParent(parentId);
+    const { authCookie, params } = this.props;
+    this.props.fetchParent(authCookie.account_kit_access_token, params.parentId);
   }
 
   componentWillUnmount() {
@@ -20,7 +20,7 @@ class ParentEditFormContainer extends Component {
 
   handleSubmit = (values) => {
     delete values.profilePhoto; // remove profile photo from form (uploaded already)
-    this.props.saveParentUser(values);
+    this.props.saveParentUser(this.props.authCookie.account_kit_access_token, values);
   }
 
   handleFile = (e) => {
@@ -28,7 +28,7 @@ class ParentEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, parent, error, loading, profilePhotoUrl} = this.props;
+    const {saving, saved, parent, error, loading, profile_image_url} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -47,7 +47,7 @@ class ParentEditFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profilePhotoUrl={profilePhotoUrl || parent.profilePhotoUrl}
+            profile_image_url={profile_image_url || parent.profile_image_url}
             initialValues={parent}
             />
           {saved &&
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => {
     error: saveParent.error,
     parent: parentProfile.parent,
     saved: saveParent.saved,
-    profilePhotoUrl: uploadImage.image_url,
+    profile_image_url: uploadImage.image_url,
     loading: parentProfile.loading,
   }
 }

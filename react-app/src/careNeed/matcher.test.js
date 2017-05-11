@@ -148,14 +148,14 @@ const CA1 = CareAge.SIX_MONTHS_TO_TWO_YEARS.name;
 const CA2 = CareAge.TWO_YEARS_TO_FIVE_YEARS.name;
 const CA3 = CareAge.FIVE_YEARS_PLUS.name;
 
-const newGma = (id, neighborhood, otherNeighborhood, careLocations, careAges, isAvailableOutsideNeighborhood) => {
+const newGma = (id, neighborhood, other_neighborhood, care_locations, care_ages, available_outside_neighborhood) => {
   return {
     id,
     neighborhood,
-    otherNeighborhood,
-    careLocations,
-    careAges,
-    isAvailableOutsideNeighborhood
+    other_neighborhood,
+    care_locations,
+    care_ages,
+    available_outside_neighborhood
   }
 }
 

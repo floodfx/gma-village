@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { capitalizeWords, formatPhone }  from './formatutil'
 import imgUrl from './ImageUrl'
+import {
+  Neighborhood
+} from 'gma-village-data-model';
 
 class GmasList extends Component {
 
@@ -67,7 +70,7 @@ class GmasList extends Component {
             <div className="text-center" style={{marginTop: '20px'}}>
               <p style={{fontWeight:"bold"}}>Neighborhood</p>
               <ul style={{display:"inline", padding: 0}}>
-                <li style={{listStyleType:"none"}}>{capitalizeWords(gma.neighborhood.name)}</li>
+                <li style={{listStyleType:"none"}}>{capitalizeWords(Neighborhood.parse(gma.neighborhood).text)}</li>
                 {gma.available_outside_neighborhood &&
                   <li style={{listStyleType:"none"}}>Willing to travel</li>
                 }

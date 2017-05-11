@@ -30,22 +30,22 @@ const matchGmasToCareNeed = (gmas, careNeed) => {
   console.log("gmas", gmas, "careNeed", careNeed);
   var matchedGmas = filterGmas(gmas, 
     careNeed.neighborhood, 
-    careNeed.otherNeighborhood, 
-    careNeed.careLocations, 
+    careNeed.other_neighborhood, 
+    careNeed.care_locations, 
     kidsAgesToCareAges(careNeed.kids)
   )
   console.log("matchGmas", matchedGmas)
   return matchedGmas;
 }
 
-const filterGmas = (gmas, neighborhood, otherNeighborhood, careLocations, careAges) => {
+const filterGmas = (gmas, neighborhood, other_neighborhood, care_locations, care_ages) => {
   return gmas.filter((gma) => {
     var sameNeighborhood = 
-      (careLocations.includes(CareLocation.CHILDS_HOME.name) && gma.isAvailableOutsideNeighborhood) ||
+      (care_locations.includes(CareLocation.CHILDS_HOME.name) && gma.available_outside_neighborhood) ||
       ((gma.neighborhood === neighborhood) && (gma.neighborhood !== Neighborhood.OTHER.name)) ||
-      ((gma.otherNeighborhood === otherNeighborhood) && (gma.neighborhood === Neighborhood.OTHER.name));
-    var sameCareLocation = careLocations.reduce((truth, loc) => truth || gma.careLocations.includes(loc), false);
-    var sameCareAges = careAges.reduce((truth, age) => truth && gma.careAges.includes(age), true);
+      ((gma.other_neighborhood === other_neighborhood) && (gma.neighborhood === Neighborhood.OTHER.name));
+    var sameCareLocation = care_locations.reduce((truth, loc) => truth || gma.care_locations.includes(loc), false);
+    var sameCareAges = care_ages.reduce((truth, age) => truth && gma.care_ages.includes(age), true);
     return sameNeighborhood && sameCareLocation && sameCareAges;
   })
 }
