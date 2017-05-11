@@ -24,7 +24,7 @@ class ParentEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.uploadImage(this.props.authCookie, e.target.files[0]);
+    this.props.preUploadImageRequest(e.target.files[0]);
   }
 
   render() {
@@ -48,6 +48,7 @@ class ParentEditFormContainer extends Component {
             handleFile={this.handleFile}
             saving={saving}
             profile_image_url={profile_image_url || parent.profile_image_url}
+            profile_image_loading={this.props.profile_image_loading}
             initialValues={parent}
             />
           {saved &&
@@ -69,12 +70,14 @@ const mapStateToProps = (state) => {
   const { auth, parentProfile, saveParent, uploadImage } = state
   return {
     authCookie: auth.cookie,
+    loading: parentProfile.loading,
     saving: saveParent.saving,
     error: saveParent.error,
     parent: parentProfile.parent,
     saved: saveParent.saved,
+    signed_url: uploadImage.signed_url,
     profile_image_url: uploadImage.image_url,
-    loading: parentProfile.loading,
+    profile_image_loading: uploadImage.loading
   }
 }
 

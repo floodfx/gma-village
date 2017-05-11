@@ -12,7 +12,7 @@ class MultiRadio extends Component {
   handleChange = (event, selected) => {
     const {input} = this.props;
     this.setState({
-      selected    
+      selected
     })
     const otherSelected = selected === "OTHER"
     const {name, onOtherValueChange} = this.props;

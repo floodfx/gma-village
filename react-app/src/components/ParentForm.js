@@ -241,6 +241,18 @@ class ParentForm extends Component {
               heading="I live in:"
               name="neighborhood"
               options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
+              format={(val) => {
+                if(val === 'OTHER_OAKLAND') {
+                  val = 'OTHER';
+                }
+                return val
+              }}
+              normalize={(val) => {
+                if(val === 'OTHER') {
+                  val = 'OTHER_OAKLAND'
+                }
+                return val
+              }}
               component={MultiRadio}
               otherTextValue={other_neighborhood}
               onOtherValueChange={this.onOtherValueChange}
@@ -264,6 +276,9 @@ class ParentForm extends Component {
                 component="input"
                 type="file"
                 onChange={(e) => handleFile(e)} />
+                {this.props.profile_image_loading &&
+                  <FontAwesome name='spinner' spin={true} className="mr1"/>
+                }
             </div>
           </div>
           <div className="mt4">
