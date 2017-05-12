@@ -37,10 +37,13 @@ class CareNeedFormContainer extends Component {
 
   handleSubmit = (careNeed) => {
     delete careNeed.careDateStartEnd; // remove profile photo from form (uploaded already)
-    const { gmas } = this.props;
-    var matchingGmas = matchGmasToCareNeed(gmas, careNeed);
-    if(matchingGmas.length > 0) {
-      this.props.saveCareNeed(careNeed, matchingGmas);
+    const { gmas, auth } = this.props;
+    const access_token = auth.cookie.account_kit_access_token;
+    var matching_gmas = matchGmasToCareNeed(gmas, careNeed);
+    console.log("matching_gmas", matching_gmas)
+    if(matching_gmas.length > 0) {
+      careNeed.matching_gmas = matching_gmas;
+      this.props.saveCareNeed(access_token, careNeed);
     } else {
       const warning = "Unable to find Gmas who match your care requirements."
       this.setState({warning})
@@ -56,10 +59,10 @@ class CareNeedFormContainer extends Component {
       );
     } else {
       const initialValues = {
-        kids: parent.kids,
+        children: parent.children,
         neighborhood: parent.neighborhood,
         other_neighborhood: parent.other_neighborhood,
-        parentId: parent.id
+        parent: parent
       }
       const successText = "Thank you for posting! Gmas that meet you child care need criteria will receive you post and will text you if available."
       return (

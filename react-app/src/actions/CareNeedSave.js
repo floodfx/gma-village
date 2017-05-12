@@ -1,6 +1,6 @@
 import rp from 'request-promise';
 import * as Types from './Types';
-import { STAGE } from '../util';
+import { API_BASE } from '../util';
 
 export const saveCareNeedUserRequest = () => ({
   type: Types.SAVE_CARE_NEED_REQUEST
@@ -25,26 +25,22 @@ export const resetCareNeed = () => {
   }
 }
 
-export const saveCareNeed = (graphQLClient, careNeed, matchedGmas) => {
+export const saveCareNeed = (access_token, careNeed) => {
   return (dispatch) => {
     dispatch(saveCareNeedUserRequest());
-    var gmas = matchedGmas.map(gma => {
-      return {
-        id: gma.id,
-        phone: gma.phone
-      }
-    });
-    var input = {
-      ...careNeed,
-      gmas
-    }
-    console.log("input", input)
-    return graphQLClient.query(`
-      mutation saveCareNeedMutation($input: CareNeedInput!) {
-        saveCareNeed(input:$input)
-      }
-    `, {input}).then(data => {
-        dispatch(saveCareNeedUserRequestSuccess(data.saveCareNeed))
+    var options = {
+      method: 'POST',
+      uri: `${API_BASE}/usersapi/careneeds`,
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      },
+      body: careNeed,
+      json: true
+    };
+    rp(options)
+    .then((data) => {
+      dispatch(saveCareNeedUserRequestSuccess(data))
+      return data
     }).catch(err => {
       dispatch(saveCareNeedUserRequestFailure(err))
     });

@@ -15,7 +15,7 @@ class KidsCheckbox extends Component {
     if(event.target.checked) {
       selected.push(options[optionIndex])
     } else {
-      selected.splice(optionIndex, 1);        
+      selected.splice(optionIndex, 1);
     }
     this.setState({
       selected
@@ -34,9 +34,9 @@ class KidsCheckbox extends Component {
     } = this.props
     const { selected } = this.state;
     const checkboxes = options.map((option, index) => {
-      var isChecked = selected.includes(option);  
-      var ageComponents = ageFromBirthday(option.birthday); 
-      const label = `${option.first_name} (${ageComponents.text})`
+      var isChecked = selected.includes(option);
+      // var ageComponents = ageFromBirthday(option.birthday); 
+      const label = `${option.first_name}`
       return (
         <div key={index}
           className={"checkbox " + (index === options.length - 1 ? 'mb1' : '')}>
@@ -50,7 +50,7 @@ class KidsCheckbox extends Component {
               disabled={disabled}
               />
             {label}
-          </label>          
+          </label>
         </div>
       );
     });
