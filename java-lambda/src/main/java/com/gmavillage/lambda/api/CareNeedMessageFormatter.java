@@ -12,9 +12,9 @@ import com.gmavillage.model.Parent;
 
 public class CareNeedMessageFormatter {
 
-  private static final DateTimeFormatter START_TIME_FORMAT =
+  public static final DateTimeFormatter START_TIME_FORMAT =
       DateTimeFormatter.ofPattern("MMM d, h:mma");
-  private static final DateTimeFormatter END_TIME_FORMAT = DateTimeFormatter.ofPattern("h:mma");
+  public static final DateTimeFormatter END_TIME_FORMAT = DateTimeFormatter.ofPattern("h:mma");
 
   public static String neighborhood(final CareNeed careNeed) {
     final Neighborhood neighborhood = careNeed.getNeighborhood();

@@ -21,7 +21,8 @@ public class CareNeedMessageFormatterTest {
   @Test
   public void testFormatDate() {
     final OffsetDateTime odt = OffsetDateTime.of(2017, 5, 10, 12, 11, 00, 0, ZoneOffset.UTC);
-    final String formattedDate = CareNeedMessageFormatter.friendlyDateTime(odt);
+    final String formattedDate =
+        CareNeedMessageFormatter.format(odt, CareNeedMessageFormatter.START_TIME_FORMAT);
     Assert.assertEquals("May 10, 12:11PM", formattedDate);
   }
 
