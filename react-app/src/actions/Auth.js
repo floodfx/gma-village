@@ -2,6 +2,7 @@ import rp from 'request-promise';
 import * as Types from './Types';
 import { AUTH_BASE } from '../util';
 import cookies from 'react-cookie';
+import { browserHistory } from 'react-router';
 
 const COOKIE_NAME = "gv_auth"
 
@@ -105,6 +106,7 @@ export const currentUser = (access_token) => {
 export const logout = () => {
   return (dispatch) => {
     cookies.remove(COOKIE_NAME, {path: "/"});
+    browserHistory.push("/login")
     dispatch(logoutRequest());
   }
 }

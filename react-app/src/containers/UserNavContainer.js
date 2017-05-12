@@ -9,7 +9,6 @@ class UserNavContainer extends Component {
 
   onLogoutClick = () => {
     this.props.logout();
-    browserHistory.push("/login/")
   }
 
   matchRoute = (routeName) => {

@@ -22,12 +22,12 @@ class LoginContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps", nextProps)
+    // console.log("nextProps", nextProps)
     // call if fetchAuthCookie succeeds but only
     // when graphQLClient has the Auth header
     if(nextProps.cookie &&
       !this.state.calledCurrentUser) {
-      console.log("calling currentUser with account_kit_access_token:"+nextProps.cookie.account_kit_access_token)
+      // console.log("calling currentUser with account_kit_access_token:"+nextProps.cookie.account_kit_access_token)
       this.props.currentUser(nextProps.cookie.account_kit_access_token);
       this.setState({calledCurrentUser: true});
     } else if(this.props.cookie && !nextProps.cookie) {
@@ -45,8 +45,12 @@ class LoginContainer extends Component {
         }
         this.props.saveAuthCookie(cookie);
       }
-      let redirect = this.props.location.query.redirect || "/home"
-      browserHistory.push(redirect)
+      if(user.accepted_terms) {
+        let redirect = this.props.location.query.redirect || "/home"
+        browserHistory.push(redirect)
+      } else {
+        browserHistory.push('/profile#tos');
+      }
     }
   }
 

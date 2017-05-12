@@ -10,8 +10,18 @@ import {
 import FontAwesome from 'react-fontawesome';
 import TextField from './forms/TextField';
 import Checkbox from './forms/Checkbox';
+import TosSummary from './TosSummary';
+import ReactModal from 'react-modal';
 
 class AdminForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showTos: !!props.showTos,
+      acceptedTos: false
+    }
+  }
 
   componentWillReceiveProps(newProps) {
     // change value of profile_image_url when prop comes in
@@ -19,6 +29,24 @@ class AdminForm extends Component {
     if(profile_image_url !== newProps.profile_image_url) {
       change("profile_image_url", newProps.profile_image_url);
     }
+  }
+
+  handleOpenModal = () => {
+    this.setState({ showTos: true });
+  }
+
+  onTosAccepted = () => {
+    this.setState({ showTos: false });
+    this.props.onTosAccepted();
+  }
+
+  onTosCanceled = () => {
+    this.setState({ showTos: false });
+    this.props.onTosCanceled();
+  }
+
+  onTosChecked = (acceptedTos) => {
+    this.setState({acceptedTos});
   }
 
   render() {
@@ -29,13 +57,24 @@ class AdminForm extends Component {
       invalid,
       submitting,
       heading,
-      profile_image_url
+      profile_image_url,
     } = this.props
     return (
       <div>
+        <ReactModal
+          isOpen={this.state.showTos}
+          contentLabel="Terms of Service Agreement"
+          shouldCloseOnOverlayClick={false}>
+          <TosSummary
+            accepted={this.state.acceptedTos}
+            onTosChecked={this.onTosChecked}
+            onTosAccepted={this.onTosAccepted}
+            onTosCanceled={this.onTosCanceled} />
+        </ReactModal>
         <h2 className="lh-title fw2 f2">{heading}</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div>
+
+          <div className="mt4">
             <Field
               label="First Name"
               name="first_name"

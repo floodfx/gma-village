@@ -7,8 +7,18 @@ import ParentForm from '../components/ParentForm';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Alert from '../components/Alert';
 import { ActionCreators } from '../actions';
+import { browserHistory } from 'react-router';
 
 class ProfileContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    var hash = window.location.hash.substr(1);
+    const showTos = !!hash ? hash === 'tos' : false ;
+    this.state = {
+      showTos
+    }
+  }
 
   componentWillUnmount() {
     const { user } = this.props;
@@ -26,6 +36,24 @@ class ProfileContainer extends Component {
     if(!this.props.saved && nextProps.saved) {
       this.props.currentUser(this.props.authCookie.account_kit_access_token);
     }
+  }
+
+  onTosAccepted = () => {
+    const { user } = this.props;
+    user.accepted_terms = true;
+    if(user.user_type === "ADMIN") {
+      this.props.saveAdminUser(this.props.authCookie.account_kit_access_token, user);
+    } else if(user.user_type === "GMA") {
+      this.props.saveGmaUser(this.props.authCookie.account_kit_access_token, user);
+    } else if(user.user_type === "PARENT") {
+      this.props.saveParentUser(this.props.authCookie.account_kit_access_token, user);
+    }
+    this.setState({showTos:false})
+    browserHistory.push("/profile")
+  }
+
+  onTosCanceled = () => {
+    this.props.logout();
   }
 
   onAdminProfileSubmit = (values) => {
@@ -70,6 +98,9 @@ class ProfileContainer extends Component {
               saving={this.props.saving}
               profile_image_url={profile_image_url || user.profile_image_url}
               profile_image_loading={this.props.profile_image_loading}
+              showTos={this.state.showTos}
+              onTosAccepted={this.onTosAccepted}
+              onTosCanceled={this.onTosCanceled}
               initialValues={user}
             />
           }
@@ -82,6 +113,9 @@ class ProfileContainer extends Component {
               currentUser={user}
               profile_image_url={profile_image_url || user.profile_image_url}
               profile_image_loading={this.props.profile_image_loading}
+              showTos={this.state.showTos}
+              onTosAccepted={this.onTosAccepted}
+              onTosCanceled={this.onTosCanceled}
               initialValues={user}
             />
           }
@@ -94,6 +128,9 @@ class ProfileContainer extends Component {
               profile_image_url={profile_image_url || user.profile_image_url}
               profile_image_loading={this.props.profile_image_loading}
               initialValues={user}
+              showTos={this.state.showTos}
+              onTosAccepted={this.onTosAccepted}
+              onTosCanceled={this.onTosCanceled}
               currentUser={user}
             />
           }
