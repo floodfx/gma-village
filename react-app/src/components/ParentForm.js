@@ -37,6 +37,7 @@ class ParentForm extends Component {
       other_neighborhood = initialValues.other_neighborhood || '';
     }
     this.state = {
+      showAdvanced: false,
       children,
       other_neighborhood,
       childFirstName: '',
@@ -171,125 +172,139 @@ class ParentForm extends Component {
               normalize={normalizePhone}
               validate={[required, phone]} />
           </div>
-          <div className="mt4">
-            <Field
-              label="My Children:"
-              name="children"
-              component={Hidden}
-              validate={[requiredArray]} />
-            {children.length > 0 &&
-              <ul>
-                {children.map((child, index) => {
-                  return (
-                    <li key={index} className="ph3 pv2">
-                      {child.first_name} (born: {moment([child.dob.year, child.dob.month, child.dob.day]).format("MM-DD-YYYY")})
-                      <button type="button" className="btn btn-sm gma-orange-bg ml2" onClick={() => this.removeChild(index)}>
-                        <FontAwesome name="trash"/>
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-            }
+          {!this.state.showAdvanced &&
+            <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setState({showAdvanced:true})}>
+              <FontAwesome name='caret-right' className="mr1"/>Show Advanced
+            </div>
+          }
+          {this.state.showAdvanced &&
+
             <div>
-              <div className="dt">
-                <div className="dtc">
-                  <label className="normal mh2">Child First Name:</label>
+              <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setState({showAdvanced:false})}>
+                <FontAwesome name='caret-down' className="mr1"/>Hide Advanced
+              </div>
+              <div className="mt4">
+                <Field
+                  label="My Children:"
+                  name="children"
+                  component={Hidden}
+                  validate={[requiredArray]} />
+                {children.length > 0 &&
+                  <ul>
+                    {children.map((child, index) => {
+                      return (
+                        <li key={index} className="ph3 pv2">
+                          {child.first_name} (born: {moment([child.dob.year, child.dob.month, child.dob.day]).format("MM-DD-YYYY")})
+                          <button type="button" className="btn btn-sm gma-orange-bg ml2" onClick={() => this.removeChild(index)}>
+                            <FontAwesome name="trash"/>
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                }
+                <div>
+                  <div className="dt">
+                    <div className="dtc">
+                      <label className="normal mh2">Child First Name:</label>
+                    </div>
+                    <div className="dtc">
+                      <input type="text" value={this.state.childFirstName} name="child_first_name" onChange={(e) => this.childValueChange("childFirstName", e.target.value)} />
+                    </div>
+                  </div>
+                  <div className="dt">
+                    <div className="dtc">
+                      <label className="normal mh2">Child Birth Date:</label>
+                    </div>
+                    <div className="dtc">
+                      <select value={this.state.childBirthMonth} onChange={(e) => this.childValueChange("childBirthMonth", e.target.value)}>
+                        <option value={0}>Month</option>
+                        {months.map((month, index) => {
+                          return <option key={index} value={month}>{leftPad(month, 2, 0)}</option>
+                        })}
+                      </select>
+                      <select value={this.state.childBirthDay} onChange={(e) => this.childValueChange("childBirthDay", e.target.value)}>
+                        <option value={0}>Day</option>
+                        {days.map((day, index) => {
+                          return <option key={index} value={day}>{leftPad(day, 2, 0)}</option>
+                        })}
+                      </select>
+                      <select value={this.state.childBirthYear} onChange={(e) => this.childValueChange("childBirthYear", e.target.value)}>
+                        <option value={0}>Year</option>
+                        {years.map((yr, index) => {
+                          return <option key={index} value={year-index}>{year-index}</option>
+                        })}
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div className="dtc">
-                  <input type="text" value={this.state.childFirstName} name="child_first_name" onChange={(e) => this.childValueChange("childFirstName", e.target.value)} />
+                <div>
+                  <button
+                    className="btn btn-sm gma-orange-bg"
+                    type="button"
+                    disabled={!this.state.validChild}
+                    onClick={() => this.addChild()}>
+                    Add Child
+                  </button>
                 </div>
               </div>
-              <div className="dt">
-                <div className="dtc">
-                  <label className="normal mh2">Child Birth Date:</label>
-                </div>
-                <div className="dtc">
-                  <select value={this.state.childBirthMonth} onChange={(e) => this.childValueChange("childBirthMonth", e.target.value)}>
-                    <option value={0}>Month</option>
-                    {months.map((month, index) => {
-                      return <option key={index} value={month}>{leftPad(month, 2, 0)}</option>
-                    })}
-                  </select>
-                  <select value={this.state.childBirthDay} onChange={(e) => this.childValueChange("childBirthDay", e.target.value)}>
-                    <option value={0}>Day</option>
-                    {days.map((day, index) => {
-                      return <option key={index} value={day}>{leftPad(day, 2, 0)}</option>
-                    })}
-                  </select>
-                  <select value={this.state.childBirthYear} onChange={(e) => this.childValueChange("childBirthYear", e.target.value)}>
-                    <option value={0}>Year</option>
-                    {years.map((yr, index) => {
-                      return <option key={index} value={year-index}>{year-index}</option>
-                    })}
-                  </select>
+              <div className="mt4">
+                <Field
+                  heading="I live in:"
+                  name="neighborhood"
+                  options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
+                  format={(val) => {
+                    if(val === 'OTHER_OAKLAND') {
+                      val = 'OTHER';
+                    }
+                    return val
+                  }}
+                  normalize={(val) => {
+                    if(val === 'OTHER') {
+                      val = 'OTHER_OAKLAND'
+                    }
+                    return val
+                  }}
+                  component={MultiRadio}
+                  otherTextValue={other_neighborhood}
+                  onOtherValueChange={this.onOtherValueChange}
+                  />
+              </div>
+              <div className="mt4">
+                <label>Profile Photo:</label>
+                {profile_image_url &&
+                  <div>
+                    <img
+                    className="w-100 w-20-ns gma-orange-border"
+                    src={profile_image_url}
+                    style={{
+                      objectFit: 'cover'
+                    }}/>
+                  </div>
+                }
+                <div>
+                  <Field
+                    name="profilePhoto"
+                    component="input"
+                    type="file"
+                    onChange={(e) => handleFile(e)} />
+                    {this.props.profile_image_loading &&
+                      <FontAwesome name='spinner' spin={true} className="mr1"/>
+                    }
                 </div>
               </div>
-            </div>
-            <div>
-              <button
-                className="btn btn-sm gma-orange-bg"
-                type="button"
-                disabled={!this.state.validChild}
-                onClick={() => this.addChild()}>
-                Add Child
-              </button>
-            </div>
-          </div>
-          <div className="mt4">
-            <Field
-              heading="I live in:"
-              name="neighborhood"
-              options={Neighborhood.enumValues.slice(0).sort(customSortNeighborhoods).map((val) => { return { id: val.name, label: val.text } })}
-              format={(val) => {
-                if(val === 'OTHER_OAKLAND') {
-                  val = 'OTHER';
-                }
-                return val
-              }}
-              normalize={(val) => {
-                if(val === 'OTHER') {
-                  val = 'OTHER_OAKLAND'
-                }
-                return val
-              }}
-              component={MultiRadio}
-              otherTextValue={other_neighborhood}
-              onOtherValueChange={this.onOtherValueChange}
-              />
-          </div>
-          <div className="mt4">
-            <label>Profile Photo:</label>
-            {profile_image_url &&
-              <div>
-                <img
-                className="w-100 w-20-ns gma-orange-border"
-                src={profile_image_url}
-                style={{
-                  objectFit: 'cover'
-                }}/>
+              <div className="mt4">
+                <Field
+                  label="Active:"
+                  name="active"
+                  component={Checkbox}
+                  type="checkbox" />
               </div>
-            }
-            <div>
-              <Field
-                name="profilePhoto"
-                component="input"
-                type="file"
-                onChange={(e) => handleFile(e)} />
-                {this.props.profile_image_loading &&
-                  <FontAwesome name='spinner' spin={true} className="mr1"/>
-                }
+              <Field name="other_neighborhood" component="input" type="hidden" />
+              <Field name="showAdvanced" component="input" type="hidden" value={this.state.showAdvanced}/>
+              <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
             </div>
-          </div>
-          <div className="mt4">
-            <Field
-              label="Active:"
-              name="active"
-              component={Checkbox}
-              type="checkbox" />
-          </div>
-          <Field name="other_neighborhood" component="input" type="hidden" />
-          <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
+          }
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
@@ -306,6 +321,9 @@ class ParentForm extends Component {
 
 const validateOthers = values => {
   const errors = {}
+  if(!values.showAdvanced) {
+    return
+  }
 
   if (!values.neighborhood && !values[otherFieldMap]) {
     errors.neighborhood = 'Required'
