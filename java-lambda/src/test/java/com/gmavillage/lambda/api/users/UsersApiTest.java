@@ -230,6 +230,13 @@ public class UsersApiTest {
   }
 
   @Test
+  public void testParentWithJanuaryKidParse() throws Exception {
+    final String parentJson = testUtils.loadJsonFileString("test_january_child_json_error.json");
+    final Parent p = gson.fromJson(parentJson, Parent.class);
+    System.out.println("Parent" + ToStringBuilder.reflectionToString(p));
+  }
+
+  @Test
   public void testGmaParse() throws Exception {
     final String gmaJson = testUtils.loadJsonFileString("test_gma_json_error.json");
     final Gma gma = gson.fromJson(gmaJson, Gma.class);
@@ -240,12 +247,6 @@ public class UsersApiTest {
   public void testPostCareNeedParses() throws Exception {
     final String careNeedJson = testUtils.loadJsonFileString("test_care_need_json_error.json");
     final CareNeed careNeed = gson.fromJson(careNeedJson, CareNeed.class);
-  }
-
-  @Test
-  public void testPutAdminParses() throws Exception {
-    final String adminJson = testUtils.loadJsonFileString("test_admin_json_error.json");
-    final Admin admin = gson.fromJson(adminJson, Admin.class);
   }
 
 

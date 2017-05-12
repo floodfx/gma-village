@@ -1,0 +1,34 @@
+{
+    "user_type": "PARENT",
+    "active": true,
+    "first_name": "New",
+    "last_name": "Parent",
+    "phone": "4157027233",
+    "children": [
+        {
+            "first_name": "Raili",
+            "dob": {
+                "year": 2017,
+                "month": 0,
+                "day": 1
+            }
+        }
+    ],
+    "neighborhood": "NORTH_OAKLAND",
+    "need_recurrence": [
+        "ONE_TIME",
+        "BACK_UP"
+    ],
+    "need_time_of_day": [
+        "DAYTIME",
+        "EARLY_MORNING",
+        "OTHER"
+    ],
+    "need_locations": [
+        "PROVIDERS_HOME",
+        "ELSEWHERE"
+    ],
+    "undefined": "Always",
+    "why_join": "It is awesome",
+    "additional_info": "Kids rock"
+}

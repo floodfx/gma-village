@@ -3,9 +3,9 @@
 LAMBDA_NAME="accountkit"
 DESCRIPTION="Account Kit Services for GMA Village"
 GATEWAY_PATH="accountkit"
-ZIP_PATH="../build/distributions/java-lambda.zip"
 HANDLER="com.gmavillage.lambda.accountkit.LambdaHandler::handleRequest"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ZIP_PATH="$SCRIPT_DIR/../../build/distributions/java-lambda.zip"
 SCRIPT_DIR=$SCRIPT_DIR/../../scripts
 
 STAGE=$1
