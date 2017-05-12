@@ -4,6 +4,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 import com.amazonaws.HttpMethod;
@@ -13,6 +14,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.gmavillage.model.json.GsonFactory;
+import com.google.api.client.util.Maps;
 import com.google.gson.Gson;
 
 public class S3Signer {
@@ -22,7 +24,7 @@ public class S3Signer {
   private final Gson gson = GsonFactory.getGson();
 
   public S3Signer() {
-    this.s3 = new AmazonS3Client();
+    this(new AmazonS3Client());
   }
 
   public S3Signer(final AmazonS3 s3) {
@@ -40,7 +42,11 @@ public class S3Signer {
     generatePresignedUrlRequest.setMethod(HttpMethod.PUT);
     generatePresignedUrlRequest
         .setExpiration(Date.from(expiration.atZone(ZoneId.systemDefault()).toInstant()));
-    generatePresignedUrlRequest.setContentType(event.getQueryStringParameters().get("type"));
+    final Map<String, String> qs =
+        event != null ? event.getQueryStringParameters() : Maps.newHashMap();
+    if (qs.get("type") != null) {
+      generatePresignedUrlRequest.setContentType(qs.get("type"));
+    }
 
     final URL signedUrl = s3.generatePresignedUrl(generatePresignedUrlRequest);
 

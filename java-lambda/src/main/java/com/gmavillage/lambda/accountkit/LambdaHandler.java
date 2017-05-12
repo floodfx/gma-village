@@ -4,7 +4,6 @@ import static com.gmavillage.lambda.LambdaProxyOutputHelper.error;
 import static com.gmavillage.lambda.LambdaProxyOutputHelper.error404;
 import static com.gmavillage.lambda.LambdaProxyOutputHelper.success;
 import static com.google.common.base.MoreObjects.firstNonNull;
-import static com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES;
 import static java.lang.System.getenv;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
@@ -22,10 +21,10 @@ import com.gmavillage.lambda.db.UserDB;
 import com.gmavillage.lambda.model.accountkit.AccountKitUser;
 import com.gmavillage.lambda.model.accountkit.AccountKitUserAccessToken;
 import com.gmavillage.model.User;
+import com.gmavillage.model.json.GsonFactory;
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class LambdaHandler extends AbstractLambdaProxyHandler {
 
@@ -33,7 +32,9 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
   private static final String CSRF = firstNonNull(getenv("CSRF"), "CSRF");
   private static final String VERSION = firstNonNull(getenv("AK_APP_VERSION"), "AK_APP_VERSION");
   private static final String APP_SECRET = firstNonNull(getenv("AK_APP_SECRET"), "AK_APP_SECRET");
-  final Gson gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
+
+  final Gson gson = GsonFactory.getGson();
+
   private final AccountKitClient accountKit;
   private final UserDB userDB;
 

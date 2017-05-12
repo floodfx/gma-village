@@ -4,3 +4,5 @@ SELECT u.id, u.first_name, u.last_name, u.phone, u.user_type, u.active,
        u.created_on, u.updated_at
 FROM users as u
 WHERE u.deleted=false or u.deleted=:deleted
+ORDER BY 
+  u.id

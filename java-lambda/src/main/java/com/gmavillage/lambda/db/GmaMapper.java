@@ -50,4 +50,13 @@ public class GmaMapper {
     }
   }
 
+  public static class CareNeedList implements RowMapper<Gma> {
+    @Override
+    public Gma mapRow(final ResultSet r, final int rowNum) throws SQLException {
+      final Gma gma = new Gma();
+      gma.setId(r.getInt("gma_id"));
+      return gma;
+    }
+  }
+
 }

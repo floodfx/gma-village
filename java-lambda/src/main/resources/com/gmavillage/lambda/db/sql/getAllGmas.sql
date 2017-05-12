@@ -21,3 +21,5 @@ WHERE
   g.neighborhood_id = n.id
   AND
   n.city_id = c.id
+ORDER BY 
+  u.id

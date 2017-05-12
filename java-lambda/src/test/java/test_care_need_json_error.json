@@ -1,0 +1,1320 @@
+{
+    "children": [
+        {
+            "id": 65,
+            "first_name": "Maia",
+            "dob": {
+                "year": 2011,
+                "month": 10,
+                "day": 20
+            }
+        },
+        {
+            "id": 64,
+            "first_name": "Micaela",
+            "dob": {
+                "year": 2015,
+                "month": 6,
+                "day": 9
+            }
+        }
+    ],
+    "neighborhood": "NORTH_OAKLAND",
+    "parent": {
+        "need_recurrence": [],
+        "need_time_of_day": [],
+        "need_locations": [],
+        "neighborhood": "NORTH_OAKLAND",
+        "children": [
+            {
+                "id": 65,
+                "first_name": "Maia",
+                "dob": {
+                    "year": 2011,
+                    "month": 10,
+                    "day": 20
+                }
+            },
+            {
+                "id": 64,
+                "first_name": "Micaela",
+                "dob": {
+                    "year": 2015,
+                    "month": 6,
+                    "day": 9
+                }
+            }
+        ],
+        "id": 79,
+        "first_name": "Catalina",
+        "last_name": "Garcia",
+        "phone": "9178250313",
+        "user_type": "PARENT",
+        "active": true,
+        "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/2bb49130-e333-11e6-8e88-556d995b4b5a.jpeg",
+        "account_kit_access_token": "EMAWcRW9aZBDs8i7Xh4uitWxfjCcWTXwJgQvZADSRYw1Vbw7kIWCPxV8gfxA7ndZBwSP22IoZByJ1pXZAATbFqeteDdP84ZCUNUZCIG9ZAX8Xl3kZBce2CpICGKzM6JNTThzbeou6xlAZBamNlKLKVVcH05YiZCZCZBgR1bXoUZD",
+        "account_kit_user_id": "381961345489132",
+        "created_on": {
+            "date": {
+                "year": 2017,
+                "month": 5,
+                "day": 9
+            },
+            "time": {
+                "hour": 3,
+                "minute": 8,
+                "second": 33,
+                "nano": 525733000
+            }
+        },
+        "updated_at": {
+            "date": {
+                "year": 2017,
+                "month": 5,
+                "day": 9
+            },
+            "time": {
+                "hour": 3,
+                "minute": 8,
+                "second": 33,
+                "nano": 525733000
+            }
+        },
+        "deleted": false,
+        "accepted_terms": false
+    },
+    "start_time": "2017-05-12T21:45:00-06:00",
+    "end_time": "2017-05-12T22:00:00-06:00",
+    "care_locations": [
+        "ELSEWHERE"
+    ],
+    "matching_gmas": [
+        {
+            "availabilities": [
+                "DAYTIME",
+                "EVENING",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "FUNNY",
+                "RELIABLE",
+                "PLAYFUL",
+                "LOUD"
+            ],
+            "other_demeanor": "Smart",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                ""
+            ],
+            "neighborhood": "EAST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "They are interesting, fun and funny, especially toddlers. I love to talk to them, read to them, play games and build things with them. ",
+            "additional_info": "I raised two children, one of whom has disabilities and I have two grandsons who are now teenagers. ",
+            "id": 2,
+            "first_name": "Marcy",
+            "last_name": "",
+            "phone": "5102130531",
+            "user_type": "GMA",
+            "active": false,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_marcy.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 31,
+                    "nano": 414345000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 11
+                },
+                "time": {
+                    "hour": 17,
+                    "minute": 43,
+                    "second": 22,
+                    "nano": 996419000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "worked at a Child care center",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "CALM",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                ""
+            ],
+            "neighborhood": "WEST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I'm a caring person. I'm a protector and like to see kids be safe and smiling and happy. I like to spend quality time with kids playing, doing art, taking them to places on outings. I try to teach them about eating healthy and nutritious. ",
+            "additional_info": "I really like being a caregiver. It's just a part of me. I used to work in child care and have always loved caring for kids. ",
+            "id": 4,
+            "first_name": "Angela",
+            "last_name": "",
+            "phone": "5107234778",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_angela.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 32,
+                    "nano": 530347000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 32,
+                    "nano": 530347000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "",
+            "care_locations": [
+                "ELSEWHERE",
+                "PROVIDERS_HOME"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "RELIABLE",
+                "ENERGETIC",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                "CHILDCENTERED_ART",
+                "OTHER",
+                "Turning Tantrums (3 part series)"
+            ],
+            "neighborhood": "EAST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I enjoy teaching them and taking them out to experience things out in the world. I love taking them to the zoo, to Fairyland and to explore different parks. ",
+            "additional_info": "I have worked taking care of children in different places including, Montessori school, Peter Pan Child care, YMCA in Alameda and the daycare room at church on Sundays.",
+            "id": 14,
+            "first_name": "Parker",
+            "last_name": "",
+            "phone": "5106893722",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_parker.jpg\n",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 39,
+                    "nano": 309279000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 39,
+                    "nano": 309279000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "DAYTIME",
+                "OTHER"
+            ],
+            "other_availability": "Supporting Children with Special Needs",
+            "care_ages": [
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "worked at a School",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "CALM",
+                "FUNNY",
+                "RELIABLE",
+                "SERIOUS",
+                "ENERGETIC",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "Respectful and Compassionate",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "OTHER",
+                "Supporting Children with Special Needs"
+            ],
+            "neighborhood": "ALAMEDA",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "they are delightful, honest and refreshing! I enjoy reading, singing, dancing with the children and encouraging their own self expression. ",
+            "additional_info": "I was adopted and raised my kids as a single parent so I can appreciate the benefit of an \"extended family.\" I wholeheartedly believe that it takes a village to raise a child. I am an artivist and have a passion for music and people.  I taught art in Oakland public schools. I love to garden. ",
+            "id": 15,
+            "first_name": "Sunny",
+            "last_name": "Traylor",
+            "phone": "5103753362",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/4664bb50-e8ff-11e6-9647-8f676662a832.jpeg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 39,
+                    "nano": 849807000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 39,
+                    "nano": 849807000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "worked at a Child care center",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "FUNNY",
+                "RELIABLE",
+                "ENERGETIC",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "Down to earth",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                ""
+            ],
+            "neighborhood": "WEST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "Little people make me happy. I like seeing them grow. I enjoy playing with them, reading to them and going places with them. ",
+            "additional_info": "One of my first jobs was working at a Head Start in my home town. ",
+            "id": 16,
+            "first_name": "Peggy",
+            "last_name": "",
+            "phone": "4157242528",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_peggy.jpg\n",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 40,
+                    "nano": 334222000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 40,
+                    "nano": 334222000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EVENING",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "I am a nurse",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "OUTGOING",
+                "FUNNY",
+                "RELIABLE",
+                "ENERGETIC",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                ""
+            ],
+            "neighborhood": "BERKELEY",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "Our children are our future. They need to be children, learning, caring, and sharing in a loving environment. ",
+            "additional_info": "As grandparents we have an obligation to give back and help parents raising their children. Our children are our future. ",
+            "id": 24,
+            "first_name": "Miniimah",
+            "last_name": "",
+            "phone": "7049062772",
+            "user_type": "GMA",
+            "active": false,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_miniimah.jpg\n",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 46,
+                    "nano": 441732000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 46,
+                    "nano": 441732000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS"
+            ],
+            "care_locations": [
+                "PROVIDERS_HOME",
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "PLAYFUL"
+            ],
+            "care_trainings": [
+                "OTHER",
+                "TEST"
+            ],
+            "neighborhood": "CASTRO_VALLEY",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "TEST",
+            "additional_info": "TEST",
+            "id": 26,
+            "first_name": "TEST",
+            "last_name": "TEST",
+            "phone": "6466711502",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/3df3e030-e7f7-11e6-9443-d70854db10e7.bin",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 48,
+                    "nano": 385755000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 48,
+                    "nano": 385755000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS"
+            ],
+            "other_care_experience": "worked at a School",
+            "care_locations": [
+                "ELSEWHERE",
+                "PROVIDERS_HOME"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "CALM",
+                "RELIABLE",
+                "ENERGETIC",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "Loving, Caring & Spiritual",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                ""
+            ],
+            "neighborhood": "WEST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I have a love for children and enjoy being with them. Special needs children need special care givers to help them along with their family, friends and community. ",
+            "additional_info": "I adopted my son and raised him until he was 20 years old. I was also a foster mother three times. At present I am employed with the Berkeley YMCA teacher assistant. I have been employed for 6 and a half years. ",
+            "id": 27,
+            "first_name": "Byzella",
+            "last_name": "",
+            "phone": "5103331140",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_byzella.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 48,
+                    "nano": 868836000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 7,
+                    "second": 48,
+                    "nano": 868836000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "I provide event child care for different organizations",
+            "care_locations": [
+                "ELSEWHERE",
+                "PROVIDERS_HOME"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "CALM",
+                "FUNNY",
+                "RELIABLE",
+                "SERIOUS",
+                "QUIET",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                ""
+            ],
+            "neighborhood": "WEST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "Kids are my life. They are interesting and innocent and have a lot to say. I like to learn from them and teach them. ",
+            "additional_info": "I'm a mom and a grandma and have enjoyed every minute of it. I have also learned a lot from taking care of my brother and sisters. I provide child care for different organizations during their events or workshops. I work with kids 5 days a week and still have time for your baby. I will love your child like I would love my own.",
+            "id": 42,
+            "first_name": "Irvella",
+            "last_name": "",
+            "phone": "5102288702",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_irvella.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 2,
+                    "nano": 434273000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 2,
+                    "nano": 434273000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EVENING",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "worked at a School",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "FUNNY",
+                "RELIABLE",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                ""
+            ],
+            "neighborhood": "BERKELEY",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I love children. I am a retired preschool teacher, had taught children's theater, have published my first children's book. Teaching children is a gift I could bring to you. ",
+            "additional_info": "I believe in empowering children and building their self-esteem. ",
+            "id": 51,
+            "first_name": "Sacul",
+            "last_name": "",
+            "phone": "5104675993",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_sacul.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 10,
+                    "nano": 304254000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 10,
+                    "nano": 304254000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "",
+            "care_locations": [
+                "ELSEWHERE",
+                "PROVIDERS_HOME"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "CALM",
+                "FUNNY",
+                "RELIABLE",
+                "ENERGETIC"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                "CHILDCENTERED_ART",
+                "OTHER",
+                "Supporting Children with Special Needs"
+            ],
+            "neighborhood": "EAST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I came from a big family and love children. I like being active and taking them to the park, the library, the beach. I love teaching them and being a part of their learning experience. ",
+            "additional_info": "I have a big heart and loving hands. I am good at thinking on the spot and love to organize fun creative activities for kids. I'm a former aerobics instructor and love to be active. ",
+            "id": 52,
+            "first_name": "Shirika",
+            "last_name": "",
+            "phone": "5105755530",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_shirika.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 10,
+                    "nano": 773820000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 10,
+                    "nano": 773820000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING",
+                "WORKED_SCHOOL",
+                "WORKED_CHILDCARE_CENTER"
+            ],
+            "care_locations": [
+                "PROVIDERS_HOME",
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "QUIET",
+                "OUTGOING",
+                "RELIABLE",
+                "ENERGETIC",
+                "PLAYFUL",
+                "SERIOUS",
+                "FUNNY",
+                "CALM",
+                "PATIENT"
+            ],
+            "care_trainings": [
+                "HEALTH_AND_SAFETY"
+            ],
+            "neighborhood": "EAST_OAKLAND",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "They are funny and energetic and I love spending time with kids. I want to give them a safe place to grow. I love to read to them, play games with them and answer their questions. I like keeping them busy and taking them to the park and the library. ",
+            "additional_info": "I have worked with kids all my life. I have worked for head start and the school district with kids of different ages but mostly children in preschool and elementary.  I have also worked in after school programs helping kids with their home work. \n\nI have many grand children and love spending time with kids. I wish they would have had this program when I was raising my kids. ",
+            "id": 53,
+            "first_name": "Virginia",
+            "last_name": "Glosson",
+            "phone": "5103796347",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/da0f2f00-3447-11e7-abed-39285cd5ed05.jpeg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 11,
+                    "nano": 608311000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 11,
+                    "nano": 608311000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "CARED_FOR_GRANDKIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "worked at a Child care center",
+            "care_locations": [
+                "ELSEWHERE",
+                "PROVIDERS_HOME"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "CALM",
+                "RELIABLE",
+                "SERIOUS",
+                "QUIET"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                "CHILDCENTERED_ART",
+                ""
+            ],
+            "neighborhood": "WEST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "It's something I've done my whole life. I love to work with kids, helping them learn and grow. ",
+            "additional_info": "I have more than 30 years experience caring for children of various ages. I have 6 children of my own and 2 grandchildren.",
+            "id": 57,
+            "first_name": "Michelle",
+            "last_name": "",
+            "phone": "5103333297",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_michelle.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 15,
+                    "nano": 105803000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 15,
+                    "nano": 105803000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "WEEKEND",
+                "EVENING"
+            ],
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "WORKED_SCHOOL",
+                "WORKED_BABYSITTING"
+            ],
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "OUTGOING",
+                "PATIENT",
+                "CALM",
+                "FUNNY",
+                "RELIABLE",
+                "SERIOUS",
+                "PLAYFUL"
+            ],
+            "care_trainings": [
+                "HEALTH_AND_SAFETY"
+            ],
+            "neighborhood": "BERKELEY",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "they are enjoyable, honest and unique. I love reading with them and being a part of their growth process. I like offering them security and stability in their lives. I enjoy exposing children to new experiences. ",
+            "additional_info": "I am a teacher and have taught in schools K-12 for 30+ years. I have been trained to work with special needs children. I have also been a director of after school tutoring programs. \n\n",
+            "id": 58,
+            "first_name": "Linda",
+            "last_name": " McCrary Grayson",
+            "phone": "5103165246",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/3e0330f0-ed72-11e6-b905-f977cfbd26bf.jpeg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 15,
+                    "nano": 982312000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 15,
+                    "nano": 982312000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "EARLY_MORNING",
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "",
+            "care_locations": [
+                "ELSEWHERE",
+                "PROVIDERS_HOME"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "CALM",
+                "RELIABLE",
+                "ENERGETIC",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                ""
+            ],
+            "neighborhood": "EAST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I love children. I adopted 4 children and took in many foster children. I love to read to children and enjoy taking them to parks, movies and other children's amusements.  ",
+            "additional_info": "I have a fifteen year old daughter living with me. ",
+            "id": 60,
+            "first_name": "Zada",
+            "last_name": "",
+            "phone": "5106777127",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_zada.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 17,
+                    "nano": 368628000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 17,
+                    "nano": 368628000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        },
+        {
+            "availabilities": [
+                "DAYTIME",
+                "EVENING",
+                "OVERNIGHT",
+                "WEEKEND"
+            ],
+            "other_availability": "",
+            "care_ages": [
+                "ZERO_TO_SIX_MONTHS",
+                "SIX_MONTHS_TO_TWO_YEARS",
+                "TWO_YEARS_TO_FIVE_YEARS",
+                "FIVE_YEARS_PLUS"
+            ],
+            "care_experiences": [
+                "RAISED_KIDS",
+                "WORKED_BABYSITTING"
+            ],
+            "other_care_experience": "worked at a Child care center",
+            "care_locations": [
+                "ELSEWHERE"
+            ],
+            "demeanors": [
+                "PATIENT",
+                "OUTGOING",
+                "CALM",
+                "FUNNY",
+                "RELIABLE",
+                "SERIOUS",
+                "PLAYFUL"
+            ],
+            "other_demeanor": "",
+            "care_trainings": [
+                "HEALTH_AND_SAFETY",
+                "CPR_AND_FIRST_AID",
+                ""
+            ],
+            "neighborhood": "WEST_OAKLAND",
+            "other_neighborhood": "",
+            "available_outside_neighborhood": true,
+            "why_care_for_kids": "I love children and they love me. I love playing games with them, reading stories and cooking special treats. ",
+            "additional_info": "I worked at Berk Child Care Center where I was the assistant teacher and I loved the children there. I also worked at my sisters Day Care. It was a joy to work there with all my family members. I would also like to share that I have had seizures in the past and I am on meds and have not had one in several years. ",
+            "id": 62,
+            "first_name": "Linda",
+            "last_name": "",
+            "phone": "5108539271",
+            "user_type": "GMA",
+            "active": true,
+            "profile_image_url": "https://storage.googleapis.com/gma-village-public-assets/gma/gma_linda.jpg",
+            "created_on": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 18,
+                    "nano": 956304000
+                }
+            },
+            "updated_at": {
+                "date": {
+                    "year": 2017,
+                    "month": 5,
+                    "day": 9
+                },
+                "time": {
+                    "hour": 3,
+                    "minute": 8,
+                    "second": 18,
+                    "nano": 956304000
+                }
+            },
+            "deleted": false,
+            "accepted_terms": false
+        }
+    ]
+}

@@ -4,3 +4,5 @@ WHERE
   c.id = n.child_id
   AND
   n.careneed_id = :careneed_id
+ORDER BY 
+  n.child_id

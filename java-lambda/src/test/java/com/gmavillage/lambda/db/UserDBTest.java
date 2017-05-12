@@ -10,19 +10,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gmavillage.model.Admin;
+import com.gmavillage.model.CareNeed;
+import com.gmavillage.model.CareNeed.DeliveryStatusType;
 import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
 import com.gmavillage.test.TestUtils;
-import com.google.api.client.util.Lists;
+import com.google.common.collect.Lists;
 
 public class UserDBTest {
 
   TestUtils testUtils = new TestUtils();
 
   @Before
-  public void resetDB() {
+  public void resetuserDB() {
     final Flyway flyway = new Flyway();
     flyway.setDataSource(Database.postgresDataSource());
     flyway.setLocations("filesystem:src/main/resources/com/gmavillage/lambda/db/migrations");
@@ -31,62 +33,57 @@ public class UserDBTest {
   }
 
 
+  UserDB userDB = new UserDB();
 
   @Test
   public void testCreateUserGetUserUpdateUser() throws Exception {
 
-    final UserDB db = new UserDB();
-
-
     final User u = testUtils.generateUser();
 
-    final User savedUser = db.createUser(u);
+    final User savedUser = userDB.createUser(u);
 
     Assert.assertNotNull(savedUser.getId());
     assertUserValuesSet(u, savedUser);
 
-    final User gotUser = db.getUser(savedUser.getId(), false);
+    final User gotUser = userDB.getUser(savedUser.getId(), false);
     assertUserValuesSet(gotUser, savedUser);
 
     final User u2 = testUtils.generateUser();
     u2.setId(gotUser.getId());
     u2.setAccountKitUserId(gotUser.getAccountKitUserId());
 
-    final User updatedUser = db.updateUser(u2);
+    final User updatedUser = userDB.updateUser(u2);
     assertUserValuesSet(u2, updatedUser);
   }
 
   public void testCreateAdminGetAdminUpdateAdmin() throws Exception {
 
-    final UserDB db = new UserDB();
-
 
     final Admin a = testUtils.generateAdmin();
 
-    final Admin savedAdmin = db.createAdmin(a);
+    final Admin savedAdmin = userDB.createAdmin(a);
 
     Assert.assertNotNull(savedAdmin.getId());
     assertUserValuesSet(a, savedAdmin);
 
-    final Admin gotAdmin = db.getAdmin(savedAdmin.getId(), false);
+    final Admin gotAdmin = userDB.getAdmin(savedAdmin.getId(), false);
     assertUserValuesSet(gotAdmin, savedAdmin);
 
     final Admin a2 = testUtils.generateAdmin();
     a2.setId(gotAdmin.getId());
     a2.setAccountKitUserId(gotAdmin.getAccountKitUserId());
 
-    final Admin updatedAdmin = db.updateAdmin(a2);
+    final Admin updatedAdmin = userDB.updateAdmin(a2);
     assertUserValuesSet(a2, updatedAdmin);
   }
 
   @Test
   public void testGetAllUsers() throws Exception {
-    final UserDB db = new UserDB();
     final User gen1 = testUtils.generateUser();
     final User gen2 = testUtils.generateUser();
-    final User created = db.createUser(gen1);
-    final User created2 = db.createUser(gen2);
-    final List<User> users = db.getAllUsers();
+    final User created = userDB.createUser(gen1);
+    final User created2 = userDB.createUser(gen2);
+    final List<User> users = userDB.getAllUsers();
     Assert.assertEquals(users.size(), 2);
     Assert.assertEquals(created, users.get(0));
     Assert.assertEquals(created2, users.get(1));
@@ -97,16 +94,14 @@ public class UserDBTest {
   @Test
   public void testCreateGmaAndGetGma() throws Exception {
 
-    final UserDB db = new UserDB();
-
     final Gma g = testUtils.generateGma();
 
-    final Gma savedGma = db.createGma(g);
+    final Gma savedGma = userDB.createGma(g);
     Assert.assertNotNull(savedGma.getId());
     assertUserValuesSet(g, savedGma);
     assertGmaValuesSet(g, savedGma);
 
-    final Gma gotGma = db.getGma(savedGma.getId(), false);
+    final Gma gotGma = userDB.getGma(savedGma.getId(), false);
     System.out.println("gotGma" + gotGma);
     Assert.assertEquals(gotGma.getId(), savedGma.getId());
     assertGmaValuesSet(gotGma, savedGma);
@@ -115,7 +110,7 @@ public class UserDBTest {
     dg.setId(gotGma.getId());
     dg.setPhone(gotGma.getPhone());
 
-    final Gma updatedGma = db.updateGma(dg);
+    final Gma updatedGma = userDB.updateGma(dg);
     Assert.assertEquals(gotGma.getId(), updatedGma.getId());
     assertGmaValuesSet(updatedGma, dg);
 
@@ -124,10 +119,9 @@ public class UserDBTest {
 
   @Test
   public void testGetAllGmas() throws Exception {
-    final UserDB db = new UserDB();
-    final Gma created = db.createGma(testUtils.generateGma());
-    final Gma created2 = db.createGma(testUtils.generateGma());
-    final List<Gma> gmas = db.getAllGmas();
+    final Gma created = userDB.createGma(testUtils.generateGma());
+    final Gma created2 = userDB.createGma(testUtils.generateGma());
+    final List<Gma> gmas = userDB.getAllGmas();
     Assert.assertEquals(gmas.size(), 2);
     Assert.assertEquals(created, gmas.get(0));
     Assert.assertEquals(created2, gmas.get(1));
@@ -136,17 +130,15 @@ public class UserDBTest {
   @Test
   public void testCreateAndGetParent() throws Exception {
 
-    final UserDB db = new UserDB();
-
     final Parent p = testUtils.generateParent();
 
-    final Parent savedParent = db.createParent(p);
+    final Parent savedParent = userDB.createParent(p);
     System.out.println(ToStringBuilder.reflectionToString(savedParent));
     Assert.assertNotNull(savedParent.getId());
     assertUserValuesSet(p, savedParent);
     assertParentValuesSet(p, savedParent);
 
-    final Parent gotParent = db.getParent(savedParent.getId(), false);
+    final Parent gotParent = userDB.getParent(savedParent.getId(), false);
     Assert.assertEquals(gotParent.getId(), savedParent.getId());
     assertUserValuesSet(gotParent, savedParent);
     assertParentValuesSet(gotParent, savedParent);
@@ -156,8 +148,6 @@ public class UserDBTest {
   @Test
   public void testCreateParentAndGetParentUpdateChildrenAndGetParent() throws Exception {
 
-    final UserDB db = new UserDB();
-
     final Parent p = testUtils.generateParent();
     final Child c = new Child();
     final LocalDate dob = LocalDate.now();
@@ -166,14 +156,14 @@ public class UserDBTest {
     c.setNote("notes");
     p.getChildren().add(c);
 
-    final Parent savedParent = db.createParent(p);
+    final Parent savedParent = userDB.createParent(p);
     System.out.println(ToStringBuilder.reflectionToString(savedParent));
     Assert.assertNotNull(savedParent.getId());
     Assert.assertEquals(p.getNeedRecurrence(), savedParent.getNeedRecurrence());
     Assert.assertTrue(savedParent.getChildren().size() > 0);
     Assert.assertEquals(p.getChildren(), savedParent.getChildren());
 
-    final Parent gotParent = db.getParent(savedParent.getId(), false);
+    final Parent gotParent = userDB.getParent(savedParent.getId(), false);
     Assert.assertEquals(gotParent.getId(), savedParent.getId());
     Assert.assertEquals(gotParent.getNeedRecurrence(), savedParent.getNeedRecurrence());
     Assert.assertEquals(gotParent.getChildren().size(), 1);
@@ -187,7 +177,7 @@ public class UserDBTest {
     c2.setNote("notes2");
     gotParent.getChildren().add(c2);
 
-    final Parent updatedParent = db.updateParent(gotParent);
+    final Parent updatedParent = userDB.updateParent(gotParent);
     Assert.assertEquals(gotParent.getId(), updatedParent.getId());
     Assert.assertEquals(gotParent.getNeedRecurrence(), updatedParent.getNeedRecurrence());
     Assert.assertEquals(updatedParent.getChildren().size(), 2);
@@ -197,10 +187,9 @@ public class UserDBTest {
 
   @Test
   public void testGetAllParents() throws Exception {
-    final UserDB db = new UserDB();
-    final Parent created = db.createParent(testUtils.generateParent());
-    final Parent created2 = db.createParent(testUtils.generateParent());
-    final List<Parent> parents = db.getAllParents();
+    final Parent created = userDB.createParent(testUtils.generateParent());
+    final Parent created2 = userDB.createParent(testUtils.generateParent());
+    final List<Parent> parents = userDB.getAllParents();
     Assert.assertEquals(parents.size(), 2);
     Assert.assertEquals(created, parents.get(0));
     Assert.assertEquals(created2, parents.get(1));
@@ -263,6 +252,59 @@ public class UserDBTest {
     Assert.assertEquals(suppliedUser.getProfileImageUrl(), savedUser.getProfileImageUrl());
   }
 
+
+  @Test
+  public void testCreateCareNeedGetCareNeedUpdateCareNeed() throws Exception {
+
+    final Parent p = userDB.createParent(testUtils.generateParent(2));
+    Assert.assertTrue(p.getId() != null);
+    Assert.assertTrue(Lists.newArrayList(p.getChildren()).get(0).getId() != null);
+    Assert.assertTrue(Lists.newArrayList(p.getChildren()).get(1).getId() != null);
+    final List<Gma> gmas = Lists.newArrayList(userDB.createGma(testUtils.generateGma()),
+        userDB.createGma(testUtils.generateGma()), userDB.createGma(testUtils.generateGma()));
+    Assert.assertTrue(gmas.get(1).getId() != null);
+
+    // save
+    final CareNeed c = testUtils.generateCareNeed(p, gmas);
+    final CareNeed saved = userDB.createCareNeed(c);
+
+    assertCareNeedValuesSet(c, saved);
+
+    // update
+    saved.setDeliveryStatus(DeliveryStatusType.QUEUED);
+    Assert.assertTrue(userDB.updateCareNeedStatus(saved));
+
+    // get
+    final CareNeed got = userDB.getCareNeed(saved.getId());
+    assertCareNeedValuesSet(saved, got);
+
+    // save more...
+    userDB.createCareNeed(testUtils.generateCareNeed(p, gmas));
+    userDB.createCareNeed(testUtils.generateCareNeed(p, gmas));
+    // getAll
+    final List<CareNeed> allCareNeeds = userDB.getAllCareNeeds();
+    Assert.assertEquals(3, allCareNeeds.size());
+  }
+
+  public void assertCareNeedValuesSet(final CareNeed a, final CareNeed b) {
+    Assert.assertEquals(a.getOtherNeighborhood(), b.getOtherNeighborhood());
+    Assert.assertEquals(a.getCareLocations(), b.getCareLocations());
+    final List<Child> ac = Lists.newArrayList(a.getChildren());
+    final List<Child> bc = Lists.newArrayList(b.getChildren());
+    ac.sort((o1, o2) -> {
+      return o1.getId() - o2.getId();
+    });
+    bc.sort((o1, o2) -> {
+      return o1.getId() - o2.getId();
+    });
+    Assert.assertEquals(ac, bc);
+    Assert.assertEquals(a.getEndTime(), b.getEndTime());
+    Assert.assertEquals(a.getMatchingGmas(), b.getMatchingGmas());
+    Assert.assertEquals(a.getNeighborhood(), b.getNeighborhood());
+    Assert.assertEquals(a.getParent(), b.getParent());
+    Assert.assertEquals(a.getStartTime(), b.getStartTime());
+    Assert.assertEquals(a.getTimezone(), b.getTimezone());
+  }
 
 
 }

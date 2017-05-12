@@ -9,3 +9,5 @@ WHERE
   u.user_type = 'ADMIN'
   AND
   u.id = a.user_id
+ORDER BY 
+  u.id

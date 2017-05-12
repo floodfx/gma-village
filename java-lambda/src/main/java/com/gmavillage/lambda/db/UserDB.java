@@ -15,10 +15,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import com.gmavillage.model.Admin;
+import com.gmavillage.model.CareNeed;
 import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
+import com.google.api.client.util.Lists;
 import com.google.common.collect.Sets;
 
 public class UserDB extends Database {
@@ -225,6 +227,25 @@ public class UserDB extends Database {
         this.namedTemplate.query(loadSqlFile("getChildren"), source, new ParentMapper.Children()));
   }
 
+  public Set<Child> getCareNeedChildren(final Integer careNeedId) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("careneed_id", careNeedId);
+    return Sets.newHashSet(this.namedTemplate.query(loadSqlFile("getCareNeedsChildren"), source,
+        new ParentMapper.Children()));
+  }
+
+  public List<Gma> getCareNeedGmas(final Integer careNeedId) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("careneed_id", careNeedId);
+    final List<Gma> idGmas = this.namedTemplate.query(loadSqlFile("getCareNeedsGmasIds"), source,
+        new GmaMapper.CareNeedList());
+    final List<Gma> realGmas = Lists.newArrayList();
+    for (final Gma idGma : idGmas) {
+      realGmas.add(getGma(idGma.getId(), false));
+    }
+    return realGmas;
+  }
+
   public List<Parent> getAllParents() throws Exception {
     return getAllParents(false);
   }
@@ -347,6 +368,84 @@ public class UserDB extends Database {
     source.addValue("createdByUser", user.getCreatedByUser());
     source.addValue("deleted", user.isDeleted());
     source.addValue("profileImageUrl", user.getProfileImageUrl());
+    return source;
+  }
+
+  public CareNeed createCareNeed(final CareNeed cn) throws Exception {
+    final CareNeed savedCareNeed = this.namedTemplate.query(loadSqlFile("createCareNeed"),
+        careNeedSqlParams(cn), new CareNeedMapper.One());
+    savedCareNeed.setParent(cn.getParent());
+    savedCareNeed.setChildren(cn.getChildren());
+    savedCareNeed.setMatchingGmas(cn.getMatchingGmas());
+
+    // now insert children
+    final MapSqlParameterSource[] childrenSource =
+        new MapSqlParameterSource[cn.getChildren().size()];
+    int i = 0;
+    for (final Child c : cn.getChildren()) {
+      childrenSource[i] = new MapSqlParameterSource();
+      childrenSource[i].addValue("careneed_id", savedCareNeed.getId());
+      childrenSource[i].addValue("child_id", c.getId());
+      i++;
+    }
+    this.namedTemplate.batchUpdate(loadSqlFile("insertCareNeedsChildren"), childrenSource);
+
+    // now insert gmas
+    final MapSqlParameterSource[] gmasSource =
+        new MapSqlParameterSource[cn.getMatchingGmas().size()];
+    i = 0;
+    for (final Gma g : cn.getMatchingGmas()) {
+      gmasSource[i] = new MapSqlParameterSource();
+      gmasSource[i].addValue("careneed_id", savedCareNeed.getId());
+      gmasSource[i].addValue("gma_id", g.getId());
+      i++;
+    }
+    this.namedTemplate.batchUpdate(loadSqlFile("insertCareNeedsGmas"), gmasSource);
+
+    return savedCareNeed;
+  }
+
+
+  public boolean updateCareNeedStatus(final CareNeed careNeed) throws Exception {
+    return this.namedTemplate.update(loadSqlFile("updateCareNeedStatus"),
+        careNeedStatusSqlParams(careNeed)) == 1;
+  }
+
+  public CareNeed getCareNeed(final int id) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("id", id);
+    final CareNeed careNeed =
+        this.namedTemplate.query(loadSqlFile("getCareNeed"), source, new CareNeedMapper.One());
+    careNeed.setChildren(getCareNeedChildren(id));
+    careNeed.setMatchingGmas(getCareNeedGmas(id));
+    careNeed.setParent(getParent(careNeed.getParent().getId(), false));
+    return careNeed;
+  }
+
+  public List<CareNeed> getAllCareNeeds() throws Exception {
+    final SqlParameterSource source = new MapSqlParameterSource();
+    return this.namedTemplate.query(loadSqlFile("getAllCareNeeds"), source,
+        new CareNeedMapper.List());
+  }
+
+  private MapSqlParameterSource careNeedStatusSqlParams(final CareNeed c) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource("id", c.getId());
+    source.addValue("delivery_status", c.getDeliveryStatus().name());
+    return source;
+  }
+
+  private MapSqlParameterSource careNeedSqlParams(final CareNeed c) throws Exception {
+    final MapSqlParameterSource source = new MapSqlParameterSource();
+    source.addValue("timezoneName", c.getTimezone().getID());
+    source.addValue("parentId", c.getParent().getId());
+    final Array careLocationsArray =
+        createSqlArray(enumListToNameList(c.getCareLocations()), this.dataSource);
+    source.addValue("careLocations", careLocationsArray, Types.ARRAY);
+    source.addValue("neighborhoodId", c.getNeighborhood().getId());
+    source.addValue("otherNeighborhood", c.getOtherNeighborhood());
+    source.addValue("startTime", c.getStartTime());
+    source.addValue("endTime", c.getEndTime());
+    source.addValue("deliveryStatus", c.getDeliveryStatus().name());
     return source;
   }
 

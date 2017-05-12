@@ -11,16 +11,16 @@ import com.amazonaws.services.lambda.runtime.LambdaProxyEvent;
 import com.amazonaws.services.lambda.runtime.LambdaProxyOutput;
 import com.gmavillage.lambda.AbstractLambdaProxyHandler;
 import com.gmavillage.lambda.LambdaProxyOutputHelper;
-import com.gmavillage.lambda.api.users.UserImagesApi;
+import com.gmavillage.lambda.api.users.CareNeedApi;
 import com.gmavillage.lambda.api.users.UsersApi;
 
 public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
 
-  private static final Pattern PROXY_PATH_MATCHER = Pattern.compile(
+  public static final Pattern USERS_MATCHER = Pattern.compile(
       "(users)(\\/\\d+){0,1}|(gmas)(\\/\\d+){0,1}|(parents)(\\/\\d+){0,1}|(admins)(\\/\\d+){0,1}");
 
-  private static final String IMAGE_API = "imageapi";
   private static final String SIGN_URL = "signurl";
+  public static final Pattern CARE_NEEDS_MATCHER = Pattern.compile("(careneeds)(\\/\\d+){0,1}");
 
   private final UsersApi usersApi;
 
@@ -44,7 +44,7 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
     // otherwise see which API request is for
     final String proxyPath = firstNonNull(event.getPathParameters().get("proxy"), "");
     logInfo("proxyPath:" + proxyPath);
-    if (proxyPathSupported(proxyPath)) {
+    if (regexMatched(proxyPath, USERS_MATCHER)) {
       try {
         logInfo("Processing User Request");
         return success(usersApi.handleApiEvent(event, context), requestOrigin(event));
@@ -52,16 +52,16 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
         e.printStackTrace();
         return LambdaProxyOutputHelper.error(e.getStatus(), null, requestOrigin(event));
       }
-    } else if (IMAGE_API.equals(proxyPath)) {
+    } else if (SIGN_URL.equals(proxyPath)) {
       try {
-        return success(new UserImagesApi().handleApiEvent(event, context), requestOrigin(event));
+        return success(new S3Signer().signUrl(event, context), requestOrigin(event));
       } catch (final Exception e) {
         e.printStackTrace();
         return LambdaProxyOutputHelper.error(500, null, requestOrigin(event));
       }
-    } else if (SIGN_URL.equals(proxyPath)) {
+    } else if (regexMatched(proxyPath, CARE_NEEDS_MATCHER)) {
       try {
-        return success(new S3Signer().signUrl(event, context), requestOrigin(event));
+        return success(new CareNeedApi().handleApiEvent(event, context), requestOrigin(event));
       } catch (final Exception e) {
         e.printStackTrace();
         return LambdaProxyOutputHelper.error(500, null, requestOrigin(event));
@@ -72,9 +72,9 @@ public class ApiLambdaHandler extends AbstractLambdaProxyHandler {
 
   }
 
-  public boolean proxyPathSupported(final String proxyPath) {
-    final Matcher matcher = PROXY_PATH_MATCHER.matcher(proxyPath);
-    return matcher.matches();
+  public boolean regexMatched(final String proxyPath, final Pattern regex) {
+    final Matcher match = regex.matcher(proxyPath);
+    return match.matches();
   }
 
 

@@ -13,13 +13,16 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.gmavillage.model.CareNeed;
 import com.gmavillage.model.CareNeed.DeliveryStatusType;
+import com.gmavillage.model.Parent;
 
 public class CareNeedMapper {
 
   public static CareNeed mapQuery(final ResultSet r) throws SQLException, DataAccessException {
     final CareNeed c = new CareNeed();
     c.setId(r.getInt("id"));
-    c.setParentId(r.getInt("parent_id"));
+    final Parent parent = new Parent();
+    parent.setId(r.getInt("parent_id"));
+    c.setParent(parent);
     c.setCareLocationsStrings(asList(r.getArray("care_locations")));
     c.setTimezone(TimeZone.getTimeZone(r.getString("timezone_name")));
     c.setNeighborhood(NeighborhoodMapper.mapQuery(r));

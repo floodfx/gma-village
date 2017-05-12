@@ -9,19 +9,24 @@ public class ApiLambdaHandlerTest {
 
   @Test
   public void testMatches() {
-    Assert.assertTrue(handler.proxyPathSupported("users"));
-    Assert.assertTrue(handler.proxyPathSupported("gmas"));
-    Assert.assertTrue(handler.proxyPathSupported("parents"));
-    Assert.assertTrue(handler.proxyPathSupported("admins"));
+    Assert.assertTrue(handler.regexMatched("users", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("gmas", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("parents", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("admins", handler.USERS_MATCHER));
 
-    Assert.assertTrue(handler.proxyPathSupported("users/1"));
-    Assert.assertTrue(handler.proxyPathSupported("users/100"));
-    Assert.assertTrue(handler.proxyPathSupported("gmas/1"));
-    Assert.assertTrue(handler.proxyPathSupported("gmas/100"));
-    Assert.assertTrue(handler.proxyPathSupported("parents/1"));
-    Assert.assertTrue(handler.proxyPathSupported("parents/100"));
-    Assert.assertTrue(handler.proxyPathSupported("admins/1"));
-    Assert.assertTrue(handler.proxyPathSupported("admins/100"));
+    Assert.assertTrue(handler.regexMatched("users/1", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("users/100", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("gmas/1", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("gmas/100", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("parents/1", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("parents/100", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("admins/1", handler.USERS_MATCHER));
+    Assert.assertTrue(handler.regexMatched("admins/100", handler.USERS_MATCHER));
+
+    Assert.assertFalse(handler.regexMatched("users/a", handler.USERS_MATCHER));
+    Assert.assertFalse(handler.regexMatched("gmas/b", handler.USERS_MATCHER));
+    Assert.assertFalse(handler.regexMatched("parents/c", handler.USERS_MATCHER));
+    Assert.assertFalse(handler.regexMatched("admins/d", handler.USERS_MATCHER));
   }
 
 }

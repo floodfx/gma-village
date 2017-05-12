@@ -139,7 +139,7 @@ public class TestUtils {
     c.setDeliveryStatus(DeliveryStatusType.NEW);
     c.setStartTime(OffsetDateTime.now(ZoneId.of("UTC")).plus(1, ChronoUnit.HOURS));
     c.setEndTime(OffsetDateTime.now(ZoneId.of("UTC")).plus(5, ChronoUnit.HOURS));
-    c.setParentId(p.getId());
+    c.setParent(p);
     c.setTimezone(TimeZone.getTimeZone("America/Los_Angeles"));
     c.setMatchingGmas(matchingGmas);
     return c;

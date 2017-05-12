@@ -50,10 +50,10 @@ public class UsersApi extends DefaultApi {
 
   @Override
   protected String handleHttpGet(final LambdaProxyEvent getEvent, final Context context) {
-    final UsersApiProxyPathParts parts = safeProxyPath(getEvent);
+    final ProxyPathParts parts = safeProxyPath(getEvent);
     try {
       final UserType type = userTypeFromPathParts(parts);
-      if (parts.userId() == null) {
+      if (parts.id() == null) {
         // determine user types to fetch
         switch (type) {
           case USER:
@@ -68,7 +68,7 @@ public class UsersApi extends DefaultApi {
         throw new RuntimeException("Invalid Path");
       } else {
         // get single user by id
-        final Integer id = parts.userId();
+        final Integer id = parts.id();
         if (id != null) {
           switch (type) {
             case USER:
@@ -90,12 +90,12 @@ public class UsersApi extends DefaultApi {
 
   @Override
   protected String handleHttpPost(final LambdaProxyEvent postEvent, final Context context) {
-    final UsersApiProxyPathParts parts = safeProxyPath(postEvent);
+    final ProxyPathParts parts = safeProxyPath(postEvent);
     final String body = postEvent.getBody();
     final UserType type = userTypeFromPathParts(parts);
     Preconditions.checkArgument(body != null, "POST body must not be empty");
     try {
-      if (parts.userId() == null) {
+      if (parts.id() == null) {
         // create new user
         switch (type) {
           case USER:
@@ -122,11 +122,11 @@ public class UsersApi extends DefaultApi {
 
   @Override
   protected String handleHttpPut(final LambdaProxyEvent putEvent, final Context context) {
-    final UsersApiProxyPathParts parts = safeProxyPath(putEvent);
+    final ProxyPathParts parts = safeProxyPath(putEvent);
     final String body = putEvent.getBody();
     final UserType type = userTypeFromPathParts(parts);
     try {
-      if (parts.userId() == null) {
+      if (parts.id() == null) {
         throw new RuntimeException("Unknown User");
       } else {
         // update user
@@ -134,28 +134,28 @@ public class UsersApi extends DefaultApi {
           case USER:
             final User u = gson.fromJson(body, User.class);
             // only allow update if id from path matches id from user
-            if (parts.userId().equals(u.getId())) {
+            if (parts.id().equals(u.getId())) {
               return gson.toJson(userDB.updateUser(u));
             }
             break;
           case ADMIN:
             final Admin a = gson.fromJson(body, Admin.class);
             // only allow update if id from path matches id from user
-            if (parts.userId().equals(a.getId())) {
+            if (parts.id().equals(a.getId())) {
               return gson.toJson(userDB.updateAdmin(a));
             }
             break;
           case GMA:
             final Gma g = gson.fromJson(body, Gma.class);
             // only allow update if id from path matches id from user
-            if (parts.userId().equals(g.getId())) {
+            if (parts.id().equals(g.getId())) {
               return gson.toJson(userDB.updateGma(g));
             }
             break;
           case PARENT:
             final Parent p = gson.fromJson(body, Parent.class);
             // only allow update if id from path matches id from user
-            if (parts.userId().equals(p.getId())) {
+            if (parts.id().equals(p.getId())) {
               return gson.toJson(userDB.updateParent(p));
             }
             break;
@@ -169,13 +169,13 @@ public class UsersApi extends DefaultApi {
 
   @Override
   protected String handleHttpDelete(final LambdaProxyEvent deleteEvent, final Context context) {
-    final UsersApiProxyPathParts parts = safeProxyPath(deleteEvent);
+    final ProxyPathParts parts = safeProxyPath(deleteEvent);
     try {
-      if (parts.userId() == null || parts.userType() == null) {
+      if (parts.id() == null || parts.type() == null) {
         throw new RuntimeException("Unknown User");
       } else {
         // get user id from path
-        final boolean deleted = userDB.deleteUser(parts.userId());
+        final boolean deleted = userDB.deleteUser(parts.id());
         final JsonObject successJson = new JsonObject();
         successJson.addProperty("success", deleted);
         return new Gson().toJson(successJson);
@@ -185,29 +185,29 @@ public class UsersApi extends DefaultApi {
     }
   }
 
-  public static UsersApiProxyPathParts safeProxyPath(final LambdaProxyEvent event) {
+  public static ProxyPathParts safeProxyPath(final LambdaProxyEvent event) {
     final Map<String, String> pathParams = event.getPathParameters();
     try {
       final String proxyPath = pathParams.get("proxy");
       if (proxyPath != null) {
         final String[] parts = proxyPath.split("/");
         if (parts.length == 1) {
-          return UsersApiProxyPathParts.create(parts[0], null);
+          return ProxyPathParts.create(parts[0], null);
         } else {
-          return UsersApiProxyPathParts.create(parts[0], Integer.parseInt(parts[1]));
+          return ProxyPathParts.create(parts[0], Integer.parseInt(parts[1]));
         }
       } else {
-        return UsersApiProxyPathParts.create(null, null);
+        return ProxyPathParts.create(null, null);
       }
     } catch (final Exception e) {
       e.printStackTrace();
     }
-    return UsersApiProxyPathParts.create(null, null);
+    return ProxyPathParts.create(null, null);
   }
 
-  public static UserType userTypeFromPathParts(final UsersApiProxyPathParts parts) {
-    if (parts.userType() != null) {
-      switch (parts.userType()) {
+  public static UserType userTypeFromPathParts(final ProxyPathParts parts) {
+    if (parts.type() != null) {
+      switch (parts.type()) {
         case "users":
           return UserType.USER;
         case "admins":

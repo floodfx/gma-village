@@ -22,6 +22,7 @@ import com.gmavillage.lambda.api.authorizer.ApiAuthorizer;
 import com.gmavillage.lambda.db.UserDB;
 import com.gmavillage.lambda.model.accountkit.AccountKitUser;
 import com.gmavillage.model.Admin;
+import com.gmavillage.model.CareNeed;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
@@ -233,6 +234,26 @@ public class UsersApiTest {
     final String gmaJson = testUtils.loadJsonFileString("test_gma_json_error.json");
     final Gma gma = gson.fromJson(gmaJson, Gma.class);
     System.out.println("Gma" + ToStringBuilder.reflectionToString(gma));
+  }
+
+  @Test
+  public void testPostCareNeed() throws Exception {
+    // setup userDB
+    final String careNeedJson = testUtils.loadJsonFileString("test_care_need_json_error.json");
+    final CareNeed careNeed = gson.fromJson(careNeedJson, CareNeed.class);
+    // when(userDB.createGma(Mockito.any(Gma.class))).thenReturn(gma);
+    //
+    // final UsersApi api = new UsersApi(userDB);
+    // postUserSuccess.setBody(gmaJson);
+    // final Map<String, String> proxyPath = Maps.newHashMap();
+    // proxyPath.put("proxy", "gmas");
+    // postUserSuccess.setPathParameters(proxyPath);
+    // String json = api.handleHttpPost(postUserSuccess, null);
+    // final String expectedJson = gson.toJson(gma);
+    // Assert.assertEquals(expectedJson, json);
+    //
+    // json = api.handleApiEvent(postUserSuccess, null);
+    // Assert.assertEquals(expectedJson, json);
   }
 
   @Test

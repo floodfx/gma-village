@@ -12,17 +12,19 @@ public class CareNeed {
     NEW, QUEUED, DELIVERED
   }
 
+  public static final TimeZone DEFAULT_TIMEZONE = TimeZone.getTimeZone("America/Los_Angeles");
+
   Integer id;
-  Integer parentId;
+  Parent parent;
   Set<Child> children;
   List<CareLocationType> careLocations;
-  TimeZone timezone;
+  TimeZone timezone = DEFAULT_TIMEZONE;
   Neighborhood neighborhood;
   String otherNeighborhood;
   OffsetDateTime startTime;
   OffsetDateTime endTime;
   List<Gma> matchingGmas;
-  DeliveryStatusType deliveryStatus;
+  DeliveryStatusType deliveryStatus = DeliveryStatusType.NEW;
 
   public Integer getId() {
     return this.id;
@@ -32,12 +34,12 @@ public class CareNeed {
     this.id = id;
   }
 
-  public Integer getParentId() {
-    return this.parentId;
+  public Parent getParent() {
+    return this.parent;
   }
 
-  public void setParentId(final Integer parentId) {
-    this.parentId = parentId;
+  public void setParent(final Parent parent) {
+    this.parent = parent;
   }
 
   public Set<Child> getChildren() {
@@ -102,6 +104,11 @@ public class CareNeed {
   }
 
   public List<Gma> getMatchingGmas() {
+    if (this.matchingGmas != null) {
+      matchingGmas.sort((g1, g2) -> {
+        return g1.getId() - g2.getId();
+      });
+    }
     return this.matchingGmas;
   }
 
