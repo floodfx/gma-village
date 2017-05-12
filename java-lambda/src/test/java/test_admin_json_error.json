@@ -1,0 +1,57 @@
+{
+    "id": 83,
+    "first_name": "Donald",
+    "last_name": "Flood",
+    "phone": "4157027236",
+    "user_type": "ADMIN",
+    "active": true,
+    "profile_image_url": "https://gmavillage-image.s3.amazonaws.com/55e32cfa-572b-495b-b44b-052682ac7c3b",
+    "account_kit_access_token": "EMAWdsCn8rbKh6vd8X8daPROOZBhB2JvevZAAmJbSFOJN3JDuuyTCssPAr8pB5zeuSN3NRpxhZBiZCOWLXdv64mkJeZA5Mez7qdcpkjr7QWXfyoLYS01aW3NsutPpTUAZAbWfZBR8UQv2XVG6VlOKY8k6hub1JSzJzmEZD",
+    "account_kit_user_id": "225432821234354",
+    "account_kit_access_token_expires_at": {
+        "date_time": {
+            "date": {
+                "year": 2017,
+                "month": 6,
+                "day": 11
+            },
+            "time": {
+                "hour": 15,
+                "minute": 53,
+                "second": 29,
+                "nano": 17000000
+            }
+        },
+        "offset": {
+            "total_seconds": 0
+        }
+    },
+    "created_on": {
+        "date": {
+            "year": 2017,
+            "month": 5,
+            "day": 9
+        },
+        "time": {
+            "hour": 3,
+            "minute": 8,
+            "second": 37,
+            "nano": 349290000
+        }
+    },
+    "updated_at": {
+        "date": {
+            "year": 2017,
+            "month": 5,
+            "day": 12
+        },
+        "time": {
+            "hour": 15,
+            "minute": 53,
+            "second": 29,
+            "nano": 99694000
+        }
+    },
+    "deleted": false,
+    "accepted_terms": true
+}

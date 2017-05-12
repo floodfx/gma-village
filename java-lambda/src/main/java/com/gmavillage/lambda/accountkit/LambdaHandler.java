@@ -51,15 +51,14 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
     this.userDB = userDB;
   }
 
-  // @Override
-  // protected void processEvent(final InputStream input, final OutputStream output,
-  // final Context context) throws Exception {
-  // throw new UnsupportedOperationException("Not Supported");
-  // }
-
   @Override
   protected LambdaProxyOutput processEvent(final LambdaProxyEvent event, final Context context)
       throws Exception {
+    // just return success for OPTIONS requests (likely CORS preflight)
+    if ("OPTIONS".equals(event.getHttpMethod())) {
+      return success("", requestOrigin(event));
+    }
+
     final String proxyPath = firstNonNull(event.getPathParameters().get("proxy"), "");
     logInfo("proxyPath:" + proxyPath);
     switch (proxyPath) {

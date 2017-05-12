@@ -18,6 +18,7 @@ import com.gmavillage.lambda.db.UserDB;
 import com.gmavillage.lambda.model.accountkit.AccountKitUser;
 import com.gmavillage.lambda.model.accountkit.AccountKitUserAccessToken;
 import com.gmavillage.model.Admin;
+import com.gmavillage.model.json.GsonFactory;
 import com.gmavillage.test.TestUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,7 +31,7 @@ public class LambdaHandlerTest {
   LambdaProxyEvent accountKit404;
   LambdaProxyEvent accountKitAuthSuccess;
 
-  final Gson gson = new GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create();
+  final Gson gson = GsonFactory.getGson();
 
   @Before
   public void loadEvent() throws Exception {

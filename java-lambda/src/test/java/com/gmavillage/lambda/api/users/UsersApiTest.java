@@ -237,24 +237,17 @@ public class UsersApiTest {
   }
 
   @Test
-  public void testPostCareNeed() throws Exception {
-    // setup userDB
+  public void testPostCareNeedParses() throws Exception {
     final String careNeedJson = testUtils.loadJsonFileString("test_care_need_json_error.json");
     final CareNeed careNeed = gson.fromJson(careNeedJson, CareNeed.class);
-    // when(userDB.createGma(Mockito.any(Gma.class))).thenReturn(gma);
-    //
-    // final UsersApi api = new UsersApi(userDB);
-    // postUserSuccess.setBody(gmaJson);
-    // final Map<String, String> proxyPath = Maps.newHashMap();
-    // proxyPath.put("proxy", "gmas");
-    // postUserSuccess.setPathParameters(proxyPath);
-    // String json = api.handleHttpPost(postUserSuccess, null);
-    // final String expectedJson = gson.toJson(gma);
-    // Assert.assertEquals(expectedJson, json);
-    //
-    // json = api.handleApiEvent(postUserSuccess, null);
-    // Assert.assertEquals(expectedJson, json);
   }
+
+  @Test
+  public void testPutAdminParses() throws Exception {
+    final String adminJson = testUtils.loadJsonFileString("test_admin_json_error.json");
+    final Admin admin = gson.fromJson(adminJson, Admin.class);
+  }
+
 
   @Test
   public void testPostGma1() throws Exception {
