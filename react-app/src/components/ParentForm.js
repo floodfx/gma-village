@@ -15,17 +15,21 @@ import {
 } from './forms/Validate';
 import FontAwesome from 'react-fontawesome';
 import MultiRadio from './forms/MultiRadio';
+import MultiCheckbox from './forms/MultiCheckbox';
 import TextField from './forms/TextField';
+import TextArea from './forms/TextArea';
 import Checkbox from './forms/Checkbox';
 import Hidden from './forms/Hidden';
 import {
   customSortNeighborhoods
 } from './SortHelp';
 import TosSummary from './TosSummary';
+import ElsewhereLearnMore from './ElsewhereLearnMore';
 import ReactModal from 'react-modal';
 
 const otherFieldMap = {
-  neighborhood: "other_neighborhood"
+  neighborhood: "other_neighborhood",
+  need_time_of_day: "other_time_of_day",
 }
 
 class ParentForm extends Component {
@@ -34,14 +38,17 @@ class ParentForm extends Component {
     const { initialValues } = props;
     var children = [];
     var other_neighborhood = '';
+    var other_time_of_day = '';
     if(initialValues) {
       children = initialValues.children || [];
       other_neighborhood = initialValues.other_neighborhood || '';
+      other_time_of_day = initialValues.other_time_of_day || '';
     }
     this.state = {
       showAdvanced: false,
       children,
       other_neighborhood,
+      other_time_of_day,
       childFirstName: '',
       childBirthDay: "0",
       childBirthMonth: "0",
@@ -78,7 +85,7 @@ class ParentForm extends Component {
 
   addChild = () => {
     const year = parseInt(this.state.childBirthYear, 10);
-    const month = parseInt(this.state.childBirthMonth-1, 10);
+    const month = parseInt(this.state.childBirthMonth, 10);
     const day = parseInt(this.state.childBirthDay, 10);
     const newChild = {
       first_name: this.state.childFirstName,
@@ -125,6 +132,7 @@ class ParentForm extends Component {
   }
 
   onOtherValueChange = (name, value) => {
+    console.log("name", name, "value", value)
     const otherField = otherFieldMap[name];
     this.props.change(otherField, value);
   }
@@ -157,7 +165,7 @@ class ParentForm extends Component {
       heading,
       profile_image_url
     } = this.props
-    const { children, other_neighborhood } = this.state;
+    const { children, other_neighborhood, other_time_of_day } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
     const years = [...Array(13)].map((v, i) => i + 1);
@@ -303,6 +311,64 @@ class ParentForm extends Component {
                   />
               </div>
               <div className="mt4">
+                <Field
+                  heading="I need child care:"
+                  name="need_recurrence"
+                  options={[
+                    {id: 'FULL_TIME', label: 'Full-time'},
+                    {id: 'PART_TIME', label: 'Part-time'},
+                    {id: 'SPORADIC', label: 'Sporadic/here and there'},
+                    {id: 'BACK_UP', label: 'Back-up'},
+                    {id: 'ONE_TIME', label: 'One-time'},
+                  ]}
+                  component={MultiCheckbox}
+                  validate={[required]}/>
+              </div>
+              <div className="mt4">
+                <Field
+                  heading="Typically I need child care during:"
+                  name="need_time_of_day"
+                  options={[
+                    {id: 'EARLY_MORNING', label: 'Early Morning'},
+                    {id: 'DAYTIME', label: 'Daytime'},
+                    {id: 'EVENING', label: 'Evening'},
+                    {id: 'OVERNIGHT', label: 'Overnight'},
+                    {id: 'WEEKEND', label: 'Weekend'},
+                    {id: 'OTHER', label: 'Other'},
+                  ]}
+                  component={MultiCheckbox}
+                  otherTextValue={other_time_of_day}
+                  onOtherValueChange={this.onOtherValueChange}
+                  validate={[required]}/>
+              </div>
+              <div className="mt4">
+                <Field
+                  heading="I want the care to take place at:"
+                  name="need_locations"
+                  options={[
+                    {id: "PROVIDERS_HOME", label: "The Provider's Home"},
+                    {id: "ELSEWHERE", label: "Elsewhere"},
+                  ]}
+                  component={MultiCheckbox}
+                  validate={[required]}/>
+                  <ElsewhereLearnMore />
+              </div>
+              <div className="mt4">
+                <Field
+                  label="I want to be a part of the Gma Village because..."
+                  name="why_join"
+                  component={TextArea}
+                  validate={[required]} />
+              </div>
+              <div className="mt4">
+                <Field
+                  label="Additional Information:"
+                  name="additional_info"
+                  component={TextArea}
+                  validate={[required]} />
+              </div>
+
+              <div className="mt4">
                 <label>Profile Photo:</label>
                 {profile_image_url &&
                   <div>
@@ -327,12 +393,13 @@ class ParentForm extends Component {
               </div>
               <div className="mt4">
                 <Field
-                  label="Active:"
+                  label="Active"
                   name="active"
                   component={Checkbox}
                   type="checkbox" />
               </div>
               <Field name="other_neighborhood" component="input" type="hidden" />
+              <Field name="other_time_of_day" component="input" type="hidden" />
               <Field name="showAdvanced" component="input" type="hidden" value={this.state.showAdvanced}/>
               <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
             </div>
@@ -359,10 +426,18 @@ const validateOthers = values => {
 
   if (!values.neighborhood && !values[otherFieldMap]) {
     errors.neighborhood = 'Required'
-  } else if (values.neighborhood === Neighborhood.OTHER.name && !values.other_neighborhood) {
+  } else if (values.neighborhood === 'OTHER_OAKLAND' && !values.other_neighborhood) {
     errors.neighborhood = "Please provide 'Other' text"
-  } else if (values.neighborhood === Neighborhood.OTHER.name && values.other_neighborhood && values.other_neighborhood.length < 2) {
+  } else if (values.neighborhood === 'OTHER_OAKLAND' && values.other_neighborhood && values.other_neighborhood.length < 2) {
     errors.neighborhood = "'Other' text be at least 2 characters"
+  }
+
+  if (!values.need_time_of_day && !values[otherFieldMap]) {
+    errors.need_time_of_day = 'Required'
+  } else if (values.need_time_of_day === 'OTHER' && !values.other_time_of_day) {
+    errors.need_time_of_day = "Please provide 'Other' text"
+  } else if (values.need_time_of_day === 'OTHER' && values.other_time_of_day && values.other_time_of_day.length < 2) {
+    errors.need_time_of_day = "'Other' text be at least 2 characters"
   }
 
   return errors

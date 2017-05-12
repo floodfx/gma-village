@@ -255,7 +255,7 @@ class GmaForm extends Component {
           </div>
           <div className="mt4">
             <Field
-              label="Active:"
+              label="Active"
               name="active"
               defaultValue={true}
               component={Checkbox}
