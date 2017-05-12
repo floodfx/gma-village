@@ -26,6 +26,8 @@ import {
   customSortNeighborhoods
 } from './SortHelp';
 import ElsewhereLearnMore from './ElsewhereLearnMore';
+import TosSummary from './TosSummary';
+import ReactModal from 'react-modal';
 
 const otherFieldMap = {
   neighborhood: "other_neighborhood",
@@ -37,11 +39,37 @@ const otherFieldMap = {
 
 class GmaForm extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showTos: !!props.showTos,
+      acceptedTos: false
+    }
+  }
+
   componentWillReceiveProps(newProps) {
     const {change, profile_image_url} = this.props;
     if(profile_image_url !== newProps.profile_image_url) {
       change("profile_image_url", newProps.profile_image_url);
     }
+  }
+
+  handleOpenModal = () => {
+    this.setState({ showTos: true });
+  }
+
+  onTosAccepted = () => {
+    this.setState({ showTos: false });
+    this.props.onTosAccepted();
+  }
+
+  onTosCanceled = () => {
+    this.setState({ showTos: false });
+    this.props.onTosCanceled();
+  }
+
+  onTosChecked = (acceptedTos) => {
+    this.setState({acceptedTos});
   }
 
   onOtherValueChange = (name, value) => {
@@ -64,6 +92,16 @@ class GmaForm extends Component {
      } = this.props
     return (
       <div>
+        <ReactModal
+          isOpen={this.state.showTos}
+          contentLabel="Terms of Service Agreement"
+          shouldCloseOnOverlayClick={false}>
+          <TosSummary
+            accepted={this.state.acceptedTos}
+            onTosChecked={this.onTosChecked}
+            onTosAccepted={this.onTosAccepted}
+            onTosCanceled={this.onTosCanceled} />
+        </ReactModal>
         <h2 className="lh-title fw2 f2">{heading}</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div>

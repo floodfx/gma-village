@@ -21,6 +21,8 @@ import Hidden from './forms/Hidden';
 import {
   customSortNeighborhoods
 } from './SortHelp';
+import TosSummary from './TosSummary';
+import ReactModal from 'react-modal';
 
 const otherFieldMap = {
   neighborhood: "other_neighborhood"
@@ -44,7 +46,9 @@ class ParentForm extends Component {
       childBirthDay: "0",
       childBirthMonth: "0",
       childBirthYear: "0",
-      validChild: false
+      validChild: false,
+      showTos: !!props.showTos,
+      acceptedTos: false
     }
   }
 
@@ -125,6 +129,24 @@ class ParentForm extends Component {
     this.props.change(otherField, value);
   }
 
+  handleOpenModal = () => {
+    this.setState({ showTos: true });
+  }
+
+  onTosAccepted = () => {
+    this.setState({ showTos: false });
+    this.props.onTosAccepted();
+  }
+
+  onTosCanceled = () => {
+    this.setState({ showTos: false });
+    this.props.onTosCanceled();
+  }
+
+  onTosChecked = (acceptedTos) => {
+    this.setState({acceptedTos});
+  }
+
   render() {
     const {
       handleSubmit,
@@ -142,6 +164,16 @@ class ParentForm extends Component {
     const year = moment().year()
     return (
       <div>
+        <ReactModal
+          isOpen={this.state.showTos}
+          contentLabel="Terms of Service Agreement"
+          shouldCloseOnOverlayClick={false}>
+          <TosSummary
+            accepted={this.state.acceptedTos}
+            onTosChecked={this.onTosChecked}
+            onTosAccepted={this.onTosAccepted}
+            onTosCanceled={this.onTosCanceled} />
+        </ReactModal>
         <h2 className="lh-title fw2 f2">{heading}</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div>
