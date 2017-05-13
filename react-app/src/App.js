@@ -52,6 +52,13 @@ const Main = ({children}) => (
   </div>
 )
 
+browserHistory.listen(function (location) {
+  if (process.env.NODE_ENV === 'production') {
+    window.FB.AppEvents.logPageView();
+  }
+  // window.ga('send', 'pageview', location.pathname);
+});
+
 const App = ({ store, authListener }) => {
   return (
     <Provider store={store}>
