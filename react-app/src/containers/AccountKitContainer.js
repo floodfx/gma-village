@@ -5,10 +5,6 @@ import { ActionCreators } from '../actions';
 
 class AccountKitContainer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     const {initAccountKit} = this.props;
     if(window.AccountKit) {
@@ -19,12 +15,6 @@ class AccountKitContainer extends Component {
       }
     }
   }
-
-  // componentDidMount() {
-  //   const script = document.createElement("script");
-  //   script.src = "https://sdk.accountkit.com/en_US/sdk.js";
-  //   document.body.appendChild(script);
-  // }
 
   componentWillReceiveProps(nextProps) {
     if(!this.props.inited && nextProps.inited) {

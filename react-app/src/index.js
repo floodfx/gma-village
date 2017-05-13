@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
-import { reducer as formReducer } from 'redux-form'
 import AuthListener  from './auth/AuthListener'
 import thunk from 'redux-thunk'
 import reducers from './reducers';

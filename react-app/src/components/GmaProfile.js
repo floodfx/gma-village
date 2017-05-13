@@ -7,7 +7,6 @@ import {
   CareAge,
   CareExperience,
   CareLocation,
-  CareTraining,
   Demeanor,
   Neighborhood
 } from 'gma-village-data-model';
@@ -31,6 +30,7 @@ class GmaProfile extends Component {
                     </li>
                   )
                 }
+                return null;
               })
     return (
       <div>
@@ -59,6 +59,7 @@ class GmaProfile extends Component {
                     </li>
                   )
                 }
+                return null;
               })
     return (
       <div>

@@ -1,4 +1,4 @@
-var { CareAge, Neighborhood, CareLocation } = require('gma-village-data-model');
+var { CareAge } = require('gma-village-data-model');
 var moment = require('moment');
 
 const childrenAgesToCareAges = (children) => {
@@ -25,31 +25,6 @@ const childrenAgesToCareAges = (children) => {
     map[value]=value;
     return map;
   }, {}));
-}
-
-const matchGmasToCareNeed = (gmas, careNeed) => {
-  // console.log("gmas", gmas, "careNeed", careNeed);
-  var matchedGmas = filterGmas(gmas,
-    careNeed.neighborhood,
-    careNeed.other_neighborhood,
-    careNeed.care_locations,
-    childrenAgesToCareAges(careNeed.children)
-  )
-  // console.log("matchGmas", matchedGmas)
-  return matchedGmas;
-}
-
-const filterGmas = (gmas, neighborhood, other_neighborhood, care_locations, care_ages) => {
-  return gmas.filter((gma) => {
-    // console.log("filtering gma", gma)
-    var locationMatch = sameNeighborhood(gma, care_locations, neighborhood, other_neighborhood);
-    var careLocationMatch = sameCareLocation(gma, care_locations);
-    var careAgeMatch = sameCareAges(gma, care_ages);
-    // console.log("locationMatch", locationMatch)
-    // console.log("careLocationMatch", careLocationMatch)
-    // console.log("careAgeMatch", careAgeMatch)
-    return locationMatch && careLocationMatch && careAgeMatch;
-  })
 }
 
 const sameCareAges = (gma, care_ages) => {
@@ -87,6 +62,31 @@ const sameNeighborhood = (gma, care_locations, neighborhood, other_neighborhood)
     neighborhoodMatch = gma.neighborhood.label === neighborhood;
   }
   return elsewhereMatch || neighborhoodMatch;
+}
+
+const filterGmas = (gmas, neighborhood, other_neighborhood, care_locations, care_ages) => {
+  return gmas.filter((gma) => {
+    // console.log("filtering gma", gma)
+    var locationMatch = sameNeighborhood(gma, care_locations, neighborhood, other_neighborhood);
+    var careLocationMatch = sameCareLocation(gma, care_locations);
+    var careAgeMatch = sameCareAges(gma, care_ages);
+    // console.log("locationMatch", locationMatch)
+    // console.log("careLocationMatch", careLocationMatch)
+    // console.log("careAgeMatch", careAgeMatch)
+    return locationMatch && careLocationMatch && careAgeMatch;
+  })
+}
+
+const matchGmasToCareNeed = (gmas, careNeed) => {
+  // console.log("gmas", gmas, "careNeed", careNeed);
+  var matchedGmas = filterGmas(gmas,
+    careNeed.neighborhood,
+    careNeed.other_neighborhood,
+    careNeed.care_locations,
+    childrenAgesToCareAges(careNeed.children)
+  )
+  // console.log("matchGmas", matchedGmas)
+  return matchedGmas;
 }
 
 module.exports = {

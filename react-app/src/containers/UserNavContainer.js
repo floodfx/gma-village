@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 import FlagsBanner from '../components/FlagsBanner';
 import { ActionCreators } from '../actions';
 

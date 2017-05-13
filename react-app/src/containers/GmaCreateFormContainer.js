@@ -47,7 +47,6 @@ class GmaCreateFormContainer extends Component {
             onSubmit={this.handleSubmit}
             handleFile={this.handleFile}
             saving={saving}
-            profile_image_url={this.props.profile_image_url}
             profile_image_url={profile_image_url}
             profile_image_loading={this.props.profile_image_loading}
             initialValues={{

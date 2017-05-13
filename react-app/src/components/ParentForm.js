@@ -115,6 +115,8 @@ class ParentForm extends Component {
       case "childBirthYear":
       this.setState({childBirthYear: value});
       break;
+      default:
+      break;
     }
     this.checkValidChild();
   }
@@ -373,11 +375,12 @@ class ParentForm extends Component {
                 {profile_image_url &&
                   <div>
                     <img
-                    className="w-100 w-20-ns gma-orange-border"
-                    src={profile_image_url}
-                    style={{
-                      objectFit: 'cover'
-                    }}/>
+                      alt="your profile"
+                      className="w-100 w-20-ns gma-orange-border"
+                      src={profile_image_url}
+                      style={{
+                        objectFit: 'cover'
+                      }}/>
                   </div>
                 }
                 <div>

@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import moment from 'moment';
-import leftPad from 'left-pad';
-import { ageFromBirthday } from './formatutil';
 import {
-  Neighborhood,
-  CareLocation
+  Neighborhood
 } from 'gma-village-data-model';
 import {
   required,
-  requiredArray,
-  minLength,
-  maxLength,
-  phone
+  requiredArray
 } from './forms/Validate';
 import FontAwesome from 'react-fontawesome';
 import MultiCheckbox from './forms/MultiCheckbox';
 import KidsCheckbox from './forms/KidsCheckbox';
 import MultiRadio from './forms/MultiRadio';
-import Hidden from './forms/Hidden';
 import DateTimeStartEnd from './forms/DateTimeStartEnd';
 import ElsewhereLearnMore from './ElsewhereLearnMore';
 
@@ -62,7 +54,6 @@ class CareNeedForm extends Component {
   render() {
     const {
       handleSubmit,
-      handleFile,
       pristine,
       invalid,
       submitting,

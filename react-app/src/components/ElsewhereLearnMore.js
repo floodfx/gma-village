@@ -10,28 +10,25 @@ class ElsewhereLearnMore extends Component {
     return (
       <div>
         <FontAwesome name='question-circle' className="mr1"/>
-        <a 
-          tabIndex="0" 
+        <a
+          tabIndex="0"
           className=""
-          data-tip 
+          data-tip
           data-event='click'
           data-for='learnMore'>
           Learn More
         </a>
-        
-        <ReactTooltip 
+
+        <ReactTooltip
           id='learnMore' 
-          aria-haspopup='true' 
-          role='example'
           globalEventOff='click'
-          effect="solid"
-        >
+          effect="solid">
           <div className="pa3" style={{maxWidth: 250}}>
             <h3 className="f2">Please Note:</h3>
             <p className="f3 lh-copy">{message}</p>
-          </div>          
-        </ReactTooltip>   
-      </div>   
+          </div>
+        </ReactTooltip>
+      </div>
     )
   }
 

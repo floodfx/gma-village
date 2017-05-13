@@ -4,7 +4,6 @@ import AccountKitContainer from './AccountKitContainer';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIndicator from '../components/LoadingIndicator';
-import  { fetchAuthCookie, currentUser, saveAuthCookie }  from '../actions/Auth'
 import { browserHistory } from 'react-router';
 import { ActionCreators } from '../actions';
 

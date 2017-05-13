@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import { ageFromBirthday } from '../formatutil';
+import React, { Component } from 'react';
 
 class KidsCheckbox extends Component {
   constructor(props) {
@@ -35,7 +34,7 @@ class KidsCheckbox extends Component {
     const { selected } = this.state;
     const checkboxes = options.map((option, index) => {
       var isChecked = selected.includes(option);
-      // var ageComponents = ageFromBirthday(option.birthday); 
+      // var ageComponents = ageFromBirthday(option.birthday);
       const label = `${option.first_name}`
       return (
         <div key={index}
