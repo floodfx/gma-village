@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.postgresql.ds.PGPoolingDataSource;
 
 import com.google.api.client.util.Lists;
@@ -58,7 +57,6 @@ public class Database {
     if (enumList == null) {
       return Lists.newArrayList();
     }
-    System.out.println("Processing EnumList" + ToStringBuilder.reflectionToString(enumList));
     return enumList.stream().map(it -> it != null ? it.name() : null).collect(Collectors.toList());
   }
 
