@@ -82,7 +82,7 @@ const checkForErrors = (response) => {
 export const uploadImage = (signed_url, access_token, image) => {
   return (dispatch) => {
     dispatch(uploadImageRequest());
-    console.log("image", image)
+    //console.log("image", image)
     fetch(signed_url.url, {
       method: 'PUT',
       body: image

@@ -40,7 +40,7 @@ class CareNeedFormContainer extends Component {
     const { gmas, auth } = this.props;
     const access_token = auth.cookie.account_kit_access_token;
     var matching_gmas = matchGmasToCareNeed(gmas, careNeed);
-    console.log("matching_gmas", matching_gmas)
+    //console.log("matching_gmas", matching_gmas)
     if(matching_gmas.length > 0) {
       careNeed.matching_gmas = matching_gmas;
       this.props.saveCareNeed(access_token, careNeed);

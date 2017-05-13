@@ -37,7 +37,7 @@ export const uploadImage = (state = {
       // use browser to parse url
       var parser = document.createElement('a');
       parser.href = action.image_url.url;
-      console.log("parser", parser)
+      //console.log("parser", parser)
       return Object.assign({}, state, {
         loading: false,
         image_url: parser.origin+parser.pathname

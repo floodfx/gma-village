@@ -73,7 +73,7 @@ class DateTimeStartEnd extends Component {
 
   render() {
     const { input, heading, placeholder, meta: { touched, error, warning } } = this.props;
-    console.log("props", this.props)
+    //console.log("props", this.props)
     const timeForSelects = this.getTimeForSelects();
     return (
       <div>

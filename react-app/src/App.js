@@ -54,7 +54,11 @@ const Main = ({children}) => (
 
 browserHistory.listen(function (location) {
   if (process.env.NODE_ENV === 'production') {
-    window.FB.AppEvents.logPageView();
+    if(window.FB && window.FB.AppEvents) {
+      try {
+        window.FB.AppEvents.logPageView();
+      } catch(e){}
+    }
   }
   // window.ga('send', 'pageview', location.pathname);
 });

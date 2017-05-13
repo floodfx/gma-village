@@ -9,7 +9,7 @@ class AuthListener {
     let previousUser = this.currentUser;
     this.currentUser = this.store.getState().auth.user
     if(this.currentUser !== previousUser) {
-      console.log("user changed", this.currentUser)
+      //console.log("user changed", this.currentUser)
     }
   }
 

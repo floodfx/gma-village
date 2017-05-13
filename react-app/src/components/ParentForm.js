@@ -70,7 +70,7 @@ class ParentForm extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log("componentWillReceiveProps", newProps)
+    //console.log("componentWillReceiveProps", newProps)
     const {change, profile_image_url} = this.props;
     if(profile_image_url !== newProps.profile_image_url) {
       change("profile_image_url", newProps.profile_image_url);
@@ -134,7 +134,7 @@ class ParentForm extends Component {
   }
 
   onOtherValueChange = (name, value) => {
-    console.log("name", name, "value", value)
+    //console.log("name", name, "value", value)
     const otherField = otherFieldMap[name];
     this.props.change(otherField, value);
   }

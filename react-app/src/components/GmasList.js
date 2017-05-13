@@ -9,7 +9,7 @@ import {
 class GmasList extends Component {
 
   render() {
-    console.log("props", this.props)
+    //console.log("props", this.props)
     if(this.props.loading) {
       return <div>Loading... </div>
     }

@@ -66,7 +66,7 @@ export const accountKitAuth = (csrfNonce, authCode) => {
     rp(options)
     .then(data => dispatch(accountKitAuthRequestSuccess(data)))
     .catch(err => {
-      console.log("err", err)
+      //console.log("err", err)
       dispatch(accountKitAuthRequestFailure({
         otherErrors: err
       }))

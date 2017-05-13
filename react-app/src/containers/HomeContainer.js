@@ -11,7 +11,7 @@ class HomeContainer extends Component {
 
   render() {
     const { user } = this.props;
-    console.log("user", user)
+    //console.log("user", user)
     if(this.props.loading) {
       return (
         <LoadingIndicator text="Loading" />
