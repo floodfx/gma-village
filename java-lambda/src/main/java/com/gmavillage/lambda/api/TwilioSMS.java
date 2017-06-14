@@ -12,7 +12,7 @@ public class TwilioSMS {
   private static final String STAGE = firstNonNull(getenv("STAGE"), "dev");
   private static final String TWILIO_ACCOUNT_SID = firstNonNull(getenv("TWILIO_ACCOUNT_SID"), "");
   private static final String TWILIO_AUTH_TOKEN = firstNonNull(getenv("TWILIO_AUTH_TOKEN"), "");
-  private static final PhoneNumber GMA_VILLAGE_PHONE = new PhoneNumber("+15102444627");
+  private static final PhoneNumber GMA_VILLAGE_PHONE = new PhoneNumber("+15109014627");
 
   static {
     Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);

@@ -1,5 +1,6 @@
 package com.gmavillage.model;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -133,6 +134,11 @@ public class Parent extends User {
     }
     final Parent u = (Parent) o;
     // field comparison
+    final Comparator<Child> childSorter = (o1, o2) -> o1.getId() - o2.getId();
+    final List<Child> thisChildrenList = Lists.newArrayList(children);
+    thisChildrenList.sort(childSorter);
+    final List<Child> otherChildrenList = Lists.newArrayList(u.children);
+    otherChildrenList.sort(childSorter);
     return super.equals(o) //
         && Iterables.elementsEqual(needRecurrence, u.needRecurrence) //
         && Iterables.elementsEqual(needTimeOfDay, u.needTimeOfDay) //
@@ -142,7 +148,7 @@ public class Parent extends User {
         && Objects.equals(otherNeighborhood, u.otherNeighborhood) //
         && Objects.equals(additionalInfo, u.additionalInfo) //
         && Objects.equals(whyJoin, u.whyJoin) //
-        && Iterables.elementsEqual(children, u.children);
+        && Iterables.elementsEqual(thisChildrenList, otherChildrenList);
   }
 
 }
