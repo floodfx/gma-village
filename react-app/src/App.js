@@ -30,12 +30,14 @@ const UserNavContainerWithRouter = withRouter(UserNavContainer, { withRef: true 
 
 const Footer = () => {
   return (
-    <div className="row">
+    <div className="row mt7 pt4 bt gma-orange-border-top">
       <footer className="footer">
         <div className="container">
-          <div className="col-md-12 col-sm-8">
-            <hr />
-            <p className="text-center gma-orange">&copy; Gma Village {moment().format('YYYY')}</p>
+          <div className="text-center">
+            <div>
+              <a href="http://www.gmavillage.com/terms-of-use">Terms of Use</a>
+            </div>
+            <p className=" gma-orange">&copy; Gma Village {moment().format('YYYY')}</p>
           </div>
         </div>
       </footer>
