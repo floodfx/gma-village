@@ -45,7 +45,7 @@ class ParentForm extends Component {
       other_time_of_day = initialValues.other_time_of_day || '';
     }
     this.state = {
-      showAdvanced: false,
+      showAdvanced: true,
       children,
       other_neighborhood,
       other_time_of_day,
@@ -358,13 +358,15 @@ class ParentForm extends Component {
               <div className="mt4">
                 <Field
                   label="I want to be a part of the Gma Village because..."
+                  placeholder="Tell us a little bit about your current situation and why you need child care support"
                   name="why_join"
                   component={TextArea}
                   validate={[required]} />
               </div>
               <div className="mt4">
                 <Field
-                  label="Additional Information:"
+                  label="About my children:"
+                  placeholder="Please tell us about your children, their personality, what they like to do and whether they have any allergies or special needs. e.g Patrick is very social and energetic. He likes to play with balls and run around. He also enjoys playing with legos and reading. He does not have any allergies but I prefer that he does not drink dairy."
                   name="additional_info"
                   component={TextArea}
                   validate={[required]} />
@@ -441,6 +443,10 @@ const validateOthers = values => {
     errors.need_time_of_day = "Please provide 'Other' text"
   } else if (values.need_time_of_day === 'OTHER' && values.other_time_of_day && values.other_time_of_day.length < 2) {
     errors.need_time_of_day = "'Other' text be at least 2 characters"
+  }
+
+  if(!values.profile_image_url) {
+    errors.profilePhoto = 'Profile photo required'
   }
 
   return errors

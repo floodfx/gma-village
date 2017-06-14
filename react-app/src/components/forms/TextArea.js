@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 class TextArea extends Component {
   render() {
     const { input, label, placeholder, meta: { touched, error, warning } } = this.props;
-    //console.log("input.name", input.name, "input.value", input.value)
     return (
       <div>
         <label className="fw7 f3">{label}</label>

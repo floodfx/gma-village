@@ -7,7 +7,6 @@ class ParentProfile extends Component {
     const { parent } = this.props;
     return (
       <div className="fl w-100 w-25-ns pa2">
-
         <div className="thumbnail">
           {parent.profile_image_url &&
             <img className="img-rounded img-responsive gma-orange-border"
