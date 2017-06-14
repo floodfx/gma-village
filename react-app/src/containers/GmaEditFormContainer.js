@@ -24,7 +24,22 @@ class GmaEditFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.preUploadImageRequest(e.target.files[0]);
+    const image = e.target.files[0];
+    window.loadImage(
+      image, (canvas) => {
+        if(canvas.type === "error") {
+          console.log("Error loading image", image);
+        } else {
+          canvas.toBlob(
+            (blob) => {
+              this.props.preUploadImageRequest(blob);
+            },
+            image.type
+          );
+        }
+      },
+      {orientation: true}
+    )
   }
 
   render() {
@@ -80,7 +95,7 @@ const mapStateToProps = (state) => {
     saved: saveGma.saved,
     signed_url: uploadImage.signed_url,
     profile_image_url: uploadImage.image_url,
-    profile_image_loading: uploadImage.loading    
+    profile_image_loading: uploadImage.loading
   }
 }
 

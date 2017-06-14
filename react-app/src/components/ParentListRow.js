@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import LoadingIndicator from './LoadingIndicator';
 import ParentProfile from './ParentProfile';
 
 class ParentListRow extends Component {

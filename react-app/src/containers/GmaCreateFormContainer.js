@@ -24,7 +24,22 @@ class GmaCreateFormContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.preUploadImageRequest(e.target.files[0]);
+    const image = e.target.files[0];
+    window.loadImage(
+      image, (canvas) => {
+        if(canvas.type === "error") {
+          console.log("Error loading image", image);
+        } else {
+          canvas.toBlob(
+            (blob) => {
+              this.props.preUploadImageRequest(blob);
+            },
+            image.type
+          );
+        }
+      },
+      {orientation: true}
+    )
   }
 
   render() {

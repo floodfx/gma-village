@@ -3,6 +3,27 @@ import { Link } from 'react-router';
 
 class ParentProfile extends Component {
 
+  // componentWillMount() {
+  //   const { parent } = this.props;
+  //   if(parent.profile_image_url) {
+  //     window.loadImage(
+  //       parent.profile_image_url, (canvas) => {
+  //         console.log("canvas", canvas)
+  //         if(canvas.type === "error") {
+  //           console.log("Error loading image");
+  //         } else {
+  //           //here's the base64 data result
+  //           var base64data = canvas.toDataURL('image/jpeg');
+  //           //here's example to show it as on imae preview
+  //           var img_src = base64data.replace(/^data\:image\/\w+\;base64\,/, '');
+  //           console.log("img_src", img_src)
+  //         }
+  //       },
+  //       {orientation: true, crossOrigin: "http://localhost.gmavillage.com:3000"}
+  //     )
+  //   }
+  // }
+
   render() {
     const { parent } = this.props;
     return (

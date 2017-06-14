@@ -39,13 +39,15 @@ class ParentForm extends Component {
     var children = [];
     var other_neighborhood = '';
     var other_time_of_day = '';
+    var showAdvanced = true;
+    props.change('showAdvanced', showAdvanced);
     if(initialValues) {
       children = initialValues.children || [];
       other_neighborhood = initialValues.other_neighborhood || '';
       other_time_of_day = initialValues.other_time_of_day || '';
     }
     this.state = {
-      showAdvanced: true,
+      showAdvanced,
       children,
       other_neighborhood,
       other_time_of_day,
@@ -157,6 +159,11 @@ class ParentForm extends Component {
     this.setState({acceptedTos});
   }
 
+  setShowAdvanced = (showAdvanced) => {
+    this.setState({showAdvanced});
+    this.props.change('showAdvanced', showAdvanced);
+  }
+
   render() {
     const {
       handleSubmit,
@@ -167,7 +174,7 @@ class ParentForm extends Component {
       heading,
       profile_image_url
     } = this.props
-    const { children, other_neighborhood, other_time_of_day } = this.state;
+    const { children, other_neighborhood, other_time_of_day, showAdvanced } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
     const years = [...Array(13)].map((v, i) => i + 1);
@@ -214,15 +221,15 @@ class ParentForm extends Component {
               normalize={normalizePhone}
               validate={[required, phone]} />
           </div>
-          {!this.state.showAdvanced &&
-            <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setState({showAdvanced:true})}>
+          {!showAdvanced &&
+            <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setShowAdvanced(true)}>
               <FontAwesome name='caret-right' className="mr1"/>Show Advanced
             </div>
           }
-          {this.state.showAdvanced &&
+          {showAdvanced &&
 
             <div>
-              <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setState({showAdvanced:false})}>
+              <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setShowAdvanced(false)}>
                 <FontAwesome name='caret-down' className="mr1"/>Hide Advanced
               </div>
               <div className="mt4">
@@ -385,6 +392,9 @@ class ParentForm extends Component {
                       }}/>
                   </div>
                 }
+                {!profile_image_url &&
+                  <span className="pl3 dark-red">Required</span>
+                }
                 <div>
                   <Field
                     name="profilePhoto"
@@ -446,7 +456,7 @@ const validateOthers = values => {
   }
 
   if(!values.profile_image_url) {
-    errors.profilePhoto = 'Profile photo required'
+    errors.profilePhoto = 'Required'
   }
 
   return errors

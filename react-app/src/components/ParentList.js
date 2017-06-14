@@ -17,8 +17,8 @@ class ParentList extends Component {
       var row = [];
       parents.forEach((parent, index) => {
         row.push(parent)
-        if(index % 4 == 3 || index === parents.length - 1) {
-          rows.push(<ParentListRow parents={row} />);
+        if(index % 4 === 3 || index === parents.length - 1) {
+          rows.push(<ParentListRow key={index} parents={row} />);
           row = []
         }
       })

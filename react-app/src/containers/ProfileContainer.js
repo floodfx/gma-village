@@ -29,6 +29,7 @@ class ProfileContainer extends Component {
     } else if(user.user_type === "PARENT") {
       this.props.resetParentUser();
     }
+    this.props.resetUploadImage();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,7 +73,22 @@ class ProfileContainer extends Component {
   }
 
   handleFile = (e) => {
-    this.props.preUploadImageRequest(e.target.files[0]);
+    const image = e.target.files[0];
+    window.loadImage(
+      image, (canvas) => {
+        if(canvas.type === "error") {
+          console.log("Error loading image", image);
+        } else {
+          canvas.toBlob(
+            (blob) => {
+              this.props.preUploadImageRequest(blob);
+            },
+            image.type
+          );
+        }
+      },
+      {orientation: true}
+    )
   }
 
   render() {
