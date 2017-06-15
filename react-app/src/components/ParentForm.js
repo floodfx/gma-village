@@ -228,12 +228,14 @@ class ParentForm extends Component {
               <FontAwesome name='caret-right' className="mr1"/>Show Advanced
             </div>
           }
-          {currentUser.user_type === 'ADMIN' && showAdvanced &&
+          {showAdvanced &&
 
             <div>
-              <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setShowAdvanced(false)}>
-                <FontAwesome name='caret-down' className="mr1"/>Hide Advanced
-              </div>
+              {currentUser.user_type === 'ADMIN' &&
+                <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setShowAdvanced(false)}>
+                  <FontAwesome name='caret-down' className="mr1"/>Hide Advanced
+                </div>
+              }
               <div className="mt4">
                 <Field
                   label="My Children:"
