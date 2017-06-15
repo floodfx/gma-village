@@ -42,7 +42,7 @@ class ParentCreateFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, error, loading, profile_image_url} = this.props;
+    const {saving, saved, error, loading, profile_image_url, user} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -67,6 +67,7 @@ class ParentCreateFormContainer extends Component {
               user_type: "PARENT",
               active: false
             }}
+            currentUser={user}
           />
           {saved &&
             <Alert type="success" heading="Success" text="Saved Parent." />
@@ -80,6 +81,7 @@ class ParentCreateFormContainer extends Component {
 const mapStateToProps = (state) => {
   const { saveParent, uploadImage, auth } = state
   return {
+    user: auth.user,
     authCookie: auth.cookie,
     saving: saveParent.saving,
     error: saveParent.error,

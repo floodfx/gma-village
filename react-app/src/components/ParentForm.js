@@ -172,8 +172,10 @@ class ParentForm extends Component {
       invalid,
       submitting,
       heading,
-      profile_image_url
+      profile_image_url,
+      currentUser
     } = this.props
+    console.log("currentUser", currentUser)
     const { children, other_neighborhood, other_time_of_day, showAdvanced } = this.state;
     const days = [...Array(31)].map((v, i) => i + 1);
     const months = [...Array(12)].map((v, i) => i + 1);
@@ -221,12 +223,12 @@ class ParentForm extends Component {
               normalize={normalizePhone}
               validate={[required, phone]} />
           </div>
-          {!showAdvanced &&
+          {currentUser.user_type === 'ADMIN' && !showAdvanced &&
             <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setShowAdvanced(true)}>
               <FontAwesome name='caret-right' className="mr1"/>Show Advanced
             </div>
           }
-          {showAdvanced &&
+          {currentUser.user_type === 'ADMIN' && showAdvanced &&
 
             <div>
               <div className="mv4 gma-orange pointer underline f3" onClick={() => this.setShowAdvanced(false)}>

@@ -43,7 +43,7 @@ class ParentEditFormContainer extends Component {
   }
 
   render() {
-    const {saving, saved, parent, error, loading, profile_image_url} = this.props;
+    const {saving, saved, parent, error, loading, profile_image_url, user} = this.props;
     if(loading) {
       return (
         <LoadingIndicator text="Loading..." />
@@ -65,6 +65,7 @@ class ParentEditFormContainer extends Component {
             profile_image_url={profile_image_url || parent.profile_image_url}
             profile_image_loading={this.props.profile_image_loading}
             initialValues={parent}
+            currentUser={user}
             />
           {saved &&
             <Alert type="success" heading="Success" text="Saved Parent." />
@@ -84,6 +85,7 @@ ParentEditFormContainer.defaultProps = {
 const mapStateToProps = (state) => {
   const { auth, parentProfile, saveParent, uploadImage } = state
   return {
+    user: auth.user,
     authCookie: auth.cookie,
     loading: parentProfile.loading,
     saving: saveParent.saving,
