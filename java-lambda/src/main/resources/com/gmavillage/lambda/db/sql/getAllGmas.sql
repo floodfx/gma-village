@@ -10,16 +10,18 @@ SELECT u.id, u.first_name, u.last_name, u.phone, u.user_type, u.active,
        g.available_outside_neighborhood, g.why_care_for_kids, g.additional_info,
        n.name as neighborhood_name, n.label as neighborhood_label,
        n.city_id, c.name as city_name, c.label as city_label, c.state as city_state
-FROM users as u, gmas as g, neighborhoods as n, cities as c
+FROM users as u, gmas as g
+  LEFT OUTER JOIN 
+    neighborhoods as n
+  ON g.neighborhood_id = n.id
+  LEFT OUTER JOIN
+    cities as c
+  ON n.city_id = c.id
 WHERE
   (u.deleted=false or u.deleted=:deleted)
   AND
   u.user_type = 'GMA'
   AND
   u.id = g.user_id
-  AND
-  g.neighborhood_id = n.id
-  AND
-  n.city_id = c.id
 ORDER BY 
   u.id

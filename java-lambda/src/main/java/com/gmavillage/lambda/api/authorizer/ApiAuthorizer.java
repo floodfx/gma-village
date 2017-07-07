@@ -7,6 +7,8 @@ import static java.lang.System.getenv;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.amazonaws.services.lambda.runtime.AuthPolicy;
 import com.amazonaws.services.lambda.runtime.AuthPolicy.HttpMethod;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -48,7 +50,7 @@ public class ApiAuthorizer
       final String accessToken = AuthHelper.accessTokenFromAuthHeader(event);
       if (accessToken != null) {
         final User user = AuthHelper.userByAccountKitAccessToken(accessToken, accountKit, userDB);
-
+        System.out.println("Authorizing user:" + ToStringBuilder.reflectionToString(user));
         if (user == null) {
           System.err.println("Access token did not return user.");
           return UNAUTHORIZED_401;
