@@ -14,7 +14,7 @@ fi
 echo "Deploying Gma Village... STAGE:$STAGE, BUCKET:$BUCKET"
 
 # build production react app
-npm run build
+REACT_APP_STAGE=$STAGE npm run build
 
 # upload to s3
 echo "Uploading build to S3"

@@ -410,19 +410,20 @@ class ParentForm extends Component {
                     }
                 </div>
               </div>
-              <div className="mt4">
-                <Field
-                  label="Active"
-                  name="active"
-                  component={Checkbox}
-                  type="checkbox" />
-              </div>
+
               <Field name="other_neighborhood" component="input" type="hidden" />
               <Field name="other_time_of_day" component="input" type="hidden" />
               <Field name="showAdvanced" component="input" type="hidden" value={this.state.showAdvanced}/>
               <Field name="profile_image_url" component="input" type="hidden" value={profile_image_url} />
             </div>
           }
+          <div className="mt4">
+            <Field
+              label="Active"
+              name="active"
+              component={Checkbox}
+              type="checkbox" />
+          </div>
           <div className="mt4">
             <button className="btn gma-orange-bg" type="submit" disabled={pristine || submitting || invalid}>
               {this.props.saving &&
