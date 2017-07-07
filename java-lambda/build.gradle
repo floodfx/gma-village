@@ -51,6 +51,7 @@ dependencies {
     compile 'org.javadelight:delight-fileupload:0.0.3'
     compile 'javax.servlet:servlet-api:2.5'
     compile 'com.twilio.sdk:twilio:(7.0,7.9)'
+    compile 'net.coobird:thumbnailator:[0.4, 0.5)'
   
     
     compileOnly "com.google.auto.value:auto-value:1.2"
