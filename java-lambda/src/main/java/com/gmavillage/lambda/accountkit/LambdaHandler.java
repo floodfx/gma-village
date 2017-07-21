@@ -136,6 +136,7 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
   private LambdaProxyOutput lookupUserByType(final LambdaProxyEvent event, final User user)
       throws Exception {
     // find user by type
+    System.out.println("Looking up user by type:" + user);
     switch (user.getUserType()) {
       case ADMIN: {
         return success(gson.toJson(userDB.getAdmin(user.getId(), false)), requestOrigin(event));

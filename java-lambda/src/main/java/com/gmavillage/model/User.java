@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class User {
 
   private Integer id;
@@ -199,6 +201,11 @@ public class User {
         && Objects.equals(updatedAt, u.updatedAt) //
         && Objects.equals(deleted, u.deleted) //
         && Objects.equals(acceptedTerms, u.acceptedTerms);
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 
 }

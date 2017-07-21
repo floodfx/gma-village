@@ -1,5 +1,7 @@
 package com.gmavillage.lambda.model.accountkit;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class AccountKitUser {
 
   private String id;
@@ -59,6 +61,16 @@ public class AccountKitUser {
     public void setNationalNumber(final String nationalNumber) {
       this.nationalNumber = nationalNumber;
     }
+
+    @Override
+    public String toString() {
+      return ToStringBuilder.reflectionToString(this);
+    }
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 
 }

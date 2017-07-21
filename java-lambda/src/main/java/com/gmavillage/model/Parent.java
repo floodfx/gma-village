@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.google.api.client.util.Lists;
 import com.google.api.client.util.Sets;
 import com.google.common.collect.Iterables;
@@ -149,6 +151,11 @@ public class Parent extends User {
         && Objects.equals(additionalInfo, u.additionalInfo) //
         && Objects.equals(whyJoin, u.whyJoin) //
         && Iterables.elementsEqual(thisChildrenList, otherChildrenList);
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 
 }

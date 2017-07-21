@@ -1,6 +1,9 @@
 package com.gmavillage.lambda.db;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -16,6 +19,7 @@ import com.gmavillage.model.Child;
 import com.gmavillage.model.Gma;
 import com.gmavillage.model.Parent;
 import com.gmavillage.model.User;
+import com.gmavillage.model.UserType;
 import com.gmavillage.test.TestUtils;
 import com.google.common.collect.Lists;
 
@@ -146,6 +150,34 @@ public class UserDBTest {
   }
 
   @Test
+  public void testCreateAndGetParentNullPointer() throws Exception {
+
+    final Parent p = new Parent();
+    p.setFirstName("E");
+    p.setLastName("M");
+    p.setPhone("5103005555");
+    p.setUserType(UserType.PARENT);
+    p.setActive(true);
+    p.setAccountKitAccessToken(
+        "EMAWekFrQnZBdxXufxX0iM0g3ALtNhjHTVS03zOC5rtedm7ngAnacalMveGzTCmY52s6kcYIcB4vrZCZBlZAeMZBakCUhbdRfGSQMpOXECddsKZCM4zuWyvKZBTI0Aol5rLYGV9yieMMhSOZBuvscOm3ymwlH3L4lP4rcZD");
+    p.setAccountKitAccessTokenExpiresAt(OffsetDateTime.now().withOffsetSameLocal(ZoneOffset.UTC));
+    p.setAcceptedTerms(false);
+    p.setCreatedOn(LocalDateTime.now());
+    p.setUpdatedAt(LocalDateTime.now());
+
+    final Parent savedParent = userDB.createParent(p);
+    System.out.println(ToStringBuilder.reflectionToString(savedParent));
+    Assert.assertNotNull(savedParent.getId());
+    assertUserValuesSet(p, savedParent);
+    assertParentValuesSet(p, savedParent);
+
+    final Parent gotParent = userDB.getParent(savedParent.getId(), false);
+    Assert.assertEquals(gotParent.getId(), savedParent.getId());
+    assertUserValuesSet(gotParent, savedParent);
+    assertParentValuesSet(gotParent, savedParent);
+  }
+
+  @Test
   public void testCreateParentAndGetParentUpdateChildrenAndGetParent() throws Exception {
 
     final Parent p = testUtils.generateParent();
@@ -204,7 +236,9 @@ public class UserDBTest {
     Assert.assertEquals(a.getNeedRecurrence(), b.getNeedRecurrence());
     Assert.assertEquals(a.getNeedTimeOfDay(), b.getNeedTimeOfDay());
     Assert.assertEquals(a.getOtherNeighborhood(), b.getOtherNeighborhood());
-    Assert.assertEquals(a.getNeighborhood(), b.getNeighborhood());
+    if (a.getNeighborhood() != null) {
+      Assert.assertEquals(a.getNeighborhood(), b.getNeighborhood());
+    }
     Assert.assertEquals(a.getChildren().size(), b.getChildren().size());
     final List<Child> ac = Lists.newArrayList(a.getChildren());
     final List<Child> bc = Lists.newArrayList(b.getChildren());

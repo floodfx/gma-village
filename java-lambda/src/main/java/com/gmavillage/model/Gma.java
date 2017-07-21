@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.google.api.client.util.Lists;
 import com.google.common.collect.Iterables;
 
@@ -203,6 +205,11 @@ public class Gma extends User {
         && Objects.equals(availableOutsideNeighborhood, u.availableOutsideNeighborhood) //
         && Objects.equals(additionalInfo, u.additionalInfo) //
         && Objects.equals(whyCareForKids, u.whyCareForKids);
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this);
   }
 
 }
