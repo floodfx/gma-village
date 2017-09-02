@@ -153,7 +153,7 @@ public class ApiAuthorizer
     final String PUT_SELF = "PUT/parents/" + parentId;
     final String methodPath = httpMethod + "/" + path;
     System.out.println("methodPath:" + methodPath);
-    if (GET_GMAS.equals(methodPath)) {
+    if (methodPath.startsWith(GET_GMAS)) {
       return true;
     } else if (GET_SELF.equals(methodPath)) {
       return true;

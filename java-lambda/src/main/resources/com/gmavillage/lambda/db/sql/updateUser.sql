@@ -5,6 +5,7 @@ with updateu as
     phone=:phone,
     active=:active,
     profile_image_url=:profileImageUrl,
+    account_kit_user_id=:accountKitUserId,
     account_kit_access_token=:accountKitAccessToken,
     account_kit_access_token_expires_at=:accountKitAccessTokenExpiresAt,
     accepted_terms=:acceptedTerms,

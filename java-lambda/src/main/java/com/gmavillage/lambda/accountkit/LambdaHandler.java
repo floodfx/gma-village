@@ -99,7 +99,8 @@ public class LambdaHandler extends AbstractLambdaProxyHandler {
           User user = userDB.getUserByPhone(akUser.getPhone().getNationalNumber());
           // if user exists, update auth info and return full user type
           if (user != null) {
-            if (user.getAccountKitUserId() != null) {
+            if (user.getAccountKitUserId() != null
+                && !user.getAccountKitUserId().trim().isEmpty()) {
               if (!user.getAccountKitUserId().equals(akUser.getId())) {
                 logError("AK UserID in DB does not match AK UserID from Account Kit Auth for user:"
                     + user.getId());
